@@ -1,10 +1,12 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:meta/meta.dart';
 
 part 'embeddings.g.dart';
 
+@immutable
 @JsonSerializable()
 class EmbeddingParams {
-  EmbeddingParams({
+  const EmbeddingParams({
     required this.model,
     required this.input,
     required this.encodingFormat,
@@ -20,9 +22,10 @@ class EmbeddingParams {
   Map<String, dynamic> toJson() => _$EmbeddingParamsToJson(this);
 }
 
+@immutable
 @JsonSerializable()
 class Embeddings {
-  Embeddings({
+  const Embeddings({
     required this.id,
     required this.object,
     required this.data,
@@ -41,9 +44,10 @@ class Embeddings {
   Map<String, dynamic> toJson() => _$EmbeddingsToJson(this);
 }
 
+@immutable
 @JsonSerializable()
 class EmbeddingsData {
-  EmbeddingsData({
+  const EmbeddingsData({
     required this.object,
     required this.embedding,
     required this.index,
@@ -58,9 +62,10 @@ class EmbeddingsData {
   Map<String, dynamic> toJson() => _$EmbeddingsDataToJson(this);
 }
 
+@immutable
 @JsonSerializable()
 class EmbeddingsUsage {
-  EmbeddingsUsage({
+  const EmbeddingsUsage({
     required this.promptTokens,
     required this.totalTokens,
   });

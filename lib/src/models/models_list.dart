@@ -1,10 +1,12 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:meta/meta.dart';
 
 part 'models_list.g.dart';
 
+@immutable
 @JsonSerializable()
 class ModelsList {
-  ModelsList({
+  const ModelsList({
     required this.object,
     required this.data,
   });
@@ -17,9 +19,10 @@ class ModelsList {
   Map<String, dynamic> toJson() => _$ModelsListToJson(this);
 }
 
+@immutable
 @JsonSerializable()
 class ModelsListData {
-  ModelsListData({
+  const ModelsListData({
     required this.id,
     required this.object,
     required this.created,

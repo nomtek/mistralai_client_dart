@@ -1,10 +1,12 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:meta/meta.dart';
 
 part 'chat_completion.g.dart';
 
 @JsonSerializable()
+@immutable
 class ChatCompletionParams {
-  ChatCompletionParams({
+  const ChatCompletionParams({
     required this.model,
     required this.messages,
     required this.temperature,
@@ -17,25 +19,27 @@ class ChatCompletionParams {
 
   factory ChatCompletionParams.fromJson(Map<String, dynamic> json) =>
       _$ChatCompletionParamsFromJson(json);
-  String model;
-  List<Message> messages;
-  double temperature;
+
+  final String model;
+  final List<Message> messages;
+  final double temperature;
   @JsonKey(name: 'top_p')
-  int topP;
+  final int topP;
   @JsonKey(name: 'max_tokens')
-  int maxTokens;
-  bool stream;
+  final int maxTokens;
+  final bool stream;
   @JsonKey(name: 'safe_mode')
-  bool safeMode;
+  final bool safeMode;
   @JsonKey(name: 'random_seed')
-  dynamic randomSeed;
+  final dynamic randomSeed;
 
   Map<String, dynamic> toJson() => _$ChatCompletionParamsToJson(this);
 }
 
 @JsonSerializable()
+@immutable
 class Message {
-  Message({
+  const Message({
     required this.role,
     required this.content,
   });
@@ -43,15 +47,16 @@ class Message {
   factory Message.fromJson(Map<String, dynamic> json) =>
       _$MessageFromJson(json);
 
-  String role;
-  String content;
+  final String role;
+  final String content;
 
   Map<String, dynamic> toJson() => _$MessageToJson(this);
 }
 
 @JsonSerializable()
+@immutable
 class ChatCompletion {
-  ChatCompletion({
+  const ChatCompletion({
     required this.id,
     required this.object,
     required this.created,
@@ -62,36 +67,40 @@ class ChatCompletion {
 
   factory ChatCompletion.fromJson(Map<String, dynamic> json) =>
       _$ChatCompletionFromJson(json);
-  String id;
-  String object;
-  int created;
-  String model;
-  List<Choice> choices;
-  CompletionUsage usage;
+
+  final String id;
+  final String object;
+  final int created;
+  final String model;
+  final List<Choice> choices;
+  final CompletionUsage usage;
 
   Map<String, dynamic> toJson() => _$ChatCompletionToJson(this);
 }
 
 @JsonSerializable()
+@immutable
 class Choice {
-  Choice({
+  const Choice({
     required this.index,
     required this.message,
     required this.finishReason,
   });
 
   factory Choice.fromJson(Map<String, dynamic> json) => _$ChoiceFromJson(json);
-  int index;
-  Message message;
+
+  final int index;
+  final Message message;
   @JsonKey(name: 'finish_reason')
-  String finishReason;
+  final String finishReason;
 
   Map<String, dynamic> toJson() => _$ChoiceToJson(this);
 }
 
 @JsonSerializable()
+@immutable
 class CompletionUsage {
-  CompletionUsage({
+  const CompletionUsage({
     required this.promptTokens,
     required this.completionTokens,
     required this.totalTokens,
@@ -101,11 +110,11 @@ class CompletionUsage {
       _$CompletionUsageFromJson(json);
 
   @JsonKey(name: 'prompt_tokens')
-  int promptTokens;
+  final int promptTokens;
   @JsonKey(name: 'completion_tokens')
-  int completionTokens;
+  final int completionTokens;
   @JsonKey(name: 'total_tokens')
-  int totalTokens;
+  final int totalTokens;
 
   Map<String, dynamic> toJson() => _$CompletionUsageToJson(this);
 }
