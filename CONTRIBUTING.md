@@ -1,3 +1,5 @@
 # CONTRIBUTING
-## Development flow 
+
+## Development flow
+
 ## How to build
