@@ -49,7 +49,7 @@ class MistralAIClient {
   /// Returns a list of the available [ModelsList] 
   /// from the Mistral AI API.
   ///
-  /// It uses [list models endpoint](https://api.mistral.ai/v1/models) from the mistral AI API.
+  /// It uses [list models endpoint](https://api.mistral.ai/v1/models) from the Mistral AI API.
   Future<ModelsList> listModels() async {
     final response = await _getRequest<ModelsList>(
       _MistralAPIEndpoints.listModels,
