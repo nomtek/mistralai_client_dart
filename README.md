@@ -4,12 +4,24 @@
 
 ## Description
 
+This is an unofficial Dart/Flutter client for the Mistral AI. The implementation is based on the [official Mistral AI JS client](https://github.com/mistralai/client-js).
+
 ## Overview (current state)
+
+The project is currently in progress.
 
 ## Installation
 
+TBD
+
 ## Usage
+
+TBD
 
 ## Resources
 
+You can check the [official Mistral AI docs](https://docs.mistral.ai/).
+
 ## Contributing
+
+For contributing guide please see [CONTRIBUTING.md](CONTRIBUTING.md).
