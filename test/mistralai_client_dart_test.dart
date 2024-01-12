@@ -6,7 +6,7 @@ void main() {
       // given
 
       // when
-      final result = 2 + 2;
+      const result = 2 + 2;
 
       // then
       expect(result, equals(4));
