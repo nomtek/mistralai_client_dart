@@ -13,12 +13,12 @@ ChatCompletionParams _$ChatCompletionParamsFromJson(
       messages: (json['messages'] as List<dynamic>)
           .map((e) => Message.fromJson(e as Map<String, dynamic>))
           .toList(),
-      temperature: (json['temperature'] as num).toDouble(),
-      topP: json['top_p'] as int,
-      maxTokens: json['max_tokens'] as int,
-      stream: json['stream'] as bool,
-      safeMode: json['safe_mode'] as bool,
-      randomSeed: json['random_seed'],
+      temperature: (json['temperature'] as num?)?.toDouble(),
+      topP: (json['top_p'] as num?)?.toDouble(),
+      maxTokens: json['max_tokens'] as int?,
+      stream: json['stream'] as bool?,
+      safeMode: json['safe_mode'] as bool?,
+      randomSeed: json['random_seed'] as int?,
     );
 
 Map<String, dynamic> _$ChatCompletionParamsToJson(
