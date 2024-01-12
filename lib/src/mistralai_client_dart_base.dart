@@ -62,7 +62,7 @@ class MistralAIClient {
     throw UnimplementedError('to be implemented');
   }
 
-  Future<Embeddings> embednings(EmbeddingParams params) {
+  Future<Embeddings> embeddings(EmbeddingParams params) {
     throw UnimplementedError('to be implemented');
   }
 }
