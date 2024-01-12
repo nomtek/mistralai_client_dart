@@ -24,7 +24,7 @@ class MistralAIClient {
   final int maxRetries;
   final http.Client _client;
 
-  Future<String> _getRequest<T>(String endpoint) async {
+  Future<String> _getRequest(String endpoint) async {
     final headers = <String, String>{
       'Accept': 'application/json',
       'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ class MistralAIClient {
   ///
   /// It uses [list models endpoint](https://api.mistral.ai/v1/models) from the Mistral AI API.
   Future<ModelsList> listModels() async {
-    final response = await _getRequest<ModelsList>(
+    final response = await _getRequest(
       _MistralAPIEndpoints.listModels,
     );
 
