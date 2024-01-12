@@ -24,10 +24,10 @@ class MistralAIClient {
   final int maxRetries;
   final http.Client _client;
 
-  /// Returns a list of the available models [ModelsList]
+  /// Returns a list of the available models [ListModelsResult]
   ///
   /// It uses [list models endpoint](https://api.mistral.ai/v1/models) from the mistral AI API.
-  Future<ModelsList> listModels() async {
+  Future<ListModelsResult> listModels() async {
     final headers = <String, String>{
       'Accept': 'application/json',
       'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ class MistralAIClient {
         throw Exception('Get request failed: ${response.statusCode}');
       }
 
-      return ModelsList.fromJson(
+      return ListModelsResult.fromJson(
         jsonDecode(response.body) as Map<String, dynamic>,
       );
     } catch (e) {
