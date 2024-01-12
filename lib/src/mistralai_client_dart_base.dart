@@ -1,3 +1,5 @@
+import 'package:http/http.dart' as http;
+import 'package:http/retry.dart' as retry;
 import 'package:mistralai_client_dart/src/models/models.dart';
 
 class MistralAIClient {
@@ -6,14 +8,18 @@ class MistralAIClient {
     this.baseUrl = 'https://api.mistral.ai',
     this.timeout = const Duration(seconds: 120),
     this.maxRetries = 5,
-  });
+  }) : _client = retry.RetryClient(
+          http.Client(),
+          retries: maxRetries,
+        );
 
   final String apiKey;
   final String baseUrl;
   final Duration timeout;
   final int maxRetries;
+  final http.Client _client;
 
-  Future<ModelsList> listModels() {
+  Future<ModelsList> listModels() async {
     throw UnimplementedError('to be implemented');
   }
 
