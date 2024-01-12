@@ -47,7 +47,7 @@ class MistralAIClient {
   }
 
   /// Returns a list of the available models [ModelsList] 
-  /// from the mistral AI API.
+  /// from the Mistral AI API.
   ///
   /// It uses [list models endpoint](https://api.mistral.ai/v1/models) from the mistral AI API.
   Future<ModelsList> listModels() async {
