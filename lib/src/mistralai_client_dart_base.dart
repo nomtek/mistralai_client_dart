@@ -24,7 +24,10 @@ class MistralAIClient {
   final int maxRetries;
   final http.Client _client;
 
-  Future<String> _getRequest(String endpoint) async {
+  /// Returns a list of the available models [ModelsList]
+  ///
+  /// It uses [list models endpoint](https://api.mistral.ai/v1/models) from the mistral AI API.
+  Future<ModelsList> listModels() async {
     final headers = <String, String>{
       'Accept': 'application/json',
       'Content-Type': 'application/json',
@@ -33,29 +36,22 @@ class MistralAIClient {
 
     try {
       final response = await _client
-          .get(Uri.parse('$baseUrl$endpoint'), headers: headers)
+          .get(
+            Uri.parse('$baseUrl${_MistralAPIEndpoints.listModels}'),
+            headers: headers,
+          )
           .timeout(timeout);
 
       if (response.statusCode != 200) {
         throw Exception('Get request failed: ${response.statusCode}');
       }
 
-      return response.body;
+      return ModelsList.fromJson(
+        jsonDecode(response.body) as Map<String, dynamic>,
+      );
     } catch (e) {
       throw Exception('Get request failed: $e');
     }
-  }
-
-  /// Returns a list of the available [ModelsList] 
-  /// from the Mistral AI API.
-  ///
-  /// It uses [list models endpoint](https://api.mistral.ai/v1/models) from the Mistral AI API.
-  Future<ModelsList> listModels() async {
-    final response = await _getRequest(
-      _MistralAPIEndpoints.listModels,
-    );
-
-    return ModelsList.fromJson(jsonDecode(response) as Map<String, dynamic>);
   }
 
   Future<ChatCompletion> chat(ChatParams params) {
