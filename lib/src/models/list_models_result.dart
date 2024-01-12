@@ -1,22 +1,22 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 
-part 'models_list.g.dart';
+part 'list_models_result.g.dart';
 
 @immutable
 @JsonSerializable()
-class ModelsList {
-  const ModelsList({
+class ListModelsResult {
+  const ListModelsResult({
     required this.object,
     required this.data,
   });
 
-  factory ModelsList.fromJson(Map<String, dynamic> json) =>
-      _$ModelsListFromJson(json);
+  factory ListModelsResult.fromJson(Map<String, dynamic> json) =>
+      _$ListModelsResultFromJson(json);
   final String object;
   final List<ModelsListData> data;
 
-  Map<String, dynamic> toJson() => _$ModelsListToJson(this);
+  Map<String, dynamic> toJson() => _$ListModelsResultToJson(this);
 }
 
 @immutable

@@ -1,19 +1,20 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'models_list.dart';
+part of 'list_models_result.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ModelsList _$ModelsListFromJson(Map<String, dynamic> json) => ModelsList(
+ListModelsResult _$ListModelsResultFromJson(Map<String, dynamic> json) =>
+    ListModelsResult(
       object: json['object'] as String,
       data: (json['data'] as List<dynamic>)
           .map((e) => ModelsListData.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$ModelsListToJson(ModelsList instance) =>
+Map<String, dynamic> _$ListModelsResultToJson(ListModelsResult instance) =>
     <String, dynamic>{
       'object': instance.object,
       'data': instance.data,
