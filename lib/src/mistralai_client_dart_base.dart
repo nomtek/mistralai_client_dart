@@ -1,4 +1,3 @@
-import 'package:http/http.dart' as http;
 import 'package:mistralai_client_dart/src/models/models.dart';
 
 class MistralAIClient {
@@ -7,14 +6,12 @@ class MistralAIClient {
     this.baseUrl = 'https://api.mistral.ai',
     this.timeout = const Duration(seconds: 120),
     this.maxRetries = 5,
-    http.Client? httpClient,
-  }) : _httpClient = httpClient ?? http.Client();
+  });
 
   final String apiKey;
   final String baseUrl;
   final Duration timeout;
   final int maxRetries;
-  final http.Client _httpClient;
 
   Future<ModelsList> listModels() {
     throw UnimplementedError('to be implemented');
