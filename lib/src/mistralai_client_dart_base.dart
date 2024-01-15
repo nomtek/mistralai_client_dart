@@ -21,9 +21,11 @@ class MistralAIClient {
 
     /// if overriten then baseUrl is ignored
     MistraAIUrlFactory? apiUrlFactory,
-    // FIXME(lgawron): allow to pass http client from outside
-  })  : _client = retry.RetryClient(
-          http.Client(),
+    http.Client? client,
+  })  : _client = client is retry.RetryClient
+            ? client
+            : retry.RetryClient(
+                client ?? http.Client(),
           retries: maxRetries,
         ),
         _apiUrlFactory = apiUrlFactory ?? MistraAIUrlFactory(baseUrl: baseUrl);
