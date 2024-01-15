@@ -104,7 +104,7 @@ class MistralAIClient {
   }
 
   /// Returns a stream of chat completion chunks for given [params].
-  /// 
+  ///
   /// Chunks are small parts of the whole chat completion.
   /// They are supposed to be used to display chat completion in real time.
   ///
