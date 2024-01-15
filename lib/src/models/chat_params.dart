@@ -34,4 +34,9 @@ class ChatParams {
   final int? maxTokens;
   final bool? safeMode;
   final int? randomSeed;
+
+  @override
+  String toString() => 'ChatParams{model: $model, messages: $messages, '
+      'temperature: $temperature, topP: $topP, maxTokens: $maxTokens, '
+      'safeMode: $safeMode, randomSeed: $randomSeed}';
 }

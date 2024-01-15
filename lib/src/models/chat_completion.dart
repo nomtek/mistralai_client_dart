@@ -34,6 +34,12 @@ class ChatCompletionParams {
   final int? randomSeed;
 
   Map<String, dynamic> toJson() => _$ChatCompletionParamsToJson(this);
+
+  @override
+  String toString() =>
+      'ChatCompletionParams{model: $model, messages: $messages, '
+      'temperature: $temperature, topP: $topP, maxTokens: $maxTokens, '
+      'stream: $stream, safeMode: $safeMode, randomSeed: $randomSeed}';
 }
 
 @JsonSerializable()
@@ -51,6 +57,9 @@ class Message {
   final String content;
 
   Map<String, dynamic> toJson() => _$MessageToJson(this);
+
+  @override
+  String toString() => 'Message{role: $role, content: $content}';
 }
 
 @JsonSerializable()
@@ -76,6 +85,11 @@ class ChatCompletion {
   final CompletionUsage usage;
 
   Map<String, dynamic> toJson() => _$ChatCompletionToJson(this);
+
+  @override
+  String toString() =>
+      'ChatCompletion{id: $id, object: $object, created: $created, '
+      'model: $model, choices: $choices, usage: $usage}';
 }
 
 @JsonSerializable()
@@ -95,6 +109,10 @@ class Choice {
   final String finishReason;
 
   Map<String, dynamic> toJson() => _$ChoiceToJson(this);
+
+  @override
+  String toString() =>
+      'Choice{index: $index, message: $message, finishReason: $finishReason}';
 }
 
 @JsonSerializable()
@@ -117,4 +135,9 @@ class CompletionUsage {
   final int totalTokens;
 
   Map<String, dynamic> toJson() => _$CompletionUsageToJson(this);
+
+  @override
+  String toString() =>
+      'CompletionUsage{promptTokens: $promptTokens, '
+      'completionTokens: $completionTokens, totalTokens: $totalTokens}';
 }
