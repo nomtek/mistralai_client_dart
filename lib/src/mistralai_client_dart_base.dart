@@ -103,6 +103,61 @@ class MistralAIClient {
     }
   }
 
+  /// Returns a stream of chat completion chunks for given [params].
+  ///
+  /// Chunks are small parts of the whole chat completion.
+  /// They are supposed to be used to display chat completion in real time.
+  ///
+  /// Sends a request to
+  /// [Mistral AI API](https://docs.mistral.ai/api/#operation/createChatCompletion)
+  /// to create chat completions.
+  ///
+  /// Throws [MistralAIClientException] if the request fails.
+  Stream<ChatCompletionChunk> streamChat(ChatParams params) async* {
+    try {
+      final headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $apiKey',
+      };
+
+      // TODO(lgawron): endpoint building should be moved to separate class
+      // cleanup in https://github.com/nomtek/mistralai_client_dart/issues/13
+      final url = Uri.parse('$baseUrl/v1/chat/completions');
+
+      // TODO(lgawron): to add tests for this method we need to mock http client
+      // cleanup in https://github.com/nomtek/mistralai_client_dart/issues/13
+      final request = http.Request('POST', url)
+        ..headers.addAll(headers)
+        ..body = jsonEncode(
+          _mapChatParamsToRequestParams(params, stream: true),
+        );
+      // use send instead of post to be able to read stream response
+      final response = await _client.send(request).timeout(timeout);
+
+      final responseStream = response.stream.transform(utf8.decoder);
+      const dataPrefix = 'data: ';
+      await for (final chunk in responseStream) {
+        for (final chunkLine in chunk.split('\n')) {
+          // we are only interested with lines starting with dataPrefix
+          if (chunkLine.startsWith(dataPrefix)) {
+            // skip dataPrefix and check data
+            final dataContent = chunkLine.substring(dataPrefix.length).trim();
+            // check if data stream is not done
+            if (dataContent != '[DONE]') {
+              // assume that data is json
+              yield ChatCompletionChunk.fromJson(
+                jsonDecode(dataContent) as Map<String, dynamic>,
+              );
+            }
+          }
+        }
+      }
+    } catch (e) {
+      throw MistralAIClientException('Error while streaming chat: $e');
+    }
+  }
+
   ChatCompletionParams _mapChatParamsToRequestParams(
     ChatParams params, {
     required bool stream,
@@ -118,15 +173,11 @@ class MistralAIClient {
         randomSeed: params.randomSeed,
       );
 
-  Stream<ChatCompletion> streamChat(ChatParams params) {
-    throw UnimplementedError('to be implemented');
-  }
-
   /// Returns [Embeddings] for a single input
   /// or a batch of inputs given as [EmbeddingParams]
   ///
   /// It uses [embeddings endpoint](https://docs.mistral.ai/api/#operation/createEmbedding) from the Mistral AI API.
-  /// 
+  ///
   /// Throws [Exception] if request fails.
   Future<Embeddings> embeddings(EmbeddingParams params) async {
     final headers = <String, String>{

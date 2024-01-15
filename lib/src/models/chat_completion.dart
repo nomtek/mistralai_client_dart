@@ -3,7 +3,11 @@ import 'package:meta/meta.dart';
 
 part 'chat_completion.g.dart';
 
-@JsonSerializable()
+/// Represents a chat completion request params.
+//
+// `includeIfNull` is used to omit null values from the JSON output
+// when sending a request to the API.
+@JsonSerializable(includeIfNull: false)
 @immutable
 class ChatCompletionParams {
   const ChatCompletionParams({
@@ -21,7 +25,7 @@ class ChatCompletionParams {
       _$ChatCompletionParamsFromJson(json);
 
   final String model;
-  final List<Message> messages;
+  final List<ChatMessage> messages;
   final double? temperature;
   @JsonKey(name: 'top_p')
   final double? topP;
@@ -34,25 +38,37 @@ class ChatCompletionParams {
   final int? randomSeed;
 
   Map<String, dynamic> toJson() => _$ChatCompletionParamsToJson(this);
+
+  @override
+  String toString() =>
+      'ChatCompletionParams{model: $model, messages: $messages, '
+      'temperature: $temperature, topP: $topP, maxTokens: $maxTokens, '
+      'stream: $stream, safeMode: $safeMode, randomSeed: $randomSeed}';
 }
 
 @JsonSerializable()
 @immutable
-class Message {
-  const Message({
+class ChatMessage {
+  const ChatMessage({
     required this.role,
     required this.content,
   });
 
-  factory Message.fromJson(Map<String, dynamic> json) =>
-      _$MessageFromJson(json);
+  factory ChatMessage.fromJson(Map<String, dynamic> json) =>
+      _$ChatMessageFromJson(json);
 
   final String role;
   final String content;
 
-  Map<String, dynamic> toJson() => _$MessageToJson(this);
+  Map<String, dynamic> toJson() => _$ChatMessageToJson(this);
+
+  @override
+  String toString() => 'ChatMessage{role: $role, content: $content}';
 }
 
+/// Represents a chat completion result.
+///
+/// To read the message for a user, use `choices[i].message.content`.
 @JsonSerializable()
 @immutable
 class ChatCompletion {
@@ -76,6 +92,11 @@ class ChatCompletion {
   final CompletionUsage usage;
 
   Map<String, dynamic> toJson() => _$ChatCompletionToJson(this);
+
+  @override
+  String toString() =>
+      'ChatCompletion{id: $id, object: $object, created: $created, '
+      'model: $model, choices: $choices, usage: $usage}';
 }
 
 @JsonSerializable()
@@ -83,18 +104,22 @@ class ChatCompletion {
 class Choice {
   const Choice({
     required this.index,
-    required this.message,
     required this.finishReason,
+    required this.message,
   });
 
   factory Choice.fromJson(Map<String, dynamic> json) => _$ChoiceFromJson(json);
 
   final int index;
-  final Message message;
+  final ChatMessage message;
   @JsonKey(name: 'finish_reason')
   final String finishReason;
 
   Map<String, dynamic> toJson() => _$ChoiceToJson(this);
+
+  @override
+  String toString() =>
+      'Choice{index: $index, finishReason: $finishReason, message: $message}';
 }
 
 @JsonSerializable()
@@ -117,4 +142,86 @@ class CompletionUsage {
   final int totalTokens;
 
   Map<String, dynamic> toJson() => _$CompletionUsageToJson(this);
+
+  @override
+  String toString() => 'CompletionUsage{promptTokens: $promptTokens, '
+      'completionTokens: $completionTokens, totalTokens: $totalTokens}';
+}
+
+/// Represents a chat completion chunk.
+///
+/// This is a response from the API when using stream mode.
+@JsonSerializable()
+@immutable
+class ChatCompletionChunk {
+  const ChatCompletionChunk({
+    required this.id,
+    required this.object,
+    required this.created,
+    required this.model,
+    required this.choices,
+  });
+
+  factory ChatCompletionChunk.fromJson(Map<String, dynamic> json) =>
+      _$ChatCompletionChunkFromJson(json);
+
+  final String id;
+  final String object;
+  final int created;
+  final String model;
+  final List<ChoiceChunk> choices;
+
+  Map<String, dynamic> toJson() => _$ChatCompletionChunkToJson(this);
+
+  @override
+  String toString() =>
+      'ChatCompletionChunk{id: $id, object: $object, created: $created, '
+      'model: $model, choices: $choices}';
+}
+
+@JsonSerializable()
+@immutable
+class ChoiceChunk {
+  const ChoiceChunk({
+    required this.index,
+    this.delta,
+    this.finishReason,
+    this.usage,
+  });
+
+  factory ChoiceChunk.fromJson(Map<String, dynamic> json) =>
+      _$ChoiceChunkFromJson(json);
+
+  final int index;
+  final DeltaMessage? delta;
+  final CompletionUsage? usage;
+  @JsonKey(name: 'finish_reason')
+  final String? finishReason;
+
+  Map<String, dynamic> toJson() => _$ChoiceChunkToJson(this);
+
+  @override
+  String toString() =>
+      'ChoiceChunk{index: $index, delta: $delta, usage: $usage, '
+      'finishReason: $finishReason}';
+}
+
+@JsonSerializable()
+@immutable
+class DeltaMessage {
+  const DeltaMessage({
+    this.role,
+    this.content,
+  });
+
+  factory DeltaMessage.fromJson(Map<String, dynamic> json) =>
+      _$DeltaMessageFromJson(json);
+
+  final String? role;
+  final String? content;
+
+  Map<String, dynamic> toJson() => _$DeltaMessageToJson(this);
+
+  @override
+  String toString() => 'DeltaMessage{role: $role, content: $content}';
 }
