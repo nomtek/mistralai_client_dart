@@ -5,14 +5,21 @@ import 'package:http/retry.dart' as retry;
 import 'package:mistralai_client_dart/src/models/models.dart';
 import 'package:mistralai_client_dart/src/network/url_tools.dart';
 
+// FIXME(lgawron): create a common request function for all requests
+// FIXME(lgawron): add tests for all requests
+// TODO(lgawron): check all names for consistency and better readability
+// TODO(lgawron): discuss and implement better error handling
+
 class MistralAIClient {
   MistralAIClient({
     required this.apiKey,
     this.baseUrl = MistralAPIEndpoints.baseUrl,
     this.timeout = const Duration(seconds: 120),
     this.maxRetries = 5,
+
     /// if overriten then baseUrl is ignored
     MistraAIUrlFactory? apiUrlFactory,
+    // FIXME(lgawron): allow to pass http client from outside
   })  : _client = retry.RetryClient(
           http.Client(),
           retries: maxRetries,
@@ -49,6 +56,7 @@ class MistralAIClient {
         jsonDecode(response.body) as Map<String, dynamic>,
       );
     } catch (e) {
+      // FIXME(lgawron): Use MistralAIClientException
       throw Exception('Get request failed: $e');
     }
   }
@@ -185,6 +193,7 @@ class MistralAIClient {
           .timeout(timeout);
 
       if (response.statusCode != 200) {
+        // FIXME(lgawron): Use MistralAIClientException
         throw Exception('Embeddings request failed: ${response.statusCode}');
       }
 
@@ -192,11 +201,13 @@ class MistralAIClient {
         jsonDecode(response.body) as Map<String, dynamic>,
       );
     } catch (e) {
+      // FIXME(lgawron): Use MistralAIClientException
       throw Exception('Embeddings request failed: $e');
     }
   }
 }
 
+// TODO(lgawron): move to separate file
 /// Simple exception class for Mistral AI Client exceptions.
 class MistralAIClientException implements Exception {
   MistralAIClientException([this.message = '']);
