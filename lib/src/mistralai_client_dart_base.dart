@@ -78,7 +78,9 @@ class MistralAIClient {
     final response = await _client
         .post(
           url,
-          body: _mapChatParamsToRequestParams(params, stream: false),
+          body: jsonEncode(
+            _mapChatParamsToRequestParams(params, stream: false),
+          ),
           headers: headers,
         )
         .timeout(timeout);
