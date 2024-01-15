@@ -1,6 +1,6 @@
 # Mistral AI client for Dart
 
-[![.github/workflows/check.yml](https://github.com/nomtek/mistralai_client_dart/actions/workflows/check.yml/badge.svg)](https://github.com/nomtek/mistralai_client_dart/actions/workflows/check.yml)
+[![.github/workflows/check.yaml](https://github.com/nomtek/mistralai_client_dart/actions/workflows/check.yaml/badge.svg)](https://github.com/nomtek/mistralai_client_dart/actions/workflows/check.yaml)
 [![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg)](https://pub.dev/packages/very_good_analysis)
 
 ## Description
