@@ -125,22 +125,19 @@ class MistralAIClient {
       // use send instead of post to be able to read stream response
       final response = await _client.send(request).timeout(timeout);
 
-      var buffer = '';
       final responseStream = response.stream.transform(utf8.decoder);
-      const dataPrefix = 'data:';
+      const dataPrefix = 'data: ';
       await for (final chunk in responseStream) {
-        // ignore: use_string_buffers
-        buffer += chunk;
-        int firstNewline;
-        while ((firstNewline = buffer.indexOf('\n')) != -1) {
-          final chunkLine = buffer.substring(0, firstNewline);
-          buffer = buffer.substring(firstNewline + 1);
+        for (final chunkLine in chunk.split('\n')) {
+          // we are only interested with lines starting with dataPrefix
           if (chunkLine.startsWith(dataPrefix)) {
-            // skip dataPrefix + space
-            final json = chunkLine.substring(dataPrefix.length + 1).trim();
-            if (json != '[DONE]') {
+            // skip dataPrefix and check data
+            final dataContent = chunkLine.substring(dataPrefix.length).trim();
+            // check if data stream is not done
+            if (dataContent != '[DONE]') {
+              // assume that data is json
               yield ChatCompletionChunk.fromJson(
-                jsonDecode(json) as Map<String, dynamic>,
+                jsonDecode(dataContent) as Map<String, dynamic>,
               );
             }
           }
