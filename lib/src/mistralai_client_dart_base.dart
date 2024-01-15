@@ -54,7 +54,9 @@ class MistralAIClient {
           .timeout(timeout);
 
       if (response.statusCode != 200) {
-        throw Exception('Get request failed: ${response.statusCode}');
+        throw MistralAIClientException(
+          'Get request failed: ${response.statusCode}',
+        );
       }
 
       return ListModelsResult.fromJson(
@@ -179,7 +181,7 @@ class MistralAIClient {
   ///
   /// It uses [embeddings endpoint](https://docs.mistral.ai/api/#operation/createEmbedding) from the Mistral AI API.
   ///
-  /// Throws [Exception] if request fails.
+  /// Throws [MistralAIClientException] if request fails.
   Future<Embeddings> embeddings(EmbeddingParams params) async {
     final headers = <String, String>{
       'Accept': 'application/json',
@@ -197,8 +199,8 @@ class MistralAIClient {
           .timeout(timeout);
 
       if (response.statusCode != 200) {
-        // FIXME(lgawron): Use MistralAIClientException
-        throw Exception('Embeddings request failed: ${response.statusCode}');
+        throw MistralAIClientException(
+            'Embeddings request failed: ${response.statusCode}');
       }
 
       return Embeddings.fromJson(
