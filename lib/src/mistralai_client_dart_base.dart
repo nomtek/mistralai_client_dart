@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:http/retry.dart' as retry;
+import 'package:mistralai_client_dart/src/exceptions.dart';
 import 'package:mistralai_client_dart/src/models/models.dart';
 import 'package:mistralai_client_dart/src/network/url_tools.dart';
 
@@ -207,15 +208,4 @@ class MistralAIClient {
       throw MistralAIClientException('Embeddings request failed: $e');
     }
   }
-}
-
-// TODO(lgawron): move to separate file
-/// Simple exception class for Mistral AI Client exceptions.
-class MistralAIClientException implements Exception {
-  MistralAIClientException([this.message = '']);
-
-  final String message;
-
-  @override
-  String toString() => 'MistralAIClientException: $message';
 }
