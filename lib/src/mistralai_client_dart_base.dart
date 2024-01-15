@@ -63,8 +63,8 @@ class MistralAIClient {
     throw UnimplementedError('to be implemented');
   }
 
-  /// Returns embeddings [Embeddings] for a single,
-  /// or batch of inputs given as params [EmbeddingParams]
+  /// Returns [Embeddings] for a single input
+  /// or a batch of inputs given as [EmbeddingParams]
   ///
   /// It uses [embeddings endpoint](https://docs.mistral.ai/api/#operation/createEmbedding) from the Mistral AI API.
   /// 
