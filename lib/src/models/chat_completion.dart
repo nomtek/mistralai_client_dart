@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 part 'chat_completion.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 @immutable
 class ChatCompletionParams {
   const ChatCompletionParams({

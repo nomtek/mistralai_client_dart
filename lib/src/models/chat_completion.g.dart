@@ -22,17 +22,26 @@ ChatCompletionParams _$ChatCompletionParamsFromJson(
     );
 
 Map<String, dynamic> _$ChatCompletionParamsToJson(
-        ChatCompletionParams instance) =>
-    <String, dynamic>{
-      'model': instance.model,
-      'messages': instance.messages,
-      'temperature': instance.temperature,
-      'top_p': instance.topP,
-      'max_tokens': instance.maxTokens,
-      'stream': instance.stream,
-      'safe_mode': instance.safeMode,
-      'random_seed': instance.randomSeed,
-    };
+    ChatCompletionParams instance) {
+  final val = <String, dynamic>{
+    'model': instance.model,
+    'messages': instance.messages,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('temperature', instance.temperature);
+  writeNotNull('top_p', instance.topP);
+  writeNotNull('max_tokens', instance.maxTokens);
+  writeNotNull('stream', instance.stream);
+  writeNotNull('safe_mode', instance.safeMode);
+  writeNotNull('random_seed', instance.randomSeed);
+  return val;
+}
 
 Message _$MessageFromJson(Map<String, dynamic> json) => Message(
       role: json['role'] as String,
