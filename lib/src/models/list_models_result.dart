@@ -17,6 +17,9 @@ class ListModelsResult {
   final List<ModelsListData> data;
 
   Map<String, dynamic> toJson() => _$ListModelsResultToJson(this);
+
+  @override
+  String toString() => 'ListModelsResult{object: $object, data: $data}';
 }
 
 @immutable
@@ -38,4 +41,9 @@ class ModelsListData {
   final String ownedBy;
 
   Map<String, dynamic> toJson() => _$ModelsListDataToJson(this);
+
+  @override
+  String toString() =>
+      'ModelsListData{id: $id, object: $object, created: $created, '
+      'ownedBy: $ownedBy}';
 }
