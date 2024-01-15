@@ -103,6 +103,16 @@ class MistralAIClient {
     }
   }
 
+  /// Returns a stream of chat completion chunks for given [params].
+  /// 
+  /// Chunks are small parts of the whole chat completion.
+  /// They are supposed to be used to display chat completion in real time.
+  ///
+  /// Sends a request to
+  /// [Mistral AI API](https://docs.mistral.ai/api/#operation/createChatCompletion)
+  /// to create chat completions.
+  ///
+  /// Throws [MistralAIClientException] if the request fails.
   Stream<ChatCompletionChunk> streamChat(ChatParams params) async* {
     try {
       final headers = {
