@@ -1,0 +1,31 @@
+name: Analyze code and run tests
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout repository
+        uses: actions/checkout@v3
+
+      - name: ⚙️ Setup Dart
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: "3.2.3"
+
+      - name: ⚙️ Install dependencies
+        run: dart pub get
+
+      - name: 📝 Verify formatting
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: 🧐 Analyze project source
+        run: dart analyze --fatal-infos
+
+      - name: 🤖 Run tests
+        run: dart test -r github
