@@ -26,8 +26,8 @@ class MistralAIClient {
             ? client
             : retry.RetryClient(
                 client ?? http.Client(),
-          retries: maxRetries,
-        ),
+                retries: maxRetries,
+              ),
         _apiUrlFactory = apiUrlFactory ?? MistraAIUrlFactory(baseUrl: baseUrl);
 
   final String apiKey;
@@ -60,8 +60,7 @@ class MistralAIClient {
         jsonDecode(response.body) as Map<String, dynamic>,
       );
     } catch (e) {
-      // FIXME(lgawron): Use MistralAIClientException
-      throw Exception('Get request failed: $e');
+      throw MistralAIClientException('listModels request failed: $e');
     }
   }
 
@@ -205,8 +204,7 @@ class MistralAIClient {
         jsonDecode(response.body) as Map<String, dynamic>,
       );
     } catch (e) {
-      // FIXME(lgawron): Use MistralAIClientException
-      throw Exception('Embeddings request failed: $e');
+      throw MistralAIClientException('Embeddings request failed: $e');
     }
   }
 }
