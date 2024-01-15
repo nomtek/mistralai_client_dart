@@ -9,6 +9,8 @@ import 'package:mistralai_client_dart/src/network/url_tools.dart';
 // FIXME(lgawron): add tests for all requests
 // TODO(lgawron): check all names for consistency and better readability
 // TODO(lgawron): discuss and implement better error handling
+// TODO(lgawron): add more documentation
+// TODO(lgawron): move headers to separate class
 
 class MistralAIClient {
   MistralAIClient({
