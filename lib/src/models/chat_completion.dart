@@ -105,13 +105,13 @@ class Choice {
   const Choice({
     required this.index,
     required this.finishReason,
-    this.message,
+    required this.message,
   });
 
   factory Choice.fromJson(Map<String, dynamic> json) => _$ChoiceFromJson(json);
 
   final int index;
-  final ChatMessage? message;
+  final ChatMessage message;
   @JsonKey(name: 'finish_reason')
   final String finishReason;
 

@@ -79,9 +79,7 @@ Map<String, dynamic> _$ChatCompletionToJson(ChatCompletion instance) =>
 Choice _$ChoiceFromJson(Map<String, dynamic> json) => Choice(
       index: json['index'] as int,
       finishReason: json['finish_reason'] as String,
-      message: json['message'] == null
-          ? null
-          : ChatMessage.fromJson(json['message'] as Map<String, dynamic>),
+      message: ChatMessage.fromJson(json['message'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ChoiceToJson(Choice instance) => <String, dynamic>{
