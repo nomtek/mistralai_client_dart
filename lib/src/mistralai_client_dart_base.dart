@@ -6,6 +6,8 @@ import 'package:mistralai_client_dart/src/exceptions.dart';
 import 'package:mistralai_client_dart/src/models/models.dart';
 import 'package:mistralai_client_dart/src/network/url_tools.dart';
 
+part 'network/request.dart';
+
 // FIXME(lgawron): create a common request function for all requests
 // FIXME(lgawron): add tests for all requests
 // TODO(lgawron): check all names for consistency and better readability
@@ -41,31 +43,12 @@ class MistralAIClient {
   /// Returns a list of the available models [ListModelsResult]
   ///
   /// It uses [list models endpoint](https://api.mistral.ai/v1/models) from the mistral AI API.
-  Future<ListModelsResult> listModels() async {
-    final headers = <String, String>{
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $apiKey',
-    };
-
-    try {
-      final response = await _client
-          .get(_apiUrlFactory.listModels(), headers: headers)
-          .timeout(timeout);
-
-      if (response.statusCode != 200) {
-        throw MistralAIClientException(
-          'Get request failed: ${response.statusCode}',
-        );
-      }
-
-      return ListModelsResult.fromJson(
-        jsonDecode(response.body) as Map<String, dynamic>,
+  Future<ListModelsResult> listModels() async => _requestJson(
+        _client,
+        _createHeaders(apiKey: apiKey),
+        http.Request('GET', _apiUrlFactory.listModels()),
+        ListModelsResult.fromJson,
       );
-    } catch (e) {
-      throw MistralAIClientException('listModels request failed: $e');
-    }
-  }
 
   /// Returns a chat completion for given [params].
   ///
