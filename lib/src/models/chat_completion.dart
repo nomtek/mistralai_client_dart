@@ -9,12 +9,12 @@ class ChatCompletionParams {
   const ChatCompletionParams({
     required this.model,
     required this.messages,
-    required this.temperature,
-    required this.topP,
-    required this.maxTokens,
-    required this.stream,
-    required this.safeMode,
-    required this.randomSeed,
+    this.temperature,
+    this.topP,
+    this.maxTokens,
+    this.stream,
+    this.safeMode,
+    this.randomSeed,
   });
 
   factory ChatCompletionParams.fromJson(Map<String, dynamic> json) =>
@@ -22,16 +22,16 @@ class ChatCompletionParams {
 
   final String model;
   final List<Message> messages;
-  final double temperature;
+  final double? temperature;
   @JsonKey(name: 'top_p')
-  final int topP;
+  final double? topP;
   @JsonKey(name: 'max_tokens')
-  final int maxTokens;
-  final bool stream;
+  final int? maxTokens;
+  final bool? stream;
   @JsonKey(name: 'safe_mode')
-  final bool safeMode;
+  final bool? safeMode;
   @JsonKey(name: 'random_seed')
-  final dynamic randomSeed;
+  final int? randomSeed;
 
   Map<String, dynamic> toJson() => _$ChatCompletionParamsToJson(this);
 }
