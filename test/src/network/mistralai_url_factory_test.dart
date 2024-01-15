@@ -60,4 +60,61 @@ void main() {
       );
     });
   });
+
+  test('create listModels default uri', () {
+    final factory = MistraAIUrlFactory();
+    expect(
+      factory.listModels(),
+      Uri.parse('https://api.mistral.ai/v1/models'),
+    );
+  });
+
+  test('create embeddings default uri', () {
+    final factory = MistraAIUrlFactory();
+    expect(
+      factory.embeddings(),
+      Uri.parse('https://api.mistral.ai/v1/embeddings'),
+    );
+  });
+
+  test('create chatCompletions default uri', () {
+    final factory = MistraAIUrlFactory();
+    expect(
+      factory.chatCompletions(),
+      Uri.parse('https://api.mistral.ai/v1/chat/completions'),
+    );
+  });
+
+  test('create listModels custom uri', () {
+    final factory = MistraAIUrlFactory(
+      baseUrl: 'https://nomtek.api.mistral.ai',
+      listModelsPath: '/custom-list-models',
+    );
+    expect(
+      factory.listModels(),
+      Uri.parse('https://nomtek.api.mistral.ai/custom-list-models'),
+    );
+  });
+
+  test('create embeddings custom uri', () {
+    final factory = MistraAIUrlFactory(
+      baseUrl: 'https://nomtek.api.mistral.ai',
+      embeddingsPath: '/custom-embeddings',
+    );
+    expect(
+      factory.embeddings(),
+      Uri.parse('https://nomtek.api.mistral.ai/custom-embeddings'),
+    );
+  });
+
+  test('create chatCompletions custom uri', () {
+    final factory = MistraAIUrlFactory(
+      baseUrl: 'https://nomtek.api.mistral.ai',
+      chatCompletionsPath: '/custom-chat-completions',
+    );
+    expect(
+      factory.chatCompletions(),
+      Uri.parse('https://nomtek.api.mistral.ai/custom-chat-completions'),
+    );
+  });
 }

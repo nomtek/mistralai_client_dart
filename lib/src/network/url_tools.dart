@@ -1,4 +1,3 @@
-
 class MistralAPIEndpoints {
   static const String listModels = '/v1/models';
   static const String embeddings = '/v1/embeddings';
@@ -8,11 +7,15 @@ class MistralAPIEndpoints {
 
 class MistraAIUrlFactory {
   MistraAIUrlFactory({
-    this.baseUrl = MistralAPIEndpoints.baseUrl,
-    this.listModelsPath = MistralAPIEndpoints.listModels,
-    this.embeddingsPath = MistralAPIEndpoints.embeddings,
-    this.chatCompletionsPath = MistralAPIEndpoints.chatCompletions,
-  })  : assert(baseUrl.isNotEmpty, 'baseUrl cannot be empty'),
+    String baseUrl = MistralAPIEndpoints.baseUrl,
+    String listModelsPath = MistralAPIEndpoints.listModels,
+    String embeddingsPath = MistralAPIEndpoints.embeddings,
+    String chatCompletionsPath = MistralAPIEndpoints.chatCompletions,
+  })  : _chatCompletionsPath = chatCompletionsPath,
+        _embeddingsPath = embeddingsPath,
+        _listModelsPath = listModelsPath,
+        _baseUrl = baseUrl,
+        assert(baseUrl.isNotEmpty, 'baseUrl cannot be empty'),
         assert(!baseUrl.endsWith('/'), 'baseUrl must not end with "/"'),
         assert(listModelsPath.isNotEmpty, 'listModelsPath cannot be empty'),
         assert(
@@ -33,16 +36,16 @@ class MistraAIUrlFactory {
           'chatCompletionsPath must start with "/"',
         );
 
-  final String baseUrl;
-  final String listModelsPath;
-  final String embeddingsPath;
-  final String chatCompletionsPath;
+  final String _baseUrl;
+  final String _listModelsPath;
+  final String _embeddingsPath;
+  final String _chatCompletionsPath;
 
-  Uri listModels() => _parseEndpint(MistralAPIEndpoints.listModels);
+  Uri listModels() => _parseEndpint(_listModelsPath);
 
-  Uri embeddings() => _parseEndpint(MistralAPIEndpoints.embeddings);
+  Uri embeddings() => _parseEndpint(_embeddingsPath);
 
-  Uri chatCompletions() => _parseEndpint(MistralAPIEndpoints.chatCompletions);
+  Uri chatCompletions() => _parseEndpint(_chatCompletionsPath);
 
-  Uri _parseEndpint(String endpoint) => Uri.parse('$baseUrl$endpoint}');
+  Uri _parseEndpint(String endpoint) => Uri.parse('$_baseUrl$endpoint');
 }
