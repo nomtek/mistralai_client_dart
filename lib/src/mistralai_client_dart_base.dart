@@ -6,6 +6,7 @@ import 'package:mistralai_client_dart/src/models/models.dart';
 
 class _MistralAPIEndpoints {
   static const String listModels = '/v1/models';
+  static const String embeddings = '/v1/embeddings';
 }
 
 class MistralAIClient {
@@ -121,8 +122,38 @@ class MistralAIClient {
     throw UnimplementedError('to be implemented');
   }
 
-  Future<Embeddings> embednings(EmbeddingParams params) {
-    throw UnimplementedError('to be implemented');
+  /// Returns [Embeddings] for a single input
+  /// or a batch of inputs given as [EmbeddingParams]
+  ///
+  /// It uses [embeddings endpoint](https://docs.mistral.ai/api/#operation/createEmbedding) from the Mistral AI API.
+  /// 
+  /// Throws [Exception] if request fails.
+  Future<Embeddings> embeddings(EmbeddingParams params) async {
+    final headers = <String, String>{
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $apiKey',
+    };
+
+    try {
+      final response = await _client
+          .post(
+            Uri.parse('$baseUrl${_MistralAPIEndpoints.embeddings}'),
+            body: jsonEncode(params.toJson()),
+            headers: headers,
+          )
+          .timeout(timeout);
+
+      if (response.statusCode != 200) {
+        throw Exception('Embeddings request failed: ${response.statusCode}');
+      }
+
+      return Embeddings.fromJson(
+        jsonDecode(response.body) as Map<String, dynamic>,
+      );
+    } catch (e) {
+      throw Exception('Embeddings request failed: $e');
+    }
   }
 }
 
