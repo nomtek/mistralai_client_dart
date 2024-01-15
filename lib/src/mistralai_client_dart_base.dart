@@ -3,27 +3,27 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:http/retry.dart' as retry;
 import 'package:mistralai_client_dart/src/models/models.dart';
-
-class _MistralAPIEndpoints {
-  static const String listModels = '/v1/models';
-  static const String embeddings = '/v1/embeddings';
-}
+import 'package:mistralai_client_dart/src/network/url_tools.dart';
 
 class MistralAIClient {
   MistralAIClient({
     required this.apiKey,
-    this.baseUrl = 'https://api.mistral.ai',
+    this.baseUrl = MistralAPIEndpoints.baseUrl,
     this.timeout = const Duration(seconds: 120),
     this.maxRetries = 5,
-  }) : _client = retry.RetryClient(
+    /// if overriten then baseUrl is ignored
+    MistraAIUrlFactory? apiUrlFactory,
+  })  : _client = retry.RetryClient(
           http.Client(),
           retries: maxRetries,
-        );
+        ),
+        _apiUrlFactory = apiUrlFactory ?? MistraAIUrlFactory(baseUrl: baseUrl);
 
   final String apiKey;
   final String baseUrl;
   final Duration timeout;
   final int maxRetries;
+  final MistraAIUrlFactory _apiUrlFactory;
   final http.Client _client;
 
   /// Returns a list of the available models [ListModelsResult]
@@ -38,10 +38,7 @@ class MistralAIClient {
 
     try {
       final response = await _client
-          .get(
-            Uri.parse('$baseUrl${_MistralAPIEndpoints.listModels}'),
-            headers: headers,
-          )
+          .get(_apiUrlFactory.listModels(), headers: headers)
           .timeout(timeout);
 
       if (response.statusCode != 200) {
@@ -70,15 +67,11 @@ class MistralAIClient {
       'Authorization': 'Bearer $apiKey',
     };
 
-    // TODO(lgawron): endpoint building should be moved to separate class
-    // cleanup in https://github.com/nomtek/mistralai_client_dart/issues/13
-    final url = Uri.parse('$baseUrl/v1/chat/completions');
-
     // TODO(lgawron): to add tests for this method we need to mock http client
     // cleanup in https://github.com/nomtek/mistralai_client_dart/issues/13
     final response = await _client
         .post(
-          url,
+          _apiUrlFactory.chatCompletions(),
           body: jsonEncode(
             _mapChatParamsToRequestParams(params, stream: false),
           ),
@@ -121,13 +114,9 @@ class MistralAIClient {
         'Authorization': 'Bearer $apiKey',
       };
 
-      // TODO(lgawron): endpoint building should be moved to separate class
-      // cleanup in https://github.com/nomtek/mistralai_client_dart/issues/13
-      final url = Uri.parse('$baseUrl/v1/chat/completions');
-
       // TODO(lgawron): to add tests for this method we need to mock http client
       // cleanup in https://github.com/nomtek/mistralai_client_dart/issues/13
-      final request = http.Request('POST', url)
+      final request = http.Request('POST', _apiUrlFactory.chatCompletions())
         ..headers.addAll(headers)
         ..body = jsonEncode(
           _mapChatParamsToRequestParams(params, stream: true),
@@ -189,7 +178,7 @@ class MistralAIClient {
     try {
       final response = await _client
           .post(
-            Uri.parse('$baseUrl${_MistralAPIEndpoints.embeddings}'),
+            _apiUrlFactory.embeddings(),
             body: jsonEncode(params.toJson()),
             headers: headers,
           )
