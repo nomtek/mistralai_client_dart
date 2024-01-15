@@ -102,6 +102,54 @@ class MistralAIClient {
     }
   }
 
+  Stream<ChatCompletionChunk> streamChat(ChatParams params) async* {
+    try {
+      final headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $apiKey',
+      };
+
+      // TODO(lgawron): endpoint building should be moved to separate class
+      // cleanup in https://github.com/nomtek/mistralai_client_dart/issues/13
+      final url = Uri.parse('$baseUrl/v1/chat/completions');
+
+      // TODO(lgawron): to add tests for this method we need to mock http client
+      // cleanup in https://github.com/nomtek/mistralai_client_dart/issues/13
+      final request = http.Request('POST', url)
+        ..headers.addAll(headers)
+        ..body = jsonEncode(
+          _mapChatParamsToRequestParams(params, stream: true),
+        );
+      // use send instead of post to be able to read stream response
+      final response = await _client.send(request).timeout(timeout);
+
+      var buffer = '';
+      final responseStream = response.stream.transform(utf8.decoder);
+      const dataPrefix = 'data:';
+      await for (final chunk in responseStream) {
+        // ignore: use_string_buffers
+        buffer += chunk;
+        int firstNewline;
+        while ((firstNewline = buffer.indexOf('\n')) != -1) {
+          final chunkLine = buffer.substring(0, firstNewline);
+          buffer = buffer.substring(firstNewline + 1);
+          if (chunkLine.startsWith(dataPrefix)) {
+            // skip dataPrefix + space
+            final json = chunkLine.substring(dataPrefix.length + 1).trim();
+            if (json != '[DONE]') {
+              yield ChatCompletionChunk.fromJson(
+                jsonDecode(json) as Map<String, dynamic>,
+              );
+            }
+          }
+        }
+      }
+    } catch (e) {
+      throw MistralAIClientException('Error while streaming chat: $e');
+    }
+  }
+
   ChatCompletionParams _mapChatParamsToRequestParams(
     ChatParams params, {
     required bool stream,
@@ -116,10 +164,6 @@ class MistralAIClient {
         safeMode: params.safeMode,
         randomSeed: params.randomSeed,
       );
-
-  Stream<ChatCompletion> streamChat(ChatParams params) {
-    throw UnimplementedError('to be implemented');
-  }
 
   Future<Embeddings> embednings(EmbeddingParams params) {
     throw UnimplementedError('to be implemented');

@@ -44,8 +44,8 @@ Map<String, dynamic> _$ChatCompletionParamsToJson(
 }
 
 Message _$MessageFromJson(Map<String, dynamic> json) => Message(
-      role: json['role'] as String,
-      content: json['content'] as String,
+      role: json['role'] as String?,
+      content: json['content'] as String?,
     );
 
 Map<String, dynamic> _$MessageToJson(Message instance) => <String, dynamic>{
@@ -77,8 +77,10 @@ Map<String, dynamic> _$ChatCompletionToJson(ChatCompletion instance) =>
 
 Choice _$ChoiceFromJson(Map<String, dynamic> json) => Choice(
       index: json['index'] as int,
-      message: Message.fromJson(json['message'] as Map<String, dynamic>),
       finishReason: json['finish_reason'] as String,
+      message: json['message'] == null
+          ? null
+          : Message.fromJson(json['message'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ChoiceToJson(Choice instance) => <String, dynamic>{
@@ -99,4 +101,44 @@ Map<String, dynamic> _$CompletionUsageToJson(CompletionUsage instance) =>
       'prompt_tokens': instance.promptTokens,
       'completion_tokens': instance.completionTokens,
       'total_tokens': instance.totalTokens,
+    };
+
+ChatCompletionChunk _$ChatCompletionChunkFromJson(Map<String, dynamic> json) =>
+    ChatCompletionChunk(
+      id: json['id'] as String,
+      object: json['object'] as String,
+      created: json['created'] as int,
+      model: json['model'] as String,
+      choices: (json['choices'] as List<dynamic>)
+          .map((e) => ChoiceChunk.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$ChatCompletionChunkToJson(
+        ChatCompletionChunk instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'object': instance.object,
+      'created': instance.created,
+      'model': instance.model,
+      'choices': instance.choices,
+    };
+
+ChoiceChunk _$ChoiceChunkFromJson(Map<String, dynamic> json) => ChoiceChunk(
+      index: json['index'] as int,
+      delta: json['delta'] == null
+          ? null
+          : Message.fromJson(json['delta'] as Map<String, dynamic>),
+      finishReason: json['finish_reason'] as String?,
+      usage: json['usage'] == null
+          ? null
+          : CompletionUsage.fromJson(json['usage'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$ChoiceChunkToJson(ChoiceChunk instance) =>
+    <String, dynamic>{
+      'index': instance.index,
+      'delta': instance.delta,
+      'usage': instance.usage,
+      'finish_reason': instance.finishReason,
     };
