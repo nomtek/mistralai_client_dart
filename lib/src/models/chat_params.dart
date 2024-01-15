@@ -28,7 +28,7 @@ class ChatParams {
         );
 
   final String model;
-  final List<Message> messages;
+  final List<ChatMessage> messages;
   final double? temperature;
   final double? topP;
   final int? maxTokens;

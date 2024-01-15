@@ -46,11 +46,11 @@ void main() {
   });
 }
 
-Message messageOf({
+ChatMessage chatMessageOf({
   String? role,
   String? content,
 }) =>
-    Message(
+    ChatMessage(
       role: role ?? 'role',
       content: content ?? 'content',
     );
@@ -58,7 +58,7 @@ Message messageOf({
 // creates ChatParams with default values for tests
 ChatParams chatParamsOf({
   String? model,
-  List<Message>? messages,
+  List<ChatMessage>? messages,
   double? temperature,
   double? topP,
   int? maxTokens,
@@ -67,7 +67,7 @@ ChatParams chatParamsOf({
 }) =>
     ChatParams(
       model: model ?? 'model',
-      messages: messages ?? [messageOf()],
+      messages: messages ?? [chatMessageOf()],
       temperature: temperature,
       topP: topP,
       maxTokens: maxTokens,

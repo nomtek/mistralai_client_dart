@@ -25,7 +25,7 @@ class ChatCompletionParams {
       _$ChatCompletionParamsFromJson(json);
 
   final String model;
-  final List<Message> messages;
+  final List<ChatMessage> messages;
   final double? temperature;
   @JsonKey(name: 'top_p')
   final double? topP;
@@ -48,26 +48,26 @@ class ChatCompletionParams {
 
 @JsonSerializable()
 @immutable
-class Message {
-  const Message({
-    this.role,
-    this.content,
+class ChatMessage {
+  const ChatMessage({
+    required this.role,
+    required this.content,
   });
 
-  factory Message.fromJson(Map<String, dynamic> json) =>
-      _$MessageFromJson(json);
+  factory ChatMessage.fromJson(Map<String, dynamic> json) =>
+      _$ChatMessageFromJson(json);
 
-  final String? role;
-  final String? content;
+  final String role;
+  final String content;
 
-  Map<String, dynamic> toJson() => _$MessageToJson(this);
+  Map<String, dynamic> toJson() => _$ChatMessageToJson(this);
 
   @override
-  String toString() => 'Message{role: $role, content: $content}';
+  String toString() => 'ChatMessage{role: $role, content: $content}';
 }
 
 /// Represents a chat completion result.
-/// 
+///
 /// To read the message for a user, use `choices[i].message.content`.
 @JsonSerializable()
 @immutable
@@ -111,7 +111,7 @@ class Choice {
   factory Choice.fromJson(Map<String, dynamic> json) => _$ChoiceFromJson(json);
 
   final int index;
-  final Message? message;
+  final ChatMessage? message;
   @JsonKey(name: 'finish_reason')
   final String finishReason;
 
@@ -149,7 +149,7 @@ class CompletionUsage {
 }
 
 /// Represents a chat completion chunk.
-/// 
+///
 /// This is a response from the API when using stream mode.
 @JsonSerializable()
 @immutable
@@ -193,7 +193,7 @@ class ChoiceChunk {
       _$ChoiceChunkFromJson(json);
 
   final int index;
-  final Message? delta;
+  final DeltaMessage? delta;
   final CompletionUsage? usage;
   @JsonKey(name: 'finish_reason')
   final String? finishReason;
@@ -204,4 +204,24 @@ class ChoiceChunk {
   String toString() =>
       'ChoiceChunk{index: $index, delta: $delta, usage: $usage, '
       'finishReason: $finishReason}';
+}
+
+@JsonSerializable()
+@immutable
+class DeltaMessage {
+  const DeltaMessage({
+    this.role,
+    this.content,
+  });
+
+  factory DeltaMessage.fromJson(Map<String, dynamic> json) =>
+      _$DeltaMessageFromJson(json);
+
+  final String? role;
+  final String? content;
+
+  Map<String, dynamic> toJson() => _$DeltaMessageToJson(this);
+
+  @override
+  String toString() => 'DeltaMessage{role: $role, content: $content}';
 }

@@ -11,7 +11,7 @@ ChatCompletionParams _$ChatCompletionParamsFromJson(
     ChatCompletionParams(
       model: json['model'] as String,
       messages: (json['messages'] as List<dynamic>)
-          .map((e) => Message.fromJson(e as Map<String, dynamic>))
+          .map((e) => ChatMessage.fromJson(e as Map<String, dynamic>))
           .toList(),
       temperature: (json['temperature'] as num?)?.toDouble(),
       topP: (json['top_p'] as num?)?.toDouble(),
@@ -43,12 +43,13 @@ Map<String, dynamic> _$ChatCompletionParamsToJson(
   return val;
 }
 
-Message _$MessageFromJson(Map<String, dynamic> json) => Message(
-      role: json['role'] as String?,
-      content: json['content'] as String?,
+ChatMessage _$ChatMessageFromJson(Map<String, dynamic> json) => ChatMessage(
+      role: json['role'] as String,
+      content: json['content'] as String,
     );
 
-Map<String, dynamic> _$MessageToJson(Message instance) => <String, dynamic>{
+Map<String, dynamic> _$ChatMessageToJson(ChatMessage instance) =>
+    <String, dynamic>{
       'role': instance.role,
       'content': instance.content,
     };
@@ -80,7 +81,7 @@ Choice _$ChoiceFromJson(Map<String, dynamic> json) => Choice(
       finishReason: json['finish_reason'] as String,
       message: json['message'] == null
           ? null
-          : Message.fromJson(json['message'] as Map<String, dynamic>),
+          : ChatMessage.fromJson(json['message'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ChoiceToJson(Choice instance) => <String, dynamic>{
@@ -128,7 +129,7 @@ ChoiceChunk _$ChoiceChunkFromJson(Map<String, dynamic> json) => ChoiceChunk(
       index: json['index'] as int,
       delta: json['delta'] == null
           ? null
-          : Message.fromJson(json['delta'] as Map<String, dynamic>),
+          : DeltaMessage.fromJson(json['delta'] as Map<String, dynamic>),
       finishReason: json['finish_reason'] as String?,
       usage: json['usage'] == null
           ? null
@@ -141,4 +142,15 @@ Map<String, dynamic> _$ChoiceChunkToJson(ChoiceChunk instance) =>
       'delta': instance.delta,
       'usage': instance.usage,
       'finish_reason': instance.finishReason,
+    };
+
+DeltaMessage _$DeltaMessageFromJson(Map<String, dynamic> json) => DeltaMessage(
+      role: json['role'] as String?,
+      content: json['content'] as String?,
+    );
+
+Map<String, dynamic> _$DeltaMessageToJson(DeltaMessage instance) =>
+    <String, dynamic>{
+      'role': instance.role,
+      'content': instance.content,
     };
