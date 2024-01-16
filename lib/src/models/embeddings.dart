@@ -22,12 +22,17 @@ class EmbeddingParams {
   final String encodingFormat;
 
   Map<String, dynamic> toJson() => _$EmbeddingParamsToJson(this);
+  
+  @override
+  String toString() =>
+      'EmbeddingParams{model: $model, input: $input, '
+      'encodingFormat: $encodingFormat}';
 }
 
 @immutable
 @JsonSerializable()
-class Embeddings {
-  const Embeddings({
+class EmbeddingsResult {
+  const EmbeddingsResult({
     required this.id,
     required this.object,
     required this.data,
@@ -35,15 +40,20 @@ class Embeddings {
     required this.usage,
   });
 
-  factory Embeddings.fromJson(Map<String, dynamic> json) =>
-      _$EmbeddingsFromJson(json);
+  factory EmbeddingsResult.fromJson(Map<String, dynamic> json) =>
+      _$EmbeddingsResultFromJson(json);
   final String id;
   final String object;
   final List<EmbeddingsData> data;
   final String model;
   final EmbeddingsUsage usage;
 
-  Map<String, dynamic> toJson() => _$EmbeddingsToJson(this);
+  Map<String, dynamic> toJson() => _$EmbeddingsResultToJson(this);
+
+  @override
+  String toString() =>
+      'EmbeddingsResult{id: $id, object: $object, data: $data, model: $model, '
+      'usage: $usage}';
 }
 
 @immutable
@@ -62,6 +72,10 @@ class EmbeddingsData {
   final int index;
 
   Map<String, dynamic> toJson() => _$EmbeddingsDataToJson(this);
+
+  @override
+  String toString() =>
+      'EmbeddingsData{object: $object, embedding: $embedding, index: $index}';
 }
 
 @immutable
@@ -80,4 +94,8 @@ class EmbeddingsUsage {
   final int totalTokens;
 
   Map<String, dynamic> toJson() => _$EmbeddingsUsageToJson(this);
+
+  @override
+  String toString() =>
+      'EmbeddingsUsage{promptTokens: $promptTokens, totalTokens: $totalTokens}';
 }

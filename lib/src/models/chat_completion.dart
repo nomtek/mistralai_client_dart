@@ -71,8 +71,8 @@ class ChatMessage {
 /// To read the message for a user, use `choices[i].message.content`.
 @JsonSerializable()
 @immutable
-class ChatCompletion {
-  const ChatCompletion({
+class ChatCompletionResult {
+  const ChatCompletionResult({
     required this.id,
     required this.object,
     required this.created,
@@ -81,8 +81,8 @@ class ChatCompletion {
     required this.usage,
   });
 
-  factory ChatCompletion.fromJson(Map<String, dynamic> json) =>
-      _$ChatCompletionFromJson(json);
+  factory ChatCompletionResult.fromJson(Map<String, dynamic> json) =>
+      _$ChatCompletionResultFromJson(json);
 
   final String id;
   final String object;
@@ -91,11 +91,11 @@ class ChatCompletion {
   final List<Choice> choices;
   final CompletionUsage usage;
 
-  Map<String, dynamic> toJson() => _$ChatCompletionToJson(this);
+  Map<String, dynamic> toJson() => _$ChatCompletionResultToJson(this);
 
   @override
   String toString() =>
-      'ChatCompletion{id: $id, object: $object, created: $created, '
+      'ChatCompletionResult{id: $id, object: $object, created: $created, '
       'model: $model, choices: $choices, usage: $usage}';
 }
 
@@ -153,8 +153,8 @@ class CompletionUsage {
 /// This is a response from the API when using stream mode.
 @JsonSerializable()
 @immutable
-class ChatCompletionChunk {
-  const ChatCompletionChunk({
+class ChatCompletionChunkResult {
+  const ChatCompletionChunkResult({
     required this.id,
     required this.object,
     required this.created,
@@ -162,8 +162,8 @@ class ChatCompletionChunk {
     required this.choices,
   });
 
-  factory ChatCompletionChunk.fromJson(Map<String, dynamic> json) =>
-      _$ChatCompletionChunkFromJson(json);
+  factory ChatCompletionChunkResult.fromJson(Map<String, dynamic> json) =>
+      _$ChatCompletionChunkResultFromJson(json);
 
   final String id;
   final String object;
@@ -171,11 +171,11 @@ class ChatCompletionChunk {
   final String model;
   final List<ChoiceChunk> choices;
 
-  Map<String, dynamic> toJson() => _$ChatCompletionChunkToJson(this);
+  Map<String, dynamic> toJson() => _$ChatCompletionChunkResultToJson(this);
 
   @override
   String toString() =>
-      'ChatCompletionChunk{id: $id, object: $object, created: $created, '
+      'ChatCompletionChunkResult{id: $id, object: $object, created: $created, '
       'model: $model, choices: $choices}';
 }
 

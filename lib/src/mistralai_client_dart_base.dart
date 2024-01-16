@@ -10,17 +10,36 @@ part 'network/request.dart';
 part 'models/mappers.dart';
 
 // FIXME(lgawron): add tests for all requests
-// TODO(lgawron): check all names for consistency and better readability
 // TODO(lgawron): add more documentation
 
+/// Mistral AI Client
 class MistralAIClient {
+  /// Creates a new instance of [MistralAIClient].
+  ///
+  /// [apiKey] is required to authenticate requests.
+  ///
+  /// [baseUrl] is the base url for all requests.
+  ///
+  /// [timeout] is the maximum wait time for response.
+  ///
+  /// [maxRetries] is the maximum number of retries for a single request.
+  /// Client uses [retry.RetryClient] to retry requests.
+  ///
+  /// [apiUrlFactory] allows to override default [MistralAIUrlFactory].
+  /// It can be used to override default paths for requests when Mistral AI API
+  /// changes.
+  ///
+  /// If [apiUrlFactory] is provided then [baseUrl] is ignored.
+  ///
+  /// [client] allows to inject http client.
+  /// If not provided then default http client is used.
+  /// It is used for testing purposes or when you want to use
+  /// custom http client.
   MistralAIClient({
     required this.apiKey,
     this.baseUrl = MistralAPIEndpoints.baseUrl,
     this.timeout = const Duration(seconds: 120),
     this.maxRetries = 5,
-
-    /// if overriten then baseUrl is ignored
     MistraAIUrlFactory? apiUrlFactory,
     http.Client? client,
   })  : _client = client is retry.RetryClient
@@ -56,7 +75,7 @@ class MistralAIClient {
   /// to create chat completions.
   ///
   /// Throws [MistralAIClientException] if the request fails.
-  Future<ChatCompletion> chat(ChatParams params) async => _requestJson(
+  Future<ChatCompletionResult> chat(ChatParams params) async => _requestJson(
         client: _client,
         apiKey: apiKey,
         request: http.Request(
@@ -65,7 +84,7 @@ class MistralAIClient {
         )..body = jsonEncode(
             _mapChatParamsToRequestParams(params, stream: false),
           ),
-        fromJson: ChatCompletion.fromJson,
+        fromJson: ChatCompletionResult.fromJson,
         timeout: timeout,
       );
 
@@ -79,7 +98,8 @@ class MistralAIClient {
   /// to create chat completions.
   ///
   /// Throws [MistralAIClientException] if the request fails.
-  Stream<ChatCompletionChunk> streamChat(ChatParams params) => _streamRequest(
+  Stream<ChatCompletionChunkResult> chatStream(ChatParams params) =>
+      _streamRequest(
         client: _client,
         apiKey: apiKey,
         request: http.Request(
@@ -88,24 +108,25 @@ class MistralAIClient {
         )..body = jsonEncode(
             _mapChatParamsToRequestParams(params, stream: true),
           ),
-        fromJson: ChatCompletionChunk.fromJson,
+        fromJson: ChatCompletionChunkResult.fromJson,
         timeout: timeout,
       );
 
-  /// Returns [Embeddings] for a single input
+  /// Returns [EmbeddingsResult] for a single input
   /// or a batch of inputs given as [EmbeddingParams]
   ///
   /// It uses [embeddings endpoint](https://docs.mistral.ai/api/#operation/createEmbedding) from the Mistral AI API.
   ///
   /// Throws [MistralAIClientException] if request fails.
-  Future<Embeddings> embeddings(EmbeddingParams params) async => _requestJson(
+  Future<EmbeddingsResult> embeddings(EmbeddingParams params) async =>
+      _requestJson(
         client: _client,
         apiKey: apiKey,
         request: http.Request(
           'POST',
           _apiUrlFactory.embeddings(),
         )..body = jsonEncode(params.toJson()),
-        fromJson: Embeddings.fromJson,
+        fromJson: EmbeddingsResult.fromJson,
         timeout: timeout,
       );
 }

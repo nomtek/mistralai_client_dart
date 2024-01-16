@@ -54,8 +54,9 @@ Map<String, dynamic> _$ChatMessageToJson(ChatMessage instance) =>
       'content': instance.content,
     };
 
-ChatCompletion _$ChatCompletionFromJson(Map<String, dynamic> json) =>
-    ChatCompletion(
+ChatCompletionResult _$ChatCompletionResultFromJson(
+        Map<String, dynamic> json) =>
+    ChatCompletionResult(
       id: json['id'] as String,
       object: json['object'] as String,
       created: json['created'] as int,
@@ -66,7 +67,8 @@ ChatCompletion _$ChatCompletionFromJson(Map<String, dynamic> json) =>
       usage: CompletionUsage.fromJson(json['usage'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$ChatCompletionToJson(ChatCompletion instance) =>
+Map<String, dynamic> _$ChatCompletionResultToJson(
+        ChatCompletionResult instance) =>
     <String, dynamic>{
       'id': instance.id,
       'object': instance.object,
@@ -102,8 +104,9 @@ Map<String, dynamic> _$CompletionUsageToJson(CompletionUsage instance) =>
       'total_tokens': instance.totalTokens,
     };
 
-ChatCompletionChunk _$ChatCompletionChunkFromJson(Map<String, dynamic> json) =>
-    ChatCompletionChunk(
+ChatCompletionChunkResult _$ChatCompletionChunkResultFromJson(
+        Map<String, dynamic> json) =>
+    ChatCompletionChunkResult(
       id: json['id'] as String,
       object: json['object'] as String,
       created: json['created'] as int,
@@ -113,8 +116,8 @@ ChatCompletionChunk _$ChatCompletionChunkFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$ChatCompletionChunkToJson(
-        ChatCompletionChunk instance) =>
+Map<String, dynamic> _$ChatCompletionChunkResultToJson(
+        ChatCompletionChunkResult instance) =>
     <String, dynamic>{
       'id': instance.id,
       'object': instance.object,
