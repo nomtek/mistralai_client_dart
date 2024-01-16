@@ -1,9 +1,6 @@
-import 'package:mistralai_client_dart/src/models/chat_completion.dart';
-import 'package:mistralai_client_dart/src/models/chat_params.dart';
+part of '../mistralai_client_dart_base.dart';
 
-// TODO(mgruchala): Add unit tests for this
-
-ChatCompletionParams mapChatParamsToRequestParams(
+ChatCompletionParams _mapChatParamsToRequestParams(
   ChatParams params, {
   required bool stream,
 }) =>

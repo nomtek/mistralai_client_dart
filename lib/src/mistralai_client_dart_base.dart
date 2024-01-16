@@ -7,6 +7,7 @@ import 'package:mistralai_client_dart/src/models/models.dart';
 import 'package:mistralai_client_dart/src/network/url_tools.dart';
 
 part 'network/request.dart';
+part 'models/mappers.dart';
 
 // TODO(lgawron): discuss and implement better error handling
 // FIXME(lgawron): add tests for all requests
@@ -66,7 +67,7 @@ class MistralAIClient {
           'POST',
           _apiUrlFactory.chatCompletions(),
         )..body = jsonEncode(
-            mapChatParamsToRequestParams(params, stream: false),
+            _mapChatParamsToRequestParams(params, stream: false),
           ),
         fromJson: ChatCompletion.fromJson,
         timeout: timeout,
@@ -89,7 +90,7 @@ class MistralAIClient {
           'POST',
           _apiUrlFactory.chatCompletions(),
         )..body = jsonEncode(
-            mapChatParamsToRequestParams(params, stream: true),
+            _mapChatParamsToRequestParams(params, stream: true),
           ),
         fromJson: ChatCompletionChunk.fromJson,
         timeout: timeout,
