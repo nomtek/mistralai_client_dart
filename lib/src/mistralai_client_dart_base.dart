@@ -8,12 +8,10 @@ import 'package:mistralai_client_dart/src/network/url_tools.dart';
 
 part 'network/request.dart';
 
-// FIXME(lgawron): create a common request function for all requests
+// TODO(lgawron): discuss and implement better error handling
 // FIXME(lgawron): add tests for all requests
 // TODO(lgawron): check all names for consistency and better readability
-// TODO(lgawron): discuss and implement better error handling
 // TODO(lgawron): add more documentation
-// TODO(lgawron): move headers to separate class
 
 // TODO(lgawron): Handle Json parsing errors
 // TODO(lgwaron): Create custom client expcetions
@@ -47,10 +45,11 @@ class MistralAIClient {
   ///
   /// It uses [list models endpoint](https://api.mistral.ai/v1/models) from the mistral AI API.
   Future<ListModelsResult> listModels() async => _requestJson(
-        _client,
-        _createHeaders(apiKey: apiKey),
-        http.Request('GET', _apiUrlFactory.listModels()),
-        ListModelsResult.fromJson,
+        client: _client,
+        apiKey: apiKey,
+        request: http.Request('GET', _apiUrlFactory.listModels()),
+        fromJson: ListModelsResult.fromJson,
+        timeout: timeout,
       );
 
   /// Returns a chat completion for given [params].
@@ -61,16 +60,17 @@ class MistralAIClient {
   ///
   /// Throws [MistralAIClientException] if the request fails.
   Future<ChatCompletion> chat(ChatParams params) async => _requestJson(
-        _client,
-        _createHeaders(apiKey: apiKey),
-        http.Request(
+        client: _client,
+        apiKey: apiKey,
+        request: http.Request(
           'POST',
           _apiUrlFactory.chatCompletions(),
         )..body = jsonEncode(
             mapChatParamsToRequestParams(params, stream: false),
           ),
-        ChatCompletion.fromJson,
-      ).timeout(timeout);
+        fromJson: ChatCompletion.fromJson,
+        timeout: timeout,
+      );
 
   /// Returns a stream of chat completion chunks for given [params].
   ///
@@ -82,46 +82,18 @@ class MistralAIClient {
   /// to create chat completions.
   ///
   /// Throws [MistralAIClientException] if the request fails.
-  Stream<ChatCompletionChunk> streamChat(ChatParams params) async* {
-    try {
-      final headers = {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $apiKey',
-      };
-
-      // TODO(lgawron): to add tests for this method we need to mock http client
-      // cleanup in https://github.com/nomtek/mistralai_client_dart/issues/13
-      final request = http.Request('POST', _apiUrlFactory.chatCompletions())
-        ..headers.addAll(headers)
-        ..body = jsonEncode(
-          mapChatParamsToRequestParams(params, stream: true),
-        );
-      // use send instead of post to be able to read stream response
-      final response = await _client.send(request).timeout(timeout);
-
-      final responseStream = response.stream.transform(utf8.decoder);
-      const dataPrefix = 'data: ';
-      await for (final chunk in responseStream) {
-        for (final chunkLine in chunk.split('\n')) {
-          // we are only interested with lines starting with dataPrefix
-          if (chunkLine.startsWith(dataPrefix)) {
-            // skip dataPrefix and check data
-            final dataContent = chunkLine.substring(dataPrefix.length).trim();
-            // check if data stream is not done
-            if (dataContent != '[DONE]') {
-              // assume that data is json
-              yield ChatCompletionChunk.fromJson(
-                jsonDecode(dataContent) as Map<String, dynamic>,
-              );
-            }
-          }
-        }
-      }
-    } catch (e) {
-      throw MistralAIClientException('Error while streaming chat: $e');
-    }
-  }
+  Stream<ChatCompletionChunk> streamChat(ChatParams params) => _streamRequest(
+        client: _client,
+        apiKey: apiKey,
+        request: http.Request(
+          'POST',
+          _apiUrlFactory.chatCompletions(),
+        )..body = jsonEncode(
+            mapChatParamsToRequestParams(params, stream: true),
+          ),
+        fromJson: ChatCompletionChunk.fromJson,
+        timeout: timeout,
+      );
 
   /// Returns [Embeddings] for a single input
   /// or a batch of inputs given as [EmbeddingParams]
@@ -130,12 +102,13 @@ class MistralAIClient {
   ///
   /// Throws [MistralAIClientException] if request fails.
   Future<Embeddings> embeddings(EmbeddingParams params) async => _requestJson(
-        _client,
-        _createHeaders(apiKey: apiKey),
-        http.Request(
+        client: _client,
+        apiKey: apiKey,
+        request: http.Request(
           'POST',
           _apiUrlFactory.embeddings(),
         )..body = jsonEncode(params.toJson()),
-        Embeddings.fromJson,
-      ).timeout(timeout);
+        fromJson: Embeddings.fromJson,
+        timeout: timeout,
+      );
 }
