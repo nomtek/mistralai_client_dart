@@ -15,6 +15,9 @@ part 'network/request.dart';
 // TODO(lgawron): add more documentation
 // TODO(lgawron): move headers to separate class
 
+// TODO(lgawron): Handle Json parsing errors
+// TODO(lgwaron): Create custom client expcetions
+
 class MistralAIClient {
   MistralAIClient({
     required this.apiKey,
@@ -57,41 +60,17 @@ class MistralAIClient {
   /// to create chat completions.
   ///
   /// Throws [MistralAIClientException] if the request fails.
-  Future<ChatCompletion> chat(ChatParams params) async {
-    final headers = {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $apiKey',
-    };
-
-    // TODO(lgawron): to add tests for this method we need to mock http client
-    // cleanup in https://github.com/nomtek/mistralai_client_dart/issues/13
-    final response = await _client
-        .post(
+  Future<ChatCompletion> chat(ChatParams params) async => _requestJson(
+        _client,
+        _createHeaders(apiKey: apiKey),
+        http.Request(
+          'POST',
           _apiUrlFactory.chatCompletions(),
-          body: jsonEncode(
+        )..body = jsonEncode(
             _mapChatParamsToRequestParams(params, stream: false),
           ),
-          headers: headers,
-        )
-        .timeout(timeout);
-
-    // at the moment API docs are only telling about 200 status code
-    // no other status codes are mentioned or any specific errors
-    if (response.statusCode == 200) {
-      return ChatCompletion.fromJson(
-        jsonDecode(response.body) as Map<String, dynamic>,
-      );
-    } else {
-      // TODO(lgawron): Handle Json parsing errors
-      // TODO(lgwaron): Create custom client expcetions
-      // cleanup in https://github.com/nomtek/mistralai_client_dart/issues/13
-      throw MistralAIClientException(
-        'HTTP error! status: ${response.statusCode} '
-        'Response: \n${response.body}',
-      );
-    }
-  }
+        ChatCompletion.fromJson,
+      ).timeout(timeout);
 
   /// Returns a stream of chat completion chunks for given [params].
   ///
