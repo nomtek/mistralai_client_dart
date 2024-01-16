@@ -33,7 +33,6 @@ Future<T> _requestJson<T>({
   }
 }
 
-// TODO(lgawron): implement stream request
 Stream<T> _streamRequest<T>({
   required http.Client client,
   required String apiKey,
