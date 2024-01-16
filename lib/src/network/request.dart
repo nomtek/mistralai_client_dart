@@ -43,6 +43,13 @@ Stream<T> _streamRequest<T>({
   try {
     request.headers.addAll(_createHeaders(apiKey: apiKey));
     final response = await client.send(request).timeout(timeout);
+
+    if (response.statusCode != 200) {
+      throw MistralAIClientException(
+        'Request $request failed with status code: ${response.statusCode}',
+      );
+    }
+
     final responseStream = response.stream.transform(utf8.decoder);
     const dataPrefix = 'data: ';
     await for (final chunk in responseStream) {

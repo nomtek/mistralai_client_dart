@@ -9,13 +9,9 @@ import 'package:mistralai_client_dart/src/network/url_tools.dart';
 part 'network/request.dart';
 part 'models/mappers.dart';
 
-// TODO(lgawron): discuss and implement better error handling
 // FIXME(lgawron): add tests for all requests
 // TODO(lgawron): check all names for consistency and better readability
 // TODO(lgawron): add more documentation
-
-// TODO(lgawron): Handle Json parsing errors
-// TODO(lgwaron): Create custom client expcetions
 
 class MistralAIClient {
   MistralAIClient({
