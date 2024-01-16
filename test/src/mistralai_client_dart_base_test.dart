@@ -1,8 +1,7 @@
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
 import 'package:mistralai_client_dart/mistralai_client_dart.dart';
 import 'package:test/test.dart';
+
+import 'test_utils.dart';
 
 void main() {
   group('MistralAIClient listModels tests', () {
@@ -10,7 +9,8 @@ void main() {
         () async {
       // given
       final mockHttpClient = FakeHttpJsonResponseClient(
-          responseBody: SampleResponseData.listModels);
+        responseBody: _SampleListModelsResponseData.listModels,
+      );
       final mistralClient = MistralAIClient(
         apiKey: 'apiKey',
         baseUrl: 'baseUrl',
@@ -30,7 +30,8 @@ void main() {
         'then return MistralAIClientException', () async {
       // given
       final mockHttpClient = FakeHttpJsonResponseClient(
-          responseBody: SampleResponseData.listModelsInvalidResponse);
+        responseBody: _SampleListModelsResponseData.listModelsInvalidResponse,
+      );
       final mistralClient = MistralAIClient(
         apiKey: 'apiKey',
         baseUrl: 'baseUrl',
@@ -51,7 +52,8 @@ void main() {
         () async {
       // given
       final mockHttpClient = FakeHttpJsonResponseClient(
-          responseBody: SampleResponseData.listModelsMalformed);
+        responseBody: _SampleListModelsResponseData.listModelsMalformed,
+      );
       final mistralClient = MistralAIClient(
         apiKey: 'apiKey',
         baseUrl: 'baseUrl',
@@ -105,7 +107,7 @@ void main() {
         'then authentification header should be set', () async {
       // given
       final mockHttpClient = FakeHttpJsonResponseClient(
-        responseBody: SampleResponseData.listModels,
+        responseBody: _SampleListModelsResponseData.listModels,
       );
       const apiKey = 'apiKey';
       final mistralClient = MistralAIClient(
@@ -135,7 +137,7 @@ void main() {
       () {
         // given
         final mockHttpClient = FakeHttpJsonResponseClient(
-          responseBody: SampleResponseData.listModels,
+          responseBody: _SampleListModelsResponseData.listModels,
           httpStatusCode: 500,
         );
         final mistralClient = MistralAIClient(
@@ -158,7 +160,7 @@ void main() {
       () async {
         // given
         final mockHttpClient = FakeHttpJsonResponseClient(
-          responseBody: SampleResponseData.listModels,
+          responseBody: _SampleListModelsResponseData.listModels,
         );
         const baseUrl = 'baseUrl';
         final mistralClient = MistralAIClient(
@@ -181,62 +183,7 @@ void main() {
   });
 }
 
-class FakeHttpJsonResponseClient with http.BaseClient {
-  FakeHttpJsonResponseClient({
-    this.responseBody = '{}',
-    this.httpStatusCode = 200,
-  });
-
-  final String responseBody;
-  final int httpStatusCode;
-
-  http.BaseRequest get request => _request;
-
-  late http.BaseRequest _request;
-
-  @override
-  Future<http.StreamedResponse> send(http.BaseRequest request) {
-    _request = request;
-    return Future.value(
-      http.StreamedResponse(
-        http.ByteStream.fromBytes(
-          utf8.encode(responseBody),
-        ),
-        httpStatusCode,
-        headers: {
-          'content-type': 'application/json',
-        },
-        request: request,
-      ),
-    );
-  }
-}
-
-class FakeDelayedHttpClient with http.BaseClient {
-  const FakeDelayedHttpClient({
-    this.delay = const Duration(milliseconds: 3),
-  });
-
-  final Duration delay;
-
-  @override
-  Future<http.StreamedResponse> send(http.BaseRequest request) =>
-      Future.delayed(
-        delay,
-        () => http.StreamedResponse(
-          http.ByteStream.fromBytes(
-            utf8.encode('{}'),
-          ),
-          200,
-          headers: {
-            'content-type': 'application/json',
-          },
-          request: request,
-        ),
-      );
-}
-
-class SampleResponseData {
+class _SampleListModelsResponseData {
   static const String listModels = '''
  {
   "object": "string",
