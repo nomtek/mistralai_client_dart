@@ -123,17 +123,61 @@ void main() {
       expect(
         headers,
         contains(authHeaderName),
-        reason:
-            'should contain $authHeaderName header '
+        reason: 'should contain $authHeaderName header '
             'but was ${mockHttpClient.request.headers}',
       );
       expect(headers[authHeaderName], contains('Bearer $apiKey'));
     });
 
-    // test for MistralAIClientException if response status code is 500
-    // test if urls are from url factory
+    test(
+      'given API request has 500 status code  when listModels is called '
+      'then return MistralAIClientException',
+      () {
+        // given
+        final mockHttpClient = FakeHttpJsonResponseClient(
+          responseBody: SampleResponseData.listModels,
+          httpStatusCode: 500,
+        );
+        final mistralClient = MistralAIClient(
+          apiKey: 'apiKey',
+          baseUrl: 'baseUrl',
+          client: mockHttpClient,
+        );
 
+        // when/then
+        expect(
+          mistralClient.listModels,
+          throwsA(isA<MistralAIClientException>()),
+        );
+      },
+    );
 
+    test(
+      'given default url factory when list models is called '
+      'then request url should be from url factory',
+      () async {
+        // given
+        final mockHttpClient = FakeHttpJsonResponseClient(
+          responseBody: SampleResponseData.listModels,
+        );
+        const baseUrl = 'baseUrl';
+        final mistralClient = MistralAIClient(
+          apiKey: 'apiKey',
+          baseUrl: baseUrl,
+          client: mockHttpClient,
+        );
+
+        // when
+        await mistralClient.listModels();
+
+        // then
+        final requestUrl = mockHttpClient.request.url;
+        expect(
+          requestUrl,
+          equals(Uri.parse('$baseUrl${MistralAPIEndpoints.listModels}')),
+        );
+      },
+    );
   });
 }
 
