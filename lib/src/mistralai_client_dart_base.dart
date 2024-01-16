@@ -67,7 +67,7 @@ class MistralAIClient {
           'POST',
           _apiUrlFactory.chatCompletions(),
         )..body = jsonEncode(
-            _mapChatParamsToRequestParams(params, stream: false),
+            mapChatParamsToRequestParams(params, stream: false),
           ),
         ChatCompletion.fromJson,
       ).timeout(timeout);
@@ -95,7 +95,7 @@ class MistralAIClient {
       final request = http.Request('POST', _apiUrlFactory.chatCompletions())
         ..headers.addAll(headers)
         ..body = jsonEncode(
-          _mapChatParamsToRequestParams(params, stream: true),
+          mapChatParamsToRequestParams(params, stream: true),
         );
       // use send instead of post to be able to read stream response
       final response = await _client.send(request).timeout(timeout);
@@ -122,21 +122,6 @@ class MistralAIClient {
       throw MistralAIClientException('Error while streaming chat: $e');
     }
   }
-
-  ChatCompletionParams _mapChatParamsToRequestParams(
-    ChatParams params, {
-    required bool stream,
-  }) =>
-      ChatCompletionParams(
-        model: params.model,
-        messages: params.messages,
-        temperature: params.temperature,
-        topP: params.topP,
-        maxTokens: params.maxTokens,
-        stream: stream,
-        safeMode: params.safeMode,
-        randomSeed: params.randomSeed,
-      );
 
   /// Returns [Embeddings] for a single input
   /// or a batch of inputs given as [EmbeddingParams]
