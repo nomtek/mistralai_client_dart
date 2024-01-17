@@ -19,7 +19,6 @@ class FakeHttpJsonResponseClient with http.BaseClient {
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
     // capture request body and decode it to json
     _requestBody = await _getJsonRequestBody(request);
-
     _request = request;
     return Future.value(
       http.StreamedResponse(
@@ -38,8 +37,6 @@ class FakeHttpJsonResponseClient with http.BaseClient {
   Future<Map<String, dynamic>> _getJsonRequestBody(
     http.BaseRequest request,
   ) async {
-    // return jsonDecode(await request.finalize().bytesToString())
-    // as Map<String, dynamic>;
     final requestBytesStream = request.finalize();
     final requestBodyString = await requestBytesStream.bytesToString();
     if (requestBodyString.isEmpty) {
@@ -49,6 +46,28 @@ class FakeHttpJsonResponseClient with http.BaseClient {
         jsonDecode(requestBodyString) as Map<String, dynamic>;
     return requestBodyJson;
   }
+}
+
+/// A fake HTTP client that returns a [http.StreamedResponse] with a
+/// [http.ByteStream] that emits the given [responseChunks] in order.
+class FakeStreamedResponseHttpClient with http.BaseClient {
+  const FakeStreamedResponseHttpClient({
+    this.responseChunks = const [''],
+    this.httpStatusCode = 200,
+  });
+
+  final List<String> responseChunks;
+  final int httpStatusCode;
+
+  @override
+  Future<http.StreamedResponse> send(http.BaseRequest request) => Future.value(
+        http.StreamedResponse(
+          Stream.fromIterable(responseChunks.map(utf8.encode)),
+          httpStatusCode,
+          headers: {'content-type': 'application/json'},
+          request: request,
+        ),
+      );
 }
 
 class FakeDelayedHttpClient with http.BaseClient {
