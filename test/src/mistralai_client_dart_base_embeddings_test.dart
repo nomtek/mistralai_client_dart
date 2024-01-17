@@ -45,63 +45,25 @@ void main() {
     );
 
     test(
-        'given API returns wrong JSON when embeddings is called '
-        'then return MistralAIClientException', () async {
-      // given
-      final mockHttpClient = FakeHttpJsonResponseClient(
-        responseBody: _SampleEmbeddingsData.embeddingsInvalidResponse,
-      );
-      final mistralClient = MistralAIClient(
-        apiKey: 'apiKey',
-        baseUrl: 'baseUrl',
-        timeout: const Duration(milliseconds: 500),
-        client: mockHttpClient,
-      );
-
-      // when/then
-      expect(
-        mistralClient.embeddings(
-          EmbeddingParams.fromJson(
-            jsonDecode(_SampleEmbeddingsData.embeddingsParams)
-                as Map<String, dynamic>,
-          ),
-        ),
-        throwsA(isA<MistralAIClientException>()),
+        'given API returns invalid JSON when embeddings is called '
+        'then return MistralAIClientException', () {
+      testIfExceptionIsThrown(
+        apiJsonResponseBody: _SampleEmbeddingsData.embeddingsInvalidResponse,
+        clientRequest: (client) => client.embeddings(embeddingParamsOf()),
       );
     });
 
     test(
-        'given API returns malformed JSON when embeddings is called '
-        'then return MistralAIClientException with FormatException inside',
-        () async {
-      // given
-      final mockHttpClient = FakeHttpJsonResponseClient(
-        responseBody: _SampleEmbeddingsData.embeddingsMalformeddResponse,
-      );
-      final mistralClient = MistralAIClient(
-        apiKey: 'apiKey',
-        baseUrl: 'baseUrl',
-        timeout: const Duration(milliseconds: 500),
-        client: mockHttpClient,
-      );
-
-      // when/then
-      expect(
-        mistralClient.embeddings(
-          EmbeddingParams.fromJson(
-            jsonDecode(_SampleEmbeddingsData.embeddingsParams)
-                as Map<String, dynamic>,
-          ),
-        ),
-        throwsA(
-          isA<MistralAIClientException>().having(
-            (p0) => p0.message,
-            'should contain FormatException',
-            contains('FormatException'),
-          ),
-        ),
-      );
-    });
+      'given API returns malformed JSON when embeddings is called '
+      'then return MistralAIClientException with FormatException inside',
+      () {
+        testIfFormatExceptionIsThrown(
+          apiJsonResponseBody:
+              _SampleEmbeddingsData.embeddingsMalformeddResponse,
+          clientRequest: (client) => client.embeddings(embeddingParamsOf()),
+        );
+      },
+    );
 
     test(
         'given API times out when embeddings is called '

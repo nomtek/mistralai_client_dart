@@ -17,52 +17,25 @@ void main() {
 
     test(
         'given API returns wrong JSON when listModels is called '
-        'then return MistralAIClientException', () async {
-      // given
-      final mockHttpClient = FakeHttpJsonResponseClient(
-        responseBody: _SampleListModelsResponseData.listModelsInvalidResponse,
-      );
-      final mistralClient = MistralAIClient(
-        apiKey: 'apiKey',
-        baseUrl: 'baseUrl',
-        timeout: const Duration(milliseconds: 500),
-        client: mockHttpClient,
-      );
-
-      // when/then
-      expect(
-        mistralClient.listModels,
-        throwsA(isA<MistralAIClientException>()),
+        'then return MistralAIClientException', () {
+      testIfExceptionIsThrown(
+        apiJsonResponseBody:
+            _SampleListModelsResponseData.listModelsInvalidResponse,
+        clientRequest: (client) => client.listModels(),
       );
     });
 
     test(
-        'given API returns malformed JSON when listModels is called '
-        'then return MistralAIClientException with FormatException inside',
-        () async {
-      // given
-      final mockHttpClient = FakeHttpJsonResponseClient(
-        responseBody: _SampleListModelsResponseData.listModelsMalformed,
-      );
-      final mistralClient = MistralAIClient(
-        apiKey: 'apiKey',
-        baseUrl: 'baseUrl',
-        timeout: const Duration(milliseconds: 500),
-        client: mockHttpClient,
-      );
-
-      // when/then
-      expect(
-        mistralClient.listModels,
-        throwsA(
-          isA<MistralAIClientException>().having(
-            (p0) => p0.message,
-            'should contain FormatException',
-            contains('FormatException'),
-          ),
-        ),
-      );
-    });
+      'given API returns malformed JSON when listModels is called '
+      'then return MistralAIClientException with FormatException inside',
+      () {
+        testIfFormatExceptionIsThrown(
+          apiJsonResponseBody:
+              _SampleListModelsResponseData.listModelsMalformed,
+          clientRequest: (client) => client.listModels(),
+        );
+      },
+    );
 
     test(
         'given API times out when listModels is called '
