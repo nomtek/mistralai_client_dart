@@ -1,28 +1,18 @@
 import 'package:mistralai_client_dart/mistralai_client_dart.dart';
 import 'package:test/test.dart';
 
-import 'test_utils.dart';
+import 'common_tests.dart';
+import 'fakes.dart';
 
 void main() {
   group('MistralAIClient listModels tests', () {
-    test('given client when listModels is called then return ListModelsResult',
-        () async {
-      // given
-      final mockHttpClient = FakeHttpJsonResponseClient(
-        responseBody: _SampleListModelsResponseData.listModels,
+    test(
+        'given valid response '
+        'when listModels is called then return ListModelsResult', () {
+      testResponseType(
+        apiJsonResponseBody: _SampleListModelsResponseData.listModels,
+        clientRequest: (client) => client.listModels(),
       );
-      final mistralClient = MistralAIClient(
-        apiKey: 'apiKey',
-        baseUrl: 'baseUrl',
-        timeout: const Duration(milliseconds: 500),
-        client: mockHttpClient,
-      );
-
-      // when
-      final result = await mistralClient.listModels();
-
-      // then
-      expect(result, isA<ListModelsResult>());
     });
 
     test(

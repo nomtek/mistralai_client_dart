@@ -3,33 +3,18 @@ import 'dart:convert';
 import 'package:mistralai_client_dart/mistralai_client_dart.dart';
 import 'package:test/test.dart';
 
-import 'test_utils.dart';
+import 'common_tests.dart';
+import 'fakes.dart';
 
 void main() {
   group('MistralAIClient embeddings test', () {
-    test('given client when embeddings is called then return EmbeddingsResult',
-        () async {
-      // given
-      final mockHttpClient = FakeHttpJsonResponseClient(
-        responseBody: _SampleEmbeddingsData.embeddingsResponse,
+    test(
+        'given valid response '
+        'when embeddings is called then return EmbeddingsResult', () {
+      testResponseType<EmbeddingsResult>(
+        apiJsonResponseBody: _SampleEmbeddingsData.embeddingsResponse,
+        clientRequest: (client) => client.embeddings(embeddingParamsOf()),
       );
-      final mistralClient = MistralAIClient(
-        apiKey: 'apiKey',
-        baseUrl: 'baseUrl',
-        timeout: const Duration(milliseconds: 500),
-        client: mockHttpClient,
-      );
-
-      // when
-      final result = await mistralClient.embeddings(
-        EmbeddingParams.fromJson(
-          jsonDecode(_SampleEmbeddingsData.embeddingsParams)
-              as Map<String, dynamic>,
-        ),
-      );
-
-      // then
-      expect(result, isA<EmbeddingsResult>());
     });
 
     test(
@@ -259,3 +244,14 @@ class _SampleEmbeddingsData {
 }
 ''';
 }
+
+EmbeddingParams embeddingParamsOf({
+  String model = 'mistral-embed',
+  List<String> input = const ['Hello', 'world'],
+  String encodingFormat = 'float',
+}) =>
+    EmbeddingParams(
+      model: model,
+      input: input,
+      encodingFormat: encodingFormat,
+    );

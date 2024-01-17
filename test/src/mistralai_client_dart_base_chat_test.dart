@@ -1,9 +1,20 @@
 import 'package:mistralai_client_dart/mistralai_client_dart.dart';
 import 'package:test/test.dart';
 
-import 'test_utils.dart';
+import 'common_tests.dart';
+import 'fakes.dart';
+import 'models/chat_params_test.dart';
 
 void main() {
+  test(
+      'given valid response '
+      'when chat is called then return ChatCompletionResult', () {
+    testResponseType<ChatCompletionResult>(
+      apiJsonResponseBody: chatCompletionResultJsonString,
+      clientRequest: (client) => client.chat(chatParamsOf()),
+    );
+  });
+
   // TODO(lgawron): fix asserts in test
   test('check body params', () async {
     // given

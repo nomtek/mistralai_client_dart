@@ -37,28 +37,18 @@ class FakeHttpJsonResponseClient with http.BaseClient {
 
   Future<Map<String, dynamic>> _getJsonRequestBody(
     http.BaseRequest request,
-  ) async => jsonDecode(await request.finalize().bytesToString())
-        as Map<String, dynamic>;
-}
-
-/// Returns a copy of [original] with the given [body].
-http.StreamedRequest _copyRequest(
-  http.BaseRequest original,
-  Stream<List<int>> body,
-) {
-  final request = http.StreamedRequest(original.method, original.url)
-    ..contentLength = original.contentLength
-    ..followRedirects = original.followRedirects
-    ..headers.addAll(original.headers)
-    ..maxRedirects = original.maxRedirects
-    ..persistentConnection = original.persistentConnection;
-
-  body.listen(request.sink.add,
-      onError: request.sink.addError,
-      onDone: request.sink.close,
-      cancelOnError: true);
-
-  return request;
+  ) async {
+    // return jsonDecode(await request.finalize().bytesToString())
+    // as Map<String, dynamic>;
+    final requestBytesStream = request.finalize();
+    final requestBodyString = await requestBytesStream.bytesToString();
+    if (requestBodyString.isEmpty) {
+      return {};
+    }
+    final requestBodyJson =
+        jsonDecode(requestBodyString) as Map<String, dynamic>;
+    return requestBodyJson;
+  }
 }
 
 class FakeDelayedHttpClient with http.BaseClient {
