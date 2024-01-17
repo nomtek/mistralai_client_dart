@@ -33,37 +33,32 @@ void main() {
       expect(result, isA<EmbeddingsResult>());
     });
 
-    // test(
-    //   'given embeddings params as JSON when embeddings is called '
-    //   'then proper body is sent',
-    //   () async {
-    //     // given
-    //     final mockHttpClient = FakeHttpJsonResponseClient(
-    //       responseBody: _SampleEmbeddingsData.embeddings,
-    //     );
-    //     final mistralClient = MistralAIClient(
-    //       apiKey: 'apiKey',
-    //       baseUrl: 'baseUrl',
-    //       timeout: const Duration(milliseconds: 500),
-    //       client: mockHttpClient,
-    //     );
+    test(
+      'given embeddings params as JSON when embeddings is called '
+      'then proper request body is sent',
+      () async {
+        // given
+        final mockHttpClient = FakeHttpJsonResponseClient(
+          responseBody: _SampleEmbeddingsData.embeddingsResponse,
+        );
+        final mistralClient = MistralAIClient(
+          apiKey: 'apiKey',
+          baseUrl: 'baseUrl',
+          timeout: const Duration(milliseconds: 500),
+          client: mockHttpClient,
+        );
+        final embeddingJsonParams =
+            jsonDecode(_SampleEmbeddingsData.embeddingsParams)
+                as Map<String, dynamic>;
+        final embeddingParams = EmbeddingParams.fromJson(embeddingJsonParams);
 
-    //     // when
-    //     final result =  await mistralClient.embeddings(
-    //       EmbeddingParams.fromJson(
-    //         jsonDecode(_SampleEmbeddingsData.embeddingsParams)
-    //             as Map<String, dynamic>,
-    //       ),
-    //     );
+        // when
+        await mistralClient.embeddings(embeddingParams);
 
-    //     //then
-    //     expect(
-    //       mockHttpClient.request,
-    //       isA<http.StreamedRequest>(),
-    //     );
-    //     final streamedRequest = mockHttpClient.request as http.StreamedRequest;
-    //   },
-    // );
+        //then
+        expect(mockHttpClient.requestBody, embeddingJsonParams);
+      },
+    );
 
     test(
         'given API returns wrong JSON when embeddings is called '
@@ -124,7 +119,7 @@ void main() {
       );
     });
 
-     test(
+    test(
         'given API times out when embeddings is called '
         'then return MistralAIClientException with Timeout in message',
         () async {
