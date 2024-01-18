@@ -58,14 +58,14 @@ void main() {
         chatParams: chatParamsOf(maxTokens: 10),
       ),
       (
-        expectedParamName: 'safe_mode',
+        expectedParamName: 'safe_prompt',
         expectedParamValue: true,
-        chatParams: chatParamsOf(safeMode: true),
+        chatParams: chatParamsOf(safePrompt: true),
       ),
       (
-        expectedParamName: 'safe_mode',
+        expectedParamName: 'safe_prompt',
         expectedParamValue: false,
-        chatParams: chatParamsOf(safeMode: false),
+        chatParams: chatParamsOf(safePrompt: false),
       ),
       (
         expectedParamName: 'random_seed',
