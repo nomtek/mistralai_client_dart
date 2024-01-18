@@ -1,3 +1,5 @@
+// ignore: lines_longer_than_80_chars
+// ignore: lines_longer_than_80_chars
 import 'package:http/http.dart' as http;
 import 'package:mistralai_client_dart/mistralai_client_dart.dart';
 import 'package:test/test.dart';
@@ -16,7 +18,8 @@ MistralAIClient _prepareMistralClient({
   }
   if (apiJsonResponseBody != null && httpClient != null) {
     throw Exception(
-        'only apiJsonResponseBody or only httpClient must not be null');
+      'only apiJsonResponseBody or only httpClient must not be null',
+    );
   }
   return MistralAIClient(
     apiKey: apiKey,
@@ -27,6 +30,7 @@ MistralAIClient _prepareMistralClient({
   );
 }
 
+// ignore: lines_longer_than_80_chars
 // TODO(mgruchala): we use this function in one test only, maybe we can remove it?
 // version of test where we expect result to be returned
 // resultMatcher should check for result, most likely using isA
@@ -135,7 +139,7 @@ dynamic testIfFormatExceptionIsThrown<T>({
     );
 
 /// Tests that TimeoutException is thrown when API request times out
-/// 
+///
 /// [clientRequest] - function that calls API method
 dynamic testIfTimeoutExceptionIsThrown<T>({
   required Future<T> Function(MistralAIClient client) clientRequest,
@@ -155,9 +159,9 @@ dynamic testIfTimeoutExceptionIsThrown<T>({
     );
 
 /// Tests that API key is set in request header
-/// 
+///
 /// [apiJsonResponseBody] - json string representing API response
-/// 
+///
 /// [clientRequest] - function that calls API method
 dynamic testIfAuthenricationHeaderIsSet<T>({
   required String apiJsonResponseBody,
@@ -189,11 +193,11 @@ dynamic testIfAuthenricationHeaderIsSet<T>({
 }
 
 /// Tests that request url is correct
-/// 
+///
 /// [apiJsonResponseBody] - json string representing API response
-/// 
+///
 /// [clientRequest] - function that calls API method
-/// 
+///
 /// [requestEndpoint] - endpoint that should be called
 dynamic testIfRequestUrlIsCorrect<T>({
   required String apiJsonResponseBody,
@@ -224,11 +228,11 @@ dynamic testIfRequestUrlIsCorrect<T>({
 }
 
 /// Tests that request body params are correct
-/// 
+///
 /// [apiJsonResponseBody] - json string representing API response
-/// 
+///
 /// [clientRequest] - function that calls API method
-/// 
+///
 /// [bodyParams] - body params that should be sent
 dynamic testIfProperBodyParamsAreSent<T>({
   required String apiJsonResponseBody,
