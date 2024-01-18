@@ -7,8 +7,8 @@ class MistralAPIEndpoints {
   static const String baseUrl = 'https://api.mistral.ai';
 }
 
-class MistraAIUrlFactory {
-  MistraAIUrlFactory({
+class MistralAIUrlFactory {
+  MistralAIUrlFactory({
     String baseUrl = MistralAPIEndpoints.baseUrl,
     String listModelsPath = MistralAPIEndpoints.listModels,
     String embeddingsPath = MistralAPIEndpoints.embeddings,

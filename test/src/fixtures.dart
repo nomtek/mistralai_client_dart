@@ -9,7 +9,7 @@ MistralAIClient mistralAIClientOf({
   String baseUrl = MistralAPIEndpoints.baseUrl,
   Duration timeout = const Duration(milliseconds: 500),
   int maxRetries = 5,
-  MistraAIUrlFactory? apiUrlFactory,
+  MistralAIUrlFactory? apiUrlFactory,
 }) =>
     MistralAIClient(
       apiKey: apiKey,

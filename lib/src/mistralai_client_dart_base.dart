@@ -40,7 +40,7 @@ class MistralAIClient {
     this.baseUrl = MistralAPIEndpoints.baseUrl,
     this.timeout = const Duration(seconds: 120),
     this.maxRetries = 5,
-    MistraAIUrlFactory? apiUrlFactory,
+    MistralAIUrlFactory? apiUrlFactory,
     http.Client? client,
   })  : _client = client is retry.RetryClient
             ? client
@@ -48,13 +48,13 @@ class MistralAIClient {
                 client ?? http.Client(),
                 retries: maxRetries,
               ),
-        _apiUrlFactory = apiUrlFactory ?? MistraAIUrlFactory(baseUrl: baseUrl);
+        _apiUrlFactory = apiUrlFactory ?? MistralAIUrlFactory(baseUrl: baseUrl);
 
   final String apiKey;
   final String baseUrl;
   final Duration timeout;
   final int maxRetries;
-  final MistraAIUrlFactory _apiUrlFactory;
+  final MistralAIUrlFactory _apiUrlFactory;
   final http.Client _client;
 
   /// Returns a list of the available models [ListModelsResult]

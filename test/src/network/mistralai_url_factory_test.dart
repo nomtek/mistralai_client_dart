@@ -6,63 +6,63 @@ void main() {
       () {
     test('with empty baseUrl', () {
       expect(
-        () => MistraAIUrlFactory(baseUrl: ''),
+        () => MistralAIUrlFactory(baseUrl: ''),
         throwsA(isA<AssertionError>()),
       );
     });
 
     test('baseUrl must not end with "/"', () {
       expect(
-        () => MistraAIUrlFactory(baseUrl: 'https://api.mistral.ai/'),
+        () => MistralAIUrlFactory(baseUrl: 'https://api.mistral.ai/'),
         throwsA(isA<AssertionError>()),
       );
     });
 
     test('with empty embedingsPath', () {
       expect(
-        () => MistraAIUrlFactory(embeddingsPath: ''),
+        () => MistralAIUrlFactory(embeddingsPath: ''),
         throwsA(isA<AssertionError>()),
       );
     });
 
     test('with embedingsPath not starting with "/"', () {
       expect(
-        () => MistraAIUrlFactory(embeddingsPath: 'v1/embeddings'),
+        () => MistralAIUrlFactory(embeddingsPath: 'v1/embeddings'),
         throwsA(isA<AssertionError>()),
       );
     });
 
     test('with empty chatCompletionsPath', () {
       expect(
-        () => MistraAIUrlFactory(chatCompletionsPath: ''),
+        () => MistralAIUrlFactory(chatCompletionsPath: ''),
         throwsA(isA<AssertionError>()),
       );
     });
 
     test('with chatCompletionsPath not starting with "/"', () {
       expect(
-        () => MistraAIUrlFactory(embeddingsPath: 'v1/chat/completions'),
+        () => MistralAIUrlFactory(embeddingsPath: 'v1/chat/completions'),
         throwsA(isA<AssertionError>()),
       );
     });
 
     test('with empty listModelsPath', () {
       expect(
-        () => MistraAIUrlFactory(listModelsPath: ''),
+        () => MistralAIUrlFactory(listModelsPath: ''),
         throwsA(isA<AssertionError>()),
       );
     });
 
     test('with listModelsPath not starting with "/"', () {
       expect(
-        () => MistraAIUrlFactory(embeddingsPath: 'v1/listModels'),
+        () => MistralAIUrlFactory(embeddingsPath: 'v1/listModels'),
         throwsA(isA<AssertionError>()),
       );
     });
   });
 
   test('create listModels default uri', () {
-    final factory = MistraAIUrlFactory();
+    final factory = MistralAIUrlFactory();
     expect(
       factory.listModels(),
       Uri.parse('https://api.mistral.ai/v1/models'),
@@ -70,7 +70,7 @@ void main() {
   });
 
   test('create embeddings default uri', () {
-    final factory = MistraAIUrlFactory();
+    final factory = MistralAIUrlFactory();
     expect(
       factory.embeddings(),
       Uri.parse('https://api.mistral.ai/v1/embeddings'),
@@ -78,7 +78,7 @@ void main() {
   });
 
   test('create chatCompletions default uri', () {
-    final factory = MistraAIUrlFactory();
+    final factory = MistralAIUrlFactory();
     expect(
       factory.chatCompletions(),
       Uri.parse('https://api.mistral.ai/v1/chat/completions'),
@@ -86,7 +86,7 @@ void main() {
   });
 
   test('create listModels custom uri', () {
-    final factory = MistraAIUrlFactory(
+    final factory = MistralAIUrlFactory(
       baseUrl: 'https://nomtek.api.mistral.ai',
       listModelsPath: '/custom-list-models',
     );
@@ -97,7 +97,7 @@ void main() {
   });
 
   test('create embeddings custom uri', () {
-    final factory = MistraAIUrlFactory(
+    final factory = MistralAIUrlFactory(
       baseUrl: 'https://nomtek.api.mistral.ai',
       embeddingsPath: '/custom-embeddings',
     );
@@ -108,7 +108,7 @@ void main() {
   });
 
   test('create chatCompletions custom uri', () {
-    final factory = MistraAIUrlFactory(
+    final factory = MistralAIUrlFactory(
       baseUrl: 'https://nomtek.api.mistral.ai',
       chatCompletionsPath: '/custom-chat-completions',
     );
