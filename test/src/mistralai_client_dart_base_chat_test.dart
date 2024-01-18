@@ -118,9 +118,7 @@ void main() {
           );
 
           // when
-          // wait for first result to be emitted
-          await mistralAIClientOf(client: mockHttpClient)
-              .chat(chatParams);
+          await mistralAIClientOf(client: mockHttpClient).chat(chatParams);
 
           // then
           expect(
