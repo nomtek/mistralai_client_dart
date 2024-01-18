@@ -10,7 +10,8 @@ void main() {
       'given response chunks '
       'when calling chat stream '
       'then should result in chat completion chunk results emissions', () {
-    const mockHttpClient = FakeStreamedResponseHttpClient(
+    // given
+    final mockHttpClient = FakeStreamedResponseHttpClient(
       responseChunks: [
         chatCompletionChunkResultJsonString,
         'some random chunk which should be ignored',
@@ -31,11 +32,93 @@ void main() {
     );
   });
 
+  group(
+      'given chat params '
+      'when calling chat stream '
+      'then should send request param', () {
+    final testInputs = [
+      (
+        expectedParamName: 'stream',
+        expectedParamValue: true,
+        chatParams: chatParamsOf(),
+      ),
+      (
+        expectedParamName: 'model',
+        expectedParamValue: 'random model',
+        chatParams: chatParamsOf(model: 'random model'),
+      ),
+      (
+        expectedParamName: 'top_p',
+        expectedParamValue: 0.5,
+        chatParams: chatParamsOf(topP: 0.5),
+      ),
+      (
+        expectedParamName: 'max_tokens',
+        expectedParamValue: 10,
+        chatParams: chatParamsOf(maxTokens: 10),
+      ),
+      (
+        expectedParamName: 'safe_mode',
+        expectedParamValue: true,
+        chatParams: chatParamsOf(safeMode: true),
+      ),
+      (
+        expectedParamName: 'safe_mode',
+        expectedParamValue: false,
+        chatParams: chatParamsOf(safeMode: false),
+      ),
+      (
+        expectedParamName: 'random_seed',
+        expectedParamValue: 12435,
+        chatParams: chatParamsOf(randomSeed: 12435),
+      ),
+      (
+        expectedParamName: 'messages',
+        expectedParamValue: [
+          {
+            'role': 'role1',
+            'content': 'content1',
+          },
+        ],
+        chatParams: chatParamsOf(
+          messages: [
+            chatMessageOf(role: 'role1', content: 'content1'),
+          ],
+        ),
+      ),
+    ];
+
+    for (final testInput in testInputs) {
+      final paramName = testInput.expectedParamName;
+      final paramValue = testInput.expectedParamValue;
+      test('param: $paramName with value: $paramValue', () async {
+        // given
+        final chatParams = testInput.chatParams;
+        final mockHttpClient = FakeStreamedResponseHttpClient(
+          responseChunks: [chatCompletionChunkResultJsonString],
+        );
+
+        // when
+        // wait for first result to be emitted
+        await mistralAIClientOf(client: mockHttpClient)
+            .chatStream(chatParams)
+            .first;
+
+        // then
+        expect(
+          mockHttpClient.requestBody,
+          containsPair(paramName, paramValue),
+        );
+      });
+    }
+  });
+
   test(
       'given malformed response chunk '
       'when calling chat stream '
       'then should emit format error', () {
-    const mockHttpClient = FakeStreamedResponseHttpClient(
+    // given
+    final mockHttpClient = FakeStreamedResponseHttpClient(
       responseChunks: [
         chatCompletionChunkResultMalformedJsonString,
       ],
@@ -62,7 +145,8 @@ void main() {
       'given invalid response chunk '
       'when calling chat stream '
       'then should emit error', () {
-    const mockHttpClient = FakeStreamedResponseHttpClient(
+    // given
+    final mockHttpClient = FakeStreamedResponseHttpClient(
       responseChunks: [
         chatCompletionChunkResultInvalidJsonString,
       ],
@@ -96,6 +180,7 @@ void main() {
       final key = textInput.key;
       final value = textInput.value;
       test(key, () {
+        // given
         final mockHttpClient = FakeStreamedResponseHttpClient(
           responseChunks: value,
         );
