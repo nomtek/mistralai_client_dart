@@ -87,7 +87,7 @@ void main() {
       'given API key when chat is called '
       'then authentification header should be set',
       () {
-        testIfAuthenricationHeaderIsSet(
+        testIfAuthenticationHeaderIsSet(
           apiJsonResponseBody: chatCompletionResultJsonString,
           clientRequest: (client) => client.chat(chatParamsOf()),
         );

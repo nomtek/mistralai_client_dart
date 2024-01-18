@@ -139,7 +139,7 @@ dynamic testIfTimeoutExceptionIsThrown<T>({
 /// [apiJsonResponseBody] - json string representing API response
 ///
 /// [clientRequest] - function that calls API method
-dynamic testIfAuthenricationHeaderIsSet<T>({
+dynamic testIfAuthenticationHeaderIsSet<T>({
   required String apiJsonResponseBody,
   required Future<T> Function(MistralAIClient client) clientRequest,
 }) async {

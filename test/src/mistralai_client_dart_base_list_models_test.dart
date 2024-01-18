@@ -51,7 +51,7 @@ void main() {
       'given API key when listModels is called '
       'then authentification header should be set',
       () {
-        testIfAuthenricationHeaderIsSet(
+        testIfAuthenticationHeaderIsSet(
           apiJsonResponseBody: _SampleListModelsResponseData.listModels,
           clientRequest: (client) => client.listModels(),
         );

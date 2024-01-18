@@ -67,7 +67,7 @@ void main() {
       'given API key when embeddings is called '
       'then authentification header should be set',
       () {
-        testIfAuthenricationHeaderIsSet(
+        testIfAuthenticationHeaderIsSet(
           apiJsonResponseBody: _SampleEmbeddingsData.embeddingsResponse,
           clientRequest: (client) => client.embeddings(embeddingParamsOf()),
         );

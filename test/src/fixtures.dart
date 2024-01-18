@@ -20,7 +20,6 @@ MistralAIClient mistralAIClientOf({
       apiUrlFactory: apiUrlFactory,
     );
 
-
 // creates ChatMessage with default values for tests
 ChatMessage chatMessageOf({
   String? role,
