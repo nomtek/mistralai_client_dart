@@ -19,3 +19,34 @@ MistralAIClient mistralAIClientOf({
       maxRetries: maxRetries,
       apiUrlFactory: apiUrlFactory,
     );
+
+
+// creates ChatMessage with default values for tests
+ChatMessage chatMessageOf({
+  String? role,
+  String? content,
+}) =>
+    ChatMessage(
+      role: role ?? 'role',
+      content: content ?? 'content',
+    );
+
+// creates ChatParams with default values for tests
+ChatParams chatParamsOf({
+  String? model,
+  List<ChatMessage>? messages,
+  double? temperature,
+  double? topP,
+  int? maxTokens,
+  bool? safePrompt,
+  int? randomSeed,
+}) =>
+    ChatParams(
+      model: model ?? 'model',
+      messages: messages ?? [chatMessageOf()],
+      temperature: temperature,
+      topP: topP,
+      maxTokens: maxTokens,
+      safePrompt: safePrompt,
+      randomSeed: randomSeed,
+    );

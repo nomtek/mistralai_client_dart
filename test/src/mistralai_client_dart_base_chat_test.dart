@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 
 import 'common_tests.dart';
 import 'fakes.dart';
-import 'models/chat_params_test.dart';
+import 'fixtures.dart';
 
 void main() {
   group('MistralAIClient chat test', () {

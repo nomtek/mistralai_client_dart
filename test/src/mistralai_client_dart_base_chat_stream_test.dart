@@ -3,7 +3,6 @@ import 'package:test/test.dart';
 
 import 'fakes.dart';
 import 'fixtures.dart';
-import 'models/chat_params_test.dart';
 
 void main() {
   test(
