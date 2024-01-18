@@ -17,7 +17,7 @@ class ChatCompletionParams {
     this.topP,
     this.maxTokens,
     this.stream,
-    this.safeMode,
+    this.safePrompt,
     this.randomSeed,
   });
 
@@ -32,8 +32,8 @@ class ChatCompletionParams {
   @JsonKey(name: 'max_tokens')
   final int? maxTokens;
   final bool? stream;
-  @JsonKey(name: 'safe_mode')
-  final bool? safeMode;
+  @JsonKey(name: 'safe_prompt')
+  final bool? safePrompt;
   @JsonKey(name: 'random_seed')
   final int? randomSeed;
 
@@ -43,7 +43,7 @@ class ChatCompletionParams {
   String toString() =>
       'ChatCompletionParams{model: $model, messages: $messages, '
       'temperature: $temperature, topP: $topP, maxTokens: $maxTokens, '
-      'stream: $stream, safeMode: $safeMode, randomSeed: $randomSeed}';
+      'stream: $stream, safePrompt: $safePrompt, randomSeed: $randomSeed}';
 }
 
 @JsonSerializable()

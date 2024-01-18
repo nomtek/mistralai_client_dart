@@ -55,6 +55,7 @@ ChatMessage chatMessageOf({
       content: content ?? 'content',
     );
 
+// TODO(mgruchala): move to some common file
 // creates ChatParams with default values for tests
 ChatParams chatParamsOf({
   String? model,
@@ -62,7 +63,7 @@ ChatParams chatParamsOf({
   double? temperature,
   double? topP,
   int? maxTokens,
-  bool? safeMode,
+  bool? safePrompt,
   int? randomSeed,
 }) =>
     ChatParams(
@@ -71,6 +72,6 @@ ChatParams chatParamsOf({
       temperature: temperature,
       topP: topP,
       maxTokens: maxTokens,
-      safeMode: safeMode,
+      safePrompt: safePrompt,
       randomSeed: randomSeed,
     );
