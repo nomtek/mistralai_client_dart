@@ -51,6 +51,86 @@ void main() {
       },
     );
 
+    group(
+        'given chat params '
+        'when calling chat '
+        'then should send request param', () {
+      final testInputs = [
+        (
+          expectedParamName: 'stream',
+          expectedParamValue: false,
+          chatParams: chatParamsOf(),
+        ),
+        (
+          expectedParamName: 'model',
+          expectedParamValue: 'random model',
+          chatParams: chatParamsOf(model: 'random model'),
+        ),
+        (
+          expectedParamName: 'top_p',
+          expectedParamValue: 0.5,
+          chatParams: chatParamsOf(topP: 0.5),
+        ),
+        (
+          expectedParamName: 'max_tokens',
+          expectedParamValue: 10,
+          chatParams: chatParamsOf(maxTokens: 10),
+        ),
+        (
+          expectedParamName: 'safe_prompt',
+          expectedParamValue: true,
+          chatParams: chatParamsOf(safePrompt: true),
+        ),
+        (
+          expectedParamName: 'safe_prompt',
+          expectedParamValue: false,
+          chatParams: chatParamsOf(safePrompt: false),
+        ),
+        (
+          expectedParamName: 'random_seed',
+          expectedParamValue: 12435,
+          chatParams: chatParamsOf(randomSeed: 12435),
+        ),
+        (
+          expectedParamName: 'messages',
+          expectedParamValue: [
+            {
+              'role': 'role1',
+              'content': 'content1',
+            },
+          ],
+          chatParams: chatParamsOf(
+            messages: [
+              chatMessageOf(role: 'role1', content: 'content1'),
+            ],
+          ),
+        ),
+      ];
+
+      for (final testInput in testInputs) {
+        final paramName = testInput.expectedParamName;
+        final paramValue = testInput.expectedParamValue;
+        test('param: $paramName with value: $paramValue', () async {
+          // given
+          final chatParams = testInput.chatParams;
+          final mockHttpClient = FakeHttpJsonResponseClient(
+            responseBody: chatCompletionResponse,
+          );
+
+          // when
+          // wait for first result to be emitted
+          await mistralAIClientOf(client: mockHttpClient)
+              .chat(chatParams);
+
+          // then
+          expect(
+            mockHttpClient.requestBody,
+            containsPair(paramName, paramValue),
+          );
+        });
+      }
+    });
+
     test(
       'given API returns wrong JSON when chat is called '
       'then return MistralAIClientException',
