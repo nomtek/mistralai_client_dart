@@ -1,10 +1,9 @@
-// ignore: lines_longer_than_80_chars
-// ignore: lines_longer_than_80_chars
 import 'package:http/http.dart' as http;
 import 'package:mistralai_client_dart/mistralai_client_dart.dart';
 import 'package:test/test.dart';
 
 import 'fakes.dart';
+import 'fixtures.dart';
 
 MistralAIClient _prepareMistralClient({
   required String? apiJsonResponseBody,
@@ -21,42 +20,13 @@ MistralAIClient _prepareMistralClient({
       'only apiJsonResponseBody or only httpClient must not be null',
     );
   }
-  return MistralAIClient(
+  return mistralAIClientOf(
     apiKey: apiKey,
-    baseUrl: baseUrl,
     client: httpClient ??
         FakeHttpJsonResponseClient(responseBody: apiJsonResponseBody!),
-    timeout: timeout,
-  );
-}
-
-// ignore: lines_longer_than_80_chars
-// TODO(mgruchala): we use this function in one test only, maybe we can remove it?
-// version of test where we expect result to be returned
-// resultMatcher should check for result, most likely using isA
-dynamic _baseMistalAIClientRequestResultTest<T>({
-  required Future<T> Function(MistralAIClient client) clientRequest,
-  required Matcher resultMatcher,
-  required String? apiJsonResponseBody,
-  http.Client? httpClient,
-  String apiKey = 'apiKey',
-  String baseUrl = 'baseUrl',
-  Duration timeout = const Duration(milliseconds: 500),
-}) async {
-  // given
-  final mistralClient = _prepareMistralClient(
-    apiJsonResponseBody: apiJsonResponseBody,
-    httpClient: httpClient,
-    apiKey: apiKey,
     baseUrl: baseUrl,
     timeout: timeout,
   );
-
-  // when
-  final result = await clientRequest(mistralClient);
-
-  // then
-  expect(result, resultMatcher);
 }
 
 // version of test where we expect exception to be thrown
@@ -91,12 +61,18 @@ dynamic _baseMistalAIClientRequestExceptionTest<T>({
 dynamic testResponseType<T>({
   required String apiJsonResponseBody,
   required Future<T> Function(MistralAIClient client) clientRequest,
-}) async =>
-    await _baseMistalAIClientRequestResultTest(
-      apiJsonResponseBody: apiJsonResponseBody,
-      clientRequest: clientRequest,
-      resultMatcher: isA<T>(),
-    );
+}) async {
+  // given
+  final mistralClient = _prepareMistralClient(
+    apiJsonResponseBody: apiJsonResponseBody,
+  );
+
+  // when
+  final result = await clientRequest(mistralClient);
+
+  // then
+  expect(result, isA<T>());
+}
 
 /// Tests that Exception is thrown when API response is invalid
 ///
