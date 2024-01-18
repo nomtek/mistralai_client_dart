@@ -13,7 +13,8 @@ MistralAIClient _prepareMistralClient({
   }
   if (apiJsonResponseBody != null && httpClient != null) {
     throw Exception(
-        'only apiJsonResponseBody or only httpClient must not be null');
+      'only apiJsonResponseBody or only httpClient must not be null',
+    );
   }
   return MistralAIClient(
     apiKey: 'apiKey',
