@@ -1,6 +1,6 @@
 # Contributing to Mistral AI Client for Dart
 
-Thank you for considering contributing to [Your Project Name]! We appreciate your time and effort.
+Thank you for considering contributing to Mistral AI Client for Dart! We appreciate your time and effort.
 
 ## Table of Contents
 
