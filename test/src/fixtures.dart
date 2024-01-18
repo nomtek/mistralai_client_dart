@@ -49,3 +49,15 @@ ChatParams chatParamsOf({
       safePrompt: safePrompt,
       randomSeed: randomSeed,
     );
+
+// creates EmbeddingParams with default values for tests
+EmbeddingParams embeddingParamsOf({
+  String model = 'mistral-embed',
+  List<String> input = const ['Hello', 'world'],
+  String encodingFormat = 'float',
+}) =>
+    EmbeddingParams(
+      model: model,
+      input: input,
+      encodingFormat: encodingFormat,
+    );

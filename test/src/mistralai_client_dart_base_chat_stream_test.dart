@@ -12,11 +12,11 @@ void main() {
     // given
     final mockHttpClient = FakeStreamedResponseHttpClient(
       responseChunks: [
-        chatCompletionChunkResultJsonString,
+        chatCompletionChunkResponse,
         'some random chunk which should be ignored',
-        chatCompletionChunkResultJsonString,
+        chatCompletionChunkResponse,
         'another random chunk which should be ignored',
-        chatCompletionChunkResultJsonString,
+        chatCompletionChunkResponse,
       ],
     );
     final mistralClient = mistralAIClientOf(client: mockHttpClient);
@@ -94,7 +94,7 @@ void main() {
         // given
         final chatParams = testInput.chatParams;
         final mockHttpClient = FakeStreamedResponseHttpClient(
-          responseChunks: [chatCompletionChunkResultJsonString],
+          responseChunks: [chatCompletionChunkResponse],
         );
 
         // when
@@ -119,7 +119,7 @@ void main() {
     // given
     final mockHttpClient = FakeStreamedResponseHttpClient(
       responseChunks: [
-        chatCompletionChunkResultMalformedJsonString,
+        chatCompletionChunkMalformedResponse,
       ],
     );
     final mistralClient = mistralAIClientOf(client: mockHttpClient);
@@ -147,7 +147,7 @@ void main() {
     // given
     final mockHttpClient = FakeStreamedResponseHttpClient(
       responseChunks: [
-        chatCompletionChunkResultInvalidJsonString,
+        chatCompletionChunkInvalidResponse,
       ],
     );
     final mistralClient = mistralAIClientOf(client: mockHttpClient);
@@ -168,10 +168,10 @@ void main() {
       'then emits MistralAIClientException', () {
     final testInputs = {
       'invalid json': [
-        chatCompletionChunkResultInvalidJsonString,
+        chatCompletionChunkInvalidResponse,
       ],
       'malformed json': [
-        chatCompletionChunkResultMalformedJsonString,
+        chatCompletionChunkMalformedResponse,
       ],
     };
 
@@ -237,13 +237,13 @@ void main() {
 
 // test data
 
-const chatCompletionChunkResultJsonString =
+const chatCompletionChunkResponse =
     '''data: {"id":"cmpl-e5cc70bb28c444948073e77776eb30ef","object":"chat.completion.chunk","created":1702256327,"model":"mistral-tiny","choices":[{"index":0,"delta":{"content":"Hello streamed chat completion!"},"finish_reason":"stop","usage":{"prompt_tokens":14,"completion_tokens":93,"total_tokens":107}}]}''';
 
 // missing '[' after 'choices: ' in the response
-const chatCompletionChunkResultMalformedJsonString =
+const chatCompletionChunkMalformedResponse =
     '''data: {"id":"cmpl-e5cc70bb28c444948073e77776eb30ef","object":"chat.completion.chunk","created":1702256327,"model":"mistral-tiny","choices":{"index":0,"delta":{"content":"Hello streamed chat completion!"},"finish_reason":"stop","usage":{"prompt_tokens":14,"completion_tokens":93,"total_tokens":107}}]}''';
 
 // missing 'index' field in the response
-const chatCompletionChunkResultInvalidJsonString =
+const chatCompletionChunkInvalidResponse =
     '''data: {"id":"cmpl-e5cc70bb28c444948073e77776eb30ef","object":"chat.completion.chunk","created":1702256327,"model":"mistral-tiny","choices":[{"delta":{"content":"Hello streamed chat completion!"},"finish_reason":"stop","usage":{"prompt_tokens":14,"completion_tokens":93,"total_tokens":107}}]}''';

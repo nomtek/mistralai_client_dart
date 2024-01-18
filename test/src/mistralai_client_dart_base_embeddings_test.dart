@@ -5,6 +5,7 @@ import 'package:test/test.dart';
 
 import 'common_tests.dart';
 import 'fakes.dart';
+import 'fixtures.dart';
 
 void main() {
   group('MistralAIClient embeddings test', () {
@@ -12,7 +13,7 @@ void main() {
         'given valid response '
         'when embeddings is called then return EmbeddingsResult', () {
       testResponseType<EmbeddingsResult>(
-        apiJsonResponseBody: _SampleEmbeddingsData.embeddingsResponse,
+        apiJsonResponseBody: embeddingsResponse,
         clientRequest: (client) => client.embeddings(embeddingParamsOf()),
       );
     });
@@ -22,13 +23,12 @@ void main() {
       'then proper request body is sent',
       () async {
         final embeddingJsonParams =
-            jsonDecode(_SampleEmbeddingsData.embeddingsParams)
-                as Map<String, dynamic>;
+            jsonDecode(embeddingsParamsBody) as Map<String, dynamic>;
 
         testIfProperBodyParamsAreSent(
-          apiJsonResponseBody: _SampleEmbeddingsData.embeddingsResponse,
+          apiJsonResponseBody: embeddingsResponse,
           clientRequest: (client, bodyParams) =>
-              client.embeddings(EmbeddingParams.fromJson(bodyParams)),
+              client.embeddings(embedingsParams),
           bodyParams: embeddingJsonParams,
         );
       },
@@ -38,7 +38,7 @@ void main() {
         'given API returns invalid JSON when embeddings is called '
         'then return MistralAIClientException', () {
       testIfExceptionIsThrown(
-        apiJsonResponseBody: _SampleEmbeddingsData.embeddingsInvalidResponse,
+        apiJsonResponseBody: embeddingsInvalidResponse,
         clientRequest: (client) => client.embeddings(embeddingParamsOf()),
       );
     });
@@ -48,8 +48,7 @@ void main() {
       'then return MistralAIClientException with FormatException inside',
       () {
         testIfFormatExceptionIsThrown(
-          apiJsonResponseBody:
-              _SampleEmbeddingsData.embeddingsMalformeddResponse,
+          apiJsonResponseBody: embeddingsMalformeddResponse,
           clientRequest: (client) => client.embeddings(embeddingParamsOf()),
         );
       },
@@ -68,7 +67,7 @@ void main() {
       'then authentification header should be set',
       () {
         testIfAuthenticationHeaderIsSet(
-          apiJsonResponseBody: _SampleEmbeddingsData.embeddingsResponse,
+          apiJsonResponseBody: embeddingsResponse,
           clientRequest: (client) => client.embeddings(embeddingParamsOf()),
         );
       },
@@ -81,7 +80,7 @@ void main() {
         testIfExceptionIsThrown(
           apiJsonResponseBody: null,
           httpClient: FakeHttpJsonResponseClient(
-            responseBody: _SampleEmbeddingsData.embeddingsResponse,
+            responseBody: embeddingsResponse,
             httpStatusCode: 500,
           ),
           clientRequest: (client) => client.embeddings(embeddingParamsOf()),
@@ -94,7 +93,7 @@ void main() {
       'then request url should be from url factory',
       () async {
         testIfRequestUrlIsCorrect(
-          apiJsonResponseBody: _SampleEmbeddingsData.embeddingsResponse,
+          apiJsonResponseBody: embeddingsResponse,
           clientRequest: (client) async =>
               client.embeddings(embeddingParamsOf()),
           requestEndpoint: MistralAPIEndpoints.embeddings,
@@ -104,8 +103,13 @@ void main() {
   });
 }
 
-class _SampleEmbeddingsData {
-  static const String embeddingsParams = '''
+const embedingsParams = EmbeddingParams(
+  model: 'mistral-embed',
+  input: ['Hello', 'world'],
+  encodingFormat: 'float',
+);
+
+const String embeddingsParamsBody = '''
 {
   "model": "mistral-embed",
   "input": [
@@ -116,7 +120,7 @@ class _SampleEmbeddingsData {
 }
 ''';
 
-  static const String embeddingsResponse = '''
+const String embeddingsResponse = '''
 {
   "id": "embd-aad6fc62b17349b192ef09225058bc45",
   "object": "list",
@@ -148,7 +152,7 @@ class _SampleEmbeddingsData {
 }
 ''';
 
-  static const String embeddingsInvalidResponse = '''
+const String embeddingsInvalidResponse = '''
 {
   "object": "list",
   "data": [
@@ -179,7 +183,7 @@ class _SampleEmbeddingsData {
 }
 ''';
 
-  static const String embeddingsMalformeddResponse = '''
+const String embeddingsMalformeddResponse = '''
 {
   "object": "list",
   "data": 
@@ -209,15 +213,3 @@ class _SampleEmbeddingsData {
   }
 }
 ''';
-}
-
-EmbeddingParams embeddingParamsOf({
-  String model = 'mistral-embed',
-  List<String> input = const ['Hello', 'world'],
-  String encodingFormat = 'float',
-}) =>
-    EmbeddingParams(
-      model: model,
-      input: input,
-      encodingFormat: encodingFormat,
-    );

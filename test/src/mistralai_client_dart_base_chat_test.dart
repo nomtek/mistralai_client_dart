@@ -13,7 +13,7 @@ void main() {
         'given valid response '
         'when chat is called then return ChatCompletionResult', () {
       testResponseType<ChatCompletionResult>(
-        apiJsonResponseBody: chatCompletionResultJsonString,
+        apiJsonResponseBody: chatCompletionResponse,
         clientRequest: (client) => client.chat(chatParamsOf()),
       );
     });
@@ -26,7 +26,7 @@ void main() {
             as Map<String, dynamic>;
 
         testIfProperBodyParamsAreSent(
-          apiJsonResponseBody: chatCompletionResultJsonString,
+          apiJsonResponseBody: chatCompletionResponse,
           clientRequest: (client, bodyParams) =>
               client.chat(chatParamsWithAllFields),
           bodyParams: chatJsonParams,
@@ -43,7 +43,7 @@ void main() {
                 as Map<String, dynamic>;
 
         testIfProperBodyParamsAreSent(
-          apiJsonResponseBody: chatCompletionResultJsonString,
+          apiJsonResponseBody: chatCompletionResponse,
           clientRequest: (client, bodyParams) =>
               client.chat(chatParamsWithRequiredFields),
           bodyParams: chatJsonParams,
@@ -56,7 +56,7 @@ void main() {
       'then return MistralAIClientException',
       () {
         testIfExceptionIsThrown(
-          apiJsonResponseBody: chatCompletionInvalidResultJsonString,
+          apiJsonResponseBody: chatCompletionInvalidResponse,
           clientRequest: (client) => client.chat(chatParamsOf()),
         );
       },
@@ -67,7 +67,7 @@ void main() {
       'then return MistralAIClientException with FormatException inside',
       () {
         testIfFormatExceptionIsThrown(
-          apiJsonResponseBody: chatCompletionMalformedResultJsonString,
+          apiJsonResponseBody: chatCompletionMalformedResponse,
           clientRequest: (client) => client.chat(chatParamsOf()),
         );
       },
@@ -88,7 +88,7 @@ void main() {
       'then authentification header should be set',
       () {
         testIfAuthenticationHeaderIsSet(
-          apiJsonResponseBody: chatCompletionResultJsonString,
+          apiJsonResponseBody: chatCompletionResponse,
           clientRequest: (client) => client.chat(chatParamsOf()),
         );
       },
@@ -101,7 +101,7 @@ void main() {
         testIfExceptionIsThrown(
           apiJsonResponseBody: null,
           httpClient: FakeHttpJsonResponseClient(
-            responseBody: chatCompletionResultJsonString,
+            responseBody: chatCompletionResponse,
             httpStatusCode: 500,
           ),
           clientRequest: (client) => client.chat(chatParamsOf()),
@@ -114,7 +114,7 @@ void main() {
       'then request url should be from url factory',
       () async {
         testIfRequestUrlIsCorrect(
-          apiJsonResponseBody: chatCompletionResultJsonString,
+          apiJsonResponseBody: chatCompletionResponse,
           clientRequest: (client) async => client.chat(chatParamsOf()),
           requestEndpoint: MistralAPIEndpoints.chatCompletions,
         );
@@ -123,7 +123,7 @@ void main() {
   });
 }
 
-const chatCompletionResultJsonString = '''
+const chatCompletionResponse = '''
 {
   "id": "cmpl-e5cc70bb28c444948073e77776eb30ef",
   "object": "chat.completion",
@@ -203,7 +203,7 @@ const chatCompletionParamsWithRequiredFieldsBody = '''
 }
 ''';
 
-const chatCompletionInvalidResultJsonString = '''
+const chatCompletionInvalidResponse = '''
 {
   "object": "chat.completion",
   "created": 1702256327,
@@ -226,7 +226,7 @@ const chatCompletionInvalidResultJsonString = '''
 }
 ''';
 
-const chatCompletionMalformedResultJsonString = '''
+const chatCompletionMalformedResponse = '''
 {
   "id": "cmpl-e5cc70bb28c444948073e77776eb30ef",
   "object": "chat.completion",

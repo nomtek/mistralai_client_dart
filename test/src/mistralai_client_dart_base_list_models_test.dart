@@ -10,7 +10,7 @@ void main() {
         'given valid response '
         'when listModels is called then return ListModelsResult', () {
       testResponseType(
-        apiJsonResponseBody: _SampleListModelsResponseData.listModels,
+        apiJsonResponseBody: listModelsResponse,
         clientRequest: (client) => client.listModels(),
       );
     });
@@ -19,8 +19,7 @@ void main() {
         'given API returns wrong JSON when listModels is called '
         'then return MistralAIClientException', () {
       testIfExceptionIsThrown(
-        apiJsonResponseBody:
-            _SampleListModelsResponseData.listModelsInvalidResponse,
+        apiJsonResponseBody: listModelsInvalidResponse,
         clientRequest: (client) => client.listModels(),
       );
     });
@@ -30,8 +29,7 @@ void main() {
       'then return MistralAIClientException with FormatException inside',
       () {
         testIfFormatExceptionIsThrown(
-          apiJsonResponseBody:
-              _SampleListModelsResponseData.listModelsMalformed,
+          apiJsonResponseBody: listModelsMalformedResponse,
           clientRequest: (client) => client.listModels(),
         );
       },
@@ -52,7 +50,7 @@ void main() {
       'then authentification header should be set',
       () {
         testIfAuthenticationHeaderIsSet(
-          apiJsonResponseBody: _SampleListModelsResponseData.listModels,
+          apiJsonResponseBody: listModelsResponse,
           clientRequest: (client) => client.listModels(),
         );
       },
@@ -65,7 +63,7 @@ void main() {
         testIfExceptionIsThrown(
           apiJsonResponseBody: null,
           httpClient: FakeHttpJsonResponseClient(
-            responseBody: _SampleListModelsResponseData.listModels,
+            responseBody: listModelsResponse,
             httpStatusCode: 500,
           ),
           clientRequest: (client) => client.listModels(),
@@ -78,7 +76,7 @@ void main() {
       'then request url should be from url factory',
       () async {
         testIfRequestUrlIsCorrect(
-          apiJsonResponseBody: _SampleListModelsResponseData.listModels,
+          apiJsonResponseBody: listModelsResponse,
           clientRequest: (client) async => client.listModels(),
           requestEndpoint: MistralAPIEndpoints.listModels,
         );
@@ -87,8 +85,7 @@ void main() {
   });
 }
 
-class _SampleListModelsResponseData {
-  static const String listModels = '''
+const String listModelsResponse = '''
  {
   "object": "string",
   "data": [
@@ -102,8 +99,8 @@ class _SampleListModelsResponseData {
 }
   ''';
 
-  // no 'id' field in the response
-  static const String listModelsInvalidResponse = '''
+// no 'id' field in the response
+const String listModelsInvalidResponse = '''
  {
   "object": "string",
   "data": [
@@ -116,8 +113,8 @@ class _SampleListModelsResponseData {
 }
   ''';
 
-  // missing '[' in the response
-  static const String listModelsMalformed = '''
+// missing '[' in the response
+const String listModelsMalformedResponse = '''
  {
   "object": "string",
   "data":
@@ -130,4 +127,3 @@ class _SampleListModelsResponseData {
   ]
 }
   ''';
-}
