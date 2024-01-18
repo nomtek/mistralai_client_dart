@@ -22,10 +22,9 @@ class EmbeddingParams {
   final String encodingFormat;
 
   Map<String, dynamic> toJson() => _$EmbeddingParamsToJson(this);
-  
+
   @override
-  String toString() =>
-      'EmbeddingParams{model: $model, input: $input, '
+  String toString() => 'EmbeddingParams{model: $model, input: $input, '
       'encodingFormat: $encodingFormat}';
 }
 
