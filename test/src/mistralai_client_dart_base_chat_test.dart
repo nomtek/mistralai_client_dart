@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:mistralai_client_dart/mistralai_client_dart.dart';
 import 'package:test/test.dart';
 
@@ -6,65 +8,118 @@ import 'fakes.dart';
 import 'models/chat_params_test.dart';
 
 void main() {
-  test(
-      'given valid response '
-      'when chat is called then return ChatCompletionResult', () {
-    testResponseType<ChatCompletionResult>(
-      apiJsonResponseBody: chatCompletionResultJsonString,
-      clientRequest: (client) => client.chat(chatParamsOf()),
-    );
-  });
-
-  test(
-    'given API returns wrong JSON when chat is called '
-    'then return MistralAIClientException',
-    () {
-      testIfExceptionIsThrown(
-        apiJsonResponseBody: chatCompletionInvalidResultJsonString,
+  group('MistralAIClient chat test', () {
+    test(
+        'given valid response '
+        'when chat is called then return ChatCompletionResult', () {
+      testResponseType<ChatCompletionResult>(
+        apiJsonResponseBody: chatCompletionResultJsonString,
         clientRequest: (client) => client.chat(chatParamsOf()),
       );
-    },
-  );
+    });
 
-  test(
-    'given API returns malformed JSON when chat is called '
-    'then return MistralAIClientException with FormatException inside',
-    () {
-      testIfFormatExceptionIsThrown(
-        apiJsonResponseBody: chatCompletionMalformedResultJsonString,
-        clientRequest: (client) => client.chat(chatParamsOf()),
-      );
-    },
-  );
+    test(
+      'given chat params with all fields as JSON when chat is called '
+      'then proper request body is sent',
+      () async {
+        final chatJsonParams = jsonDecode(chatCompletionParamsWithAllFieldsBody)
+            as Map<String, dynamic>;
 
-  // TODO(lgawron): fix asserts in test
-  test('check body params', () async {
-    // given
-    final mockHttpClient = FakeHttpJsonResponseClient(
-      responseBody: chatCompletionResultJsonString,
-    );
-    final mistralClient = MistralAIClient(
-      apiKey: 'apiKey',
-      baseUrl: 'baseUrl',
-      timeout: const Duration(milliseconds: 500),
-      client: mockHttpClient,
+        testIfProperBodyParamsAreSent(
+          apiJsonResponseBody: chatCompletionResultJsonString,
+          clientRequest: (client, bodyParams) =>
+              client.chat(chatParamsWithAllFields),
+          bodyParams: chatJsonParams,
+        );
+      },
     );
 
-    // when
-    final params = ChatParams(
-      model: 'tiny',
-      messages: const [
-        ChatMessage(role: 'role', content: 'content'),
-      ],
+    test(
+      'given chat params with required fields as JSON when chat is called '
+      'then proper request body is sent',
+      () {
+        final chatJsonParams =
+            jsonDecode(chatCompletionParamsWithRequiredFieldsBody)
+                as Map<String, dynamic>;
+
+        testIfProperBodyParamsAreSent(
+          apiJsonResponseBody: chatCompletionResultJsonString,
+          clientRequest: (client, bodyParams) =>
+              client.chat(chatParamsWithRequiredFields),
+          bodyParams: chatJsonParams,
+        );
+      },
     );
-    final result = await mistralClient.chat(params);
 
-    // then
-    expect(result, isA<ChatCompletionResult>());
+    test(
+      'given API returns wrong JSON when chat is called '
+      'then return MistralAIClientException',
+      () {
+        testIfExceptionIsThrown(
+          apiJsonResponseBody: chatCompletionInvalidResultJsonString,
+          clientRequest: (client) => client.chat(chatParamsOf()),
+        );
+      },
+    );
 
-    final originalRequestBody = mockHttpClient.requestBody;
-    final modelInBody = originalRequestBody['model'];
-    expect('tiny', modelInBody);
+    test(
+      'given API returns malformed JSON when chat is called '
+      'then return MistralAIClientException with FormatException inside',
+      () {
+        testIfFormatExceptionIsThrown(
+          apiJsonResponseBody: chatCompletionMalformedResultJsonString,
+          clientRequest: (client) => client.chat(chatParamsOf()),
+        );
+      },
+    );
+
+    test(
+      'given API times out when chat is called '
+      'then return MistralAIClientException with Timeout in message',
+      () {
+        testIfTimeoutExceptionIsThrown(
+          clientRequest: (client) => client.chat(chatParamsOf()),
+        );
+      },
+    );
+
+    test(
+      'given API key when chat is called '
+      'then authentification header should be set',
+      () {
+        testIfAuthenricationHeaderIsSet(
+          apiJsonResponseBody: chatCompletionResultJsonString,
+          clientRequest: (client) => client.chat(chatParamsOf()),
+        );
+      },
+    );
+
+    test(
+      'given API request has 500 status code  when chat is called '
+      'then return MistralAIClientException',
+      () {
+        testIfExceptionIsThrown(
+          apiJsonResponseBody: null,
+          httpClient: FakeHttpJsonResponseClient(
+            responseBody: chatCompletionResultJsonString,
+            httpStatusCode: 500,
+          ),
+          clientRequest: (client) => client.chat(chatParamsOf()),
+        );
+      },
+    );
+
+    test(
+      'given default url factory when chat is called '
+      'then request url should be from url factory',
+      () async {
+        testIfRequestUrlIsCorrect(
+          apiJsonResponseBody: chatCompletionResultJsonString,
+          clientRequest: (client) async => client.chat(chatParamsOf()),
+          requestEndpoint: MistralAPIEndpoints.chatCompletions,
+        );
+      },
+    );
   });
 }
 
@@ -89,6 +144,62 @@ const chatCompletionResultJsonString = '''
     "completion_tokens": 93,
     "total_tokens": 107
   }
+}
+''';
+
+ChatParams chatParamsWithAllFields = ChatParams(
+  model: 'mistral-tiny',
+  messages: const [
+    ChatMessage(
+      role: 'user',
+      content: 'What is the best French cheese?',
+    ),
+  ],
+  temperature: 0.7,
+  topP: 1,
+  maxTokens: 16,
+  safePrompt: false,
+  randomSeed: 1,
+);
+
+const chatCompletionParamsWithAllFieldsBody = '''
+{
+  "model": "mistral-tiny",
+  "messages": [
+    {
+      "role": "user",
+      "content": "What is the best French cheese?"
+    }
+  ],
+  "temperature": 0.7,
+  "top_p": 1,
+  "max_tokens": 16,
+  "stream": false,
+  "safe_prompt": false,
+  "random_seed": 1
+}
+''';
+
+ChatParams chatParamsWithRequiredFields = ChatParams(
+  model: 'mistral-tiny',
+  messages: const [
+    ChatMessage(
+      role: 'user',
+      content: 'What is the best French cheese?',
+    ),
+  ],
+);
+
+const chatCompletionParamsWithRequiredFieldsBody = '''
+{
+  "model": "mistral-tiny",
+  "messages": [
+    {
+      "role": "user",
+      "content": "What is the best French cheese?"
+    }
+  ],
+  "stream": false
 }
 ''';
 

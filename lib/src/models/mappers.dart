@@ -11,6 +11,6 @@ ChatCompletionParams _mapChatParamsToRequestParams(
       topP: params.topP,
       maxTokens: params.maxTokens,
       stream: stream,
-      safeMode: params.safeMode,
+      safePrompt: params.safePrompt,
       randomSeed: params.randomSeed,
     );

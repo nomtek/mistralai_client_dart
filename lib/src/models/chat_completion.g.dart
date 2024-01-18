@@ -17,7 +17,7 @@ ChatCompletionParams _$ChatCompletionParamsFromJson(
       topP: (json['top_p'] as num?)?.toDouble(),
       maxTokens: json['max_tokens'] as int?,
       stream: json['stream'] as bool?,
-      safeMode: json['safe_mode'] as bool?,
+      safePrompt: json['safe_prompt'] as bool?,
       randomSeed: json['random_seed'] as int?,
     );
 
@@ -38,7 +38,7 @@ Map<String, dynamic> _$ChatCompletionParamsToJson(
   writeNotNull('top_p', instance.topP);
   writeNotNull('max_tokens', instance.maxTokens);
   writeNotNull('stream', instance.stream);
-  writeNotNull('safe_mode', instance.safeMode);
+  writeNotNull('safe_prompt', instance.safePrompt);
   writeNotNull('random_seed', instance.randomSeed);
   return val;
 }

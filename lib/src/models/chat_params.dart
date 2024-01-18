@@ -11,7 +11,7 @@ class ChatParams {
     this.temperature,
     this.topP,
     this.maxTokens,
-    this.safeMode,
+    this.safePrompt,
     this.randomSeed,
   })  : assert(messages.length > 0, 'messages cannot be empty'),
         assert(
@@ -32,11 +32,11 @@ class ChatParams {
   final double? temperature;
   final double? topP;
   final int? maxTokens;
-  final bool? safeMode;
+  final bool? safePrompt;
   final int? randomSeed;
 
   @override
   String toString() => 'ChatParams{model: $model, messages: $messages, '
       'temperature: $temperature, topP: $topP, maxTokens: $maxTokens, '
-      'safeMode: $safeMode, randomSeed: $randomSeed}';
+      'safePrompt: $safePrompt, randomSeed: $randomSeed}';
 }

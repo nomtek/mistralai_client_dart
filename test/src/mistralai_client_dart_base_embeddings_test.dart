@@ -21,26 +21,16 @@ void main() {
       'given embeddings params as JSON when embeddings is called '
       'then proper request body is sent',
       () async {
-        // given
-        final mockHttpClient = FakeHttpJsonResponseClient(
-          responseBody: _SampleEmbeddingsData.embeddingsResponse,
-        );
-        final mistralClient = MistralAIClient(
-          apiKey: 'apiKey',
-          baseUrl: 'baseUrl',
-          timeout: const Duration(milliseconds: 500),
-          client: mockHttpClient,
-        );
         final embeddingJsonParams =
             jsonDecode(_SampleEmbeddingsData.embeddingsParams)
                 as Map<String, dynamic>;
-        final embeddingParams = EmbeddingParams.fromJson(embeddingJsonParams);
 
-        // when
-        await mistralClient.embeddings(embeddingParams);
-
-        //then
-        expect(mockHttpClient.requestBody, embeddingJsonParams);
+        testIfProperBodyParamsAreSent(
+          apiJsonResponseBody: _SampleEmbeddingsData.embeddingsResponse,
+          clientRequest: (client, bodyParams) =>
+              client.embeddings(EmbeddingParams.fromJson(bodyParams)),
+          bodyParams: embeddingJsonParams,
+        );
       },
     );
 
@@ -67,36 +57,50 @@ void main() {
 
     test(
         'given API times out when embeddings is called '
-        'then return MistralAIClientException with Timeout in message',
-        () async {
-      // given
-      const mockHttpClient = FakeDelayedHttpClient(
-        delay: Duration(milliseconds: 10),
-      );
-      final mistralClient = MistralAIClient(
-        apiKey: 'apiKey',
-        baseUrl: 'baseUrl',
-        timeout: const Duration(milliseconds: 1),
-        client: mockHttpClient,
-      );
-
-      // when/then
-      expect(
-        mistralClient.embeddings(
-          EmbeddingParams.fromJson(
-            jsonDecode(_SampleEmbeddingsData.embeddingsParams)
-                as Map<String, dynamic>,
-          ),
-        ),
-        throwsA(
-          isA<MistralAIClientException>().having(
-            (p0) => p0.message,
-            'should contain timeout in message',
-            contains('Timeout'),
-          ),
-        ),
+        'then return MistralAIClientException with Timeout in message', () {
+      testIfTimeoutExceptionIsThrown(
+        clientRequest: (client) => client.embeddings(embeddingParamsOf()),
       );
     });
+
+    test(
+      'given API key when embeddings is called '
+      'then authentification header should be set',
+      () {
+        testIfAuthenricationHeaderIsSet(
+          apiJsonResponseBody: _SampleEmbeddingsData.embeddingsResponse,
+          clientRequest: (client) => client.embeddings(embeddingParamsOf()),
+        );
+      },
+    );
+
+    test(
+      'given API request has 500 status code  when embeddings is called '
+      'then return MistralAIClientException',
+      () {
+        testIfExceptionIsThrown(
+          apiJsonResponseBody: null,
+          httpClient: FakeHttpJsonResponseClient(
+            responseBody: _SampleEmbeddingsData.embeddingsResponse,
+            httpStatusCode: 500,
+          ),
+          clientRequest: (client) => client.embeddings(embeddingParamsOf()),
+        );
+      },
+    );
+
+    test(
+      'given default url factory when embedings is called '
+      'then request url should be from url factory',
+      () async {
+        testIfRequestUrlIsCorrect(
+          apiJsonResponseBody: _SampleEmbeddingsData.embeddingsResponse,
+          clientRequest: (client) async =>
+              client.embeddings(embeddingParamsOf()),
+          requestEndpoint: MistralAPIEndpoints.embeddings,
+        );
+      },
+    );
   });
 }
 
