@@ -20,7 +20,8 @@ Map<String, dynamic> _$EmbeddingParamsToJson(EmbeddingParams instance) =>
       'encoding_format': instance.encodingFormat,
     };
 
-Embeddings _$EmbeddingsFromJson(Map<String, dynamic> json) => Embeddings(
+EmbeddingsResult _$EmbeddingsResultFromJson(Map<String, dynamic> json) =>
+    EmbeddingsResult(
       id: json['id'] as String,
       object: json['object'] as String,
       data: (json['data'] as List<dynamic>)
@@ -30,7 +31,7 @@ Embeddings _$EmbeddingsFromJson(Map<String, dynamic> json) => Embeddings(
       usage: EmbeddingsUsage.fromJson(json['usage'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$EmbeddingsToJson(Embeddings instance) =>
+Map<String, dynamic> _$EmbeddingsResultToJson(EmbeddingsResult instance) =>
     <String, dynamic>{
       'id': instance.id,
       'object': instance.object,
