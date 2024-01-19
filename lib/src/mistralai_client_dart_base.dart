@@ -56,7 +56,11 @@ class MistralAIClient {
 
   /// Returns a list of the available models [ListModelsResult]
   ///
-  /// It uses [list models endpoint](https://api.mistral.ai/v1/models) from the mistral AI API.
+  /// Sends a request to
+  /// [Mistral AI API](https://docs.mistral.ai/api/#operation/listModels)
+  /// to get a list of the available models.
+  ///
+  /// Throws [MistralAIClientException] if the request fails.
   Future<ListModelsResult> listModels() async => _requestJson(
         client: _httpClient,
         apiKey: apiKey,
@@ -112,7 +116,9 @@ class MistralAIClient {
   /// Returns [EmbeddingsResult] for a single input
   /// or a batch of inputs given as [EmbeddingParams]
   ///
-  /// It uses [embeddings endpoint](https://docs.mistral.ai/api/#operation/createEmbedding) from the Mistral AI API.
+  /// Sends a request to
+  /// [Mistral AI API](https://docs.mistral.ai/api/#operation/createEmbedding)
+  /// to create embeddings.
   ///
   /// Throws [MistralAIClientException] if request fails.
   Future<EmbeddingsResult> embeddings(EmbeddingParams params) async =>
