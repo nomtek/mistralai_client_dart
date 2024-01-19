@@ -10,16 +10,15 @@ class FakeHttpJsonResponseClient with http.BaseClient {
 
   final String responseBody;
   final int httpStatusCode;
-  http.BaseRequest get request => _request;
-  late http.BaseRequest _request;
-  Map<String, dynamic> get requestBody => _requestBody;
-  late Map<String, dynamic> _requestBody;
+
+  late http.BaseRequest request;
+  late Map<String, dynamic> requestBody;
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
     // capture request body and decode it to json
-    _requestBody = await _getJsonRequestBody(request);
-    _request = request;
+    requestBody = await _getJsonRequestBody(request);
+    this.request = request;
     return Future.value(
       http.StreamedResponse(
         http.ByteStream.fromBytes(
@@ -45,16 +44,15 @@ class FakeStreamedResponseHttpClient with http.BaseClient {
 
   final List<String> responseChunks;
   final int httpStatusCode;
-  http.BaseRequest get request => _request;
-  late http.BaseRequest _request;
-  Map<String, dynamic> get requestBody => _requestBody;
-  late Map<String, dynamic> _requestBody;
+
+  late http.BaseRequest request;
+  late Map<String, dynamic> requestBody;
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
     // capture request body and decode it to json
-    _requestBody = await _getJsonRequestBody(request);
-    _request = request;
+    requestBody = await _getJsonRequestBody(request);
+    this.request = request;
     return Future.value(
       http.StreamedResponse(
         Stream.fromIterable(responseChunks.map(utf8.encode)),
