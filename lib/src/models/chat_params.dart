@@ -5,6 +5,25 @@ import 'package:mistralai_client_dart/src/models/chat_completion.dart';
 /// [Mistral AI API docs](https://docs.mistral.ai/api/#operation/createChatCompletion)
 @immutable
 class ChatParams {
+  /// Creates a new instance of [ChatParams].
+  ///
+  /// [model] model the name of the model to chat with, e.g. mistral-tiny
+  ///
+  /// [messages] messages an array of messages to chat with, e.g.
+  /// [{role: 'user', content: 'What is the best French cheese?'}]
+  ///
+  /// [temperature] temperature the temperature to use for sampling, e.g. 0.5.
+  ///
+  /// [topP] the cumulative probability of tokens to generate, e.g. 0.9.
+  /// Defaults to None.
+  ///
+  /// [maxTokens]  the maximum number of tokens to generate, e.g. 100. Defaults
+  /// to None.
+  ///
+  /// [safePrompt]  whether to use safe prompt, e.g. true. Defaults to False.
+  ///
+  /// [randomSeed]  the random seed to use for sampling, e.g.
+  /// 42. Defaults to None.
   const ChatParams({
     required this.model,
     required this.messages,
