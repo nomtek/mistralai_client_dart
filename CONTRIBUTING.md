@@ -20,11 +20,15 @@ Thank you for considering contributing to [Your Project Name]! We appreciate you
 
 ### Reporting Bugs
 
-Before submitting a bug report, please check if the issue has already been reported in the [issue tracker](https://github.com/nomtek/mistralai_client_dart/issues). If it hasn't, create a new issue with a clear title and description, including steps to reproduce the bug.
+Before submitting a bug report, please check if the issue has already been reported in the [issue tracker](https://github.com/nomtek/mistralai_client_dart/issues). If it hasn't, create a new issue with a clear title and description, including steps to reproduce the bug and labeling issue as `bug`.
+
+To make it easier we have a bug report template which gives you all the things you need to create a bug report and help us squash those bugs.
 
 ### Suggesting Enhancements
 
-If you have an idea for an improvement or a new feature, we'd love to hear about it! Create a new issue in the [issue tracker](https://github.com/nomtek/mistralai_client_dart/issues) with your suggestion, and we can discuss it further.
+If you have an idea for an improvement or a new feature, we'd love to hear about it! Create a new issue in the [issue tracker](https://github.com/nomtek/mistralai_client_dart/issues) with your suggestion, and we can discuss it further. 
+
+Make sure that you mark an issue with `enhancement` label or use our feature request issue template.
 
 ### Code Contributions
 
@@ -40,15 +44,24 @@ We welcome contributions to the codebase. To contribute:
 
 Improving documentation is a valuable contribution. If you find areas that need clarification or have ideas for better explanations, please make the necessary updates.
 
+To contribute to documentation follow the same steps as in [Code Contributions](#code-contributions).
+
 ## Getting Started
 
 ### Setting Up the Development Environment
 
-- Check [pubspec.yaml](https://github.com/nomtek/mistralai_client_dart/blob/main/pubspec.yaml) for any dependencies and versions required to build project.
+1. Install Dart SDK
+   1. Using [Flutter SDK installation gude](https://docs.flutter.dev/get-started/install) when you also want to develop apps
+   2. Using [standalone installation](https://dart.dev/get-dart)
+2. [Install](https://dart.dev/tools#ides-and-editors) your favourite IDE
+3. Run `dart pub get` in terminal to get dependencies
+4. If everything went well you're good to go 😊
 
 ## Style Guide
 
-No particular style guide. We are using [very_good_analysis](https://pub.dev/packages/very_good_analysis) package to keep code consistent.
+We following official [dart code style](https://dart.dev/effective-dart/style) as a base style guide.
+
+On top of that we are using [very_good_analysis](https://pub.dev/packages/very_good_analysis) package to keep code as consistent as we can with strict rules the package provides.
 
 ## Review Process
 
@@ -72,3 +85,4 @@ After submitting pull request few things will happen:
 
 5. **Celebrate:**
     - Congratulations! Your contribution has been successfully merged.
+    - Also, you will be mentioned in the changelog when your change is released!
