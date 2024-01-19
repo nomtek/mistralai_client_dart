@@ -17,7 +17,7 @@ ChatCompletionParams _$ChatCompletionParamsFromJson(
       topP: (json['top_p'] as num?)?.toDouble(),
       maxTokens: json['max_tokens'] as int?,
       stream: json['stream'] as bool?,
-      safeMode: json['safe_mode'] as bool?,
+      safePrompt: json['safe_prompt'] as bool?,
       randomSeed: json['random_seed'] as int?,
     );
 
@@ -38,7 +38,7 @@ Map<String, dynamic> _$ChatCompletionParamsToJson(
   writeNotNull('top_p', instance.topP);
   writeNotNull('max_tokens', instance.maxTokens);
   writeNotNull('stream', instance.stream);
-  writeNotNull('safe_mode', instance.safeMode);
+  writeNotNull('safe_prompt', instance.safePrompt);
   writeNotNull('random_seed', instance.randomSeed);
   return val;
 }
@@ -54,8 +54,9 @@ Map<String, dynamic> _$ChatMessageToJson(ChatMessage instance) =>
       'content': instance.content,
     };
 
-ChatCompletion _$ChatCompletionFromJson(Map<String, dynamic> json) =>
-    ChatCompletion(
+ChatCompletionResult _$ChatCompletionResultFromJson(
+        Map<String, dynamic> json) =>
+    ChatCompletionResult(
       id: json['id'] as String,
       object: json['object'] as String,
       created: json['created'] as int,
@@ -66,7 +67,8 @@ ChatCompletion _$ChatCompletionFromJson(Map<String, dynamic> json) =>
       usage: CompletionUsage.fromJson(json['usage'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$ChatCompletionToJson(ChatCompletion instance) =>
+Map<String, dynamic> _$ChatCompletionResultToJson(
+        ChatCompletionResult instance) =>
     <String, dynamic>{
       'id': instance.id,
       'object': instance.object,
@@ -102,8 +104,9 @@ Map<String, dynamic> _$CompletionUsageToJson(CompletionUsage instance) =>
       'total_tokens': instance.totalTokens,
     };
 
-ChatCompletionChunk _$ChatCompletionChunkFromJson(Map<String, dynamic> json) =>
-    ChatCompletionChunk(
+ChatCompletionChunkResult _$ChatCompletionChunkResultFromJson(
+        Map<String, dynamic> json) =>
+    ChatCompletionChunkResult(
       id: json['id'] as String,
       object: json['object'] as String,
       created: json['created'] as int,
@@ -113,8 +116,8 @@ ChatCompletionChunk _$ChatCompletionChunkFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$ChatCompletionChunkToJson(
-        ChatCompletionChunk instance) =>
+Map<String, dynamic> _$ChatCompletionChunkResultToJson(
+        ChatCompletionChunkResult instance) =>
     <String, dynamic>{
       'id': instance.id,
       'object': instance.object,
