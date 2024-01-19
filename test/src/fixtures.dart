@@ -4,7 +4,7 @@ import 'package:mistralai_client_dart/mistralai_client_dart.dart';
 // http client is required to force setting mocked http client
 // to not make real http requests
 MistralAIClient mistralAIClientOf({
-  required http.Client client,
+  required http.Client httpClient,
   String apiKey = 'apiKey',
   String baseUrl = 'https://example.api.mistral.ai',
   Duration timeout = const Duration(milliseconds: 500),
@@ -15,7 +15,7 @@ MistralAIClient mistralAIClientOf({
       apiKey: apiKey,
       baseUrl: baseUrl,
       timeout: timeout,
-      client: client,
+      httpClient: httpClient,
       maxRetries: maxRetries,
       apiUrlFactory: apiUrlFactory,
     );

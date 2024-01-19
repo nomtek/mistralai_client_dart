@@ -22,7 +22,7 @@ MistralAIClient _prepareMistralClient({
   }
   return mistralAIClientOf(
     apiKey: apiKey,
-    client: httpClient ??
+    httpClient: httpClient ??
         FakeHttpJsonResponseClient(responseBody: apiJsonResponseBody!),
     baseUrl: baseUrl,
     timeout: timeout,

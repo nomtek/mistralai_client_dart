@@ -31,21 +31,21 @@ class MistralAIClient {
   ///
   /// If [apiUrlFactory] is provided then [baseUrl] is ignored.
   ///
-  /// [client] allows to inject http client.
+  /// [httpClient] allows to inject http client.
   /// If not provided then default http client is used.
   /// It is used for testing purposes or when you want to use
-  /// custom http client.
+  /// custom http client``.
   MistralAIClient({
     required this.apiKey,
     this.baseUrl = MistralAPIEndpoints.baseUrl,
     this.timeout = const Duration(seconds: 120),
     this.maxRetries = 5,
     MistralAIUrlFactory? apiUrlFactory,
-    http.Client? client,
-  })  : _client = client is retry.RetryClient
-            ? client
+    http.Client? httpClient,
+  })  : _httpClient = httpClient is retry.RetryClient
+            ? httpClient
             : retry.RetryClient(
-                client ?? http.Client(),
+                httpClient ?? http.Client(),
                 retries: maxRetries,
               ),
         _apiUrlFactory = apiUrlFactory ?? MistralAIUrlFactory(baseUrl: baseUrl);
@@ -55,13 +55,13 @@ class MistralAIClient {
   final Duration timeout;
   final int maxRetries;
   final MistralAIUrlFactory _apiUrlFactory;
-  final http.Client _client;
+  final http.Client _httpClient;
 
   /// Returns a list of the available models [ListModelsResult]
   ///
   /// It uses [list models endpoint](https://api.mistral.ai/v1/models) from the mistral AI API.
   Future<ListModelsResult> listModels() async => _requestJson(
-        client: _client,
+        client: _httpClient,
         apiKey: apiKey,
         request: http.Request('GET', _apiUrlFactory.listModels()),
         fromJson: ListModelsResult.fromJson,
@@ -76,7 +76,7 @@ class MistralAIClient {
   ///
   /// Throws [MistralAIClientException] if the request fails.
   Future<ChatCompletionResult> chat(ChatParams params) async => _requestJson(
-        client: _client,
+        client: _httpClient,
         apiKey: apiKey,
         request: http.Request(
           'POST',
@@ -100,7 +100,7 @@ class MistralAIClient {
   /// Throws [MistralAIClientException] if the request fails.
   Stream<ChatCompletionChunkResult> chatStream(ChatParams params) =>
       _streamRequest(
-        client: _client,
+        client: _httpClient,
         apiKey: apiKey,
         request: http.Request(
           'POST',
@@ -120,7 +120,7 @@ class MistralAIClient {
   /// Throws [MistralAIClientException] if request fails.
   Future<EmbeddingsResult> embeddings(EmbeddingParams params) async =>
       _requestJson(
-        client: _client,
+        client: _httpClient,
         apiKey: apiKey,
         request: http.Request(
           'POST',

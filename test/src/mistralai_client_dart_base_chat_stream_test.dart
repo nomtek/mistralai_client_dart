@@ -20,7 +20,7 @@ void main() {
           chatCompletionChunkResponse,
         ],
       );
-      final mistralClient = mistralAIClientOf(client: mockHttpClient);
+      final mistralClient = mistralAIClientOf(httpClient: mockHttpClient);
 
       // when
       final result = mistralClient.chatStream(chatParamsOf());
@@ -100,7 +100,7 @@ void main() {
 
           // when
           // wait for first result to be emitted
-          await mistralAIClientOf(client: mockHttpClient)
+          await mistralAIClientOf(httpClient: mockHttpClient)
               .chatStream(chatParams)
               .first;
 
@@ -123,7 +123,7 @@ void main() {
           chatCompletionChunkMalformedResponse,
         ],
       );
-      final mistralClient = mistralAIClientOf(client: mockHttpClient);
+      final mistralClient = mistralAIClientOf(httpClient: mockHttpClient);
 
       // when
       final result = mistralClient.chatStream(chatParamsOf());
@@ -151,7 +151,7 @@ void main() {
           chatCompletionChunkInvalidResponse,
         ],
       );
-      final mistralClient = mistralAIClientOf(client: mockHttpClient);
+      final mistralClient = mistralAIClientOf(httpClient: mockHttpClient);
 
       // when
       final result = mistralClient.chatStream(chatParamsOf());
@@ -184,7 +184,7 @@ void main() {
           final mockHttpClient = FakeStreamedResponseHttpClient(
             responseChunks: value,
           );
-          final mistralClient = mistralAIClientOf(client: mockHttpClient);
+          final mistralClient = mistralAIClientOf(httpClient: mockHttpClient);
 
           // when
           final result = mistralClient.chatStream(chatParamsOf());
@@ -212,7 +212,7 @@ void main() {
             httpStatusCode: errorResponseCode,
           );
           final mistralClient = mistralAIClientOf(
-            client: mockHttpClient,
+            httpClient: mockHttpClient,
             // disable retries
             maxRetries: 0,
           );
