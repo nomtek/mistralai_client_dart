@@ -9,9 +9,6 @@ part 'network/request.dart';
 part 'models/mappers.dart';
 part 'network/url_tools.dart';
 
-// FIXME(lgawron): add tests for all requests
-// TODO(lgawron): add more documentation
-
 /// Mistral AI Client
 class MistralAIClient {
   /// Creates a new instance of [MistralAIClient].
