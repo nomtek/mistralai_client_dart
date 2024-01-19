@@ -20,7 +20,7 @@ void main() async {
   );
   final chatCompletion = await client.chat(params);
   final chatMessage = chatCompletion.choices[0].message;
-  print(chatMessage);
+  print(chatMessage.content);
 
   // chat with streaming
   final stream = client.streamChat(params);
@@ -41,6 +41,6 @@ void main() async {
     ),
   );
   for (final data in embeddings.data) {
-    print(data.embedding);
+    print('Embeddings: ${data.embedding}');
   }
 }
