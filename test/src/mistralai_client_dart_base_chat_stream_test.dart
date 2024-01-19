@@ -167,7 +167,7 @@ void main() {
     group(
         'calling chat stream '
         'with errorneous response chunks '
-        'should emits exception', () {
+        'should emit exception', () {
       final testInputs = {
         'invalid json': [
           chatCompletionChunkInvalidResponse,
