@@ -70,7 +70,6 @@ final embeddings = await client.embeddings(
   const EmbeddingParams(
     model: 'mistral-embed',
     input: ['Hello chat!'],
-    encodingFormat: 'float',
   ),
 );
 for (final data in embeddings.data) {

@@ -36,8 +36,6 @@ void main() async {
     const EmbeddingParams(
       model: 'mistral-embed',
       input: ['Hello chat!'],
-      // TODO(lgawron): this should be a default in the model
-      encodingFormat: 'float',
     ),
   );
   for (final data in embeddings.data) {
