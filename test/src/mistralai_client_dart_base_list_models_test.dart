@@ -7,8 +7,8 @@ import 'fakes.dart';
 void main() {
   group('MistralAIClient listModels tests', () {
     test(
-        'given valid response '
-        'when listModels is called then return ListModelsResult', () {
+        'calling list models '
+        'should result in returning list models result', () {
       testResponseType(
         apiJsonResponseBody: listModelsResponse,
         clientRequest: (client) => client.listModels(),
@@ -16,8 +16,8 @@ void main() {
     });
 
     test(
-        'given API returns wrong JSON when listModels is called '
-        'then return MistralAIClientException', () {
+        'calling list models when api returns invalid JSON '
+        'should result in receving exception', () {
       testIfExceptionIsThrown(
         apiJsonResponseBody: listModelsInvalidResponse,
         clientRequest: (client) => client.listModels(),
@@ -25,8 +25,8 @@ void main() {
     });
 
     test(
-      'given API returns malformed JSON when listModels is called '
-      'then return MistralAIClientException with FormatException inside',
+      'calling list models when api returns malformed JSON '
+      'should result in receving exception with format exception',
       () {
         testIfFormatExceptionIsThrown(
           apiJsonResponseBody: listModelsMalformedResponse,
@@ -36,8 +36,8 @@ void main() {
     );
 
     test(
-      'given API times out when listModels is called '
-      'then return MistralAIClientException with Timeout in message',
+      'calling list models when api times out '
+      'should result in receving exception with Timeout in message',
       () {
         testIfTimeoutExceptionIsThrown(
           clientRequest: (client) => client.listModels(),
@@ -46,8 +46,8 @@ void main() {
     );
 
     test(
-      'given API key when listModels is called '
-      'then authentification header should be set',
+      'calling list models with certain api key '
+      'should result in sending authentification header with that key',
       () {
         testIfAuthenticationHeaderIsSet(
           apiJsonResponseBody: listModelsResponse,
@@ -57,8 +57,8 @@ void main() {
     );
 
     test(
-      'given API request has 500 status code  when listModels is called '
-      'then return MistralAIClientException',
+      'calling list models when api returns 500 status code '
+      'should result in receving exception',
       () {
         testIfExceptionIsThrown(
           apiJsonResponseBody: null,
@@ -72,8 +72,8 @@ void main() {
     );
 
     test(
-      'given default url factory when list models is called '
-      'then request url should be from url factory',
+      'calling list models with default url factory '
+      'should result in sending request to default url',
       () async {
         testIfRequestUrlIsCorrect(
           apiJsonResponseBody: listModelsResponse,

@@ -37,8 +37,8 @@ void main() {
     });
 
     group(
-        'calling chat stream '
-        'request body should contains proper parameter', () {
+        'calling chat stream with certain param '
+        'should result in request body containing that param', () {
       final testInputs = [
         (
           expectedParamName: 'stream',
@@ -167,7 +167,7 @@ void main() {
     group(
         'calling chat stream '
         'with errorneous response chunks '
-        'should emits MistralAIClientException', () {
+        'should emits exception', () {
       final testInputs = {
         'invalid json': [
           chatCompletionChunkInvalidResponse,
@@ -202,7 +202,7 @@ void main() {
     group(
         'calling chat stream '
         'when response code is other than 200 '
-        'should emit MistralAIClientException', () {
+        'should emit exception', () {
       final errorResponseCodes = [400, 401, 403, 404, 500, 503];
 
       for (final errorResponseCode in errorResponseCodes) {

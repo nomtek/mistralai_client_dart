@@ -10,8 +10,8 @@ import 'fixtures.dart';
 void main() {
   group('MistralAIClient embeddings test', () {
     test(
-        'given valid response '
-        'when embeddings is called then return EmbeddingsResult', () {
+        'calling embeddings '
+        'should result in returning embeddings result', () {
       testResponseType<EmbeddingsResult>(
         apiJsonResponseBody: embeddingsResponse,
         clientRequest: (client) => client.embeddings(embeddingParamsOf()),
@@ -19,8 +19,8 @@ void main() {
     });
 
     test(
-      'given embeddings params as JSON when embeddings is called '
-      'then proper request body is sent',
+      'calling embeddings with params '
+      'should result in sending params in request body',
       () async {
         final embeddingJsonParams =
             jsonDecode(embeddingsParamsBody) as Map<String, dynamic>;
@@ -35,8 +35,8 @@ void main() {
     );
 
     test(
-        'given API returns invalid JSON when embeddings is called '
-        'then return MistralAIClientException', () {
+        'calling embeddings when api returns invalid JSON '
+        'should result in receving exception', () {
       testIfExceptionIsThrown(
         apiJsonResponseBody: embeddingsInvalidResponse,
         clientRequest: (client) => client.embeddings(embeddingParamsOf()),
@@ -44,8 +44,8 @@ void main() {
     });
 
     test(
-      'given API returns malformed JSON when embeddings is called '
-      'then return MistralAIClientException with FormatException inside',
+      'calling embeddings when api returns malformed JSON '
+      'should result in receving exception with format exception',
       () {
         testIfFormatExceptionIsThrown(
           apiJsonResponseBody: embeddingsMalformeddResponse,
@@ -55,16 +55,16 @@ void main() {
     );
 
     test(
-        'given API times out when embeddings is called '
-        'then return MistralAIClientException with Timeout in message', () {
+        'calling embeddings when api times out '
+        'should result in receving exception with Timeout in message', () {
       testIfTimeoutExceptionIsThrown(
         clientRequest: (client) => client.embeddings(embeddingParamsOf()),
       );
     });
 
     test(
-      'given API key when embeddings is called '
-      'then authentification header should be set',
+      'calling embeddings with certain api key '
+      'should result in sending authentification header with that key',
       () {
         testIfAuthenticationHeaderIsSet(
           apiJsonResponseBody: embeddingsResponse,
@@ -74,8 +74,8 @@ void main() {
     );
 
     test(
-      'given API request has 500 status code  when embeddings is called '
-      'then return MistralAIClientException',
+      'calling embeddings when api returns 500 status code '
+      'should result in receving exception',
       () {
         testIfExceptionIsThrown(
           apiJsonResponseBody: null,
@@ -89,8 +89,8 @@ void main() {
     );
 
     test(
-      'given default url factory when embedings is called '
-      'then request url should be from url factory',
+      'calling embeddings with default url factory '
+      'should result in sending request to default url',
       () async {
         testIfRequestUrlIsCorrect(
           apiJsonResponseBody: embeddingsResponse,

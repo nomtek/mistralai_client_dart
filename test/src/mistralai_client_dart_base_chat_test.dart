@@ -10,8 +10,8 @@ import 'fixtures.dart';
 void main() {
   group('MistralAIClient chat test', () {
     test(
-        'given valid response '
-        'when chat is called then return ChatCompletionResult', () {
+        'calling chat '
+        'should result in returning chat completition result', () {
       testResponseType<ChatCompletionResult>(
         apiJsonResponseBody: chatCompletionResponse,
         clientRequest: (client) => client.chat(chatParamsOf()),
@@ -19,8 +19,8 @@ void main() {
     });
 
     test(
-      'given chat params with all fields as JSON when chat is called '
-      'then proper request body is sent',
+      'calling chat with all params '
+      'should result in sending all params in request body',
       () async {
         final chatJsonParams = jsonDecode(chatCompletionParamsWithAllFieldsBody)
             as Map<String, dynamic>;
@@ -35,8 +35,8 @@ void main() {
     );
 
     test(
-      'given chat params with required fields as JSON when chat is called '
-      'then proper request body is sent',
+      'calling chat with required params '
+      'should result in sending required params in request body',
       () {
         final chatJsonParams =
             jsonDecode(chatCompletionParamsWithRequiredFieldsBody)
@@ -52,9 +52,8 @@ void main() {
     );
 
     group(
-        'given chat params '
-        'when calling chat '
-        'then should send request param', () {
+        'calling chat with certain param '
+        'should result in request body containing that param', () {
       final testInputs = [
         (
           expectedParamName: 'stream',
@@ -130,8 +129,8 @@ void main() {
     });
 
     test(
-      'given API returns wrong JSON when chat is called '
-      'then return MistralAIClientException',
+      'calling chat when api returns invalid JSON '
+      'should result in receving exception',
       () {
         testIfExceptionIsThrown(
           apiJsonResponseBody: chatCompletionInvalidResponse,
@@ -141,8 +140,8 @@ void main() {
     );
 
     test(
-      'given API returns malformed JSON when chat is called '
-      'then return MistralAIClientException with FormatException inside',
+      'calling chat when api returns malformed JSON '
+      'should result in receving exception with format exception',
       () {
         testIfFormatExceptionIsThrown(
           apiJsonResponseBody: chatCompletionMalformedResponse,
@@ -152,8 +151,8 @@ void main() {
     );
 
     test(
-      'given API times out when chat is called '
-      'then return MistralAIClientException with Timeout in message',
+      'calling chat when api times out '
+      'should result in receving exception with Timeout in message',
       () {
         testIfTimeoutExceptionIsThrown(
           clientRequest: (client) => client.chat(chatParamsOf()),
@@ -162,8 +161,8 @@ void main() {
     );
 
     test(
-      'given API key when chat is called '
-      'then authentification header should be set',
+      'calling chat with certain api key '
+      'should result in sending authentification header with that key',
       () {
         testIfAuthenticationHeaderIsSet(
           apiJsonResponseBody: chatCompletionResponse,
@@ -173,8 +172,8 @@ void main() {
     );
 
     test(
-      'given API request has 500 status code  when chat is called '
-      'then return MistralAIClientException',
+      'calling chat when api returns 500 status code '
+      'should result in receving exception',
       () {
         testIfExceptionIsThrown(
           apiJsonResponseBody: null,
@@ -188,8 +187,8 @@ void main() {
     );
 
     test(
-      'given default url factory when chat is called '
-      'then request url should be from url factory',
+      'calling chat with default url factory '
+      'should result in sending request to default url',
       () async {
         testIfRequestUrlIsCorrect(
           apiJsonResponseBody: chatCompletionResponse,
