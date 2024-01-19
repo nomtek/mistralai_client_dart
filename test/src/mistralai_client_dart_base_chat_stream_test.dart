@@ -28,7 +28,11 @@ void main() {
       // then
       expect(
         result,
-        emits(isA<ChatCompletionChunkResult>()),
+        emitsInOrder([
+          isA<ChatCompletionChunkResult>(),
+          isA<ChatCompletionChunkResult>(),
+          isA<ChatCompletionChunkResult>(),
+        ]),
       );
     });
 
