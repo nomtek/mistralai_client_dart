@@ -5,13 +5,13 @@
 
 ## Description
 
-This is an unofficial Dart/Flutter client for the Mistral AI API (0.0.1).
+This is an unofficial Dart/Flutter client for the Mistral AI API.
 
 The implementation is inspired by the [official Mistral AI JS client](https://github.com/mistralai/client-js).
 
 ## Overview (current state)
 
-The project is currently in progress.
+The package is supporting Mistral AI API (0.0.1) a the moment.
 
 ## Installation
 
