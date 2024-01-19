@@ -1,6 +1,5 @@
 name: mistralai_client_dart
 description: Mistral Ai client for Dart.
-publish_to: none 
 version: 0.0.1
 
 environment:
