@@ -117,7 +117,7 @@ void main() {
     });
 
     test(
-        'calling chat stream with  malformed response chunk '
+        'calling chat stream with malformed response chunk '
         'should emit format exception ', () {
       // given
       final mockHttpClient = FakeStreamedResponseHttpClient(
