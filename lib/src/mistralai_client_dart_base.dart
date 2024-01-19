@@ -23,8 +23,8 @@ class MistralAIClient {
   /// Client uses [retry.RetryClient] to retry requests.
   ///
   /// [apiUrlFactory] allows to override default [MistralAIUrlFactory].
-  /// It can be used to override default paths for requests when Mistral AI API
-  /// changes.
+  /// It can be used to override default paths for requests to Mistral AI API.
+  /// It could be useful when trying to use a non-stable version of the API.
   ///
   /// If [apiUrlFactory] is provided then [baseUrl] is ignored.
   ///
