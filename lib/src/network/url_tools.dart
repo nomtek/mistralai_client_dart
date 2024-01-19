@@ -43,11 +43,11 @@ class MistralAIUrlFactory {
   final String _embeddingsPath;
   final String _chatCompletionsPath;
 
-  Uri listModels() => _parseEndpint(_listModelsPath);
+  Uri listModels() => _parseEndpoint(_listModelsPath);
 
-  Uri embeddings() => _parseEndpint(_embeddingsPath);
+  Uri embeddings() => _parseEndpoint(_embeddingsPath);
 
-  Uri chatCompletions() => _parseEndpint(_chatCompletionsPath);
+  Uri chatCompletions() => _parseEndpoint(_chatCompletionsPath);
 
-  Uri _parseEndpint(String endpoint) => Uri.parse('$_baseUrl$endpoint');
+  Uri _parseEndpoint(String endpoint) => Uri.parse('$_baseUrl$endpoint');
 }
