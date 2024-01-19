@@ -7,9 +7,9 @@ import 'fixtures.dart';
 void main() {
   group('MistralAIClient chat stream test', () {
     test(
-        'given response chunks '
-        'when calling chat stream '
-        'then should result in chat completion chunk results emissions', () {
+        'calling chat stream '
+        'should result in chat completion results emission '
+        'if chunks contain completion chunk responses', () {
       // given
       final mockHttpClient = FakeStreamedResponseHttpClient(
         responseChunks: [
@@ -33,9 +33,8 @@ void main() {
     });
 
     group(
-        'given chat params '
-        'when calling chat stream '
-        'then should send request param', () {
+        'calling chat stream '
+        'request body should contains proper parameter', () {
       final testInputs = [
         (
           expectedParamName: 'stream',
@@ -114,9 +113,8 @@ void main() {
     });
 
     test(
-        'given malformed response chunk '
-        'when calling chat stream '
-        'then should emit format error', () {
+        'calling chat stream with  malformed response chunk '
+        'should emit format exception ', () {
       // given
       final mockHttpClient = FakeStreamedResponseHttpClient(
         responseChunks: [
@@ -142,9 +140,8 @@ void main() {
     });
 
     test(
-        'given invalid response chunk '
-        'when calling chat stream '
-        'then should emit error', () {
+        'calling chat stream with invalid response chunk '
+        'should emit exception ', () {
       // given
       final mockHttpClient = FakeStreamedResponseHttpClient(
         responseChunks: [
@@ -164,9 +161,9 @@ void main() {
     });
 
     group(
-        'given errorneous response chunks '
-        'when calling chat stream '
-        'then emits MistralAIClientException', () {
+        'calling chat stream '
+        'with errorneous response chunks '
+        'should emits MistralAIClientException', () {
       final testInputs = {
         'invalid json': [
           chatCompletionChunkInvalidResponse,
@@ -199,9 +196,9 @@ void main() {
     });
 
     group(
-        'given response with response code other than 200 '
-        'when calling chat stream '
-        'then should emit MistralAIClientException', () {
+        'calling chat stream '
+        'when response code is other than 200 '
+        'should emit MistralAIClientException', () {
       final errorResponseCodes = [400, 401, 403, 404, 500, 503];
 
       for (final errorResponseCode in errorResponseCodes) {
