@@ -11,7 +11,7 @@ The implementation is inspired by the [official Mistral AI JS client](https://gi
 
 ## Overview (current state)
 
-The package is supporting Mistral AI API (0.0.1) a the moment.
+The package is supporting Mistral AI API (0.0.1) at the moment.
 
 ## Installation
 
