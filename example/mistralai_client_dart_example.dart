@@ -23,7 +23,7 @@ void main() async {
   print(chatMessage.content);
 
   // chat with streaming
-  final stream = client.streamChat(params);
+  final stream = client.chatStream(params);
   await for (final completionChunk in stream) {
     final chatMessage = completionChunk.choices[0].delta?.content;
     if (chatMessage != null) {
