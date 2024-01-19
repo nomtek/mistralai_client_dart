@@ -1,5 +1,3 @@
-part of '../mistralai_client_dart_base.dart';
-
 class MistralAPIEndpoints {
   static const String listModels = '/v1/models';
   static const String embeddings = '/v1/embeddings';
