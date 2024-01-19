@@ -9,7 +9,10 @@ environment:
 dependencies:
   http: ^1.2.0
   json_annotation: ^4.8.1
-  meta: ^1.11.0
+  # meta version to support Flutter SDK 3.16.0+
+  # check Flutter version pinning for more details
+  # https://github.com/dart-lang/sdk/wiki/Flutter-Pinned-Packages
+  meta: ^1.10.0
 
 dev_dependencies:
   build_runner: ^2.4.7
