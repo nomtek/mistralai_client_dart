@@ -8,6 +8,14 @@ part 'embeddings.g.dart';
 @immutable
 @JsonSerializable()
 class EmbeddingParams {
+  /// Creates a new instance of [EmbeddingParams].
+  ///
+  /// [model] model The embedding model to use, e.g. mistral-embed
+  ///
+  /// [input] input The input to embed,
+  /// e.g. ['What is the best French cheese?']
+  ///
+  /// [encodingFormat] The format of the output data. e.g. 'float'
   const EmbeddingParams({
     required this.model,
     required this.input,
