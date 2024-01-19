@@ -1,6 +1,7 @@
 name: mistralai_client_dart
 description: Mistral Ai client for Dart.
 version: 0.0.1
+repository: https://github.com/nomtek/mistralai_client_dart
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
