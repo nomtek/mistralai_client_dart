@@ -9,18 +9,9 @@ import 'package:mistralai_client_dart/src/network/url_tools.dart';
 part 'network/request.dart';
 part 'models/mappers.dart';
 
-/// Mistral AI Client
+/// Mistral AI Client enables to connect with [Mistral AI API](https://docs.mistral.ai/api/)
 class MistralAIClient {
   /// Creates a new instance of [MistralAIClient].
-  ///
-  /// [apiKey] is required to authenticate requests.
-  ///
-  /// [baseUrl] is the base url for all requests.
-  ///
-  /// [timeout] is the maximum wait time for response.
-  ///
-  /// [maxRetries] is the maximum number of retries for a single request.
-  /// Client uses [retry.RetryClient] to retry requests.
   ///
   /// [apiUrlFactory] allows to override default [MistralAIUrlFactory].
   /// It can be used to override default paths for requests to Mistral AI API.
@@ -31,7 +22,7 @@ class MistralAIClient {
   /// [httpClient] allows to inject http client.
   /// If not provided then default http client is used.
   /// It is used for testing purposes or when you want to use
-  /// custom http client``.
+  /// custom http client.
   MistralAIClient({
     required this.apiKey,
     this.baseUrl = MistralAPIEndpoints.baseUrl,
@@ -47,16 +38,29 @@ class MistralAIClient {
               ),
         _apiUrlFactory = apiUrlFactory ?? MistralAIUrlFactory(baseUrl: baseUrl);
 
+  /// required to authenticate requests.
   final String apiKey;
+
+  /// base url for all requests.
   final String baseUrl;
+
+  /// maximum wait time for response.
   final Duration timeout;
+
+  /// maximum number of retries for a single request.
+  ///
+  /// Client uses [retry.RetryClient] to retry requests.
   final int maxRetries;
   final MistralAIUrlFactory _apiUrlFactory;
   final http.Client _httpClient;
 
-  /// Returns a list of the available models [ListModelsResult]
+  /// Returns a list of the available models.
   ///
-  /// It uses [list models endpoint](https://api.mistral.ai/v1/models) from the mistral AI API.
+  /// Sends a request to
+  /// [Mistral AI API](https://docs.mistral.ai/api/#operation/listModels)
+  /// to get a list of the available models.
+  ///
+  /// Throws [MistralAIClientException] if the request fails.
   Future<ListModelsResult> listModels() async => _requestJson(
         client: _httpClient,
         apiKey: apiKey,
@@ -65,7 +69,7 @@ class MistralAIClient {
         timeout: timeout,
       );
 
-  /// Returns a chat completion for given [params].
+  /// Returns a chat completion.
   ///
   /// Sends a request to
   /// [Mistral AI API](https://docs.mistral.ai/api/#operation/createChatCompletion)
@@ -85,7 +89,7 @@ class MistralAIClient {
         timeout: timeout,
       );
 
-  /// Returns a stream of chat completion chunks for given [params].
+  /// Returns a stream of chat completion chunks.
   ///
   /// Chunks are small parts of the whole chat completion.
   /// They are supposed to be used to display chat completion in real time.
@@ -109,10 +113,11 @@ class MistralAIClient {
         timeout: timeout,
       );
 
-  /// Returns [EmbeddingsResult] for a single input
-  /// or a batch of inputs given as [EmbeddingParams]
+  /// Returns [EmbeddingsResult] for a single input or a batch of inputs.
   ///
-  /// It uses [embeddings endpoint](https://docs.mistral.ai/api/#operation/createEmbedding) from the Mistral AI API.
+  /// Sends a request to
+  /// [Mistral AI API](https://docs.mistral.ai/api/#operation/createEmbedding)
+  /// to create embeddings.
   ///
   /// Throws [MistralAIClientException] if request fails.
   Future<EmbeddingsResult> embeddings(EmbeddingParams params) async =>
