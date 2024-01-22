@@ -3,6 +3,12 @@ description: Mistral Ai client for Dart.
 version: 0.0.1
 repository: https://github.com/nomtek/mistralai_client_dart
 
+topics:
+  - ai
+  - nlp
+  - llms
+  - mistral
+
 environment:
   sdk: ^3.2.0
 
