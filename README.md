@@ -5,19 +5,77 @@
 
 ## Description
 
-This is an unofficial Dart/Flutter client for the Mistral AI. The implementation is based on the [official Mistral AI JS client](https://github.com/mistralai/client-js).
+This is an unofficial Dart/Flutter client for the Mistral AI API.
+
+The implementation is inspired by the [official Mistral AI JS client](https://github.com/mistralai/client-js).
 
 ## Overview (current state)
 
-The project is currently in progress.
+The package is supporting Mistral AI API (0.0.1) at the moment.
 
 ## Installation
 
-TBD
+```shell
+dart pub add mistralai_client_dart
+```
 
 ## Usage
 
-TBD
+### Create client
+
+```dart
+import 'package:mistralai_client_dart/mistralai_client_dart.dart';
+
+final client = MistralAIClient(apiKey: 'your api key here');
+```
+
+### List models
+
+```dart
+final modelsResult = await client.listModels();
+final models = modelsResult.data.map((e) => e.id).toList();
+print(models.join(', '));
+```
+
+### Chat
+
+```dart
+final params = ChatParams(
+  model: 'mistral-tiny',
+  messages: const [
+    ChatMessage(role: 'user', content: 'Hello chat!'),
+  ],
+);
+final chatCompletion = await client.chat(params);
+final chatMessage = chatCompletion.choices[0].message;
+print(chatMessage);
+```
+
+### Chat stream
+
+```dart
+final stream = client.streamChat(params);
+await for (final completionChunk in stream) {
+  final chatMessage = completionChunk.choices[0].delta?.content;
+  if (chatMessage != null) {
+    print(chatMessage);
+  }
+}
+```
+
+### Embeddings
+
+```dart
+final embeddings = await client.embeddings(
+  const EmbeddingParams(
+    model: 'mistral-embed',
+    input: ['Hello chat!'],
+  ),
+);
+for (final data in embeddings.data) {
+  print(data.embedding);
+}
+```
 
 ## Resources
 

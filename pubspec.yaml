@@ -1,18 +1,24 @@
 name: mistralai_client_dart
 description: Mistral Ai client for Dart.
-publish_to: none 
 version: 0.0.1
+repository: https://github.com/nomtek/mistralai_client_dart
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: ^3.2.0
 
 dependencies:
-  http: ^1.1.2
+  http: ^1.2.0
   json_annotation: ^4.8.1
-  meta: ^1.11.0
+  # meta version to support Flutter SDK 3.16.0+
+  # check Flutter version pinning for more details
+  # https://github.com/dart-lang/sdk/wiki/Flutter-Pinned-Packages
+  meta: ^1.10.0
 
 dev_dependencies:
   build_runner: ^2.4.7
   json_serializable: ^6.7.1
-  test: ^1.16.0
+  # test version to support Flutter SDK 3.16.0+
+  # check Flutter version pinning for more details
+  # https://github.com/dart-lang/sdk/wiki/Flutter-Pinned-Packages
+  test: ^1.24.9
   very_good_analysis: ^5.1.0

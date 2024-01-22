@@ -10,7 +10,7 @@ EmbeddingParams _$EmbeddingParamsFromJson(Map<String, dynamic> json) =>
     EmbeddingParams(
       model: json['model'] as String,
       input: (json['input'] as List<dynamic>).map((e) => e as String).toList(),
-      encodingFormat: json['encoding_format'] as String,
+      encodingFormat: json['encoding_format'] as String? ?? 'float',
     );
 
 Map<String, dynamic> _$EmbeddingParamsToJson(EmbeddingParams instance) =>
