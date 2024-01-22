@@ -3,6 +3,7 @@ import 'package:meta/meta.dart';
 
 part 'list_models_result.g.dart';
 
+/// Represents a list of models.
 @immutable
 @JsonSerializable()
 class ListModelsResult {
@@ -14,7 +15,7 @@ class ListModelsResult {
   factory ListModelsResult.fromJson(Map<String, dynamic> json) =>
       _$ListModelsResultFromJson(json);
   final String object;
-  final List<ModelsListData> data;
+  final List<ListModelsData> data;
 
   Map<String, dynamic> toJson() => _$ListModelsResultToJson(this);
 
@@ -24,26 +25,26 @@ class ListModelsResult {
 
 @immutable
 @JsonSerializable()
-class ModelsListData {
-  const ModelsListData({
+class ListModelsData {
+  const ListModelsData({
     required this.id,
     required this.object,
     required this.created,
     required this.ownedBy,
   });
 
-  factory ModelsListData.fromJson(Map<String, dynamic> json) =>
-      _$ModelsListDataFromJson(json);
+  factory ListModelsData.fromJson(Map<String, dynamic> json) =>
+      _$ListModelsDataFromJson(json);
   final String id;
   final String object;
   final int created;
   @JsonKey(name: 'owned_by')
   final String ownedBy;
 
-  Map<String, dynamic> toJson() => _$ModelsListDataToJson(this);
+  Map<String, dynamic> toJson() => _$ListModelsDataToJson(this);
 
   @override
   String toString() =>
-      'ModelsListData{id: $id, object: $object, created: $created, '
+      'ListModelsData{id: $id, object: $object, created: $created, '
       'ownedBy: $ownedBy}';
 }

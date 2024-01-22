@@ -3,19 +3,11 @@ import 'package:meta/meta.dart';
 
 part 'embeddings.g.dart';
 
-/// [EmbeddingParams] are referring to embeddings params from official
+/// EmbeddingParams are referring to embeddings params from official
 /// [Mistral AI API docs](https://docs.mistral.ai/api/#operation/createEmbedding)
 @immutable
 @JsonSerializable()
 class EmbeddingParams {
-  /// Creates a new instance of [EmbeddingParams].
-  ///
-  /// [model] model The embedding model to use, e.g. mistral-embed
-  ///
-  /// [input] input The input to embed,
-  /// e.g. ['What is the best French cheese?']
-  ///
-  /// [encodingFormat] The format of the output data. e.g. 'float'
   const EmbeddingParams({
     required this.model,
     required this.input,
@@ -24,8 +16,14 @@ class EmbeddingParams {
 
   factory EmbeddingParams.fromJson(Map<String, dynamic> json) =>
       _$EmbeddingParamsFromJson(json);
+
+  /// the embedding model to use, e.g. mistral-embed
   final String model;
+
+  /// list of strings to embed, e.g. `['What is the best French cheese?']`.
   final List<String> input;
+
+  /// the format of the output data. e.g. 'float'
   @JsonKey(name: 'encoding_format')
   final String encodingFormat;
 
@@ -36,6 +34,7 @@ class EmbeddingParams {
       'encodingFormat: $encodingFormat}';
 }
 
+/// Represents an embeddings result.
 @immutable
 @JsonSerializable()
 class EmbeddingsResult {
