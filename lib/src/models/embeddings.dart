@@ -11,7 +11,7 @@ class EmbeddingParams {
   const EmbeddingParams({
     required this.model,
     required this.input,
-    required this.encodingFormat,
+    this.encodingFormat = 'float',
   });
 
   factory EmbeddingParams.fromJson(Map<String, dynamic> json) =>

@@ -106,7 +106,6 @@ void main() {
 const embedingsParams = EmbeddingParams(
   model: 'mistral-embed',
   input: ['Hello', 'world'],
-  encodingFormat: 'float',
 );
 
 const String embeddingsParamsBody = '''
