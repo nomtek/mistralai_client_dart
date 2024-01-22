@@ -1,7 +1,7 @@
 import 'package:meta/meta.dart';
 import 'package:mistralai_client_dart/src/models/chat_completion.dart';
 
-/// Params are referring to params from official
+/// [ChatParams] are referring to chat completions params from official
 /// [Mistral AI API docs](https://docs.mistral.ai/api/#operation/createChatCompletion)
 @immutable
 class ChatParams {

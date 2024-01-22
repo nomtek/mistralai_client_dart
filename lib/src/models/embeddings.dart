@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 part 'embeddings.g.dart';
 
-/// EmbeddingParams are referring to params from official
+/// [EmbeddingParams] are referring to embeddings params from official
 /// [Mistral AI API docs](https://docs.mistral.ai/api/#operation/createEmbedding)
 @immutable
 @JsonSerializable()
