@@ -3,6 +3,12 @@ description: This is an unofficial Dart/Flutter client for the Mistral AI API.
 version: 0.0.1
 repository: https://github.com/nomtek/mistralai_client_dart
 
+topics:
+  - ai
+  - nlp
+  - llms
+  - mistral
+
 environment:
   sdk: ^3.2.0
 
