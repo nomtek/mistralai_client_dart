@@ -41,7 +41,7 @@ print(models.join(', '));
 
 ```dart
 final params = ChatParams(
-  model: 'mistral-tiny',
+  model: 'mistral-small-latest',
   messages: const [
     ChatMessage(role: 'user', content: 'Hello chat!'),
   ],

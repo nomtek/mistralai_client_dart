@@ -27,7 +27,7 @@ class ChatParams {
           'maxTokens must be greater or equal to 0',
         );
 
-  /// the name of the model to chat with, e.g. mistral-tiny
+  /// the name of the model to chat with, e.g. mistral-small-latest
   final String model;
 
   /// an array of messages to chat with, e.g.
