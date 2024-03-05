@@ -96,11 +96,18 @@ void main() {
             {
               'role': 'role1',
               'content': 'content1',
+              'name': 'name1',
+              'tool_calls': null,
             },
           ],
           chatParams: chatParamsOf(
             messages: [
-              chatMessageOf(role: 'role1', content: 'content1'),
+              chatMessageOf(
+                role: 'role1',
+                content: 'content1',
+                name: 'name1',
+                toolCalls: null,
+              ),
             ],
           ),
         ),
@@ -245,7 +252,9 @@ const chatCompletionParamsWithAllFieldsBody = '''
   "messages": [
     {
       "role": "user",
-      "content": "What is the best French cheese?"
+      "content": "What is the best French cheese?",
+      "name": null,
+      "tool_calls": null
     }
   ],
   "temperature": 0.7,
@@ -273,7 +282,9 @@ const chatCompletionParamsWithRequiredFieldsBody = '''
   "messages": [
     {
       "role": "user",
-      "content": "What is the best French cheese?"
+      "content": "What is the best French cheese?",
+      "name": null,
+      "tool_calls": null
     }
   ],
   "stream": false
