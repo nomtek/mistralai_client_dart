@@ -3,6 +3,7 @@
 ## 0.1.0
 
 - Add Function Calling functionality to `chat` and `chatStream`
+- Add support for `responseFormat` parameter to `ChatParams`
 - Update examples to not use deprecated models (like `mistral-tiny`)
 
 ## 0.0.2
