@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.0
+
+- Add Function Calling functionality to `chat` and `chatStream`
+- Update examples to not use deprecated models (like `mistral-tiny`)
+
 ## 0.0.2
 
 - Add topics for better [pub.dev](https://pub.dev/) search
