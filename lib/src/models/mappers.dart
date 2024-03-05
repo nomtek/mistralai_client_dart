@@ -13,4 +13,7 @@ ChatCompletionParams _mapChatParamsToRequestParams(
       stream: stream,
       safePrompt: params.safePrompt,
       randomSeed: params.randomSeed,
+      tools: params.tools,
+      toolChoice: params.toolChoice,
+      responseFormat: params.responseFormat,
     );

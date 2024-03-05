@@ -1,5 +1,6 @@
 import 'package:meta/meta.dart';
 import 'package:mistralai_client_dart/src/models/chat_completion.dart';
+import 'package:mistralai_client_dart/src/models/tools.dart';
 
 /// ChatParams are referring to chat completions params from official
 /// [Mistral AI API docs](https://docs.mistral.ai/api/#operation/createChatCompletion)
@@ -13,6 +14,9 @@ class ChatParams {
     this.maxTokens,
     this.safePrompt,
     this.randomSeed,
+    this.tools,
+    this.toolChoice,
+    this.responseFormat,
   })  : assert(messages.length > 0, 'messages cannot be empty'),
         assert(
           temperature == null || (temperature >= 0 && temperature <= 1),
@@ -52,8 +56,20 @@ class ChatParams {
   /// 42. Defaults to null.
   final int? randomSeed;
 
+  /// a list of tools to use. Defaults to null.
+  /// You can manually create tool map objects or use any of the type-safe
+  /// classes prepared for tools e.g. [ToolsFunction].
+  final List<Map<String, Object>>? tools;
+
+  /// the tool to use, e.g. 'auto', 'any', 'none'. Defaults to null.
+  final String? toolChoice;
+
+  /// the format of the response, e.g. 'text', 'json_object'. Defaults to null.
+  final String? responseFormat;
+
   @override
   String toString() => 'ChatParams{model: $model, messages: $messages, '
       'temperature: $temperature, topP: $topP, maxTokens: $maxTokens, '
-      'safePrompt: $safePrompt, randomSeed: $randomSeed}';
+      'safePrompt: $safePrompt, randomSeed: $randomSeed}, tools: $tools, '
+      'toolChoice: $toolChoice, responseFormat: $responseFormat';
 }

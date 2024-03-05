@@ -19,6 +19,13 @@ ChatCompletionParams _$ChatCompletionParamsFromJson(
       stream: json['stream'] as bool?,
       safePrompt: json['safe_prompt'] as bool?,
       randomSeed: json['random_seed'] as int?,
+      tools: (json['tools'] as List<dynamic>?)
+          ?.map((e) => (e as Map<String, dynamic>).map(
+                (k, e) => MapEntry(k, e as Object),
+              ))
+          .toList(),
+      toolChoice: json['tool_choice'] as String?,
+      responseFormat: json['response_format'] as String?,
     );
 
 Map<String, dynamic> _$ChatCompletionParamsToJson(
@@ -40,18 +47,27 @@ Map<String, dynamic> _$ChatCompletionParamsToJson(
   writeNotNull('stream', instance.stream);
   writeNotNull('safe_prompt', instance.safePrompt);
   writeNotNull('random_seed', instance.randomSeed);
+  writeNotNull('tools', instance.tools);
+  writeNotNull('tool_choice', instance.toolChoice);
+  writeNotNull('response_format', instance.responseFormat);
   return val;
 }
 
 ChatMessage _$ChatMessageFromJson(Map<String, dynamic> json) => ChatMessage(
       role: json['role'] as String,
       content: json['content'] as String,
+      name: json['name'] as String?,
+      toolCalls: (json['tool_calls'] as List<dynamic>?)
+          ?.map((e) => ToolCall.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$ChatMessageToJson(ChatMessage instance) =>
     <String, dynamic>{
       'role': instance.role,
       'content': instance.content,
+      'name': instance.name,
+      'tool_calls': instance.toolCalls,
     };
 
 ChatCompletionResult _$ChatCompletionResultFromJson(
@@ -154,4 +170,29 @@ Map<String, dynamic> _$DeltaMessageToJson(DeltaMessage instance) =>
     <String, dynamic>{
       'role': instance.role,
       'content': instance.content,
+    };
+
+ToolCall _$ToolCallFromJson(Map<String, dynamic> json) => ToolCall(
+      id: json['id'] as String?,
+      type: json['type'] as String?,
+      function: json['function'] == null
+          ? null
+          : FunctionCall.fromJson(json['function'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$ToolCallToJson(ToolCall instance) => <String, dynamic>{
+      'id': instance.id,
+      'type': instance.type,
+      'function': instance.function,
+    };
+
+FunctionCall _$FunctionCallFromJson(Map<String, dynamic> json) => FunctionCall(
+      name: json['name'] as String,
+      arguments: json['arguments'] as String,
+    );
+
+Map<String, dynamic> _$FunctionCallToJson(FunctionCall instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'arguments': instance.arguments,
     };
