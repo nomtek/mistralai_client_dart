@@ -164,12 +164,18 @@ Map<String, dynamic> _$ChoiceChunkToJson(ChoiceChunk instance) =>
 DeltaMessage _$DeltaMessageFromJson(Map<String, dynamic> json) => DeltaMessage(
       role: json['role'] as String?,
       content: json['content'] as String?,
+      name: json['name'] as String?,
+      toolCalls: (json['tool_calls'] as List<dynamic>?)
+          ?.map((e) => ToolCall.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$DeltaMessageToJson(DeltaMessage instance) =>
     <String, dynamic>{
       'role': instance.role,
       'content': instance.content,
+      'name': instance.name,
+      'tool_calls': instance.toolCalls,
     };
 
 ToolCall _$ToolCallFromJson(Map<String, dynamic> json) => ToolCall(

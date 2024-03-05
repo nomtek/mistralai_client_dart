@@ -230,6 +230,8 @@ class DeltaMessage {
   const DeltaMessage({
     this.role,
     this.content,
+    this.name,
+    this.toolCalls,
   });
 
   factory DeltaMessage.fromJson(Map<String, dynamic> json) =>
@@ -237,11 +239,15 @@ class DeltaMessage {
 
   final String? role;
   final String? content;
+  final String? name;
+  @JsonKey(name: 'tool_calls')
+  final List<ToolCall>? toolCalls;
 
   Map<String, dynamic> toJson() => _$DeltaMessageToJson(this);
 
   @override
-  String toString() => 'DeltaMessage{role: $role, content: $content}';
+  String toString() => 'DeltaMessage{role: $role, content: $content, '
+      'name: $name, toolCalls: $toolCalls}';
 }
 
 @JsonSerializable()
