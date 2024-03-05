@@ -96,11 +96,13 @@ void main() {
             {
               'role': 'role1',
               'content': 'content1',
+              'name': 'name1',
+              'tool_calls': null,
             },
           ],
           chatParams: chatParamsOf(
             messages: [
-              chatMessageOf(role: 'role1', content: 'content1'),
+              chatMessageOf(role: 'role1', content: 'content1', name: 'name1'),
             ],
           ),
         ),
@@ -205,7 +207,7 @@ const chatCompletionResponse = '''
   "id": "cmpl-e5cc70bb28c444948073e77776eb30ef",
   "object": "chat.completion",
   "created": 1702256327,
-  "model": "mistral-tiny",
+  "model": "mistral-small-latest",
   "choices": [
     {
       "index": 0,
@@ -225,7 +227,7 @@ const chatCompletionResponse = '''
 ''';
 
 ChatParams chatParamsWithAllFields = ChatParams(
-  model: 'mistral-tiny',
+  model: 'mistral-small-latest',
   messages: const [
     ChatMessage(
       role: 'user',
@@ -241,11 +243,13 @@ ChatParams chatParamsWithAllFields = ChatParams(
 
 const chatCompletionParamsWithAllFieldsBody = '''
 {
-  "model": "mistral-tiny",
+  "model": "mistral-small-latest",
   "messages": [
     {
       "role": "user",
-      "content": "What is the best French cheese?"
+      "content": "What is the best French cheese?",
+      "name": null,
+      "tool_calls": null
     }
   ],
   "temperature": 0.7,
@@ -258,7 +262,7 @@ const chatCompletionParamsWithAllFieldsBody = '''
 ''';
 
 ChatParams chatParamsWithRequiredFields = ChatParams(
-  model: 'mistral-tiny',
+  model: 'mistral-small-latest',
   messages: const [
     ChatMessage(
       role: 'user',
@@ -269,11 +273,13 @@ ChatParams chatParamsWithRequiredFields = ChatParams(
 
 const chatCompletionParamsWithRequiredFieldsBody = '''
 {
-  "model": "mistral-tiny",
+  "model": "mistral-small-latest",
   "messages": [
     {
       "role": "user",
-      "content": "What is the best French cheese?"
+      "content": "What is the best French cheese?",
+      "name": null,
+      "tool_calls": null
     }
   ],
   "stream": false
@@ -284,7 +290,7 @@ const chatCompletionInvalidResponse = '''
 {
   "object": "chat.completion",
   "created": 1702256327,
-  "model": "mistral-tiny",
+  "model": "mistral-small-latest",
   "choices": [
     {
       "index": 0,
@@ -308,7 +314,7 @@ const chatCompletionMalformedResponse = '''
   "id": "cmpl-e5cc70bb28c444948073e77776eb30ef",
   "object": "chat.completion",
   "created": 1702256327,
-  "model": "mistral-tiny",
+  "model": "mistral-small-latest",
   "choices": 
     {
       "index": 0,

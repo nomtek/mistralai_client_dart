@@ -24,10 +24,14 @@ MistralAIClient mistralAIClientOf({
 ChatMessage chatMessageOf({
   String? role,
   String? content,
+  String? name,
+  List<ToolCall>? toolCalls,
 }) =>
     ChatMessage(
       role: role ?? 'role',
       content: content ?? 'content',
+      name: name ?? 'name',
+      toolCalls: toolCalls,
     );
 
 // creates ChatParams with default values for tests

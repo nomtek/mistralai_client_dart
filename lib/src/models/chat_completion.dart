@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 
@@ -10,7 +12,7 @@ part 'chat_completion.g.dart';
 @JsonSerializable(includeIfNull: false)
 @immutable
 class ChatCompletionParams {
-  const ChatCompletionParams({
+  ChatCompletionParams({
     required this.model,
     required this.messages,
     this.temperature,
@@ -19,7 +21,11 @@ class ChatCompletionParams {
     this.stream,
     this.safePrompt,
     this.randomSeed,
-  });
+    this.tools,
+    this.toolChoice,
+    String? responseFormat,
+  }) : responseFormat =
+            responseFormat != null ? {'type': responseFormat} : null;
 
   factory ChatCompletionParams.fromJson(Map<String, dynamic> json) =>
       _$ChatCompletionParamsFromJson(json);
@@ -36,6 +42,11 @@ class ChatCompletionParams {
   final bool? safePrompt;
   @JsonKey(name: 'random_seed')
   final int? randomSeed;
+  final List<Map<String, Object>>? tools;
+  @JsonKey(name: 'tool_choice')
+  final String? toolChoice;
+  @JsonKey(name: 'response_format')
+  final Map<String, String>? responseFormat;
 
   Map<String, dynamic> toJson() => _$ChatCompletionParamsToJson(this);
 
@@ -43,7 +54,8 @@ class ChatCompletionParams {
   String toString() =>
       'ChatCompletionParams{model: $model, messages: $messages, '
       'temperature: $temperature, topP: $topP, maxTokens: $maxTokens, '
-      'stream: $stream, safePrompt: $safePrompt, randomSeed: $randomSeed}';
+      'stream: $stream, safePrompt: $safePrompt, randomSeed: $randomSeed}, '
+      'tools: $tools, toolChoice: $toolChoice, responseFormat: $responseFormat';
 }
 
 @JsonSerializable()
@@ -52,6 +64,8 @@ class ChatMessage {
   const ChatMessage({
     required this.role,
     required this.content,
+    this.name,
+    this.toolCalls,
   });
 
   factory ChatMessage.fromJson(Map<String, dynamic> json) =>
@@ -59,11 +73,15 @@ class ChatMessage {
 
   final String role;
   final String content;
+  final String? name;
+  @JsonKey(name: 'tool_calls')
+  final List<ToolCall>? toolCalls;
 
   Map<String, dynamic> toJson() => _$ChatMessageToJson(this);
 
   @override
-  String toString() => 'ChatMessage{role: $role, content: $content}';
+  String toString() => 'ChatMessage{role: $role, content: $content, '
+      'name: $name, toolCalls: $toolCalls}';
 }
 
 /// Represents a chat completion result.
@@ -212,6 +230,8 @@ class DeltaMessage {
   const DeltaMessage({
     this.role,
     this.content,
+    this.name,
+    this.toolCalls,
   });
 
   factory DeltaMessage.fromJson(Map<String, dynamic> json) =>
@@ -219,9 +239,63 @@ class DeltaMessage {
 
   final String? role;
   final String? content;
+  final String? name;
+  @JsonKey(name: 'tool_calls')
+  final List<ToolCall>? toolCalls;
 
   Map<String, dynamic> toJson() => _$DeltaMessageToJson(this);
 
   @override
-  String toString() => 'DeltaMessage{role: $role, content: $content}';
+  String toString() => 'DeltaMessage{role: $role, content: $content, '
+      'name: $name, toolCalls: $toolCalls}';
+}
+
+@JsonSerializable()
+@immutable
+class ToolCall {
+  const ToolCall({
+    String? id,
+    String? type,
+    this.function,
+  })  : _id = id,
+        _type = type;
+
+  factory ToolCall.fromJson(Map<String, dynamic> json) =>
+      _$ToolCallFromJson(json);
+
+  String get id => _id ?? 'null';
+  final String? _id;
+
+  String get type => _type ?? 'function';
+  final String? _type;
+
+  final FunctionCall? function;
+
+  Map<String, dynamic> toJson() => _$ToolCallToJson(this);
+
+  @override
+  String toString() => 'ToolCall{id: $id, type: $type, function: $function}';
+}
+
+@JsonSerializable()
+@immutable
+class FunctionCall {
+  const FunctionCall({
+    required this.name,
+    required this.arguments,
+  });
+
+  factory FunctionCall.fromJson(Map<String, dynamic> json) =>
+      _$FunctionCallFromJson(json);
+
+  final String name;
+  final String arguments;
+
+  Map<String, dynamic> toJson() => _$FunctionCallToJson(this);
+
+  Map<String, dynamic> get argumentsMap =>
+      jsonDecode(arguments) as Map<String, dynamic>;
+
+  @override
+  String toString() => 'FunctionCall{name: $name, arguments: $arguments}';
 }

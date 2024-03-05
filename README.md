@@ -41,7 +41,7 @@ print(models.join(', '));
 
 ```dart
 final params = ChatParams(
-  model: 'mistral-tiny',
+  model: 'mistral-small-latest',
   messages: const [
     ChatMessage(role: 'user', content: 'Hello chat!'),
   ],
@@ -74,6 +74,70 @@ final embeddings = await client.embeddings(
 );
 for (final data in embeddings.data) {
   print(data.embedding);
+}
+```
+
+### Function calling
+
+```dart
+String retrievePaymentStatus(Map<String, String> data, String transactionId) =>
+    '{"status": ${data[transactionId]}}';
+
+final namesToFunctions = {
+  'retrievePaymentStatus': (String transactionId) =>
+      retrievePaymentStatus(paymentStatusData, transactionId),
+};
+
+final tools = [
+  const ToolsFunction(
+    name: 'retrievePaymentStatus',
+    description: 'Get payment status of a transaction',
+    parameters: [
+      ToolsFunctionParameter(
+        name: 'transactionId',
+        type: 'string',
+        description: 'The transaction ID',
+        isRequired: true,
+      ),
+    ],
+  ).toChatParamsFormat(),
+];
+
+var chatResponse = await client.chat(
+    ChatParams(
+        model: 'mistral-large-latest',
+        messages: messages,
+        tools: tools,
+        toolChoice: 'auto',
+    ),
+);
+
+final toolCall = chatResponse.choices[0].message.toolCalls?[0];
+if (toolCall != null && toolCall.type == 'function') {
+    final functionName = toolCall.function!.name;
+    final functionParams = toolCall.function!.argumentsMap;
+
+    print('calling functionName: $functionName');
+    print('functionParams: $functionParams');
+
+    final functionResult = namesToFunctions[functionName]!(
+        functionParams['transactionId']! as String,
+    );
+
+    messages.add(
+        ChatMessage(role: 'tool', content: functionResult, name: functionName),
+    );
+
+    chatResponse = await client.chat(
+        ChatParams(
+            model: model,
+            messages: messages,
+            tools: tools,
+            toolChoice: 'auto',
+        ),
+    );
+
+    print(chatResponse.choices[0].message.content);
 }
 ```
 
