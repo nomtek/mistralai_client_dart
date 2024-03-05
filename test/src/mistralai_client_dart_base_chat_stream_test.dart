@@ -87,12 +87,7 @@ void main() {
           ],
           chatParams: chatParamsOf(
             messages: [
-              chatMessageOf(
-                role: 'role1',
-                content: 'content1',
-                name: 'name1',
-                toolCalls: null,
-              ),
+              chatMessageOf(role: 'role1', content: 'content1', name: 'name1'),
             ],
           ),
         ),
