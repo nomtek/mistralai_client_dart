@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:http/retry.dart' as retry;
-import 'package:mistralai_client_dart/src/exceptions.dart';
-import 'package:mistralai_client_dart/src/models/models.dart';
-import 'package:mistralai_client_dart/src/network/url_tools.dart';
+import 'exceptions.dart';
+import 'models/models.dart';
+import 'network/url_tools.dart';
 
 part 'network/request.dart';
 part 'models/mappers.dart';

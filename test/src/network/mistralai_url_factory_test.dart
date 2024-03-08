@@ -1,4 +1,4 @@
-import 'package:mistralai_client_dart/src/network/url_tools.dart';
+import 'package:mistralai_client_dart_flutter_flow/mistralai_client_dart.dart';
 import 'package:test/test.dart';
 
 void main() {

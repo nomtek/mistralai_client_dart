@@ -1,5 +1,5 @@
-name: mistralai_client_dart
-description: This is an unofficial Dart/Flutter client for the Mistral AI API.
+name: mistralai_client_dart_flutter_flow
+description: This is an unofficial Dart/Flutter client for the Mistral AI API with support for Flutter Flow.
 version: 0.1.0
 repository: https://github.com/nomtek/mistralai_client_dart
 

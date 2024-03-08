@@ -18,7 +18,7 @@ This is a special version of the Mistral AI client that supports FlutterFlow 4.1
 ## Installation
 
 ```shell
-dart pub add mistralai_client_dart
+dart pub add mistralai_client_dart_flutter_flow
 ```
 
 ## Usage
@@ -26,7 +26,7 @@ dart pub add mistralai_client_dart
 ### Create client
 
 ```dart
-import 'package:mistralai_client_dart/mistralai_client_dart.dart';
+import 'package:mistralai_client_dart_flutter_flow/mistralai_client_dart.dart';
 
 final client = MistralAIClient(apiKey: 'your api key here');
 ```

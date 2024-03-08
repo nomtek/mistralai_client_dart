@@ -1,6 +1,6 @@
 import 'package:meta/meta.dart';
-import 'package:mistralai_client_dart/src/models/chat_completion.dart';
-import 'package:mistralai_client_dart/src/models/tools.dart';
+import 'chat_completion.dart';
+import 'tools.dart';
 
 /// ChatParams are referring to chat completions params from official
 /// [Mistral AI API docs](https://docs.mistral.ai/api/#operation/createChatCompletion)

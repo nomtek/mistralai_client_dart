@@ -1,6 +1,5 @@
 import 'package:meta/meta.dart';
-
-import 'package:mistralai_client_dart/src/models/chat_params.dart';
+import 'chat_params.dart';
 
 /// Type safe implementation of the function tool used when making chat calls
 @immutable
