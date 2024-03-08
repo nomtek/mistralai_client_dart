@@ -1,5 +1,5 @@
 import 'package:http/http.dart' as http;
-import 'package:mistralai_client_dart_flutter_flow/mistralai_client_dart.dart';
+import 'package:mistralai_client_dart_flutter_flow/mistralai_client_dart_flutter_flow.dart';
 
 // http client is required to force setting mocked http client
 // to not make real http requests

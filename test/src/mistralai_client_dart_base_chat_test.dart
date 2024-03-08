@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:mistralai_client_dart_flutter_flow/mistralai_client_dart.dart';
+import 'package:mistralai_client_dart_flutter_flow/mistralai_client_dart_flutter_flow.dart';
 import 'package:test/test.dart';
 
 import 'common_tests.dart';

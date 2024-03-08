@@ -1,6 +1,6 @@
 // ignore_for_file: avoid_print
 
-import 'package:mistralai_client_dart_flutter_flow/mistralai_client_dart.dart';
+import 'package:mistralai_client_dart_flutter_flow/mistralai_client_dart_flutter_flow.dart';
 
 void main() async {
   const apiKey = 'your api key here';
