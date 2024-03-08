@@ -9,9 +9,11 @@ This is an unofficial Dart/Flutter client for the Mistral AI API.
 
 The implementation is inspired by the [official Mistral AI JS client](https://github.com/mistralai/client-js).
 
-## Overview (current state)
+## Flutter Flow
 
-The package is supporting Mistral AI API (0.0.1) at the moment.
+For Flutter Flow integration please use the [mistralai_client_dart_flutter_flow](https://pub.dev/packages/mistralai_client_dart_flutter_flow) package.
+
+It's a version of this package that is adapted to work with Flutter Flow.
 
 ## Installation
 
