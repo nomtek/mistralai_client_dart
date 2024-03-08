@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.1.1
+
+This version diverges from the original Mistral AI client for Dart to support FlutterFlow 4.1 with Flutter 3.13.7.
+
+New versions of this package may have different version numbers than the original Mistral AI client for Dart.
+All changes to the original Mistral AI client will also be merged into this package.
+
+- Add FlutterFlow support (downgrade dependencies to support FlutterFlow 4.1 with Flutter 3.13.7)
+- Update README.md to reflect FlutterFlow support
+- Introduce `mistralai_client_dart_flutter_flow` package
+
 ## 0.1.0
 
 - Add Function Calling functionality to `chat` and `chatStream`

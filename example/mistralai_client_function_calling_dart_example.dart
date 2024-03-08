@@ -1,6 +1,6 @@
 // ignore_for_file: avoid_print
 
-import 'package:mistralai_client_dart_flutter_flow/mistralai_client_dart.dart';
+import 'package:mistralai_client_dart_flutter_flow/mistralai_client_dart_flutter_flow.dart';
 
 const paymentStatusData = {
   'T1001': 'Paid',
