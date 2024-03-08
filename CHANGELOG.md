@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1
+
+- Update README.md with mention about FlutterFlow support.
+
 ## 0.1.0
 
 - Add Function Calling functionality to `chat` and `chatStream`
