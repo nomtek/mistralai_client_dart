@@ -73,8 +73,9 @@ class ChatMessage {
 
   final String role;
   final String content;
+  @JsonKey(includeIfNull: false)
   final String? name;
-  @JsonKey(name: 'tool_calls')
+  @JsonKey(name: 'tool_calls', includeIfNull: false)
   final List<ToolCall>? toolCalls;
 
   Map<String, dynamic> toJson() => _$ChatMessageToJson(this);

@@ -62,13 +62,22 @@ ChatMessage _$ChatMessageFromJson(Map<String, dynamic> json) => ChatMessage(
           .toList(),
     );
 
-Map<String, dynamic> _$ChatMessageToJson(ChatMessage instance) =>
-    <String, dynamic>{
-      'role': instance.role,
-      'content': instance.content,
-      'name': instance.name,
-      'tool_calls': instance.toolCalls,
-    };
+Map<String, dynamic> _$ChatMessageToJson(ChatMessage instance) {
+  final val = <String, dynamic>{
+    'role': instance.role,
+    'content': instance.content,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('name', instance.name);
+  writeNotNull('tool_calls', instance.toolCalls);
+  return val;
+}
 
 ChatCompletionResult _$ChatCompletionResultFromJson(
         Map<String, dynamic> json) =>
