@@ -97,7 +97,6 @@ void main() {
               'role': 'role1',
               'content': 'content1',
               'name': 'name1',
-              'tool_calls': null,
             },
           ],
           chatParams: chatParamsOf(
@@ -232,6 +231,7 @@ ChatParams chatParamsWithAllFields = ChatParams(
     ChatMessage(
       role: 'user',
       content: 'What is the best French cheese?',
+      name: 'toolFunction',
     ),
   ],
   temperature: 0.7,
@@ -239,6 +239,21 @@ ChatParams chatParamsWithAllFields = ChatParams(
   maxTokens: 16,
   safePrompt: false,
   randomSeed: 1,
+  toolChoice: 'auto',
+  tools: [
+    const ToolsFunction(
+      name: 'toolFunction',
+      description: 'Tool function test',
+      parameters: [
+        ToolsFunctionParameter(
+          name: 'param1',
+          type: 'string',
+          description: 'param1',
+          isRequired: true,
+        ),
+      ],
+    ).toChatParamsFormat(),
+  ],
 );
 
 const chatCompletionParamsWithAllFieldsBody = '''
@@ -248,16 +263,30 @@ const chatCompletionParamsWithAllFieldsBody = '''
     {
       "role": "user",
       "content": "What is the best French cheese?",
-      "name": null,
-      "tool_calls": null
+      "name": "toolFunction"
     }
   ],
   "temperature": 0.7,
-  "top_p": 1,
+  "top_p": 1.0,
   "max_tokens": 16,
   "stream": false,
   "safe_prompt": false,
-  "random_seed": 1
+  "random_seed": 1,
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "toolFunction",
+        "description": "Tool function test",
+        "parameters": {
+          "type": "object",
+          "properties": {"param1": {"type": "string", "description": "param1"}},
+          "required": ["param1"]
+        }
+      }
+    }
+  ],
+  "tool_choice": "auto"
 }
 ''';
 
@@ -277,9 +306,7 @@ const chatCompletionParamsWithRequiredFieldsBody = '''
   "messages": [
     {
       "role": "user",
-      "content": "What is the best French cheese?",
-      "name": null,
-      "tool_calls": null
+      "content": "What is the best French cheese?"
     }
   ],
   "stream": false

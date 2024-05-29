@@ -58,7 +58,7 @@ class ChatCompletionParams {
       'tools: $tools, toolChoice: $toolChoice, responseFormat: $responseFormat';
 }
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 @immutable
 class ChatMessage {
   const ChatMessage({

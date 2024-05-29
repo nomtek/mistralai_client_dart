@@ -82,7 +82,6 @@ void main() {
               'role': 'role1',
               'content': 'content1',
               'name': 'name1',
-              'tool_calls': null,
             },
           ],
           chatParams: chatParamsOf(
