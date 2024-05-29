@@ -231,6 +231,7 @@ ChatParams chatParamsWithAllFields = ChatParams(
     ChatMessage(
       role: 'user',
       content: 'What is the best French cheese?',
+      name: 'toolFunction',
     ),
   ],
   temperature: 0.7,
@@ -238,6 +239,21 @@ ChatParams chatParamsWithAllFields = ChatParams(
   maxTokens: 16,
   safePrompt: false,
   randomSeed: 1,
+  toolChoice: 'auto',
+  tools: [
+    const ToolsFunction(
+      name: 'toolFunction',
+      description: 'Tool function test',
+      parameters: [
+        ToolsFunctionParameter(
+          name: 'param1',
+          type: 'string',
+          description: 'param1',
+          isRequired: true,
+        ),
+      ],
+    ).toChatParamsFormat(),
+  ],
 );
 
 const chatCompletionParamsWithAllFieldsBody = '''
@@ -246,15 +262,31 @@ const chatCompletionParamsWithAllFieldsBody = '''
   "messages": [
     {
       "role": "user",
-      "content": "What is the best French cheese?"
+      "content": "What is the best French cheese?",
+      "name": "toolFunction"
     }
   ],
   "temperature": 0.7,
-  "top_p": 1,
+  "top_p": 1.0,
   "max_tokens": 16,
   "stream": false,
   "safe_prompt": false,
-  "random_seed": 1
+  "random_seed": 1,
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "toolFunction",
+        "description": "Tool function test",
+        "parameters": {
+          "type": "object",
+          "properties": {"param1": {"type": "string", "description": "param1"}},
+          "required": ["param1"]
+        }
+      }
+    }
+  ],
+  "tool_choice": "auto"
 }
 ''';
 
