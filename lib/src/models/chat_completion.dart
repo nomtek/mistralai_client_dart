@@ -58,7 +58,7 @@ class ChatCompletionParams {
       'tools: $tools, toolChoice: $toolChoice, responseFormat: $responseFormat';
 }
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 @immutable
 class ChatMessage {
   const ChatMessage({
@@ -73,9 +73,8 @@ class ChatMessage {
 
   final String role;
   final String content;
-  @JsonKey(includeIfNull: false)
   final String? name;
-  @JsonKey(name: 'tool_calls', includeIfNull: false)
+  @JsonKey(name: 'tool_calls')
   final List<ToolCall>? toolCalls;
 
   Map<String, dynamic> toJson() => _$ChatMessageToJson(this);
