@@ -60,6 +60,7 @@ ChatMessage _$ChatMessageFromJson(Map<String, dynamic> json) => ChatMessage(
       toolCalls: (json['tool_calls'] as List<dynamic>?)
           ?.map((e) => ToolCall.fromJson(e as Map<String, dynamic>))
           .toList(),
+      toolCallId: json['tool_call_id'] as String?,
     );
 
 Map<String, dynamic> _$ChatMessageToJson(ChatMessage instance) {
@@ -76,6 +77,7 @@ Map<String, dynamic> _$ChatMessageToJson(ChatMessage instance) {
 
   writeNotNull('name', instance.name);
   writeNotNull('tool_calls', instance.toolCalls);
+  writeNotNull('tool_call_id', instance.toolCallId);
   return val;
 }
 
