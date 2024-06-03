@@ -25,7 +25,7 @@ void main() {
         final embeddingJsonParams =
             jsonDecode(embeddingsParamsBody) as Map<String, dynamic>;
 
-        testIfProperBodyParamsAreSent(
+        await testIfProperBodyParamsAreSent(
           apiJsonResponseBody: embeddingsResponse,
           clientRequest: (client, bodyParams) =>
               client.embeddings(embedingsParams),

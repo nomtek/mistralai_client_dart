@@ -210,7 +210,7 @@ dynamic testIfRequestUrlIsCorrect<T>({
 /// [clientRequest] - function that calls API method
 ///
 /// [bodyParams] - body params that should be sent
-dynamic testIfProperBodyParamsAreSent<T>({
+Future<void> testIfProperBodyParamsAreSent<T>({
   required String apiJsonResponseBody,
   required Future<T> Function(
     MistralAIClient client,
