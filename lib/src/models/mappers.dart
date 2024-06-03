@@ -17,3 +17,19 @@ ChatCompletionParams _mapChatParamsToRequestParams(
       toolChoice: params.toolChoice,
       responseFormat: params.responseFormat,
     );
+
+FimCompletionParams _mapFimParamsToRequestParams(
+  FimParams params, {
+  required bool stream,
+}) =>
+    FimCompletionParams(
+      model: params.model,
+      prompt: params.prompt,
+      suffix: params.suffix,
+      temperature: params.temperature,
+      maxTokens: params.maxTokens,
+      topP: params.topP,
+      randomSeed: params.randomSeed,
+      stop: params.stop,
+      stream: stream,
+    );

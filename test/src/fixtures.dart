@@ -65,3 +65,24 @@ EmbeddingParams embeddingParamsOf({
       input: input,
       encodingFormat: encodingFormat,
     );
+
+FimParams fimParamsOf({
+  String prompt = 'void main() {',
+  String model = 'code-model',
+  String? suffix,
+  double? temperature,
+  int? maxTokens,
+  double? topP,
+  int? randomSeed,
+  List<String>? stop,
+}) =>
+    FimParams(
+      model: model,
+      prompt: prompt,
+      suffix: suffix,
+      temperature: temperature,
+      maxTokens: maxTokens,
+      topP: topP,
+      randomSeed: randomSeed,
+      stop: stop,
+    );

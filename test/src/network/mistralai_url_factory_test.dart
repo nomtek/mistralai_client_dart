@@ -59,6 +59,20 @@ void main() {
         throwsA(isA<AssertionError>()),
       );
     });
+
+    test('with fimCompletionsPath empty', () {
+      expect(
+        () => MistralAIUrlFactory(fimCompletionsPath: ''),
+        throwsA(isA<AssertionError>()),
+      );
+    });
+
+    test('with fimCompletionsPath not starting with "/"', () {
+      expect(
+        () => MistralAIUrlFactory(fimCompletionsPath: 'v1/fim/completions'),
+        throwsA(isA<AssertionError>()),
+      );
+    });
   });
 
   test('create listModels default uri', () {
@@ -115,6 +129,17 @@ void main() {
     expect(
       factory.chatCompletions(),
       Uri.parse('https://nomtek.api.mistral.ai/custom-chat-completions'),
+    );
+  });
+
+  test('create fimCompletions custom uri', () {
+    final factory = MistralAIUrlFactory(
+      baseUrl: 'https://nomtek.api.mistral.ai',
+      fimCompletionsPath: '/custom-fim-completions',
+    );
+    expect(
+      factory.fimCompletions(),
+      Uri.parse('https://nomtek.api.mistral.ai/custom-fim-completions'),
     );
   });
 }
