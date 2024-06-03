@@ -116,30 +116,35 @@ var chatResponse = await client.chat(
 
 final toolCall = chatResponse.choices[0].message.toolCalls?[0];
 if (toolCall != null && toolCall.type == 'function') {
-    final functionName = toolCall.function!.name;
-    final functionParams = toolCall.function!.argumentsMap;
+  final functionName = toolCall.function!.name;
+  final functionParams = toolCall.function!.argumentsMap;
 
-    print('calling functionName: $functionName');
-    print('functionParams: $functionParams');
+  print('calling functionName: $functionName');
+  print('functionParams: $functionParams');
 
-    final functionResult = namesToFunctions[functionName]!(
-        functionParams['transactionId']! as String,
-    );
+  final functionResult = namesToFunctions[functionName]!(
+      functionParams['transactionId']! as String,
+  );
 
-    messages.add(
-        ChatMessage(role: 'tool', content: functionResult, name: functionName),
-    );
+  messages.add(
+    ChatMessage(
+      role: 'tool',
+      content: functionResult,
+      name: functionName,
+      toolCallId: toolCall.id,
+    ),
+  );
 
-    chatResponse = await client.chat(
-        ChatParams(
-            model: model,
-            messages: messages,
-            tools: tools,
-            toolChoice: 'auto',
-        ),
-    );
+  chatResponse = await client.chat(
+      ChatParams(
+          model: model,
+          messages: messages,
+          tools: tools,
+          toolChoice: 'auto',
+      ),
+  );
 
-    print(chatResponse.choices[0].message.content);
+  print(chatResponse.choices[0].message.content);
 }
 ```
 

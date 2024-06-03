@@ -25,7 +25,7 @@ void main() {
         final chatJsonParams = jsonDecode(chatCompletionParamsWithAllFieldsBody)
             as Map<String, dynamic>;
 
-        testIfProperBodyParamsAreSent(
+        await testIfProperBodyParamsAreSent(
           apiJsonResponseBody: chatCompletionResponse,
           clientRequest: (client, bodyParams) =>
               client.chat(chatParamsWithAllFields),
@@ -37,12 +37,12 @@ void main() {
     test(
       'calling chat with required params '
       'should result in sending required params in request body',
-      () {
+      () async {
         final chatJsonParams =
             jsonDecode(chatCompletionParamsWithRequiredFieldsBody)
                 as Map<String, dynamic>;
 
-        testIfProperBodyParamsAreSent(
+        await testIfProperBodyParamsAreSent(
           apiJsonResponseBody: chatCompletionResponse,
           clientRequest: (client, bodyParams) =>
               client.chat(chatParamsWithRequiredFields),
@@ -232,6 +232,7 @@ ChatParams chatParamsWithAllFields = ChatParams(
       role: 'user',
       content: 'What is the best French cheese?',
       name: 'toolFunction',
+      toolCallId: 'toolCallId',
     ),
   ],
   temperature: 0.7,
@@ -263,7 +264,8 @@ const chatCompletionParamsWithAllFieldsBody = '''
     {
       "role": "user",
       "content": "What is the best French cheese?",
-      "name": "toolFunction"
+      "name": "toolFunction",
+      "tool_call_id": "toolCallId"
     }
   ],
   "temperature": 0.7,

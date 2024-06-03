@@ -121,7 +121,12 @@ void main() async {
   );
 
   messages.add(
-    ChatMessage(role: 'tool', content: functionResult, name: functionName),
+    ChatMessage(
+      role: 'tool',
+      content: functionResult,
+      name: functionName,
+      toolCallId: toolCall.id,
+    ),
   );
 
   chatResponse = await client.chat(

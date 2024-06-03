@@ -66,7 +66,11 @@ class ChatMessage {
     required this.content,
     this.name,
     this.toolCalls,
-  });
+    this.toolCallId,
+  }) : assert(
+          (role == 'tool' && toolCallId != null) || role != 'tool',
+          'toolCallId is required when role is tool',
+        );
 
   factory ChatMessage.fromJson(Map<String, dynamic> json) =>
       _$ChatMessageFromJson(json);
@@ -76,12 +80,15 @@ class ChatMessage {
   final String? name;
   @JsonKey(name: 'tool_calls')
   final List<ToolCall>? toolCalls;
+  @JsonKey(name: 'tool_call_id')
+  final String? toolCallId;
 
   Map<String, dynamic> toJson() => _$ChatMessageToJson(this);
 
   @override
-  String toString() => 'ChatMessage{role: $role, content: $content, '
-      'name: $name, toolCalls: $toolCalls}';
+  String toString() =>
+      'ChatMessage{role: $role, content: $content, name: $name, '
+      'toolCalls: $toolCalls, toolCallId: $toolCallId}';
 }
 
 /// Represents a chat completion result.
