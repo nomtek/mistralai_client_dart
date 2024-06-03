@@ -14,7 +14,7 @@ void main() async {
   final stream = client.fimCompletionStream(
     FimParams(model: model, prompt: prompt, suffix: suffix),
   );
-  
+
   stdout.write(prompt);
   await for (final completionChunk in stream) {
     final message = completionChunk.choices[0].delta?.content;

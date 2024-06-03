@@ -135,7 +135,8 @@ class MistralAIClient {
   /// Returns a fill in the middle completion.
   Future<ChatCompletionResult> fimCompletion(
     FimParams params,
-  ) async => _requestJson(
+  ) async =>
+      _requestJson(
         client: _httpClient,
         apiKey: apiKey,
         request: http.Request(
@@ -152,7 +153,7 @@ class MistralAIClient {
   Stream<ChatCompletionChunkResult> fimCompletionStream(
     FimParams params,
   ) =>
-       _streamRequest(
+      _streamRequest(
         client: _httpClient,
         apiKey: apiKey,
         request: http.Request(
@@ -164,5 +165,4 @@ class MistralAIClient {
         fromJson: ChatCompletionChunkResult.fromJson,
         timeout: timeout,
       );
-
 }
