@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.0
+
+- New feature: Fill in the middle completion ([docs](https://docs.mistral.ai/capabilities/code_generation/)). Check [example](example/fim_completion_example.dart) for usage.
+- Add `toolCallId` as mandatory parameter to [ChatMessage](lib/src/models/chat_completion.dart) when role is `tool`.
+
+## 0.1.2
+
+- No longer send `null` values in the request body.
+
 ## 0.1.1
 
 - Update README.md with mention about FlutterFlow support.
