@@ -1,8 +1,9 @@
 class MistralAPIEndpoints {
+  static const String baseUrl = 'https://api.mistral.ai';
   static const String listModels = '/v1/models';
   static const String embeddings = '/v1/embeddings';
   static const String chatCompletions = '/v1/chat/completions';
-  static const String baseUrl = 'https://api.mistral.ai';
+  static const String fimCompletions = '/v1/fim/completions';
 }
 
 class MistralAIUrlFactory {
@@ -11,9 +12,11 @@ class MistralAIUrlFactory {
     String listModelsPath = MistralAPIEndpoints.listModels,
     String embeddingsPath = MistralAPIEndpoints.embeddings,
     String chatCompletionsPath = MistralAPIEndpoints.chatCompletions,
+    String fimCompletionsPath = MistralAPIEndpoints.fimCompletions,
   })  : _chatCompletionsPath = chatCompletionsPath,
         _embeddingsPath = embeddingsPath,
         _listModelsPath = listModelsPath,
+        _fimCompletionsPath = fimCompletionsPath,
         _baseUrl = baseUrl,
         assert(baseUrl.isNotEmpty, 'baseUrl cannot be empty'),
         assert(!baseUrl.endsWith('/'), 'baseUrl must not end with "/"'),
@@ -34,18 +37,29 @@ class MistralAIUrlFactory {
         assert(
           chatCompletionsPath.startsWith('/'),
           'chatCompletionsPath must start with "/"',
+        ),
+        assert(
+          fimCompletionsPath.isNotEmpty,
+          'fimCompletionsPath cannot be empty',
+        ),
+        assert(
+          fimCompletionsPath.startsWith('/'),
+          'fimCompletionsPath must start with "/"',
         );
 
   final String _baseUrl;
   final String _listModelsPath;
   final String _embeddingsPath;
   final String _chatCompletionsPath;
+  final String _fimCompletionsPath;
 
   Uri listModels() => _parseEndpoint(_listModelsPath);
 
   Uri embeddings() => _parseEndpoint(_embeddingsPath);
 
   Uri chatCompletions() => _parseEndpoint(_chatCompletionsPath);
+
+  Uri fimCompletions() => _parseEndpoint(_fimCompletionsPath);
 
   Uri _parseEndpoint(String endpoint) => Uri.parse('$_baseUrl$endpoint');
 }

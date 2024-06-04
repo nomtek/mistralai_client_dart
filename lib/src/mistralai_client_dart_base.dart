@@ -131,4 +131,38 @@ class MistralAIClient {
         fromJson: EmbeddingsResult.fromJson,
         timeout: timeout,
       );
+
+  /// Returns a fill in the middle completion.
+  Future<ChatCompletionResult> fimCompletion(
+    FimParams params,
+  ) async =>
+      _requestJson(
+        client: _httpClient,
+        apiKey: apiKey,
+        request: http.Request(
+          'POST',
+          _apiUrlFactory.fimCompletions(),
+        )..body = jsonEncode(
+            _mapFimParamsToRequestParams(params, stream: false),
+          ),
+        fromJson: ChatCompletionResult.fromJson,
+        timeout: timeout,
+      );
+
+  /// Returns a stream of fill in the middle completion chunks.
+  Stream<ChatCompletionChunkResult> fimCompletionStream(
+    FimParams params,
+  ) =>
+      _streamRequest(
+        client: _httpClient,
+        apiKey: apiKey,
+        request: http.Request(
+          'POST',
+          _apiUrlFactory.fimCompletions(),
+        )..body = jsonEncode(
+            _mapFimParamsToRequestParams(params, stream: true),
+          ),
+        fromJson: ChatCompletionChunkResult.fromJson,
+        timeout: timeout,
+      );
 }

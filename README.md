@@ -148,6 +148,13 @@ if (toolCall != null && toolCall.type == 'function') {
 }
 ```
 
+### Fill in the middle completion
+
+Check examples:
+
+- [FIM completion example](example/fim_completion_example.dart)
+- [FIM completion stream example](example/fim_completion_stream_example.dart)
+
 ## Resources
 
 You can check the [official Mistral AI docs](https://docs.mistral.ai/).
