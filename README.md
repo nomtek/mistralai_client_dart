@@ -148,6 +148,47 @@ if (toolCall != null && toolCall.type == 'function') {
 }
 ```
 
+### Files
+
+```dart
+// Create a new file
+final file = File('file.jsonl');
+final createdFile = await client.files.create(file: file);
+
+// List files
+final files = await client.files.list();
+
+// Retrieve a file
+final retrievedFile = await client.files.retrieve(fileId: createdFile.id);
+
+// Delete a file
+final deletedFile = await client.files.delete(fileId: createdFile.id);
+```
+
+### Fine-tuning Jobs
+
+```dart
+// Create a new job
+final createdJob = await client.jobs.create(
+    model: 'open-mistral-7b',
+    trainingFiles: [trainingFile.id],
+    validationFiles: [validationFile.id],
+    hyperparameters: const TrainingParameters(
+        trainingSteps: 10,
+        learningRate: 0.0001,
+    ),
+);
+
+// List jobs
+final jobs = await client.jobs.list();
+
+// Retrieve a job
+final retrievedJob = await client.jobs.retrieve(jobId: createdJob.id);
+
+// Cancel a job
+final canceledJob = await client.jobs.cancel(jobId: createdJob.id);
+```
+
 ### Fill in the middle completion
 
 Check examples:
