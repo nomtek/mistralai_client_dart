@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:mistralai_client_dart/src/models/files.dart';
 import 'package:mistralai_client_dart/src/models/jobs.dart';
 import 'package:test/test.dart';
 
