@@ -24,11 +24,17 @@ class JobsClient {
   /// Creates a new fine-tune job.
   ///
   /// [model] specifies the model to be fine-tuned.
+  ///
   /// The [trainingFiles] contains as a list of file IDs of previously
-  /// uploaded training files via [FilesClient.create]. An optional list of
-  /// [validationFiles] can be provided to improve the fine-tuning process.
+  /// uploaded training files via [FilesClient.create].
+  ///
+  /// An optional list of [validationFiles] can be provided to improve the
+  /// fine-tuning process.
+  ///
   /// The [hyperparameters] specify the fine-tuning parameters for the job.
+  ///
   /// The [suffix] is an optional suffix added to the fine-tuned model name.
+  ///
   /// The [integrations] is an optional list of integrations to enable for
   /// the fine-tuning job.
   Future<Job> create({
