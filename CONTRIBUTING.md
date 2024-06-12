@@ -57,6 +57,17 @@ To contribute to documentation follow the same steps as in [Code Contributions](
 3. Run `dart pub get` in terminal to get dependencies
 4. If everything went well you're good to go 😊
 
+### Code generation
+
+We are using [json_serializable](https://pub.dev/packages/json_serializable) package to generate code for serializing and deserializing JSON models.
+We are committing the generated code to the repository.
+
+In order to generate code run:
+
+```shell
+dart run build_runner build -d
+```
+
 ## Style Guide
 
 We following official [dart code style](https://dart.dev/effective-dart/style) as a base style guide.
