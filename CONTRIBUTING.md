@@ -66,6 +66,7 @@ In order to generate code run:
 
 ```shell
 dart run build_runner build -d
+```
 
 ## Style Guide
 
