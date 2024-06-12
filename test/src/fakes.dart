@@ -71,7 +71,8 @@ Future<Map<String, dynamic>> _getJsonRequestBody(
   final requestBytesStream = request.finalize();
   final requestBodyString = await requestBytesStream.bytesToString();
   // Multipart request body (e.g. when uploading a file) is not a JSON string
-  if (requestBodyString.isEmpty || !requestBodyString.startsWith('{')) {
+  // and starts with '--' (e.g. --dart-http-boundary-Qjx...)
+  if (requestBodyString.isEmpty || requestBodyString.startsWith('-')) {
     return {};
   }
   final requestBodyJson = jsonDecode(requestBodyString) as Map<String, dynamic>;
