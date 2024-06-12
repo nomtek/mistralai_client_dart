@@ -64,9 +64,8 @@ We are committing the generated code to the repository.
 
 In order to generate code run:
 
-```bash
-dart run build_runner build
-```
+```shell
+dart run build_runner build -d
 
 ## Style Guide
 
