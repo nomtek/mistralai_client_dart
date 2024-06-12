@@ -15,7 +15,7 @@ enum JobStatus {
 }
 
 @immutable
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class TrainingParameters {
   const TrainingParameters({
     required this.trainingSteps,
@@ -38,7 +38,7 @@ class TrainingParameters {
 }
 
 @immutable
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class WandbIntegration {
   const WandbIntegration({
     required this.project,
