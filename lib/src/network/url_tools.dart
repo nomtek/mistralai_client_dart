@@ -4,6 +4,8 @@ class MistralAPIEndpoints {
   static const String embeddings = '/v1/embeddings';
   static const String chatCompletions = '/v1/chat/completions';
   static const String fimCompletions = '/v1/fim/completions';
+  static const String files = '/v1/files';
+  static const String jobs = '/v1/fine_tuning/jobs';
 }
 
 class MistralAIUrlFactory {
@@ -13,10 +15,14 @@ class MistralAIUrlFactory {
     String embeddingsPath = MistralAPIEndpoints.embeddings,
     String chatCompletionsPath = MistralAPIEndpoints.chatCompletions,
     String fimCompletionsPath = MistralAPIEndpoints.fimCompletions,
+    String filesPath = MistralAPIEndpoints.files,
+    String jobsPath = MistralAPIEndpoints.jobs,
   })  : _chatCompletionsPath = chatCompletionsPath,
         _embeddingsPath = embeddingsPath,
         _listModelsPath = listModelsPath,
         _fimCompletionsPath = fimCompletionsPath,
+        _filesPath = filesPath,
+        _jobsPath = jobsPath,
         _baseUrl = baseUrl,
         assert(baseUrl.isNotEmpty, 'baseUrl cannot be empty'),
         assert(!baseUrl.endsWith('/'), 'baseUrl must not end with "/"'),
@@ -45,6 +51,22 @@ class MistralAIUrlFactory {
         assert(
           fimCompletionsPath.startsWith('/'),
           'fimCompletionsPath must start with "/"',
+        ),
+        assert(
+          filesPath.isNotEmpty,
+          'filesPath cannot be empty',
+        ),
+        assert(
+          filesPath.startsWith('/'),
+          'filesPath must start with "/"',
+        ),
+        assert(
+          jobsPath.isNotEmpty,
+          'jobsPath cannot be empty',
+        ),
+        assert(
+          jobsPath.startsWith('/'),
+          'jobsPath must start with "/"',
         );
 
   final String _baseUrl;
@@ -52,6 +74,8 @@ class MistralAIUrlFactory {
   final String _embeddingsPath;
   final String _chatCompletionsPath;
   final String _fimCompletionsPath;
+  final String _filesPath;
+  final String _jobsPath;
 
   Uri listModels() => _parseEndpoint(_listModelsPath);
 
@@ -60,6 +84,16 @@ class MistralAIUrlFactory {
   Uri chatCompletions() => _parseEndpoint(_chatCompletionsPath);
 
   Uri fimCompletions() => _parseEndpoint(_fimCompletionsPath);
+
+  Uri files() => _parseEndpoint(_filesPath);
+
+  Uri file(String id) => _parseEndpoint('$_filesPath/$id');
+
+  Uri jobs() => _parseEndpoint(_jobsPath);
+
+  Uri job(String id) => _parseEndpoint('$_jobsPath/$id');
+
+  Uri jobCancel(String id) => _parseEndpoint('$_jobsPath/$id/cancel');
 
   Uri _parseEndpoint(String endpoint) => Uri.parse('$_baseUrl$endpoint');
 }

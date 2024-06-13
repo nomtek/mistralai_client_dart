@@ -1,20 +1,33 @@
 part of '../mistralai_client_dart_base.dart';
 
-Map<String, String> _createHeaders({required String apiKey}) => {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $apiKey',
-    };
+Map<String, String> _createHeaders({
+  required String apiKey,
+  bool sendMultipartFormData = false,
+}) {
+  final headers = {
+    'Accept': 'application/json',
+    'Content-Type':
+        sendMultipartFormData ? 'multipart/form-data' : 'application/json',
+    'Authorization': 'Bearer $apiKey',
+  };
+  return headers;
+}
 
 Future<T> _requestJson<T>({
   required http.Client client,
-  required http.Request request,
+  required http.BaseRequest request,
   required String apiKey,
   required T Function(Map<String, dynamic> json) fromJson,
   required Duration timeout,
+  bool sendMultipartFormData = false,
 }) async {
   try {
-    request.headers.addAll(_createHeaders(apiKey: apiKey));
+    request.headers.addAll(
+      _createHeaders(
+        apiKey: apiKey,
+        sendMultipartFormData: sendMultipartFormData,
+      ),
+    );
     final streamResponse = await client.send(request).timeout(timeout);
     final response =
         await http.Response.fromStream(streamResponse).timeout(timeout);

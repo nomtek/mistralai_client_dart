@@ -1,13 +1,21 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:http/retry.dart' as retry;
 import 'package:mistralai_client_dart/src/exceptions.dart';
+import 'package:mistralai_client_dart/src/models/files.dart';
+import 'package:mistralai_client_dart/src/models/jobs.dart';
 import 'package:mistralai_client_dart/src/models/models.dart';
 import 'package:mistralai_client_dart/src/network/url_tools.dart';
 
 part 'network/request.dart';
+
 part 'models/mappers.dart';
+
+part 'files_client.dart';
+
+part 'jobs_client.dart';
 
 /// Mistral AI Client enables to connect with [Mistral AI API](https://docs.mistral.ai/api/)
 class MistralAIClient {
@@ -37,6 +45,22 @@ class MistralAIClient {
                 retries: maxRetries,
               ),
         _apiUrlFactory = apiUrlFactory ?? MistralAIUrlFactory(baseUrl: baseUrl);
+
+  /// files client to manage files related operations.
+  late final FilesClient files = FilesClient._(
+    _httpClient,
+    apiKey,
+    timeout,
+    _apiUrlFactory,
+  );
+
+  /// jobs client to manage jobs related operations.
+  late final JobsClient jobs = JobsClient._(
+    _httpClient,
+    apiKey,
+    timeout,
+    _apiUrlFactory,
+  );
 
   /// required to authenticate requests.
   final String apiKey;

@@ -148,6 +148,18 @@ if (toolCall != null && toolCall.type == 'function') {
 }
 ```
 
+### Files
+
+Check examples:
+
+- [Files example](example/mistralai_client_files_example.dart)
+
+### Fine-tuning Jobs
+
+Check examples:
+
+- [Fine-tuning jobs example](example/mistralai_client_jobs_example.dart)
+
 ### Fill in the middle completion
 
 Check examples:
