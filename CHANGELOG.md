@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.0
+
+- New feature: Fine-tuning ([docs](https://docs.mistral.ai/capabilities/finetuning/)). Check [example](example/mistralai_client_jobs_example.dart) for usage.
+
 ## 0.2.0
 
 - New feature: Fill in the middle completion ([docs](https://docs.mistral.ai/capabilities/code_generation/)). Check [example](example/fim_completion_example.dart) for usage.
