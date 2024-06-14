@@ -1,0 +1,15 @@
+name: Publish to pub.dev
+
+on:
+  push:
+    tags:
+      # must align with the tag-pattern configured on pub.dev
+      - '[0-9]+.[0-9]+.[0-9]+*' # tag-pattern on pub.dev: '{{version}}'
+
+# Based on official guide from https://dart.dev/tools/pub/automated-publishing
+jobs:
+  publish:
+    permissions:
+      id-token: write # Required for authentication using OIDC
+    # Publish using the reusable workflow from dart-lang.
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
