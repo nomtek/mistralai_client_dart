@@ -17,9 +17,7 @@ When releasing the main package version we should also release the FlutterFlow v
    - Auto generate release notes (adjust the releases notes if needed)
    - Set title of release to the name of version. For example if we want to release version 1.0.0 then release title should be `1.0.0`.
    - Publish release.
-3. Publish the package to [pub.dev](https://pub.dev)
-   - checkout tag that was created in step 5.
-   - run `dart pub publish` from the (you have to be logged in to pub.dev and have access to publishing to the package).
+   - The [publish workflow](../../.github/workflows/publish.yaml) will automatically run after the new tag is pushed to the repository and publish the new package version to [pub.dev](https://pub.dev/packages/mistralai_client_dart).
 
 ### FlutterFlow version
 
