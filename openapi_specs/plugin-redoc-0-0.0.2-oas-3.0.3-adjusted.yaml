@@ -16,7 +16,7 @@ paths:
     get:
       summary: List Models
       description: List all models available to the user.
-      operationId: list_models_v1_models_get
+      operationId: list_models
       responses:
         '200':
           description: Successful Response
@@ -36,7 +36,7 @@ paths:
     get:
       summary: Retrieve Model
       description: Retrieve a model information.
-      operationId: retrieve_model_v1_models__model_id__get
+      operationId: retrieve_model
       parameters:
         - name: model_id
           in: path
@@ -64,7 +64,7 @@ paths:
     delete:
       summary: Delete Model
       description: Delete a fine-tuned model.
-      operationId: delete_model_v1_models__model_id__delete
+      operationId: delete_model
       parameters:
         - name: model_id
           in: path
@@ -91,7 +91,7 @@ paths:
         - models
   /v1/files:
     post:
-      operationId: files_api_routes_upload_file
+      operationId: upload_file
       summary: Upload File
       responses:
         '200':
@@ -142,7 +142,7 @@ paths:
       tags:
         - files
     get:
-      operationId: files_api_routes_list_files
+      operationId: list_files
       summary: List Files
       responses:
         '200':
@@ -156,7 +156,7 @@ paths:
         - files
   /v1/files/{file_id}:
     get:
-      operationId: files_api_routes_retrieve_file
+      operationId: retrieve_file
       summary: Retrieve File
       parameters:
         - in: path
@@ -176,7 +176,7 @@ paths:
       tags:
         - files
     delete:
-      operationId: files_api_routes_delete_file
+      operationId: delete_file
       summary: Delete File
       parameters:
         - in: path
@@ -197,7 +197,7 @@ paths:
         - files
   /v1/fine_tuning/jobs:
     get:
-      operationId: jobs_api_routes_fine_tuning_get_fine_tuning_jobs
+      operationId: get_fine_tuning_jobs
       summary: Get Fine Tuning Jobs
       parameters:
         - in: query
@@ -309,7 +309,7 @@ paths:
       tags:
         - fine-tuning
     post:
-      operationId: jobs_api_routes_fine_tuning_create_fine_tuning_job
+      operationId: create_fine_tuning_job
       summary: Create Fine Tuning Job
       parameters:
         - in: query
@@ -335,7 +335,7 @@ paths:
                 anyOf:
                   - $ref: '#/components/schemas/JobOut'
                   - $ref: '#/components/schemas/LegacyJobMetadataOut'
-                title: Response
+                title: JobsResponse
       description: Create a new fine-tuning job, it will be queued for processing.
       requestBody:
         content:
@@ -347,7 +347,7 @@ paths:
         - fine-tuning
   /v1/fine_tuning/jobs/{job_id}:
     get:
-      operationId: jobs_api_routes_fine_tuning_get_fine_tuning_job
+      operationId: get_fine_tuning_job
       summary: Get Fine Tuning Job
       parameters:
         - in: path
@@ -370,7 +370,7 @@ paths:
         - fine-tuning
   /v1/fine_tuning/jobs/{job_id}/cancel:
     post:
-      operationId: jobs_api_routes_fine_tuning_cancel_fine_tuning_job
+      operationId: cancel_fine_tuning_job
       summary: Cancel Fine Tuning Job
       parameters:
         - in: path
@@ -393,7 +393,7 @@ paths:
         - fine-tuning
   /v1/fine_tuning/jobs/{job_id}/start:
     post:
-      operationId: jobs_api_routes_fine_tuning_start_fine_tuning_job
+      operationId: start_fine_tuning_job
       summary: Start Fine Tuning Job
       parameters:
         - in: path
@@ -415,7 +415,7 @@ paths:
         - fine-tuning
   /v1/fine_tuning/models/{model_id}:
     patch:
-      operationId: jobs_api_routes_fine_tuning_update_fine_tuned_model
+      operationId: update_fine_tuned_model
       summary: Update Fine Tuned Model
       parameters:
         - in: path
@@ -444,7 +444,7 @@ paths:
         - models
   /v1/fine_tuning/models/{model_id}/archive:
     post:
-      operationId: jobs_api_routes_fine_tuning_archive_fine_tuned_model
+      operationId: archive_fine_tuned_model
       summary: Archive Fine Tuned Model
       parameters:
         - in: path
@@ -466,7 +466,7 @@ paths:
       tags:
         - models
     delete:
-      operationId: jobs_api_routes_fine_tuning_unarchive_fine_tuned_model
+      operationId: unarchive_fine_tuned_model
       summary: Unarchive Fine Tuned Model
       parameters:
         - in: path
@@ -490,7 +490,7 @@ paths:
   /v1/chat/completions:
     post:
       summary: Chat Completion
-      operationId: chat_completion_v1_chat_completions_post
+      operationId: chat_complete
       requestBody:
         required: true
         content:
@@ -519,7 +519,7 @@ paths:
     post:
       summary: Fim Completion
       description: FIM completion.
-      operationId: fim_completion_v1_fim_completions_post
+      operationId: fim_complete
       requestBody:
         required: true
         content:
@@ -547,7 +547,7 @@ paths:
   /v1/agents/completions:
     post:
       summary: Agents Completion
-      operationId: agents_completion_v1_agents_completions_post
+      operationId: agents_complete
       requestBody:
         required: true
         content:
@@ -573,7 +573,7 @@ paths:
     post:
       summary: Embeddings
       description: Embeddings
-      operationId: embeddings_v1_embeddings_post
+      operationId: create_embeddings
       requestBody:
         required: true
         content:
@@ -606,7 +606,7 @@ components:
           example: ft:open-mistral-7b:587a6b29:20240514:7e773925
         object:
           type: string
-          title: Object
+          title: DeleteModelOutObject
           default: model
           description: The object type that was deleted
         deleted:
@@ -655,7 +655,7 @@ components:
           title: Id
         object:
           type: string
-          title: Object
+          title: ModelCardObject
           default: model
         created:
           type: integer
@@ -706,7 +706,7 @@ components:
       properties:
         object:
           type: string
-          title: Object
+          title: ModelListObject
           default: list
         data:
           items:
@@ -757,7 +757,7 @@ components:
           description: The unique identifier of the file.
           example: 497f6eca-6276-4993-bfeb-53cbbbba6f09
         object:
-          title: Object
+          title: UploadFileOutObject
           type: string
           description: The object type, which is always "file".
           example: file
@@ -813,7 +813,7 @@ components:
           description: The unique identifier of the file.
           example: 497f6eca-6276-4993-bfeb-53cbbbba6f09
         object:
-          title: Object
+          title: FileSchemaObject
           type: string
           description: The object type, which is always "file".
           example: file
@@ -867,7 +867,7 @@ components:
           title: Data
           type: array
         object:
-          title: Object
+          title: ListFilesOutObject
           type: string
       required:
         - data
@@ -883,7 +883,7 @@ components:
           description: The unique identifier of the file.
           example: 497f6eca-6276-4993-bfeb-53cbbbba6f09
         object:
-          title: Object
+          title: RetrieveFileOutObject
           type: string
           description: The object type, which is always "file".
           example: file
@@ -939,7 +939,7 @@ components:
           description: The ID of the deleted file.
           example: 497f6eca-6276-4993-bfeb-53cbbbba6f09
         object:
-          title: Object
+          title: DeleteFileOutObject
           type: string
           description: The object type that was deleted
           example: file
@@ -1101,7 +1101,7 @@ components:
             - job
           type: string
           default: job
-          title: Object
+          title: JobOutObject
           description: The object type of the fine-tuning job.
         fine_tuned_model:
           type: string
@@ -1167,7 +1167,7 @@ components:
             - list
           type: string
           default: list
-          title: Object
+          title: JobsOutObject
         total:
           title: Total
           type: integer
@@ -1301,7 +1301,7 @@ components:
             - job.metadata
           type: string
           default: job.metadata
-          title: Object
+          title: LegacyJobMetadataOutObject
       required:
         - details
       title: LegacyJobMetadataOut
@@ -1557,7 +1557,7 @@ components:
             - job
           type: string
           default: job
-          title: Object
+          title: DetailedJobOutObject
         fine_tuned_model:
           type: string
           nullable: true
@@ -1584,9 +1584,10 @@ components:
           title: Repositories
           type: array
         metadata:
-          nullable: true
           allOf:
             - $ref: '#/components/schemas/JobMetadataOut'
+          type: object
+          nullable: true
         events:
           default: []
           items:
@@ -1684,7 +1685,7 @@ components:
             - model
           type: string
           default: model
-          title: Object
+          title: FTModelOutObject
         created:
           title: Created
           type: integer
@@ -1753,7 +1754,7 @@ components:
             - model
           type: string
           default: model
-          title: Object
+          title: ArchiveFTModelOutObject
         archived:
           default: true
           title: Archived
@@ -1772,7 +1773,7 @@ components:
             - model
           type: string
           default: model
-          title: Object
+          title: UnarchiveFTModelOutObject
         archived:
           default: false
           title: Archived
@@ -2048,7 +2049,7 @@ components:
         - prompt
         - model
       title: FIMCompletionRequest
-    Function:
+    FunctionDefinition:
       properties:
         name:
           type: string
@@ -2066,7 +2067,7 @@ components:
       required:
         - name
         - parameters
-      title: Function
+      title: FunctionDefinition
     FunctionCall:
       properties:
         name:
@@ -2147,7 +2148,7 @@ components:
             - $ref: '#/components/schemas/ToolTypes'
           default: function
         function:
-          $ref: '#/components/schemas/Function'
+          $ref: '#/components/schemas/FunctionDefinition'
       additionalProperties: false
       type: object
       required:
