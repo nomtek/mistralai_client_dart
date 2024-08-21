@@ -1,10 +1,7 @@
 openapi: 3.1.0
 info:
   title: Mistral AI API
-  description: >-
-    Our Chat Completion and Embeddings APIs specification. Create your account
-    on [La Plateforme](https://console.mistral.ai) to get access and read the
-    [docs](https://docs.mistral.ai) to learn how to use it.
+  description: Our Chat Completion and Embeddings APIs specification. Create your account on [La Plateforme](https://console.mistral.ai) to get access and read the [docs](https://docs.mistral.ai) to learn how to use it.
   version: 0.0.2
 paths:
   /v1/models:
@@ -13,18 +10,18 @@ paths:
       description: List all models available to the user.
       operationId: list_models_v1_models_get
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ModelList'
-        '422':
+                $ref: "#/components/schemas/ModelList"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       tags:
         - models
   /v1/models/{model_id}:
@@ -39,21 +36,21 @@ paths:
           schema:
             type: string
             title: Model Id
-          example: ft:open-mistral-7b:587a6b29:20240514:7e773925
+          example: "ft:open-mistral-7b:587a6b29:20240514:7e773925"
           description: The ID of the model to retrieve.
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ModelCard'
-        '422':
+                $ref: "#/components/schemas/ModelCard"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       tags:
         - models
     delete:
@@ -67,21 +64,21 @@ paths:
           schema:
             type: string
             title: Model Id
-          example: ft:open-mistral-7b:587a6b29:20240514:7e773925
+          example: "ft:open-mistral-7b:587a6b29:20240514:7e773925"
           description: The ID of the model to delete.
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeleteModelOut'
-        '422':
+                $ref: "#/components/schemas/DeleteModelOut"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       tags:
         - models
   /v1/files:
@@ -89,21 +86,19 @@ paths:
       operationId: files_api_routes_upload_file
       summary: Upload File
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UploadFileOut'
-      description: >-
-        Upload a file that can be used across various endpoints.
+                $ref: "#/components/schemas/UploadFileOut"
+      description: "Upload a file that can be used across various endpoints.
 
 
-        The size of individual files can be a maximum of 512 MB. The Fine-tuning
-        API only supports .jsonl files.
+        The size of individual files can be a maximum of 512 MB. The Fine-tuning API only supports .jsonl files.
 
 
-        Please contact us if you need to increase these storage limits.
+        Please contact us if you need to increase these storage limits."
       requestBody:
         content:
           multipart/form-data:
@@ -119,16 +114,7 @@ paths:
                   format: binary
                   title: File
                   type: string
-                  description: |-
-                    The File object (not file name) to be uploaded.
-                     To upload a file and specify a custom file name you should format your request as such:
-                     ```bash
-                     file=@path/to/your/file.jsonl;filename=custom_name.jsonl
-                     ```
-                     Otherwise, you can just keep the original file name:
-                     ```bash
-                     file=@path/to/your/file.jsonl
-                     ```
+                  description: "The File object (not file name) to be uploaded.\n To upload a file and specify a custom file name you should format your request as such:\n ```bash\n file=@path/to/your/file.jsonl;filename=custom_name.jsonl\n ```\n Otherwise, you can just keep the original file name:\n ```bash\n file=@path/to/your/file.jsonl\n ```"
               required:
                 - file
         required: true
@@ -138,12 +124,12 @@ paths:
       operationId: files_api_routes_list_files
       summary: List Files
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListFilesOut'
+                $ref: "#/components/schemas/ListFilesOut"
       description: Returns a list of files that belong to the user's organization.
       tags:
         - files
@@ -159,12 +145,12 @@ paths:
             type: string
           required: true
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RetrieveFileOut'
+                $ref: "#/components/schemas/RetrieveFileOut"
       description: Returns information about a specific file.
       tags:
         - files
@@ -179,12 +165,12 @@ paths:
             type: string
           required: true
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeleteFileOut'
+                $ref: "#/components/schemas/DeleteFileOut"
       description: Delete a file.
       tags:
         - files
@@ -214,24 +200,20 @@ paths:
           schema:
             anyOf:
               - type: string
-              - type: 'null'
+              - type: "null"
             title: Model
           required: false
-          description: >-
-            The model name used for fine-tuning to filter on. When set, the
-            other results are not displayed.
+          description: The model name used for fine-tuning to filter on. When set, the other results are not displayed.
         - in: query
           name: created_after
           schema:
             anyOf:
               - format: date-time
                 type: string
-              - type: 'null'
+              - type: "null"
             title: Created After
           required: false
-          description: >-
-            The date/time to filter on. When set, the results for previous
-            creation times are not displayed.
+          description: The date/time to filter on. When set, the results for previous creation times are not displayed.
         - in: query
           name: created_by_me
           schema:
@@ -239,9 +221,7 @@ paths:
             title: Created By Me
             type: boolean
           required: false
-          description: >-
-            When set, only return results for jobs created by the API caller.
-            Other results are not displayed.
+          description: When set, only return results for jobs created by the API caller. Other results are not displayed.
         - in: query
           name: status
           schema:
@@ -258,52 +238,44 @@ paths:
                   - CANCELLED
                   - CANCELLATION_REQUESTED
                 type: string
-              - type: 'null'
+              - type: "null"
             title: Status
           required: false
-          description: >-
-            The current job state to filter on. When set, the other results are
-            not displayed.
+          description: The current job state to filter on. When set, the other results are not displayed.
         - in: query
           name: wandb_project
           schema:
             anyOf:
               - type: string
-              - type: 'null'
+              - type: "null"
             title: Wandb Project
           required: false
-          description: >-
-            The Weights and Biases project to filter on. When set, the other
-            results are not displayed.
+          description: The Weights and Biases project to filter on. When set, the other results are not displayed.
         - in: query
           name: wandb_name
           schema:
             anyOf:
               - type: string
-              - type: 'null'
+              - type: "null"
             title: Wandb Name
           required: false
-          description: >-
-            The Weight and Biases run name to filter on. When set, the other
-            results are not displayed.
+          description: The Weight and Biases run name to filter on. When set, the other results are not displayed.
         - in: query
           name: suffix
           schema:
             anyOf:
               - type: string
-              - type: 'null'
+              - type: "null"
             title: Suffix
           required: false
-          description: >-
-            The model suffix to filter on. When set, the other results are not
-            displayed.
+          description: The model suffix to filter on. When set, the other results are not displayed.
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/JobsOut'
+                $ref: "#/components/schemas/JobsOut"
       description: Get a list of fine-tuning jobs for your organization and user.
       tags:
         - fine-tuning
@@ -316,32 +288,30 @@ paths:
           schema:
             anyOf:
               - type: boolean
-              - type: 'null'
+              - type: "null"
             title: Dry Run
           required: false
-          description: >
-            * If `true` the job is not spawned, instead the query returns a
-            handful of useful metadata
+          description: |
+            * If `true` the job is not spawned, instead the query returns a handful of useful metadata
               for the user to perform sanity checks (see `LegacyJobMetadataOut` response).
-            * Otherwise, the job is started and the query returns the job ID
-            along with some of the
+            * Otherwise, the job is started and the query returns the job ID along with some of the
               input parameters (see `JobOut` response).
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
                 anyOf:
-                  - $ref: '#/components/schemas/JobOut'
-                  - $ref: '#/components/schemas/LegacyJobMetadataOut'
+                  - $ref: "#/components/schemas/JobOut"
+                  - $ref: "#/components/schemas/LegacyJobMetadataOut"
                 title: Response
       description: Create a new fine-tuning job, it will be queued for processing.
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/JobIn'
+              $ref: "#/components/schemas/JobIn"
         required: true
       tags:
         - fine-tuning
@@ -359,12 +329,12 @@ paths:
           required: true
           description: The ID of the job to analyse.
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DetailedJobOut'
+                $ref: "#/components/schemas/DetailedJobOut"
       description: Get a fine-tuned job details by its UUID.
       tags:
         - fine-tuning
@@ -382,12 +352,12 @@ paths:
           required: true
           description: The ID of the job to cancel.
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DetailedJobOut'
+                $ref: "#/components/schemas/DetailedJobOut"
       description: Request the cancellation of a fine tuning job.
       tags:
         - fine-tuning
@@ -404,12 +374,12 @@ paths:
             type: string
           required: true
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DetailedJobOut'
+                $ref: "#/components/schemas/DetailedJobOut"
       description: Request the start of a validated fine tuning job.
       tags:
         - fine-tuning
@@ -424,21 +394,21 @@ paths:
             title: Model Id
             type: string
           required: true
-          example: ft:open-mistral-7b:587a6b29:20240514:7e773925
+          example: "ft:open-mistral-7b:587a6b29:20240514:7e773925"
           description: The ID of the model to update.
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FTModelOut'
+                $ref: "#/components/schemas/FTModelOut"
       description: Update a model name or description.
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateFTModelIn'
+              $ref: "#/components/schemas/UpdateFTModelIn"
         required: true
       tags:
         - models
@@ -453,15 +423,15 @@ paths:
             title: Model Id
             type: string
           required: true
-          example: ft:open-mistral-7b:587a6b29:20240514:7e773925
+          example: "ft:open-mistral-7b:587a6b29:20240514:7e773925"
           description: The ID of the model to archive.
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ArchiveFTModelOut'
+                $ref: "#/components/schemas/ArchiveFTModelOut"
       description: Archive a fine-tuned model.
       tags:
         - models
@@ -475,15 +445,15 @@ paths:
             title: Model Id
             type: string
           required: true
-          example: ft:open-mistral-7b:587a6b29:20240514:7e773925
+          example: "ft:open-mistral-7b:587a6b29:20240514:7e773925"
           description: The ID of the model to unarchive.
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UnarchiveFTModelOut'
+                $ref: "#/components/schemas/UnarchiveFTModelOut"
       description: Un-archive a fine-tuned model.
       tags:
         - models
@@ -496,23 +466,22 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ChatCompletionRequest'
+              $ref: "#/components/schemas/ChatCompletionRequest"
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/ChatCompletionResponse'
+              schema: { $ref: "#/components/schemas/ChatCompletionResponse" }
             text/event-stream:
               schema:
-                $ref: '#/components/schemas/CompletionEvent'
-        '422':
+                $ref: "#/components/schemas/CompletionEvent"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       tags:
         - chat
   /v1/fim/completions:
@@ -525,23 +494,22 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/FIMCompletionRequest'
+              $ref: "#/components/schemas/FIMCompletionRequest"
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/FIMCompletionResponse'
+              schema: { $ref: "#/components/schemas/FIMCompletionResponse" }
             text/event-stream:
               schema:
-                $ref: '#/components/schemas/CompletionEvent'
-        '422':
+                $ref: "#/components/schemas/CompletionEvent"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       tags:
         - fim
   /v1/agents/completions:
@@ -553,46 +521,44 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AgentsCompletionRequest'
+              $ref: "#/components/schemas/AgentsCompletionRequest"
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/ChatCompletionResponse'
-        '422':
+              schema: { $ref: "#/components/schemas/ChatCompletionResponse" }
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       tags:
         - agents
   /v1/embeddings:
     post:
       summary: Embeddings
-      description: Embeddings
+      description: "Embeddings"
       operationId: embeddings_v1_embeddings_post
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EmbeddingRequest'
+              $ref: "#/components/schemas/EmbeddingRequest"
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/EmbeddingResponse'
-        '422':
+              schema: { $ref: "#/components/schemas/EmbeddingResponse" }
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       tags:
         - embeddings
 components:
@@ -616,7 +582,7 @@ components:
           default: true
           description: The deletion status
           examples:
-            - true
+            - True
       type: object
       required:
         - id
@@ -625,7 +591,7 @@ components:
       properties:
         detail:
           items:
-            $ref: '#/components/schemas/ValidationError'
+            $ref: "#/components/schemas/ValidationError"
           type: array
           title: Detail
       type: object
@@ -669,7 +635,7 @@ components:
         root:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Root
         archived:
           type: boolean
@@ -678,15 +644,15 @@ components:
         name:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Name
         description:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Description
         capabilities:
-          $ref: '#/components/schemas/ModelCapabilities'
+          $ref: "#/components/schemas/ModelCapabilities"
         max_context_length:
           type: integer
           title: Max Context Length
@@ -701,7 +667,7 @@ components:
           anyOf:
             - type: string
               format: date-time
-            - type: 'null'
+            - type: "null"
           title: Deprecation
       type: object
       required:
@@ -716,7 +682,7 @@ components:
           default: list
         data:
           items:
-            $ref: '#/components/schemas/ModelCard'
+            $ref: "#/components/schemas/ModelCard"
           type: array
           title: Data
       type: object
@@ -790,20 +756,18 @@ components:
         purpose:
           const: fine-tune
           title: Purpose
-          description: >-
-            The intended purpose of the uploaded file. Only accepts fine-tuning
-            (`fine-tune`) for now.
+          description: The intended purpose of the uploaded file. Only accepts fine-tuning (`fine-tune`) for now.
           examples:
             - fine-tune
         sample_type:
-          $ref: '#/components/schemas/SampleType'
+          $ref: "#/components/schemas/SampleType"
         num_lines:
           anyOf:
             - type: integer
-            - type: 'null'
+            - type: "null"
           title: Num Lines
         source:
-          $ref: '#/components/schemas/Source'
+          $ref: "#/components/schemas/Source"
       required:
         - id
         - object
@@ -851,20 +815,18 @@ components:
         purpose:
           const: fine-tune
           title: Purpose
-          description: >-
-            The intended purpose of the uploaded file. Only accepts fine-tuning
-            (`fine-tune`) for now.
+          description: The intended purpose of the uploaded file. Only accepts fine-tuning (`fine-tune`) for now.
           examples:
             - fine-tune
         sample_type:
-          $ref: '#/components/schemas/SampleType'
+          $ref: "#/components/schemas/SampleType"
         num_lines:
           anyOf:
             - type: integer
-            - type: 'null'
+            - type: "null"
           title: Num Lines
         source:
-          $ref: '#/components/schemas/Source'
+          $ref: "#/components/schemas/Source"
       required:
         - id
         - object
@@ -880,7 +842,7 @@ components:
       properties:
         data:
           items:
-            $ref: '#/components/schemas/FileSchema'
+            $ref: "#/components/schemas/FileSchema"
           title: Data
           type: array
         object:
@@ -927,20 +889,18 @@ components:
         purpose:
           const: fine-tune
           title: Purpose
-          description: >-
-            The intended purpose of the uploaded file. Only accepts fine-tuning
-            (`fine-tune`) for now.
+          description: The intended purpose of the uploaded file. Only accepts fine-tuning (`fine-tune`) for now.
           examples:
             - fine-tune
         sample_type:
-          $ref: '#/components/schemas/SampleType'
+          $ref: "#/components/schemas/SampleType"
         num_lines:
           anyOf:
             - type: integer
-            - type: 'null'
+            - type: "null"
           title: Num Lines
         source:
-          $ref: '#/components/schemas/Source'
+          $ref: "#/components/schemas/Source"
       required:
         - id
         - object
@@ -1004,10 +964,10 @@ components:
         ref:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Ref
         weight:
-          default: 1
+          default: 1.0
           exclusiveMinimum: 0
           title: Weight
           type: number
@@ -1027,37 +987,37 @@ components:
         expected_duration_seconds:
           anyOf:
             - type: integer
-            - type: 'null'
+            - type: "null"
           title: Expected Duration Seconds
         cost:
           anyOf:
             - type: number
-            - type: 'null'
+            - type: "null"
           title: Cost
         cost_currency:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Cost Currency
         train_tokens_per_step:
           anyOf:
             - type: integer
-            - type: 'null'
+            - type: "null"
           title: Train Tokens Per Step
         train_tokens:
           anyOf:
             - type: integer
-            - type: 'null'
+            - type: "null"
           title: Train Tokens
         data_tokens:
           anyOf:
             - type: integer
-            - type: 'null'
+            - type: "null"
           title: Data Tokens
         estimated_start_time:
           anyOf:
             - type: integer
-            - type: 'null'
+            - type: "null"
           title: Estimated Start Time
       title: JobMetadataOut
       type: object
@@ -1072,9 +1032,9 @@ components:
           title: Auto Start
           type: boolean
         hyperparameters:
-          $ref: '#/components/schemas/TrainingParameters'
+          $ref: "#/components/schemas/TrainingParameters"
         model:
-          $ref: '#/components/schemas/FineTuneableModel'
+          $ref: "#/components/schemas/FineTuneableModel"
         status:
           enum:
             - QUEUED
@@ -1097,36 +1057,28 @@ components:
         created_at:
           title: Created At
           type: integer
-          description: >-
-            The UNIX timestamp (in seconds) for when the fine-tuning job was
-            created.
+          description: The UNIX timestamp (in seconds) for when the fine-tuning job was created.
         modified_at:
           title: Modified At
           type: integer
-          description: >-
-            The UNIX timestamp (in seconds) for when the fine-tuning job was
-            last modified.
+          description: The UNIX timestamp (in seconds) for when the fine-tuning job was last modified.
         training_files:
           items:
             format: uuid
             type: string
           title: Training Files
           type: array
-          description: >-
-            A list containing the IDs of uploaded files that contain training
-            data.
+          description: A list containing the IDs of uploaded files that contain training data.
         validation_files:
           anyOf:
             - items:
                 format: uuid
                 type: string
               type: array
-            - type: 'null'
+            - type: "null"
           default: []
           title: Validation Files
-          description: >-
-            A list containing the IDs of uploaded files that contain validation
-            data.
+          description: A list containing the IDs of uploaded files that contain validation data.
         object:
           const: job
           default: job
@@ -1135,46 +1087,40 @@ components:
         fine_tuned_model:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Fine Tuned Model
-          description: >-
-            The name of the fine-tuned model that is being created. The value
-            will be `null` if the fine-tuning job is still running.
+          description: The name of the fine-tuned model that is being created. The value will be `null` if the fine-tuning job is still running.
         suffix:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Suffix
-          description: >-
-            Optional text/code that adds more context for the model. When given
-            a `prompt` and a `suffix` the model will fill what is between them.
-            When `suffix` is not provided, the model will simply execute
-            completion starting with `prompt`.
+          description: Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`.
         integrations:
           anyOf:
             - items:
-                $ref: '#/components/schemas/WandbIntegrationOut'
+                $ref: "#/components/schemas/WandbIntegrationOut"
               type: array
-            - type: 'null'
+            - type: "null"
           title: Integrations
           description: A list of integrations enabled for your fine-tuning job.
         trained_tokens:
           anyOf:
             - type: integer
-            - type: 'null'
+            - type: "null"
           title: Trained Tokens
           description: Total number of tokens trained.
         repositories:
           default: []
           items:
-            $ref: '#/components/schemas/GithubRepositoryOut'
+            $ref: "#/components/schemas/GithubRepositoryOut"
           maxItems: 20
           title: Repositories
           type: array
         metadata:
           anyOf:
-            - $ref: '#/components/schemas/JobMetadataOut'
-            - type: 'null'
+            - $ref: "#/components/schemas/JobMetadataOut"
+            - type: "null"
       required:
         - id
         - auto_start
@@ -1192,7 +1138,7 @@ components:
         data:
           default: []
           items:
-            $ref: '#/components/schemas/JobOut'
+            $ref: "#/components/schemas/JobOut"
           title: Data
           type: array
         object:
@@ -1212,26 +1158,26 @@ components:
           anyOf:
             - minimum: 1
               type: integer
-            - type: 'null'
+            - type: "null"
           title: Training Steps
         learning_rate:
           default: 0.0001
           maximum: 1
-          minimum: 1.e-8
+          minimum: 0.00000001
           title: Learning Rate
           type: number
         epochs:
           anyOf:
             - minimum: 0.01
               type: number
-            - type: 'null'
+            - type: "null"
           title: Epochs
         fim_ratio:
           anyOf:
             - maximum: 1
               minimum: 0
               type: number
-            - type: 'null'
+            - type: "null"
           default: 0.9
           title: Fim Ratio
       title: TrainingParameters
@@ -1249,15 +1195,13 @@ components:
         name:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Name
-          description: >-
-            A display name to set for the run. If not set, will use the job ID
-            as the name.
+          description: A display name to set for the run. If not set, will use the job ID as the name.
         run_name:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Run Name
       required:
         - project
@@ -1268,17 +1212,15 @@ components:
         expected_duration_seconds:
           anyOf:
             - type: integer
-            - type: 'null'
+            - type: "null"
           title: Expected Duration Seconds
-          description: >-
-            The approximated time (in seconds) for the fine-tuning process to
-            complete.
+          description: The approximated time (in seconds) for the fine-tuning process to complete.
           examples:
             - 220
         cost:
           anyOf:
             - type: number
-            - type: 'null'
+            - type: "null"
           title: Cost
           description: The cost of the fine-tuning job.
           examples:
@@ -1286,7 +1228,7 @@ components:
         cost_currency:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Cost Currency
           description: The currency used for the fine-tuning job cost.
           examples:
@@ -1294,7 +1236,7 @@ components:
         train_tokens_per_step:
           anyOf:
             - type: integer
-            - type: 'null'
+            - type: "null"
           title: Train Tokens Per Step
           description: The number of tokens consumed by one training step.
           examples:
@@ -1302,7 +1244,7 @@ components:
         train_tokens:
           anyOf:
             - type: integer
-            - type: 'null'
+            - type: "null"
           title: Train Tokens
           description: The total number of tokens used during the fine-tuning process.
           examples:
@@ -1310,7 +1252,7 @@ components:
         data_tokens:
           anyOf:
             - type: integer
-            - type: 'null'
+            - type: "null"
           title: Data Tokens
           description: The total number of tokens in the training dataset.
           examples:
@@ -1318,7 +1260,7 @@ components:
         estimated_start_time:
           anyOf:
             - type: integer
-            - type: 'null'
+            - type: "null"
           title: Estimated Start Time
         deprecated:
           default: true
@@ -1330,7 +1272,7 @@ components:
         epochs:
           anyOf:
             - type: number
-            - type: 'null'
+            - type: "null"
           title: Epochs
           description: The number of complete passes through the entire training dataset.
           examples:
@@ -1338,13 +1280,9 @@ components:
         training_steps:
           anyOf:
             - type: integer
-            - type: 'null'
+            - type: "null"
           title: Training Steps
-          description: >-
-            The number of training steps to perform. A training step refers to a
-            single update of the model weights during the fine-tuning process.
-            This update is typically calculated using a batch of samples from
-            the training dataset.
+          description: The number of training steps to perform. A training step refers to a single update of the model weights during the fine-tuning process. This update is typically calculated using a batch of samples from the training dataset.
           examples:
             - 10
         object:
@@ -1370,10 +1308,10 @@ components:
         ref:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Ref
         weight:
-          default: 1
+          default: 1.0
           exclusiveMinimum: 0
           title: Weight
           type: number
@@ -1389,11 +1327,11 @@ components:
     JobIn:
       properties:
         model:
-          $ref: '#/components/schemas/FineTuneableModel'
+          $ref: "#/components/schemas/FineTuneableModel"
         training_files:
           default: []
           items:
-            $ref: '#/components/schemas/TrainingFile'
+            $ref: "#/components/schemas/TrainingFile"
           title: Training Files
           type: array
         validation_files:
@@ -1402,39 +1340,30 @@ components:
                 format: uuid
                 type: string
               type: array
-            - type: 'null'
+            - type: "null"
           title: Validation Files
-          description: >-
-            A list containing the IDs of uploaded files that contain validation
-            data. If you provide these files, the data is used to generate
-            validation metrics periodically during fine-tuning. These metrics
-            can be viewed in `checkpoints` when getting the status of a running
-            fine-tuning job. The same data should not be present in both train
-            and validation files.
+          description: "A list containing the IDs of uploaded files that contain validation data. If you provide these files, the data is used to generate validation metrics periodically during fine-tuning. These metrics can be viewed in `checkpoints` when getting the status of a running fine-tuning job. The same data should not be present in both train and validation files."
         hyperparameters:
-          $ref: '#/components/schemas/TrainingParametersIn'
+          $ref: "#/components/schemas/TrainingParametersIn"
         suffix:
           anyOf:
             - maxLength: 18
               type: string
-            - type: 'null'
+            - type: "null"
           title: Suffix
-          description: >-
-            A string that will be added to your fine-tuning model name. For
-            example, a suffix of "my-great-model" would produce a model name
-            like `ft:open-mistral-7b:my-great-model:xxx...`
+          description: 'A string that will be added to your fine-tuning model name. For example, a suffix of "my-great-model" would produce a model name like `ft:open-mistral-7b:my-great-model:xxx...`'
         integrations:
           anyOf:
             - items:
-                $ref: '#/components/schemas/WandbIntegration'
+                $ref: "#/components/schemas/WandbIntegration"
               type: array
-            - type: 'null'
+            - type: "null"
           title: Integrations
           description: A list of integrations to enable for your fine-tuning job.
         repositories:
           default: []
           items:
-            $ref: '#/components/schemas/GithubRepositoryIn'
+            $ref: "#/components/schemas/GithubRepositoryIn"
           title: Repositories
           type: array
         auto_start:
@@ -1453,7 +1382,7 @@ components:
           title: File Id
           type: string
         weight:
-          default: 1
+          default: 1.0
           exclusiveMinimum: 0
           title: Weight
           type: number
@@ -1467,35 +1396,28 @@ components:
           anyOf:
             - minimum: 1
               type: integer
-            - type: 'null'
+            - type: "null"
           title: Training Steps
-          description: >-
-            The number of training steps to perform. A training step refers to a
-            single update of the model weights during the fine-tuning process.
-            This update is typically calculated using a batch of samples from
-            the training dataset.
+          description: "The number of training steps to perform. A training step refers to a single update of the model weights during the fine-tuning process. This update is typically calculated using a batch of samples from the training dataset."
         learning_rate:
           default: 0.0001
           maximum: 1
-          minimum: 1.e-8
+          minimum: 0.00000001
           title: Learning Rate
           type: number
-          description: >-
-            A parameter describing how much to adjust the pre-trained model's
-            weights in response to the estimated error each time the weights are
-            updated during the fine-tuning process.
+          description: "A parameter describing how much to adjust the pre-trained model's weights in response to the estimated error each time the weights are updated during the fine-tuning process."
         epochs:
           anyOf:
             - minimum: 0.01
               type: number
-            - type: 'null'
+            - type: "null"
           title: Epochs
         fim_ratio:
           anyOf:
             - maximum: 1
               minimum: 0
               type: number
-            - type: 'null'
+            - type: "null"
           default: 0.9
           title: Fim Ratio
       title: TrainingParametersIn
@@ -1514,11 +1436,9 @@ components:
         name:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Name
-          description: >-
-            A display name to set for the run. If not set, will use the job ID
-            as the name.
+          description: A display name to set for the run. If not set, will use the job ID as the name.
         api_key:
           maxLength: 40
           minLength: 40
@@ -1528,7 +1448,7 @@ components:
         run_name:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Run Name
       required:
         - project
@@ -1538,7 +1458,7 @@ components:
     CheckpointOut:
       properties:
         metrics:
-          $ref: '#/components/schemas/MetricOut'
+          $ref: "#/components/schemas/MetricOut"
         step_number:
           title: Step Number
           type: integer
@@ -1565,9 +1485,9 @@ components:
           title: Auto Start
           type: boolean
         hyperparameters:
-          $ref: '#/components/schemas/TrainingParameters'
+          $ref: "#/components/schemas/TrainingParameters"
         model:
-          $ref: '#/components/schemas/FineTuneableModel'
+          $ref: "#/components/schemas/FineTuneableModel"
         status:
           enum:
             - QUEUED
@@ -1603,7 +1523,7 @@ components:
                 format: uuid
                 type: string
               type: array
-            - type: 'null'
+            - type: "null"
           default: []
           title: Validation Files
         object:
@@ -1613,49 +1533,47 @@ components:
         fine_tuned_model:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Fine Tuned Model
         suffix:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Suffix
         integrations:
           anyOf:
             - items:
-                $ref: '#/components/schemas/WandbIntegrationOut'
+                $ref: "#/components/schemas/WandbIntegrationOut"
               type: array
-            - type: 'null'
+            - type: "null"
           title: Integrations
         trained_tokens:
           anyOf:
             - type: integer
-            - type: 'null'
+            - type: "null"
           title: Trained Tokens
         repositories:
           default: []
           items:
-            $ref: '#/components/schemas/GithubRepositoryOut'
+            $ref: "#/components/schemas/GithubRepositoryOut"
           maxItems: 20
           title: Repositories
           type: array
         metadata:
           anyOf:
-            - $ref: '#/components/schemas/JobMetadataOut'
-            - type: 'null'
+            - $ref: "#/components/schemas/JobMetadataOut"
+            - type: "null"
         events:
           default: []
           items:
-            $ref: '#/components/schemas/EventOut'
+            $ref: "#/components/schemas/EventOut"
           title: Events
           type: array
-          description: >-
-            Event items are created every time the status of a fine-tuning job
-            changes. The timestamped list of all events is accessible here.
+          description: "Event items are created every time the status of a fine-tuning job changes. The timestamped list of all events is accessible here."
         checkpoints:
           default: []
           items:
-            $ref: '#/components/schemas/CheckpointOut'
+            $ref: "#/components/schemas/CheckpointOut"
           title: Checkpoints
           type: array
       required:
@@ -1680,7 +1598,7 @@ components:
           anyOf:
             - type: object
               additionalProperties: true
-            - type: 'null'
+            - type: "null"
           title: Data
         created_at:
           title: Created At
@@ -1696,24 +1614,21 @@ components:
         train_loss:
           anyOf:
             - type: number
-            - type: 'null'
+            - type: "null"
           title: Train Loss
         valid_loss:
           anyOf:
             - type: number
-            - type: 'null'
+            - type: "null"
           title: Valid Loss
         valid_mean_token_accuracy:
           anyOf:
             - type: number
-            - type: 'null'
+            - type: "null"
           title: Valid Mean Token Accuracy
       title: MetricOut
       type: object
-      description: >-
-        Metrics at the step number during the fine-tuning job. Use these metrics
-        to assess if the training is going smoothly (loss should decrease, token
-        accuracy should increase).
+      description: "Metrics at the step number during the fine-tuning job. Use these metrics to assess if the training is going smoothly (loss should decrease, token accuracy should increase)."
     FTModelCapabilitiesOut:
       properties:
         completion_chat:
@@ -1758,15 +1673,15 @@ components:
         name:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Name
         description:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Description
         capabilities:
-          $ref: '#/components/schemas/FTModelCapabilitiesOut'
+          $ref: "#/components/schemas/FTModelCapabilitiesOut"
         max_context_length:
           default: 32768
           title: Max Context Length
@@ -1796,12 +1711,12 @@ components:
         name:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Name
         description:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Description
       title: UpdateFTModelIn
       type: object
@@ -1844,23 +1759,20 @@ components:
         content:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Content
         tool_calls:
           anyOf:
             - items:
-                $ref: '#/components/schemas/ToolCall'
+                $ref: "#/components/schemas/ToolCall"
               type: array
-            - type: 'null'
+            - type: "null"
           title: Tool Calls
         prefix:
           type: boolean
           title: Prefix
           default: false
-          description: >-
-            Set this to `true` when adding an assistant message as prefix to
-            condition the model response. The role of the prefix message is to
-            force the model to start its answer by the content of the message.
+          description: "Set this to `true` when adding an assistant message as prefix to condition the model response. The role of the prefix message is to force the model to start its answer by the content of the message."
         role:
           type: string
           default: assistant
@@ -1875,13 +1787,9 @@ components:
         model:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Model
-          description: >-
-            ID of the model to use. You can use the [List Available
-            Models](/api/#tag/models/operation/list_models_v1_models_get) API to
-            see all of your available models, or see our [Model
-            overview](/models) for model descriptions.
+          description: ID of the model to use. You can use the [List Available Models](/api/#tag/models/operation/list_models_v1_models_get) API to see all of your available models, or see our [Model overview](/models) for model descriptions.
           examples:
             - mistral-small-latest
         temperature:
@@ -1890,49 +1798,33 @@ components:
           minimum: 0
           title: Temperature
           default: 0.7
-          description: >-
-            What sampling temperature to use, between 0.0 and 1.0. Higher values
-            like 0.8 will make the output more random, while lower values like
-            0.2 will make it more focused and deterministic. We generally
-            recommend altering this or `top_p` but not both.
+          description: "What sampling temperature to use, between 0.0 and 1.0. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both."
         top_p:
           type: number
           maximum: 1
           minimum: 0
           title: Top P
-          default: 1
-          description: >-
-            Nucleus sampling, where the model considers the results of the
-            tokens with `top_p` probability mass. So 0.1 means only the tokens
-            comprising the top 10% probability mass are considered. We generally
-            recommend altering this or `temperature` but not both.
+          default: 1.0
+          description: "Nucleus sampling, where the model considers the results of the tokens with `top_p` probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered. We generally recommend altering this or `temperature` but not both."
         max_tokens:
           anyOf:
             - type: integer
               minimum: 0
-            - type: 'null'
+            - type: "null"
           title: Max Tokens
-          description: >-
-            The maximum number of tokens to generate in the completion. The
-            token count of your prompt plus `max_tokens` cannot exceed the
-            model's context length.
+          description: "The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length."
         min_tokens:
           anyOf:
             - type: integer
               minimum: 0
-            - type: 'null'
+            - type: "null"
           title: Min Tokens
           description: The minimum number of tokens to generate in the completion.
         stream:
           type: boolean
           title: Stream
           default: false
-          description: >-
-            Whether to stream back partial progress. If set, tokens will be sent
-            as data-only server-side events as they become available, with the
-            stream terminated by a data: [DONE] message. Otherwise, the server
-            will hold the request open until the timeout or until completion,
-            with the response containing the full result as JSON.
+          description: "Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON."
         stop:
           anyOf:
             - type: string
@@ -1940,52 +1832,50 @@ components:
                 type: string
               type: array
           title: Stop
-          description: >-
-            Stop generation if this token is detected. Or if one of these tokens
-            is detected when providing an array
+          description: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         random_seed:
           anyOf:
             - type: integer
               minimum: 0
-            - type: 'null'
+            - type: "null"
           title: Random Seed
-          description: >-
-            The seed to use for random sampling. If set, different calls will
-            generate deterministic results.
+          description: The seed to use for random sampling. If set, different calls will generate deterministic results.
         messages:
           items:
             oneOf:
-              - $ref: '#/components/schemas/SystemMessage'
-              - $ref: '#/components/schemas/UserMessage'
-              - $ref: '#/components/schemas/AssistantMessage'
-              - $ref: '#/components/schemas/ToolMessage'
+              - $ref: "#/components/schemas/SystemMessage"
+              - $ref: "#/components/schemas/UserMessage"
+              - $ref: "#/components/schemas/AssistantMessage"
+              - $ref: "#/components/schemas/ToolMessage"
             discriminator:
               propertyName: role
               mapping:
-                assistant: '#/components/schemas/AssistantMessage'
-                system: '#/components/schemas/SystemMessage'
-                tool: '#/components/schemas/ToolMessage'
-                user: '#/components/schemas/UserMessage'
+                assistant: "#/components/schemas/AssistantMessage"
+                system: "#/components/schemas/SystemMessage"
+                tool: "#/components/schemas/ToolMessage"
+                user: "#/components/schemas/UserMessage"
           type: array
           title: Messages
-          description: >-
-            The prompt(s) to generate completions for, encoded as a list of dict
-            with role and content.
+          description: The prompt(s) to generate completions for, encoded as a list of dict with role and content.
           examples:
-            - - role: user
-                content: Who is the best French painter? Answer in one short sentence.
+            - [
+                {
+                  "role": "user",
+                  "content": "Who is the best French painter? Answer in one short sentence.",
+                },
+              ]
         response_format:
-          $ref: '#/components/schemas/ResponseFormat'
+          $ref: "#/components/schemas/ResponseFormat"
         tools:
           anyOf:
             - items:
-                $ref: '#/components/schemas/Tool'
+                $ref: "#/components/schemas/Tool"
               type: array
-            - type: 'null'
+            - type: "null"
           title: Tools
         tool_choice:
           allOf:
-            - $ref: '#/components/schemas/ToolChoice'
+            - $ref: "#/components/schemas/ToolChoice"
           default: auto
         safe_prompt:
           type: boolean
@@ -2005,7 +1895,7 @@ components:
       properties:
         type:
           allOf:
-            - $ref: '#/components/schemas/ChunkTypes'
+            - $ref: "#/components/schemas/ChunkTypes"
           default: text
         text:
           type: string
@@ -2020,13 +1910,10 @@ components:
         model:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Model
           default: codestral-2405
-          description: |-
-            ID of the model to use. Only compatible for now with:
-              - `codestral-2405`
-              - `codestral-latest`
+          description: "ID of the model to use. Only compatible for now with:\n  - `codestral-2405`\n  - `codestral-latest`"
           examples:
             - codestral-2405
         temperature:
@@ -2035,49 +1922,33 @@ components:
           minimum: 0
           title: Temperature
           default: 0.7
-          description: >-
-            What sampling temperature to use, between 0.0 and 1.0. Higher values
-            like 0.8 will make the output more random, while lower values like
-            0.2 will make it more focused and deterministic. We generally
-            recommend altering this or `top_p` but not both.
+          description: "What sampling temperature to use, between 0.0 and 1.0. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both."
         top_p:
           type: number
           maximum: 1
           minimum: 0
           title: Top P
-          default: 1
-          description: >-
-            Nucleus sampling, where the model considers the results of the
-            tokens with `top_p` probability mass. So 0.1 means only the tokens
-            comprising the top 10% probability mass are considered. We generally
-            recommend altering this or `temperature` but not both.
+          default: 1.0
+          description: "Nucleus sampling, where the model considers the results of the tokens with `top_p` probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered. We generally recommend altering this or `temperature` but not both."
         max_tokens:
           anyOf:
             - type: integer
               minimum: 0
-            - type: 'null'
+            - type: "null"
           title: Max Tokens
-          description: >-
-            The maximum number of tokens to generate in the completion. The
-            token count of your prompt plus `max_tokens` cannot exceed the
-            model's context length.
+          description: "The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length."
         min_tokens:
           anyOf:
             - type: integer
               minimum: 0
-            - type: 'null'
+            - type: "null"
           title: Min Tokens
           description: The minimum number of tokens to generate in the completion.
         stream:
           type: boolean
           title: Stream
           default: false
-          description: >-
-            Whether to stream back partial progress. If set, tokens will be sent
-            as data-only server-side events as they become available, with the
-            stream terminated by a data: [DONE] message. Otherwise, the server
-            will hold the request open until the timeout or until completion,
-            with the response containing the full result as JSON.
+          description: "Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON."
         stop:
           anyOf:
             - type: string
@@ -2085,35 +1956,27 @@ components:
                 type: string
               type: array
           title: Stop
-          description: >-
-            Stop generation if this token is detected. Or if one of these tokens
-            is detected when providing an array
+          description: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         random_seed:
           anyOf:
             - type: integer
               minimum: 0
-            - type: 'null'
+            - type: "null"
           title: Random Seed
-          description: >-
-            The seed to use for random sampling. If set, different calls will
-            generate deterministic results.
+          description: The seed to use for random sampling. If set, different calls will generate deterministic results.
         prompt:
           type: string
           title: Prompt
-          description: The text/code to complete.
+          description: "The text/code to complete."
           examples:
             - def
         suffix:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Suffix
-          default: ''
-          description: >-
-            Optional text/code that adds more context for the model. When given
-            a `prompt` and a `suffix` the model will fill what is between them.
-            When `suffix` is not provided, the model will simply execute
-            completion starting with `prompt`.
+          default: ""
+          description: "Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`."
           examples:
             - return a+b
       additionalProperties: false
@@ -2130,7 +1993,7 @@ components:
         description:
           type: string
           title: Description
-          default: ''
+          default: ""
         parameters:
           type: object
           title: Parameters
@@ -2162,7 +2025,7 @@ components:
       properties:
         type:
           allOf:
-            - $ref: '#/components/schemas/ResponseFormats'
+            - $ref: "#/components/schemas/ResponseFormats"
           default: text
       additionalProperties: false
       type: object
@@ -2173,19 +2036,14 @@ components:
         - text
         - json_object
       title: ResponseFormats
-      description: >-
-        An object specifying the format that the model must output. Setting to
-        `{ "type": "json_object" }` enables JSON mode, which guarantees the
-        message the model generates is in JSON. When using JSON mode you MUST
-        also instruct the model to produce JSON yourself with a system or a user
-        message.
+      description: 'An object specifying the format that the model must output. Setting to `{ "type": "json_object" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message.'
     SystemMessage:
       properties:
         content:
           anyOf:
             - type: string
             - items:
-                $ref: '#/components/schemas/ContentChunk'
+                $ref: "#/components/schemas/ContentChunk"
               type: array
           title: Content
         role:
@@ -2216,10 +2074,10 @@ components:
       properties:
         type:
           allOf:
-            - $ref: '#/components/schemas/ToolTypes'
+            - $ref: "#/components/schemas/ToolTypes"
           default: function
         function:
-          $ref: '#/components/schemas/Function'
+          $ref: "#/components/schemas/Function"
       additionalProperties: false
       type: object
       required:
@@ -2230,13 +2088,13 @@ components:
         id:
           type: string
           title: Id
-          default: 'null'
+          default: "null"
         type:
           allOf:
-            - $ref: '#/components/schemas/ToolTypes'
+            - $ref: "#/components/schemas/ToolTypes"
           default: function
         function:
-          $ref: '#/components/schemas/FunctionCall'
+          $ref: "#/components/schemas/FunctionCall"
       additionalProperties: false
       type: object
       required:
@@ -2257,12 +2115,12 @@ components:
         tool_call_id:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Tool Call Id
         name:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Name
         role:
           type: string
@@ -2285,7 +2143,7 @@ components:
           anyOf:
             - type: string
             - items:
-                $ref: '#/components/schemas/TextChunk'
+                $ref: "#/components/schemas/TextChunk"
               type: array
         role:
           type: string
@@ -2303,29 +2161,21 @@ components:
           anyOf:
             - type: integer
               minimum: 0
-            - type: 'null'
+            - type: "null"
           title: Max Tokens
-          description: >-
-            The maximum number of tokens to generate in the completion. The
-            token count of your prompt plus `max_tokens` cannot exceed the
-            model's context length.
+          description: "The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length."
         min_tokens:
           anyOf:
             - type: integer
               minimum: 0
-            - type: 'null'
+            - type: "null"
           title: Min Tokens
           description: The minimum number of tokens to generate in the completion.
         stream:
           type: boolean
           title: Stream
           default: false
-          description: >-
-            Whether to stream back partial progress. If set, tokens will be sent
-            as data-only server-side events as they become available, with the
-            stream terminated by a data: [DONE] message. Otherwise, the server
-            will hold the request open until the timeout or until completion,
-            with the response containing the full result as JSON.
+          description: "Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON."
         stop:
           anyOf:
             - type: string
@@ -2333,50 +2183,48 @@ components:
                 type: string
               type: array
           title: Stop
-          description: >-
-            Stop generation if this token is detected. Or if one of these tokens
-            is detected when providing an array
+          description: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         random_seed:
           anyOf:
             - type: integer
               minimum: 0
-            - type: 'null'
+            - type: "null"
           title: Random Seed
-          description: >-
-            The seed to use for random sampling. If set, different calls will
-            generate deterministic results.
+          description: The seed to use for random sampling. If set, different calls will generate deterministic results.
         messages:
           type: array
           title: Messages
           items:
             oneOf:
-              - $ref: '#/components/schemas/UserMessage'
-              - $ref: '#/components/schemas/AssistantMessage'
-              - $ref: '#/components/schemas/ToolMessage'
+              - $ref: "#/components/schemas/UserMessage"
+              - $ref: "#/components/schemas/AssistantMessage"
+              - $ref: "#/components/schemas/ToolMessage"
             discriminator:
               propertyName: role
               mapping:
-                assistant: '#/components/schemas/AssistantMessage'
-                tool: '#/components/schemas/ToolMessage'
-                user: '#/components/schemas/UserMessage'
-          description: >-
-            The prompt(s) to generate completions for, encoded as a list of dict
-            with role and content.
+                assistant: "#/components/schemas/AssistantMessage"
+                tool: "#/components/schemas/ToolMessage"
+                user: "#/components/schemas/UserMessage"
+          description: The prompt(s) to generate completions for, encoded as a list of dict with role and content.
           examples:
-            - - role: user
-                content: Who is the best French painter? Answer in one short sentence.
+            - [
+                {
+                  "role": "user",
+                  "content": "Who is the best French painter? Answer in one short sentence.",
+                },
+              ]
         response_format:
-          $ref: '#/components/schemas/ResponseFormat'
+          $ref: "#/components/schemas/ResponseFormat"
         tools:
           anyOf:
             - items:
-                $ref: '#/components/schemas/Tool'
+                $ref: "#/components/schemas/Tool"
               type: array
-            - type: 'null'
+            - type: "null"
           title: Tools
         tool_choice:
           allOf:
-            - $ref: '#/components/schemas/ToolChoice'
+            - $ref: "#/components/schemas/ToolChoice"
           default: auto
         agent_id:
           type: string
@@ -2404,7 +2252,7 @@ components:
         encoding_format:
           anyOf:
             - type: string
-            - type: 'null'
+            - type: "null"
           title: Encoding Format
           description: The format to return the embeddings in.
           default: float
@@ -2440,12 +2288,12 @@ components:
           example: cmpl-e5cc70bb28c444948073e77776eb30ef
         object:
           type: string
-          example: chat.completion
+          example: "chat.completion"
         model:
           type: string
           example: mistral-small-latest
         usage:
-          $ref: '#/components/schemas/UsageInfo'
+          $ref: "#/components/schemas/UsageInfo"
     ChatCompletionChoice:
       title: ChatCompletionChoice
       type: object
@@ -2458,7 +2306,7 @@ components:
           type: integer
           example: 0
         message:
-          $ref: '#/components/schemas/AssistantMessage'
+          $ref: "#/components/schemas/AssistantMessage"
         finish_reason:
           type: string
           enum:
@@ -2470,7 +2318,7 @@ components:
           example: stop
     ChatCompletionResponseBase:
       allOf:
-        - $ref: '#/components/schemas/ResponseBase'
+        - $ref: "#/components/schemas/ResponseBase"
         - type: object
           title: ChatCompletionResponseBase
           properties:
@@ -2479,14 +2327,14 @@ components:
               example: 1702256327
     ChatCompletionResponse:
       allOf:
-        - $ref: '#/components/schemas/ChatCompletionResponseBase'
+        - $ref: "#/components/schemas/ChatCompletionResponseBase"
         - type: object
           title: ChatCompletionResponse
           properties:
             choices:
               type: array
               items:
-                $ref: '#/components/schemas/ChatCompletionChoice'
+                $ref: "#/components/schemas/ChatCompletionChoice"
           required:
             - id
             - object
@@ -2495,7 +2343,7 @@ components:
             - usage
     FIMCompletionResponse:
       allOf:
-        - $ref: '#/components/schemas/ChatCompletionResponse'
+        - $ref: "#/components/schemas/ChatCompletionResponse"
         - type: object
           properties:
             model:
@@ -2512,35 +2360,24 @@ components:
           type: array
           items:
             type: number
-          example:
-            - 0.1
-            - 0.2
-            - 0.3
+          example: [0.1, 0.2, 0.3]
         index:
           type: integer
           example: 0
       example:
-        - object: embedding
-          embedding:
-            - 0.1
-            - 0.2
-            - 0.3
-          index: 0
-        - object: embedding
-          embedding:
-            - 0.4
-            - 0.5
-            - 0.6
-          index: 1
+        [
+          { "object": "embedding", "embedding": [0.1, 0.2, 0.3], "index": 0 },
+          { "object": "embedding", "embedding": [0.4, 0.5, 0.6], "index": 1 },
+        ]
     EmbeddingResponse:
       allOf:
-        - $ref: '#/components/schemas/ResponseBase'
+        - $ref: "#/components/schemas/ResponseBase"
         - type: object
           properties:
             data:
               type: array
               items:
-                - $ref: '#/components/schemas/EmbeddingResponseData'
+                - $ref: "#/components/schemas/EmbeddingResponseData"
           required:
             - id
             - object
@@ -2549,17 +2386,13 @@ components:
             - usage
     CompletionEvent:
       type: object
-      required:
-        - data
+      required: [data]
       properties:
         data:
-          $ref: '#/components/schemas/CompletionChunk'
+          $ref: "#/components/schemas/CompletionChunk"
     CompletionChunk:
       type: object
-      required:
-        - id
-        - model
-        - choices
+      required: [id, model, choices]
       properties:
         id:
           type: string
@@ -2570,26 +2403,21 @@ components:
         model:
           type: string
         usage:
-          $ref: '#/components/schemas/UsageInfo'
+          $ref: "#/components/schemas/UsageInfo"
         choices:
           type: array
           items:
-            $ref: '#/components/schemas/CompletionResponseStreamChoice'
+            $ref: "#/components/schemas/CompletionResponseStreamChoice"
     CompletionResponseStreamChoice:
       type: object
-      required:
-        - index
-        - delta
-        - finish_reason
+      required: [index, delta, finish_reason]
       properties:
         index:
           type: integer
         delta:
-          $ref: '#/components/schemas/DeltaMessage'
+          $ref: "#/components/schemas/DeltaMessage"
         finish_reason:
-          type:
-            - string
-            - 'null'
+          type: [string, "null"]
           enum:
             - stop
             - length
@@ -2605,10 +2433,10 @@ components:
           type: string
         tool_calls:
           anyOf:
-            - type: 'null'
+            - type: "null"
             - type: array
               items:
-                $ref: '#/components/schemas/ToolCall'
+                $ref: "#/components/schemas/ToolCall"
   securitySchemes:
     ApiKey:
       type: http
