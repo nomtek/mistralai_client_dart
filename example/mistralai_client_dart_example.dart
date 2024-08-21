@@ -3,9 +3,10 @@
 import 'package:mistralai_client_dart/mistralai_client_dart.dart';
 import 'package:mistralai_client_dart/src/generated/schema/schema.dart';
 
+import 'api_key.dart';
+
 void main() async {
-  const apiKey = 'wTOpnaFjDxWFOHn7JHEhG6K283wR3DNb';
-  final client = MistralAIClient(apiKey: apiKey);
+  final client = MistralAIClient(apiKey: mistralApiKey);
 
   // list models
   final modelsResult = await client.listModels();
