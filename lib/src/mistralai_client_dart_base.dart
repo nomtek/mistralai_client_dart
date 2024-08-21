@@ -36,6 +36,28 @@ class MistralAIClient extends generated.MistralaiClientDartClient {
       },
     );
   }
+
+  Stream<CompletionChunk> fimStream(
+    FIMCompletionRequest request,
+  ) async* {
+    final streamRequest = await makeRequestStream(
+      baseUrl: 'https://api.mistral.ai',
+      path: '/v1/fim/completions',
+      method: generated.HttpMethod.post,
+      requestType: 'application/json',
+      responseType: 'text/event-stream',
+      body: request.copyWith(stream: true),
+    );
+
+    yield* streamRequest.stream
+        .transform(const _MistralAIStreamTransformer())
+        .map(
+      (response) {
+        final json = jsonDecode(response);
+        return CompletionChunk.fromJson(json as Map<String, dynamic>);
+      },
+    );
+  }
 }
 
 class _MistralAIStreamTransformer
