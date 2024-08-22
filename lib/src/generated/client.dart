@@ -604,20 +604,20 @@ class MistralaiClientDartClient {
       queryParams: {
         'page': page,
         'page_size': pageSize,
-        'model': model,
-        'created_after': createdAfter,
+        if (model != null) 'model': model,
+        if (createdAfter != null) 'created_after': createdAfter,
         'created_by_me': createdByMe,
         if (status != null) 'status': status,
-        'wandb_project': wandbProject,
-        'wandb_name': wandbName,
-        'suffix': suffix,
+        if (wandbProject != null) 'wandb_project': wandbProject,
+        if (wandbName != null) 'wandb_name': wandbName,
+        if (suffix != null) 'suffix': suffix,
       },
     );
     return JobsOut.fromJson(_jsonDecode(r) as Map<String, dynamic>);
   }
 
   // ------------------------------------------
-  // METHOD: createFineTuningJob
+  // METHOD: createFineTuningJobRaw
   // ------------------------------------------
 
   /// Create Fine Tuning Job
@@ -629,7 +629,7 @@ class MistralaiClientDartClient {
   /// `request`: No description
   ///
   /// `POST` `https://api.mistral.ai/v1/fine_tuning/jobs`
-  Future<UnionOut> createFineTuningJob({
+  Future<http.Response> createFineTuningJobRaw({
     bool? dryRun,
     required JobIn request,
   }) async {
@@ -642,10 +642,10 @@ class MistralaiClientDartClient {
       responseType: 'application/json',
       body: request,
       queryParams: {
-        'dry_run': dryRun,
+        if (dryRun != null) 'dry_run': dryRun,
       },
     );
-    return UnionOut.fromJson(_jsonDecode(r) as Map<String, dynamic>);
+    return r;
   }
 
   // ------------------------------------------

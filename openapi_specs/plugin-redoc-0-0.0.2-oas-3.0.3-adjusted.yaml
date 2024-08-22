@@ -309,7 +309,9 @@ paths:
       tags:
         - fine-tuning
     post:
-      operationId: create_fine_tuning_job
+      # _raw at the end is to tell that the result will be a raw response
+      # which has to be parsed manually
+      operationId: create_fine_tuning_job_raw
       summary: Create Fine Tuning Job
       parameters:
         - in: query
@@ -332,7 +334,10 @@ paths:
           content:
             application/json:
               schema:
-                anyOf:
+                # oneOf instead of allOf to prevent generating union
+                # in this case - generator cannot do a dynamic
+                # resolution of the union (it's easier to do it manually)
+                oneOf:
                   - $ref: '#/components/schemas/JobOut'
                   - $ref: '#/components/schemas/LegacyJobMetadataOut'
                 title: JobsResponse

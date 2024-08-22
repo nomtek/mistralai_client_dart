@@ -58,6 +58,30 @@ class MistralAIClient extends generated.MistralaiClientDartClient {
       },
     );
   }
+
+  /// Creates a new fine-tuning job.
+  ///
+  /// For more information see [createFineTuningJobRaw].
+  Future<JobOut> createFineTuningJob({required JobIn request}) async {
+    final response = await createFineTuningJobRaw(request: request);
+    return JobOut.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
+  }
+
+  /// Version of [createFineTuningJob] that returns only metadata
+  /// (without the creating the actual job).
+  ///
+  /// For more information see [createFineTuningJobRaw]
+  Future<LegacyJobMetadataOut> createFineTuningJobDryRun({
+    required JobIn request,
+  }) async {
+    final response = await createFineTuningJobRaw(
+      dryRun: true,
+      request: request,
+    );
+    return LegacyJobMetadataOut.fromJson(
+      jsonDecode(response.body) as Map<String, dynamic>,
+    );
+  }
 }
 
 class _MistralAIStreamTransformer
