@@ -3,7 +3,6 @@
 import 'dart:io';
 
 import 'package:mistralai_client_dart/mistralai_client_dart.dart';
-import 'package:mistralai_client_dart/src/generated/schema/schema.dart';
 
 import 'api_key.dart';
 
