@@ -2232,6 +2232,8 @@ components:
             - text
           title: Type
           default: text
+          # added for better generated code
+          type: string
         text:
           type: string
           title: Text
