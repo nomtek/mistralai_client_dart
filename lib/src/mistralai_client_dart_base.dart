@@ -85,7 +85,6 @@ class MistralAIClient extends generated.MistralaiClientDartClient {
     );
   }
 
-
   // START: Fix arguments of ToolCalls that are not parsed correctly
   //
   // Fix arguments that are not parsed correctly
@@ -167,6 +166,41 @@ class MistralAIClient extends generated.MistralaiClientDartClient {
     );
     return LegacyJobMetadataOut.fromJson(
       jsonDecode(response.body) as Map<String, dynamic>,
+    );
+  }
+
+  @override
+  Future<ChatCompletionResponse> agentsComplete({
+    required AgentsCompletionRequest request,
+  }) async {
+    final response = await super.agentsComplete(request: request);
+    final fixedChoices = _fixChoices(response.choices);
+    return response.copyWith(choices: fixedChoices);
+  }
+
+  Stream<CompletionChunk> agentsStream({
+    required AgentsCompletionRequest request,
+  }) async* {
+    final streamRequest = await makeRequestStream(
+      baseUrl: 'https://api.mistral.ai',
+      path: '/v1/agents/completions',
+      method: generated.HttpMethod.post,
+      requestType: 'application/json',
+      responseType: 'text/event-stream',
+      body: request.copyWith(stream: true),
+    );
+
+    yield* streamRequest.stream
+        .transform(const _MistralAIStreamTransformer())
+        .map(
+      (response) {
+        final json = jsonDecode(response);
+        final decodedResponse =
+            CompletionChunk.fromJson(json as Map<String, dynamic>);
+        return decodedResponse.copyWith(
+          choices: _fixStreamChoices(decodedResponse.choices),
+        );
+      },
     );
   }
 }
