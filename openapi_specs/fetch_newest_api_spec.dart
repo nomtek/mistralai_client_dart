@@ -8,7 +8,9 @@ void main(List<String> args) async {
   var arguments = args.toList();
   if (arguments.isEmpty) {
     // fallback to the default URL
-    arguments = ['https://docs.mistral.ai/redocusaurus/plugin-redoc-0.yaml'];
+    arguments = [
+      'https://raw.githubusercontent.com/mistralai/platform-docs-public/main/openapi.yaml',
+    ];
   }
   final uri = Uri.tryParse(arguments[0]);
   if (uri == null) {
@@ -20,26 +22,29 @@ void main(List<String> args) async {
     throw Exception('Failed to download OpenAPI spec: ${response.body}');
   }
 
-  // TODO(lgawron): make the name to not clash with existing files
-  final file = File(uri.pathSegments.last);
-  if (file.existsSync()) {
-    file.deleteSync();
+  final downloadedSpecFile = File('openapi_specs/openapi-downloaded.yaml');
+  final originalSpecFile = File('openapi_specs/openapi-original.yaml');
+  if (downloadedSpecFile.existsSync()) {
+    downloadedSpecFile.deleteSync();
   }
 
   // create tmp file
-  await file.writeAsString(response.body);
+  await downloadedSpecFile.writeAsString(response.body);
 
   final isSpecUpdated = await areFilesDifferent(
-    'plugin-redoc-0-0.0.2-original.yaml',
-    file.path,
+    originalSpecFile.path,
+    downloadedSpecFile.path,
   );
-  if (isSpecUpdated) {
-    log('OpenAPI spec has been updated');
-    // TODO(lgawron): figure out strategy for updating the spec
-    // renaming files, updating the version, etc.
-  } else {
+  try {
+    if (isSpecUpdated) {
+      log('OpenAPI spec has been updated');
+      await downloadedSpecFile.copy(originalSpecFile.path);
+    } else {
+      log('OpenAPI spec is up to date');
+    }
+  } finally {
     // remove file to not leave any traces
-    file.deleteSync();
+    downloadedSpecFile.deleteSync();
   }
 }
 
