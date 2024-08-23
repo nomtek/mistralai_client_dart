@@ -1911,6 +1911,9 @@ components:
           description: >-
             The prompt(s) to generate completions for, encoded as a list of dict
             with role and content.
+
+            You can pass only this types into to the list: [SystemMessage], [UserMessage],
+            [AssistantMessage], [ToolMessage].
           example: >- 
             - role: user
               content: Who is the best French painter? Answer in one short sentence.
@@ -2293,6 +2296,9 @@ components:
           description: >-
             The prompt(s) to generate completions for, encoded as a list of dict
             with role and content.
+
+            You can pass only this types into to the list [UserMessage],
+            [AssistantMessage], [ToolMessage].
           example: >-
             - role: user
               content: Who is the best French painter? Answer in one short sentence.

@@ -2377,6 +2377,7 @@ class ChatCompletionRequest with _$ChatCompletionRequest {
     @JsonKey(name: 'random_seed', includeIfNull: false) int? randomSeed,
 
     /// The prompt(s) to generate completions for, encoded as a list of dict with role and content.
+    /// You can pass only this types into to the list: [SystemMessage], [UserMessage], [AssistantMessage], [ToolMessage].
     required List<dynamic> messages,
 
     /// No Description
@@ -3365,6 +3366,7 @@ class AgentsCompletionRequest with _$AgentsCompletionRequest {
     @JsonKey(name: 'random_seed', includeIfNull: false) int? randomSeed,
 
     /// The prompt(s) to generate completions for, encoded as a list of dict with role and content.
+    /// You can pass only this types into to the list [UserMessage],  [AssistantMessage], [ToolMessage].
     required List<dynamic> messages,
 
     /// No Description

@@ -10310,6 +10310,7 @@ mixin _$ChatCompletionRequest {
   int? get randomSeed => throw _privateConstructorUsedError;
 
   /// The prompt(s) to generate completions for, encoded as a list of dict with role and content.
+  /// You can pass only this types into to the list: [SystemMessage], [UserMessage], [AssistantMessage], [ToolMessage].
   List<dynamic> get messages => throw _privateConstructorUsedError;
 
   /// No Description
@@ -10661,9 +10662,11 @@ class _$ChatCompletionRequestImpl extends _ChatCompletionRequest {
   final int? randomSeed;
 
   /// The prompt(s) to generate completions for, encoded as a list of dict with role and content.
+  /// You can pass only this types into to the list: [SystemMessage], [UserMessage], [AssistantMessage], [ToolMessage].
   final List<dynamic> _messages;
 
   /// The prompt(s) to generate completions for, encoded as a list of dict with role and content.
+  /// You can pass only this types into to the list: [SystemMessage], [UserMessage], [AssistantMessage], [ToolMessage].
   @override
   List<dynamic> get messages {
     if (_messages is EqualUnmodifiableListView) return _messages;
@@ -10828,6 +10831,7 @@ abstract class _ChatCompletionRequest extends ChatCompletionRequest {
   int? get randomSeed;
 
   /// The prompt(s) to generate completions for, encoded as a list of dict with role and content.
+  /// You can pass only this types into to the list: [SystemMessage], [UserMessage], [AssistantMessage], [ToolMessage].
   @override
   List<dynamic> get messages;
 
@@ -15458,6 +15462,7 @@ mixin _$AgentsCompletionRequest {
   int? get randomSeed => throw _privateConstructorUsedError;
 
   /// The prompt(s) to generate completions for, encoded as a list of dict with role and content.
+  /// You can pass only this types into to the list [UserMessage],  [AssistantMessage], [ToolMessage].
   List<dynamic> get messages => throw _privateConstructorUsedError;
 
   /// No Description
@@ -15763,9 +15768,11 @@ class _$AgentsCompletionRequestImpl extends _AgentsCompletionRequest {
   final int? randomSeed;
 
   /// The prompt(s) to generate completions for, encoded as a list of dict with role and content.
+  /// You can pass only this types into to the list [UserMessage],  [AssistantMessage], [ToolMessage].
   final List<dynamic> _messages;
 
   /// The prompt(s) to generate completions for, encoded as a list of dict with role and content.
+  /// You can pass only this types into to the list [UserMessage],  [AssistantMessage], [ToolMessage].
   @override
   List<dynamic> get messages {
     if (_messages is EqualUnmodifiableListView) return _messages;
@@ -15908,6 +15915,7 @@ abstract class _AgentsCompletionRequest extends AgentsCompletionRequest {
   int? get randomSeed;
 
   /// The prompt(s) to generate completions for, encoded as a list of dict with role and content.
+  /// You can pass only this types into to the list [UserMessage],  [AssistantMessage], [ToolMessage].
   @override
   List<dynamic> get messages;
 
