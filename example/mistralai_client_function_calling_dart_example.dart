@@ -2,6 +2,8 @@
 
 import 'package:mistralai_client_dart/mistralai_client_dart.dart';
 
+import 'api_key.dart';
+
 const paymentStatusData = {
   'T1001': 'Paid',
   'T1002': 'Unpaid',
@@ -37,106 +39,118 @@ String retrievePaymentDate(
 }
 
 void main() async {
-  const apiKey = 'your api key here';
   const model = 'mistral-large-latest';
-  final client = MistralAIClient(apiKey: apiKey);
+  final client = MistralAIClient(apiKey: mistralApiKey);
 
-  final tools = [
-    const ToolsFunction(
-      name: 'retrievePaymentStatus',
-      description: 'Get payment status of a transaction',
-      parameters: [
-        ToolsFunctionParameter(
-          name: 'transactionId',
-          type: 'string',
-          description: 'The transaction ID',
-          isRequired: true,
-        ),
-      ],
-    ).toChatParamsFormat(),
-    const ToolsFunction(
-      name: 'retrievePaymentDate',
-      description: 'Get payment date of a transaction',
-      parameters: [
-        ToolsFunctionParameter(
-          name: 'transactionId',
-          type: 'string',
-          description: 'The transaction ID',
-          isRequired: true,
-        ),
-      ],
-    ).toChatParamsFormat(),
+  const retrievePaymentStatusDefinition = FunctionDefinition(
+    name: 'retrievePaymentStatus',
+    description: 'Get payment status of a transaction',
+    parameters: {
+      'type': 'object',
+      'properties': {
+        'transaction_id': {
+          'type': 'string',
+          'description': 'The transaction id.',
+        },
+      },
+      'required': ['transaction_id'],
+    },
+  );
+
+  const retrievePaymentDateDefinition = FunctionDefinition(
+    name: 'retrievePaymentDate',
+    description: 'Get payment date of a transaction',
+    parameters: {
+      'type': 'object',
+      'properties': {
+        'transaction_id': {
+          'type': 'string',
+          'description': 'The transaction id.',
+        },
+      },
+      'required': ['transaction_id'],
+    },
+  );
+  final allFunctionDefinitions = [
+    retrievePaymentStatusDefinition,
+    retrievePaymentDateDefinition,
+  ];
+
+  final tools = <Tool>[
+    for (final function in allFunctionDefinitions) Tool(function: function),
   ];
 
   final namesToFunctions = {
-    'retrievePaymentStatus': (String transactionId) =>
+    retrievePaymentStatusDefinition.name: (String transactionId) =>
         retrievePaymentStatus(paymentStatusData, transactionId),
-    'retrievePaymentDate': (String transactionId) =>
+    retrievePaymentDateDefinition.name: (String transactionId) =>
         retrievePaymentDate(paymentDateData, transactionId),
   };
 
-  final messages = [
-    const ChatMessage(
-      role: 'user',
-      content: "What's the status of my transaction?",
+  final messages = <dynamic>[
+    const UserMessage(
+      content:
+          UserMessageContent.string("What's the status of my transaction?"),
     ),
   ];
 
-  var chatResponse = await client.chat(
-    ChatParams(
+  var chatResponse = await client.chatComplete(
+    request: ChatCompletionRequest(
       model: model,
+      // TODO(lgawron): generated code accepts only List<dynamic> for messages
+      // we should have a union type for messages
       messages: messages,
       tools: tools,
-      toolChoice: 'auto',
     ),
   );
-  print(chatResponse.choices[0].message.content);
+  print(chatResponse.choices![0].message.content);
   messages
-    ..add(chatResponse.choices[0].message)
+    ..add(chatResponse.choices![0].message)
     ..add(
-      const ChatMessage(role: 'user', content: 'My transaction ID is T1001'),
+      const UserMessage(
+        content: UserMessageContent.string('My transaction ID is T1001'),
+      ),
     );
 
-  chatResponse = await client.chat(
-    ChatParams(
+  chatResponse = await client.chatComplete(
+    request: ChatCompletionRequest(
       model: model,
       messages: messages,
       tools: tools,
-      toolChoice: 'auto',
     ),
   );
 
   // Request to call the function 'retrievePaymentStatus'
-  messages.add(chatResponse.choices[0].message);
+  messages.add(chatResponse.choices?[0].message);
 
-  final toolCall = chatResponse.choices[0].message.toolCalls![0];
-  final functionName = toolCall.function!.name;
-  final functionParams = toolCall.function!.argumentsMap;
+  final toolMessages =
+      chatResponse.choices?[0].message.toolCalls?.map((toolCall) {
+    final functionName = toolCall.function.name;
+    final functionParams = toolCall.function.arguments;
 
-  print('calling functionName: $functionName');
-  print('functionParams: $functionParams');
-
-  final functionResult = namesToFunctions[functionName]!(
-    functionParams['transactionId']! as String,
-  );
-
-  messages.add(
-    ChatMessage(
-      role: 'tool',
+    final toolFunction = namesToFunctions[functionName]!;
+    final toolFunctionArg = functionParams.mapOrNull(
+      map: (args) => args.value['transaction_id'] as String,
+    );
+    print('calling $functionName(transaction_id: $toolFunctionArg)');
+    final functionResult = toolFunction(toolFunctionArg!);
+    print('\tresult: $functionResult');
+    return ToolMessage(
       content: functionResult,
       name: functionName,
       toolCallId: toolCall.id,
-    ),
-  );
+    );
+  }).toList();
 
-  chatResponse = await client.chat(
-    ChatParams(
+  if (toolMessages != null) messages.addAll(toolMessages);
+
+  chatResponse = await client.chatComplete(
+    request: ChatCompletionRequest(
       model: model,
       messages: messages,
       tools: tools,
-      toolChoice: 'auto',
     ),
   );
 
-  print(chatResponse.choices[0].message.content);
+  print(chatResponse.choices?[0].message.content);
 }

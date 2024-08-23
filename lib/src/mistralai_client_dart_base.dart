@@ -32,9 +32,31 @@ class MistralAIClient extends generated.MistralaiClientDartClient {
         .map(
       (response) {
         final json = jsonDecode(response);
-        return CompletionChunk.fromJson(json as Map<String, dynamic>);
+        final decodedResponse =
+            CompletionChunk.fromJson(json as Map<String, dynamic>);
+        return decodedResponse.copyWith(
+          choices: _fixStreamChoices(decodedResponse.choices),
+        );
       },
     );
+  }
+
+  @override
+  Future<ChatCompletionResponse> chatComplete({
+    required ChatCompletionRequest request,
+  }) async {
+    final response = await super.chatComplete(request: request);
+    final fixedChoices = _fixChoices(response.choices);
+    return response.copyWith(choices: fixedChoices);
+  }
+
+  @override
+  Future<FIMCompletionResponse> fimComplete({
+    required FIMCompletionRequest request,
+  }) async {
+    final response = await super.fimComplete(request: request);
+    final fixedChoices = _fixChoices(response.choices);
+    return response.copyWith(choices: fixedChoices);
   }
 
   Stream<CompletionChunk> fimStream(
@@ -54,10 +76,75 @@ class MistralAIClient extends generated.MistralaiClientDartClient {
         .map(
       (response) {
         final json = jsonDecode(response);
-        return CompletionChunk.fromJson(json as Map<String, dynamic>);
+        final decodedResponse =
+            CompletionChunk.fromJson(json as Map<String, dynamic>);
+        return decodedResponse.copyWith(
+          choices: _fixStreamChoices(decodedResponse.choices),
+        );
       },
     );
   }
+
+
+  // START: Fix arguments of ToolCalls that are not parsed correctly
+  //
+  // Fix arguments that are not parsed correctly
+  // Generator uses `Arguments` class which is a freezed Union
+  // but the response doesn't contain `runtimeType` field
+  // (default for freezed unions).
+
+  List<ChatCompletionChoice>? _fixChoices(List<ChatCompletionChoice>? choices) {
+    return choices
+        ?.map(
+          (choice) => choice.copyWith(
+            message: choice.message.copyWith(
+              toolCalls: _fixToolCalls(choice.message.toolCalls),
+            ),
+          ),
+        )
+        .toList();
+  }
+
+  List<CompletionResponseStreamChoice> _fixStreamChoices(
+    List<CompletionResponseStreamChoice> choices,
+  ) {
+    return choices
+        .map(
+          (choice) => choice.copyWith(
+            delta: choice.delta.copyWith(
+              toolCalls: _fixToolCalls(choice.delta.toolCalls),
+            ),
+          ),
+        )
+        .toList();
+  }
+
+  List<ToolCall>? _fixToolCalls(List<ToolCall>? toolCalls) {
+    return toolCalls?.map((toolCall) {
+      return toolCall.copyWith(
+        function: toolCall.function.copyWith(
+          arguments: _fixArguments(toolCall.function.arguments),
+        ),
+      );
+    }).toList();
+  }
+
+  Arguments _fixArguments(Arguments arguments) {
+    return arguments.map<Arguments>(
+      map: (map) => map,
+      string: (string) {
+        try {
+          return Arguments.map(
+            jsonDecode(string.value) as Map<String, dynamic>,
+          );
+        } catch (e) {
+          return string;
+        }
+      },
+    );
+  }
+
+  // END: Fix arguments of ToolCalls that are not parsed correctly
 
   /// Creates a new fine-tuning job.
   ///
