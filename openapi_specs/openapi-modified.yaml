@@ -2331,7 +2331,7 @@ components:
             - items:
                 type: string
               type: array
-          title: Input
+          title: EmbeddingRequestInput
           description: Text to embed.
         model:
           type: string

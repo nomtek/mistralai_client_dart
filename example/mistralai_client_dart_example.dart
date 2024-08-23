@@ -36,8 +36,7 @@ void main() async {
   final embeddings = await client.createEmbeddings(
     request: const EmbeddingRequest(
       model: 'mistral-embed',
-      // TODO: try to update oas so generated class name for input is better
-      input: Input.arrayString(['Hello chat!']),
+      input: EmbeddingRequestInput.arrayString(['Hello chat!']),
     ),
   );
   for (final data in embeddings.data) {

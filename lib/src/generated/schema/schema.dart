@@ -3366,7 +3366,7 @@ class AgentsCompletionRequest with _$AgentsCompletionRequest {
     @JsonKey(name: 'random_seed', includeIfNull: false) int? randomSeed,
 
     /// The prompt(s) to generate completions for, encoded as a list of dict with role and content.
-    /// You can pass only this types into to the list [UserMessage],  [AssistantMessage], [ToolMessage].
+    /// You can pass only this types into to the list [UserMessage], [AssistantMessage], [ToolMessage].
     required List<dynamic> messages,
 
     /// No Description
@@ -3504,7 +3504,7 @@ class EmbeddingRequest with _$EmbeddingRequest {
   /// Factory constructor for EmbeddingRequest
   const factory EmbeddingRequest({
     /// Text to embed.
-    @_InputConverter() required Input input,
+    @_EmbeddingRequestInputConverter() required EmbeddingRequestInput input,
 
     /// ID of the model to use.
     required String model,
@@ -3542,48 +3542,50 @@ class EmbeddingRequest with _$EmbeddingRequest {
 }
 
 // ==========================================
-// CLASS: Input
+// CLASS: EmbeddingRequestInput
 // ==========================================
 
 /// Text to embed.
 @freezed
-sealed class Input with _$Input {
-  const Input._();
+sealed class EmbeddingRequestInput with _$EmbeddingRequestInput {
+  const EmbeddingRequestInput._();
 
-  const factory Input.arrayString(
+  const factory EmbeddingRequestInput.arrayString(
     List<String> value,
-  ) = _UnionInputArrayString;
+  ) = _UnionEmbeddingRequestInputArrayString;
 
-  const factory Input.string(
+  const factory EmbeddingRequestInput.string(
     String value,
-  ) = _UnionInputString;
+  ) = _UnionEmbeddingRequestInputString;
 
   /// Object construction from a JSON representation
-  factory Input.fromJson(Map<String, dynamic> json) => _$InputFromJson(json);
+  factory EmbeddingRequestInput.fromJson(Map<String, dynamic> json) =>
+      _$EmbeddingRequestInputFromJson(json);
 }
 
-/// Custom JSON converter for [Input]
-class _InputConverter implements JsonConverter<Input, Object?> {
-  const _InputConverter();
+/// Custom JSON converter for [EmbeddingRequestInput]
+class _EmbeddingRequestInputConverter
+    implements JsonConverter<EmbeddingRequestInput, Object?> {
+  const _EmbeddingRequestInputConverter();
 
   @override
-  Input fromJson(Object? data) {
+  EmbeddingRequestInput fromJson(Object? data) {
     if (data is List && data.every((item) => item is String)) {
-      return Input.arrayString(data.cast());
+      return EmbeddingRequestInput.arrayString(data.cast());
     }
     if (data is String) {
-      return Input.string(data);
+      return EmbeddingRequestInput.string(data);
     }
     throw Exception(
-      'Unexpected value for Input: $data',
+      'Unexpected value for EmbeddingRequestInput: $data',
     );
   }
 
   @override
-  Object? toJson(Input data) {
+  Object? toJson(EmbeddingRequestInput data) {
     return switch (data) {
-      _UnionInputArrayString(value: final v) => v,
-      _UnionInputString(value: final v) => v,
+      _UnionEmbeddingRequestInputArrayString(value: final v) => v,
+      _UnionEmbeddingRequestInputString(value: final v) => v,
     };
   }
 }

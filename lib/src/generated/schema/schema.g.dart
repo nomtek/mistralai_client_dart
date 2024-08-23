@@ -1566,7 +1566,7 @@ Map<String, dynamic> _$$UnionAgentsCompletionRequestStopStringImplToJson(
 _$EmbeddingRequestImpl _$$EmbeddingRequestImplFromJson(
         Map<String, dynamic> json) =>
     _$EmbeddingRequestImpl(
-      input: const _InputConverter().fromJson(json['input']),
+      input: const _EmbeddingRequestInputConverter().fromJson(json['input']),
       model: json['model'] as String,
       encodingFormat: json['encoding_format'] as String? ?? 'float',
     );
@@ -1574,7 +1574,7 @@ _$EmbeddingRequestImpl _$$EmbeddingRequestImplFromJson(
 Map<String, dynamic> _$$EmbeddingRequestImplToJson(
     _$EmbeddingRequestImpl instance) {
   final val = <String, dynamic>{
-    'input': const _InputConverter().toJson(instance.input),
+    'input': const _EmbeddingRequestInputConverter().toJson(instance.input),
     'model': instance.model,
   };
 
@@ -1588,29 +1588,31 @@ Map<String, dynamic> _$$EmbeddingRequestImplToJson(
   return val;
 }
 
-_$UnionInputArrayStringImpl _$$UnionInputArrayStringImplFromJson(
-        Map<String, dynamic> json) =>
-    _$UnionInputArrayStringImpl(
-      (json['value'] as List<dynamic>).map((e) => e as String).toList(),
-      $type: json['runtimeType'] as String?,
-    );
+_$UnionEmbeddingRequestInputArrayStringImpl
+    _$$UnionEmbeddingRequestInputArrayStringImplFromJson(
+            Map<String, dynamic> json) =>
+        _$UnionEmbeddingRequestInputArrayStringImpl(
+          (json['value'] as List<dynamic>).map((e) => e as String).toList(),
+          $type: json['runtimeType'] as String?,
+        );
 
-Map<String, dynamic> _$$UnionInputArrayStringImplToJson(
-        _$UnionInputArrayStringImpl instance) =>
+Map<String, dynamic> _$$UnionEmbeddingRequestInputArrayStringImplToJson(
+        _$UnionEmbeddingRequestInputArrayStringImpl instance) =>
     <String, dynamic>{
       'value': instance.value,
       'runtimeType': instance.$type,
     };
 
-_$UnionInputStringImpl _$$UnionInputStringImplFromJson(
-        Map<String, dynamic> json) =>
-    _$UnionInputStringImpl(
-      json['value'] as String,
-      $type: json['runtimeType'] as String?,
-    );
+_$UnionEmbeddingRequestInputStringImpl
+    _$$UnionEmbeddingRequestInputStringImplFromJson(
+            Map<String, dynamic> json) =>
+        _$UnionEmbeddingRequestInputStringImpl(
+          json['value'] as String,
+          $type: json['runtimeType'] as String?,
+        );
 
-Map<String, dynamic> _$$UnionInputStringImplToJson(
-        _$UnionInputStringImpl instance) =>
+Map<String, dynamic> _$$UnionEmbeddingRequestInputStringImplToJson(
+        _$UnionEmbeddingRequestInputStringImpl instance) =>
     <String, dynamic>{
       'value': instance.value,
       'runtimeType': instance.$type,

@@ -15462,7 +15462,7 @@ mixin _$AgentsCompletionRequest {
   int? get randomSeed => throw _privateConstructorUsedError;
 
   /// The prompt(s) to generate completions for, encoded as a list of dict with role and content.
-  /// You can pass only this types into to the list [UserMessage],  [AssistantMessage], [ToolMessage].
+  /// You can pass only this types into to the list [UserMessage], [AssistantMessage], [ToolMessage].
   List<dynamic> get messages => throw _privateConstructorUsedError;
 
   /// No Description
@@ -15768,11 +15768,11 @@ class _$AgentsCompletionRequestImpl extends _AgentsCompletionRequest {
   final int? randomSeed;
 
   /// The prompt(s) to generate completions for, encoded as a list of dict with role and content.
-  /// You can pass only this types into to the list [UserMessage],  [AssistantMessage], [ToolMessage].
+  /// You can pass only this types into to the list [UserMessage], [AssistantMessage], [ToolMessage].
   final List<dynamic> _messages;
 
   /// The prompt(s) to generate completions for, encoded as a list of dict with role and content.
-  /// You can pass only this types into to the list [UserMessage],  [AssistantMessage], [ToolMessage].
+  /// You can pass only this types into to the list [UserMessage], [AssistantMessage], [ToolMessage].
   @override
   List<dynamic> get messages {
     if (_messages is EqualUnmodifiableListView) return _messages;
@@ -15915,7 +15915,7 @@ abstract class _AgentsCompletionRequest extends AgentsCompletionRequest {
   int? get randomSeed;
 
   /// The prompt(s) to generate completions for, encoded as a list of dict with role and content.
-  /// You can pass only this types into to the list [UserMessage],  [AssistantMessage], [ToolMessage].
+  /// You can pass only this types into to the list [UserMessage], [AssistantMessage], [ToolMessage].
   @override
   List<dynamic> get messages;
 
@@ -16417,8 +16417,8 @@ EmbeddingRequest _$EmbeddingRequestFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$EmbeddingRequest {
   /// Text to embed.
-  @_InputConverter()
-  Input get input => throw _privateConstructorUsedError;
+  @_EmbeddingRequestInputConverter()
+  EmbeddingRequestInput get input => throw _privateConstructorUsedError;
 
   /// ID of the model to use.
   String get model => throw _privateConstructorUsedError;
@@ -16444,12 +16444,12 @@ abstract class $EmbeddingRequestCopyWith<$Res> {
       _$EmbeddingRequestCopyWithImpl<$Res, EmbeddingRequest>;
   @useResult
   $Res call(
-      {@_InputConverter() Input input,
+      {@_EmbeddingRequestInputConverter() EmbeddingRequestInput input,
       String model,
       @JsonKey(name: 'encoding_format', includeIfNull: false)
       String? encodingFormat});
 
-  $InputCopyWith<$Res> get input;
+  $EmbeddingRequestInputCopyWith<$Res> get input;
 }
 
 /// @nodoc
@@ -16475,7 +16475,7 @@ class _$EmbeddingRequestCopyWithImpl<$Res, $Val extends EmbeddingRequest>
       input: null == input
           ? _value.input
           : input // ignore: cast_nullable_to_non_nullable
-              as Input,
+              as EmbeddingRequestInput,
       model: null == model
           ? _value.model
           : model // ignore: cast_nullable_to_non_nullable
@@ -16491,8 +16491,8 @@ class _$EmbeddingRequestCopyWithImpl<$Res, $Val extends EmbeddingRequest>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $InputCopyWith<$Res> get input {
-    return $InputCopyWith<$Res>(_value.input, (value) {
+  $EmbeddingRequestInputCopyWith<$Res> get input {
+    return $EmbeddingRequestInputCopyWith<$Res>(_value.input, (value) {
       return _then(_value.copyWith(input: value) as $Val);
     });
   }
@@ -16507,13 +16507,13 @@ abstract class _$$EmbeddingRequestImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@_InputConverter() Input input,
+      {@_EmbeddingRequestInputConverter() EmbeddingRequestInput input,
       String model,
       @JsonKey(name: 'encoding_format', includeIfNull: false)
       String? encodingFormat});
 
   @override
-  $InputCopyWith<$Res> get input;
+  $EmbeddingRequestInputCopyWith<$Res> get input;
 }
 
 /// @nodoc
@@ -16537,7 +16537,7 @@ class __$$EmbeddingRequestImplCopyWithImpl<$Res>
       input: null == input
           ? _value.input
           : input // ignore: cast_nullable_to_non_nullable
-              as Input,
+              as EmbeddingRequestInput,
       model: null == model
           ? _value.model
           : model // ignore: cast_nullable_to_non_nullable
@@ -16554,7 +16554,7 @@ class __$$EmbeddingRequestImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$EmbeddingRequestImpl extends _EmbeddingRequest {
   const _$EmbeddingRequestImpl(
-      {@_InputConverter() required this.input,
+      {@_EmbeddingRequestInputConverter() required this.input,
       required this.model,
       @JsonKey(name: 'encoding_format', includeIfNull: false)
       this.encodingFormat = 'float'})
@@ -16565,8 +16565,8 @@ class _$EmbeddingRequestImpl extends _EmbeddingRequest {
 
   /// Text to embed.
   @override
-  @_InputConverter()
-  final Input input;
+  @_EmbeddingRequestInputConverter()
+  final EmbeddingRequestInput input;
 
   /// ID of the model to use.
   @override
@@ -16616,7 +16616,8 @@ class _$EmbeddingRequestImpl extends _EmbeddingRequest {
 
 abstract class _EmbeddingRequest extends EmbeddingRequest {
   const factory _EmbeddingRequest(
-      {@_InputConverter() required final Input input,
+      {@_EmbeddingRequestInputConverter()
+      required final EmbeddingRequestInput input,
       required final String model,
       @JsonKey(name: 'encoding_format', includeIfNull: false)
       final String? encodingFormat}) = _$EmbeddingRequestImpl;
@@ -16627,8 +16628,8 @@ abstract class _EmbeddingRequest extends EmbeddingRequest {
 
   /// Text to embed.
   @override
-  @_InputConverter()
-  Input get input;
+  @_EmbeddingRequestInputConverter()
+  EmbeddingRequestInput get input;
 
   /// ID of the model to use.
   @override
@@ -16647,21 +16648,25 @@ abstract class _EmbeddingRequest extends EmbeddingRequest {
       throw _privateConstructorUsedError;
 }
 
-Input _$InputFromJson(Map<String, dynamic> json) {
+EmbeddingRequestInput _$EmbeddingRequestInputFromJson(
+    Map<String, dynamic> json) {
   switch (json['runtimeType']) {
     case 'arrayString':
-      return _UnionInputArrayString.fromJson(json);
+      return _UnionEmbeddingRequestInputArrayString.fromJson(json);
     case 'string':
-      return _UnionInputString.fromJson(json);
+      return _UnionEmbeddingRequestInputString.fromJson(json);
 
     default:
-      throw CheckedFromJsonException(json, 'runtimeType', 'Input',
+      throw CheckedFromJsonException(
+          json,
+          'runtimeType',
+          'EmbeddingRequestInput',
           'Invalid union type "${json['runtimeType']}"!');
   }
 }
 
 /// @nodoc
-mixin _$Input {
+mixin _$EmbeddingRequestInput {
   Object get value => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
@@ -16684,74 +16689,80 @@ mixin _$Input {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_UnionInputArrayString value) arrayString,
-    required TResult Function(_UnionInputString value) string,
+    required TResult Function(_UnionEmbeddingRequestInputArrayString value)
+        arrayString,
+    required TResult Function(_UnionEmbeddingRequestInputString value) string,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_UnionInputArrayString value)? arrayString,
-    TResult? Function(_UnionInputString value)? string,
+    TResult? Function(_UnionEmbeddingRequestInputArrayString value)?
+        arrayString,
+    TResult? Function(_UnionEmbeddingRequestInputString value)? string,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_UnionInputArrayString value)? arrayString,
-    TResult Function(_UnionInputString value)? string,
+    TResult Function(_UnionEmbeddingRequestInputArrayString value)? arrayString,
+    TResult Function(_UnionEmbeddingRequestInputString value)? string,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 
-  /// Serializes this Input to a JSON map.
+  /// Serializes this EmbeddingRequestInput to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $InputCopyWith<$Res> {
-  factory $InputCopyWith(Input value, $Res Function(Input) then) =
-      _$InputCopyWithImpl<$Res, Input>;
+abstract class $EmbeddingRequestInputCopyWith<$Res> {
+  factory $EmbeddingRequestInputCopyWith(EmbeddingRequestInput value,
+          $Res Function(EmbeddingRequestInput) then) =
+      _$EmbeddingRequestInputCopyWithImpl<$Res, EmbeddingRequestInput>;
 }
 
 /// @nodoc
-class _$InputCopyWithImpl<$Res, $Val extends Input>
-    implements $InputCopyWith<$Res> {
-  _$InputCopyWithImpl(this._value, this._then);
+class _$EmbeddingRequestInputCopyWithImpl<$Res,
+        $Val extends EmbeddingRequestInput>
+    implements $EmbeddingRequestInputCopyWith<$Res> {
+  _$EmbeddingRequestInputCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of Input
+  /// Create a copy of EmbeddingRequestInput
   /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
-abstract class _$$UnionInputArrayStringImplCopyWith<$Res> {
-  factory _$$UnionInputArrayStringImplCopyWith(
-          _$UnionInputArrayStringImpl value,
-          $Res Function(_$UnionInputArrayStringImpl) then) =
-      __$$UnionInputArrayStringImplCopyWithImpl<$Res>;
+abstract class _$$UnionEmbeddingRequestInputArrayStringImplCopyWith<$Res> {
+  factory _$$UnionEmbeddingRequestInputArrayStringImplCopyWith(
+          _$UnionEmbeddingRequestInputArrayStringImpl value,
+          $Res Function(_$UnionEmbeddingRequestInputArrayStringImpl) then) =
+      __$$UnionEmbeddingRequestInputArrayStringImplCopyWithImpl<$Res>;
   @useResult
   $Res call({List<String> value});
 }
 
 /// @nodoc
-class __$$UnionInputArrayStringImplCopyWithImpl<$Res>
-    extends _$InputCopyWithImpl<$Res, _$UnionInputArrayStringImpl>
-    implements _$$UnionInputArrayStringImplCopyWith<$Res> {
-  __$$UnionInputArrayStringImplCopyWithImpl(_$UnionInputArrayStringImpl _value,
-      $Res Function(_$UnionInputArrayStringImpl) _then)
+class __$$UnionEmbeddingRequestInputArrayStringImplCopyWithImpl<$Res>
+    extends _$EmbeddingRequestInputCopyWithImpl<$Res,
+        _$UnionEmbeddingRequestInputArrayStringImpl>
+    implements _$$UnionEmbeddingRequestInputArrayStringImplCopyWith<$Res> {
+  __$$UnionEmbeddingRequestInputArrayStringImplCopyWithImpl(
+      _$UnionEmbeddingRequestInputArrayStringImpl _value,
+      $Res Function(_$UnionEmbeddingRequestInputArrayStringImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of Input
+  /// Create a copy of EmbeddingRequestInput
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? value = null,
   }) {
-    return _then(_$UnionInputArrayStringImpl(
+    return _then(_$UnionEmbeddingRequestInputArrayStringImpl(
       null == value
           ? _value._value
           : value // ignore: cast_nullable_to_non_nullable
@@ -16762,15 +16773,17 @@ class __$$UnionInputArrayStringImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$UnionInputArrayStringImpl extends _UnionInputArrayString {
-  const _$UnionInputArrayStringImpl(final List<String> value,
+class _$UnionEmbeddingRequestInputArrayStringImpl
+    extends _UnionEmbeddingRequestInputArrayString {
+  const _$UnionEmbeddingRequestInputArrayStringImpl(final List<String> value,
       {final String? $type})
       : _value = value,
         $type = $type ?? 'arrayString',
         super._();
 
-  factory _$UnionInputArrayStringImpl.fromJson(Map<String, dynamic> json) =>
-      _$$UnionInputArrayStringImplFromJson(json);
+  factory _$UnionEmbeddingRequestInputArrayStringImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$UnionEmbeddingRequestInputArrayStringImplFromJson(json);
 
   final List<String> _value;
   @override
@@ -16785,14 +16798,14 @@ class _$UnionInputArrayStringImpl extends _UnionInputArrayString {
 
   @override
   String toString() {
-    return 'Input.arrayString(value: $value)';
+    return 'EmbeddingRequestInput.arrayString(value: $value)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UnionInputArrayStringImpl &&
+            other is _$UnionEmbeddingRequestInputArrayStringImpl &&
             const DeepCollectionEquality().equals(other._value, _value));
   }
 
@@ -16801,14 +16814,15 @@ class _$UnionInputArrayStringImpl extends _UnionInputArrayString {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(_value));
 
-  /// Create a copy of Input
+  /// Create a copy of EmbeddingRequestInput
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$UnionInputArrayStringImplCopyWith<_$UnionInputArrayStringImpl>
-      get copyWith => __$$UnionInputArrayStringImplCopyWithImpl<
-          _$UnionInputArrayStringImpl>(this, _$identity);
+  _$$UnionEmbeddingRequestInputArrayStringImplCopyWith<
+          _$UnionEmbeddingRequestInputArrayStringImpl>
+      get copyWith => __$$UnionEmbeddingRequestInputArrayStringImplCopyWithImpl<
+          _$UnionEmbeddingRequestInputArrayStringImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -16844,8 +16858,9 @@ class _$UnionInputArrayStringImpl extends _UnionInputArrayString {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_UnionInputArrayString value) arrayString,
-    required TResult Function(_UnionInputString value) string,
+    required TResult Function(_UnionEmbeddingRequestInputArrayString value)
+        arrayString,
+    required TResult Function(_UnionEmbeddingRequestInputString value) string,
   }) {
     return arrayString(this);
   }
@@ -16853,8 +16868,9 @@ class _$UnionInputArrayStringImpl extends _UnionInputArrayString {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_UnionInputArrayString value)? arrayString,
-    TResult? Function(_UnionInputString value)? string,
+    TResult? Function(_UnionEmbeddingRequestInputArrayString value)?
+        arrayString,
+    TResult? Function(_UnionEmbeddingRequestInputString value)? string,
   }) {
     return arrayString?.call(this);
   }
@@ -16862,8 +16878,8 @@ class _$UnionInputArrayStringImpl extends _UnionInputArrayString {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_UnionInputArrayString value)? arrayString,
-    TResult Function(_UnionInputString value)? string,
+    TResult Function(_UnionEmbeddingRequestInputArrayString value)? arrayString,
+    TResult Function(_UnionEmbeddingRequestInputString value)? string,
     required TResult orElse(),
   }) {
     if (arrayString != null) {
@@ -16874,55 +16890,61 @@ class _$UnionInputArrayStringImpl extends _UnionInputArrayString {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$UnionInputArrayStringImplToJson(
+    return _$$UnionEmbeddingRequestInputArrayStringImplToJson(
       this,
     );
   }
 }
 
-abstract class _UnionInputArrayString extends Input {
-  const factory _UnionInputArrayString(final List<String> value) =
-      _$UnionInputArrayStringImpl;
-  const _UnionInputArrayString._() : super._();
+abstract class _UnionEmbeddingRequestInputArrayString
+    extends EmbeddingRequestInput {
+  const factory _UnionEmbeddingRequestInputArrayString(
+      final List<String> value) = _$UnionEmbeddingRequestInputArrayStringImpl;
+  const _UnionEmbeddingRequestInputArrayString._() : super._();
 
-  factory _UnionInputArrayString.fromJson(Map<String, dynamic> json) =
-      _$UnionInputArrayStringImpl.fromJson;
+  factory _UnionEmbeddingRequestInputArrayString.fromJson(
+          Map<String, dynamic> json) =
+      _$UnionEmbeddingRequestInputArrayStringImpl.fromJson;
 
   @override
   List<String> get value;
 
-  /// Create a copy of Input
+  /// Create a copy of EmbeddingRequestInput
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$UnionInputArrayStringImplCopyWith<_$UnionInputArrayStringImpl>
+  _$$UnionEmbeddingRequestInputArrayStringImplCopyWith<
+          _$UnionEmbeddingRequestInputArrayStringImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$UnionInputStringImplCopyWith<$Res> {
-  factory _$$UnionInputStringImplCopyWith(_$UnionInputStringImpl value,
-          $Res Function(_$UnionInputStringImpl) then) =
-      __$$UnionInputStringImplCopyWithImpl<$Res>;
+abstract class _$$UnionEmbeddingRequestInputStringImplCopyWith<$Res> {
+  factory _$$UnionEmbeddingRequestInputStringImplCopyWith(
+          _$UnionEmbeddingRequestInputStringImpl value,
+          $Res Function(_$UnionEmbeddingRequestInputStringImpl) then) =
+      __$$UnionEmbeddingRequestInputStringImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String value});
 }
 
 /// @nodoc
-class __$$UnionInputStringImplCopyWithImpl<$Res>
-    extends _$InputCopyWithImpl<$Res, _$UnionInputStringImpl>
-    implements _$$UnionInputStringImplCopyWith<$Res> {
-  __$$UnionInputStringImplCopyWithImpl(_$UnionInputStringImpl _value,
-      $Res Function(_$UnionInputStringImpl) _then)
+class __$$UnionEmbeddingRequestInputStringImplCopyWithImpl<$Res>
+    extends _$EmbeddingRequestInputCopyWithImpl<$Res,
+        _$UnionEmbeddingRequestInputStringImpl>
+    implements _$$UnionEmbeddingRequestInputStringImplCopyWith<$Res> {
+  __$$UnionEmbeddingRequestInputStringImplCopyWithImpl(
+      _$UnionEmbeddingRequestInputStringImpl _value,
+      $Res Function(_$UnionEmbeddingRequestInputStringImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of Input
+  /// Create a copy of EmbeddingRequestInput
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? value = null,
   }) {
-    return _then(_$UnionInputStringImpl(
+    return _then(_$UnionEmbeddingRequestInputStringImpl(
       null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
@@ -16933,13 +16955,16 @@ class __$$UnionInputStringImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$UnionInputStringImpl extends _UnionInputString {
-  const _$UnionInputStringImpl(this.value, {final String? $type})
+class _$UnionEmbeddingRequestInputStringImpl
+    extends _UnionEmbeddingRequestInputString {
+  const _$UnionEmbeddingRequestInputStringImpl(this.value,
+      {final String? $type})
       : $type = $type ?? 'string',
         super._();
 
-  factory _$UnionInputStringImpl.fromJson(Map<String, dynamic> json) =>
-      _$$UnionInputStringImplFromJson(json);
+  factory _$UnionEmbeddingRequestInputStringImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$UnionEmbeddingRequestInputStringImplFromJson(json);
 
   @override
   final String value;
@@ -16949,14 +16974,14 @@ class _$UnionInputStringImpl extends _UnionInputString {
 
   @override
   String toString() {
-    return 'Input.string(value: $value)';
+    return 'EmbeddingRequestInput.string(value: $value)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UnionInputStringImpl &&
+            other is _$UnionEmbeddingRequestInputStringImpl &&
             (identical(other.value, value) || other.value == value));
   }
 
@@ -16964,14 +16989,15 @@ class _$UnionInputStringImpl extends _UnionInputString {
   @override
   int get hashCode => Object.hash(runtimeType, value);
 
-  /// Create a copy of Input
+  /// Create a copy of EmbeddingRequestInput
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$UnionInputStringImplCopyWith<_$UnionInputStringImpl> get copyWith =>
-      __$$UnionInputStringImplCopyWithImpl<_$UnionInputStringImpl>(
-          this, _$identity);
+  _$$UnionEmbeddingRequestInputStringImplCopyWith<
+          _$UnionEmbeddingRequestInputStringImpl>
+      get copyWith => __$$UnionEmbeddingRequestInputStringImplCopyWithImpl<
+          _$UnionEmbeddingRequestInputStringImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -17007,8 +17033,9 @@ class _$UnionInputStringImpl extends _UnionInputString {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_UnionInputArrayString value) arrayString,
-    required TResult Function(_UnionInputString value) string,
+    required TResult Function(_UnionEmbeddingRequestInputArrayString value)
+        arrayString,
+    required TResult Function(_UnionEmbeddingRequestInputString value) string,
   }) {
     return string(this);
   }
@@ -17016,8 +17043,9 @@ class _$UnionInputStringImpl extends _UnionInputString {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_UnionInputArrayString value)? arrayString,
-    TResult? Function(_UnionInputString value)? string,
+    TResult? Function(_UnionEmbeddingRequestInputArrayString value)?
+        arrayString,
+    TResult? Function(_UnionEmbeddingRequestInputString value)? string,
   }) {
     return string?.call(this);
   }
@@ -17025,8 +17053,8 @@ class _$UnionInputStringImpl extends _UnionInputString {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_UnionInputArrayString value)? arrayString,
-    TResult Function(_UnionInputString value)? string,
+    TResult Function(_UnionEmbeddingRequestInputArrayString value)? arrayString,
+    TResult Function(_UnionEmbeddingRequestInputString value)? string,
     required TResult orElse(),
   }) {
     if (string != null) {
@@ -17037,27 +17065,30 @@ class _$UnionInputStringImpl extends _UnionInputString {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$UnionInputStringImplToJson(
+    return _$$UnionEmbeddingRequestInputStringImplToJson(
       this,
     );
   }
 }
 
-abstract class _UnionInputString extends Input {
-  const factory _UnionInputString(final String value) = _$UnionInputStringImpl;
-  const _UnionInputString._() : super._();
+abstract class _UnionEmbeddingRequestInputString extends EmbeddingRequestInput {
+  const factory _UnionEmbeddingRequestInputString(final String value) =
+      _$UnionEmbeddingRequestInputStringImpl;
+  const _UnionEmbeddingRequestInputString._() : super._();
 
-  factory _UnionInputString.fromJson(Map<String, dynamic> json) =
-      _$UnionInputStringImpl.fromJson;
+  factory _UnionEmbeddingRequestInputString.fromJson(
+          Map<String, dynamic> json) =
+      _$UnionEmbeddingRequestInputStringImpl.fromJson;
 
   @override
   String get value;
 
-  /// Create a copy of Input
+  /// Create a copy of EmbeddingRequestInput
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$UnionInputStringImplCopyWith<_$UnionInputStringImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$UnionEmbeddingRequestInputStringImplCopyWith<
+          _$UnionEmbeddingRequestInputStringImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 UsageInfo _$UsageInfoFromJson(Map<String, dynamic> json) {
