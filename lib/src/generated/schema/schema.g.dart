@@ -201,7 +201,7 @@ _$FileSchemaImpl _$$FileSchemaImplFromJson(Map<String, dynamic> json) =>
       bytes: (json['bytes'] as num).toInt(),
       createdAt: (json['created_at'] as num).toInt(),
       filename: json['filename'] as String,
-      purpose: json['purpose'],
+      purpose: $enumDecode(_$FileSchemaPurposeEnumMap, json['purpose']),
       sampleType: $enumDecode(_$SampleTypeEnumMap, json['sample_type']),
       numLines: (json['num_lines'] as num?)?.toInt(),
       source: $enumDecode(_$SourceEnumMap, json['source']),
@@ -214,7 +214,7 @@ Map<String, dynamic> _$$FileSchemaImplToJson(_$FileSchemaImpl instance) {
     'bytes': instance.bytes,
     'created_at': instance.createdAt,
     'filename': instance.filename,
-    'purpose': instance.purpose,
+    'purpose': _$FileSchemaPurposeEnumMap[instance.purpose]!,
     'sample_type': _$SampleTypeEnumMap[instance.sampleType]!,
   };
 
@@ -228,6 +228,10 @@ Map<String, dynamic> _$$FileSchemaImplToJson(_$FileSchemaImpl instance) {
   val['source'] = _$SourceEnumMap[instance.source]!;
   return val;
 }
+
+const _$FileSchemaPurposeEnumMap = {
+  FileSchemaPurpose.fineTune: 'fine-tune',
+};
 
 _$ListFilesOutImpl _$$ListFilesOutImplFromJson(Map<String, dynamic> json) =>
     _$ListFilesOutImpl(
@@ -482,6 +486,8 @@ _$TrainingParametersImpl _$$TrainingParametersImplFromJson(
     _$TrainingParametersImpl(
       trainingSteps: (json['training_steps'] as num?)?.toInt(),
       learningRate: (json['learning_rate'] as num?)?.toDouble() ?? 0.0001,
+      weightDecay: (json['weight_decay'] as num?)?.toDouble() ?? 0.1,
+      warmupFraction: (json['warmup_fraction'] as num?)?.toDouble() ?? 0.05,
       epochs: (json['epochs'] as num?)?.toDouble(),
       fimRatio: (json['fim_ratio'] as num?)?.toDouble() ?? 0.9,
     );
@@ -498,6 +504,8 @@ Map<String, dynamic> _$$TrainingParametersImplToJson(
 
   writeNotNull('training_steps', instance.trainingSteps);
   val['learning_rate'] = instance.learningRate;
+  writeNotNull('weight_decay', instance.weightDecay);
+  writeNotNull('warmup_fraction', instance.warmupFraction);
   writeNotNull('epochs', instance.epochs);
   writeNotNull('fim_ratio', instance.fimRatio);
   return val;
@@ -683,6 +691,8 @@ _$TrainingParametersInImpl _$$TrainingParametersInImplFromJson(
     _$TrainingParametersInImpl(
       trainingSteps: (json['training_steps'] as num?)?.toInt(),
       learningRate: (json['learning_rate'] as num?)?.toDouble() ?? 0.0001,
+      weightDecay: (json['weight_decay'] as num?)?.toDouble() ?? 0.1,
+      warmupFraction: (json['warmup_fraction'] as num?)?.toDouble() ?? 0.05,
       epochs: (json['epochs'] as num?)?.toDouble(),
       fimRatio: (json['fim_ratio'] as num?)?.toDouble() ?? 0.9,
     );
@@ -699,6 +709,8 @@ Map<String, dynamic> _$$TrainingParametersInImplToJson(
 
   writeNotNull('training_steps', instance.trainingSteps);
   val['learning_rate'] = instance.learningRate;
+  writeNotNull('weight_decay', instance.weightDecay);
+  writeNotNull('warmup_fraction', instance.warmupFraction);
   writeNotNull('epochs', instance.epochs);
   writeNotNull('fim_ratio', instance.fimRatio);
   return val;

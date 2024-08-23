@@ -1967,7 +1967,7 @@ mixin _$FileSchema {
   String get filename => throw _privateConstructorUsedError;
 
   /// The intended purpose of the uploaded file. Only accepts fine-tuning (`fine-tune`) for now.
-  dynamic get purpose => throw _privateConstructorUsedError;
+  FileSchemaPurpose get purpose => throw _privateConstructorUsedError;
 
   ///
   @JsonKey(name: 'sample_type')
@@ -2002,7 +2002,7 @@ abstract class $FileSchemaCopyWith<$Res> {
       int bytes,
       @JsonKey(name: 'created_at') int createdAt,
       String filename,
-      dynamic purpose,
+      FileSchemaPurpose purpose,
       @JsonKey(name: 'sample_type') SampleType sampleType,
       @JsonKey(name: 'num_lines', includeIfNull: false) int? numLines,
       Source source});
@@ -2028,7 +2028,7 @@ class _$FileSchemaCopyWithImpl<$Res, $Val extends FileSchema>
     Object? bytes = null,
     Object? createdAt = null,
     Object? filename = null,
-    Object? purpose = freezed,
+    Object? purpose = null,
     Object? sampleType = null,
     Object? numLines = freezed,
     Object? source = null,
@@ -2054,10 +2054,10 @@ class _$FileSchemaCopyWithImpl<$Res, $Val extends FileSchema>
           ? _value.filename
           : filename // ignore: cast_nullable_to_non_nullable
               as String,
-      purpose: freezed == purpose
+      purpose: null == purpose
           ? _value.purpose
           : purpose // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as FileSchemaPurpose,
       sampleType: null == sampleType
           ? _value.sampleType
           : sampleType // ignore: cast_nullable_to_non_nullable
@@ -2088,7 +2088,7 @@ abstract class _$$FileSchemaImplCopyWith<$Res>
       int bytes,
       @JsonKey(name: 'created_at') int createdAt,
       String filename,
-      dynamic purpose,
+      FileSchemaPurpose purpose,
       @JsonKey(name: 'sample_type') SampleType sampleType,
       @JsonKey(name: 'num_lines', includeIfNull: false) int? numLines,
       Source source});
@@ -2112,7 +2112,7 @@ class __$$FileSchemaImplCopyWithImpl<$Res>
     Object? bytes = null,
     Object? createdAt = null,
     Object? filename = null,
-    Object? purpose = freezed,
+    Object? purpose = null,
     Object? sampleType = null,
     Object? numLines = freezed,
     Object? source = null,
@@ -2138,10 +2138,10 @@ class __$$FileSchemaImplCopyWithImpl<$Res>
           ? _value.filename
           : filename // ignore: cast_nullable_to_non_nullable
               as String,
-      purpose: freezed == purpose
+      purpose: null == purpose
           ? _value.purpose
           : purpose // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as FileSchemaPurpose,
       sampleType: null == sampleType
           ? _value.sampleType
           : sampleType // ignore: cast_nullable_to_non_nullable
@@ -2199,7 +2199,7 @@ class _$FileSchemaImpl extends _FileSchema {
 
   /// The intended purpose of the uploaded file. Only accepts fine-tuning (`fine-tune`) for now.
   @override
-  final dynamic purpose;
+  final FileSchemaPurpose purpose;
 
   ///
   @override
@@ -2232,7 +2232,7 @@ class _$FileSchemaImpl extends _FileSchema {
                 other.createdAt == createdAt) &&
             (identical(other.filename, filename) ||
                 other.filename == filename) &&
-            const DeepCollectionEquality().equals(other.purpose, purpose) &&
+            (identical(other.purpose, purpose) || other.purpose == purpose) &&
             (identical(other.sampleType, sampleType) ||
                 other.sampleType == sampleType) &&
             (identical(other.numLines, numLines) ||
@@ -2242,17 +2242,8 @@ class _$FileSchemaImpl extends _FileSchema {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      object,
-      bytes,
-      createdAt,
-      filename,
-      const DeepCollectionEquality().hash(purpose),
-      sampleType,
-      numLines,
-      source);
+  int get hashCode => Object.hash(runtimeType, id, object, bytes, createdAt,
+      filename, purpose, sampleType, numLines, source);
 
   /// Create a copy of FileSchema
   /// with the given fields replaced by the non-null parameter values.
@@ -2277,7 +2268,7 @@ abstract class _FileSchema extends FileSchema {
       required final int bytes,
       @JsonKey(name: 'created_at') required final int createdAt,
       required final String filename,
-      required final dynamic purpose,
+      required final FileSchemaPurpose purpose,
       @JsonKey(name: 'sample_type') required final SampleType sampleType,
       @JsonKey(name: 'num_lines', includeIfNull: false) final int? numLines,
       required final Source source}) = _$FileSchemaImpl;
@@ -2309,7 +2300,7 @@ abstract class _FileSchema extends FileSchema {
 
   /// The intended purpose of the uploaded file. Only accepts fine-tuning (`fine-tune`) for now.
   @override
-  dynamic get purpose;
+  FileSchemaPurpose get purpose;
 
   ///
   @override
@@ -4715,6 +4706,14 @@ mixin _$TrainingParameters {
   double get learningRate => throw _privateConstructorUsedError;
 
   /// No Description
+  @JsonKey(name: 'weight_decay', includeIfNull: false)
+  double? get weightDecay => throw _privateConstructorUsedError;
+
+  /// No Description
+  @JsonKey(name: 'warmup_fraction', includeIfNull: false)
+  double? get warmupFraction => throw _privateConstructorUsedError;
+
+  /// No Description
   @JsonKey(includeIfNull: false)
   double? get epochs => throw _privateConstructorUsedError;
 
@@ -4742,6 +4741,9 @@ abstract class $TrainingParametersCopyWith<$Res> {
       {@JsonKey(name: 'training_steps', includeIfNull: false)
       int? trainingSteps,
       @JsonKey(name: 'learning_rate') double learningRate,
+      @JsonKey(name: 'weight_decay', includeIfNull: false) double? weightDecay,
+      @JsonKey(name: 'warmup_fraction', includeIfNull: false)
+      double? warmupFraction,
       @JsonKey(includeIfNull: false) double? epochs,
       @JsonKey(name: 'fim_ratio', includeIfNull: false) double? fimRatio});
 }
@@ -4763,6 +4765,8 @@ class _$TrainingParametersCopyWithImpl<$Res, $Val extends TrainingParameters>
   $Res call({
     Object? trainingSteps = freezed,
     Object? learningRate = null,
+    Object? weightDecay = freezed,
+    Object? warmupFraction = freezed,
     Object? epochs = freezed,
     Object? fimRatio = freezed,
   }) {
@@ -4775,6 +4779,14 @@ class _$TrainingParametersCopyWithImpl<$Res, $Val extends TrainingParameters>
           ? _value.learningRate
           : learningRate // ignore: cast_nullable_to_non_nullable
               as double,
+      weightDecay: freezed == weightDecay
+          ? _value.weightDecay
+          : weightDecay // ignore: cast_nullable_to_non_nullable
+              as double?,
+      warmupFraction: freezed == warmupFraction
+          ? _value.warmupFraction
+          : warmupFraction // ignore: cast_nullable_to_non_nullable
+              as double?,
       epochs: freezed == epochs
           ? _value.epochs
           : epochs // ignore: cast_nullable_to_non_nullable
@@ -4799,6 +4811,9 @@ abstract class _$$TrainingParametersImplCopyWith<$Res>
       {@JsonKey(name: 'training_steps', includeIfNull: false)
       int? trainingSteps,
       @JsonKey(name: 'learning_rate') double learningRate,
+      @JsonKey(name: 'weight_decay', includeIfNull: false) double? weightDecay,
+      @JsonKey(name: 'warmup_fraction', includeIfNull: false)
+      double? warmupFraction,
       @JsonKey(includeIfNull: false) double? epochs,
       @JsonKey(name: 'fim_ratio', includeIfNull: false) double? fimRatio});
 }
@@ -4818,6 +4833,8 @@ class __$$TrainingParametersImplCopyWithImpl<$Res>
   $Res call({
     Object? trainingSteps = freezed,
     Object? learningRate = null,
+    Object? weightDecay = freezed,
+    Object? warmupFraction = freezed,
     Object? epochs = freezed,
     Object? fimRatio = freezed,
   }) {
@@ -4830,6 +4847,14 @@ class __$$TrainingParametersImplCopyWithImpl<$Res>
           ? _value.learningRate
           : learningRate // ignore: cast_nullable_to_non_nullable
               as double,
+      weightDecay: freezed == weightDecay
+          ? _value.weightDecay
+          : weightDecay // ignore: cast_nullable_to_non_nullable
+              as double?,
+      warmupFraction: freezed == warmupFraction
+          ? _value.warmupFraction
+          : warmupFraction // ignore: cast_nullable_to_non_nullable
+              as double?,
       epochs: freezed == epochs
           ? _value.epochs
           : epochs // ignore: cast_nullable_to_non_nullable
@@ -4849,6 +4874,10 @@ class _$TrainingParametersImpl extends _TrainingParameters {
       {@JsonKey(name: 'training_steps', includeIfNull: false)
       this.trainingSteps,
       @JsonKey(name: 'learning_rate') this.learningRate = 0.0001,
+      @JsonKey(name: 'weight_decay', includeIfNull: false)
+      this.weightDecay = 0.1,
+      @JsonKey(name: 'warmup_fraction', includeIfNull: false)
+      this.warmupFraction = 0.05,
       @JsonKey(includeIfNull: false) this.epochs,
       @JsonKey(name: 'fim_ratio', includeIfNull: false) this.fimRatio = 0.9})
       : super._();
@@ -4868,6 +4897,16 @@ class _$TrainingParametersImpl extends _TrainingParameters {
 
   /// No Description
   @override
+  @JsonKey(name: 'weight_decay', includeIfNull: false)
+  final double? weightDecay;
+
+  /// No Description
+  @override
+  @JsonKey(name: 'warmup_fraction', includeIfNull: false)
+  final double? warmupFraction;
+
+  /// No Description
+  @override
   @JsonKey(includeIfNull: false)
   final double? epochs;
 
@@ -4878,7 +4917,7 @@ class _$TrainingParametersImpl extends _TrainingParameters {
 
   @override
   String toString() {
-    return 'TrainingParameters(trainingSteps: $trainingSteps, learningRate: $learningRate, epochs: $epochs, fimRatio: $fimRatio)';
+    return 'TrainingParameters(trainingSteps: $trainingSteps, learningRate: $learningRate, weightDecay: $weightDecay, warmupFraction: $warmupFraction, epochs: $epochs, fimRatio: $fimRatio)';
   }
 
   @override
@@ -4890,6 +4929,10 @@ class _$TrainingParametersImpl extends _TrainingParameters {
                 other.trainingSteps == trainingSteps) &&
             (identical(other.learningRate, learningRate) ||
                 other.learningRate == learningRate) &&
+            (identical(other.weightDecay, weightDecay) ||
+                other.weightDecay == weightDecay) &&
+            (identical(other.warmupFraction, warmupFraction) ||
+                other.warmupFraction == warmupFraction) &&
             (identical(other.epochs, epochs) || other.epochs == epochs) &&
             (identical(other.fimRatio, fimRatio) ||
                 other.fimRatio == fimRatio));
@@ -4897,8 +4940,8 @@ class _$TrainingParametersImpl extends _TrainingParameters {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, trainingSteps, learningRate, epochs, fimRatio);
+  int get hashCode => Object.hash(runtimeType, trainingSteps, learningRate,
+      weightDecay, warmupFraction, epochs, fimRatio);
 
   /// Create a copy of TrainingParameters
   /// with the given fields replaced by the non-null parameter values.
@@ -4922,6 +4965,10 @@ abstract class _TrainingParameters extends TrainingParameters {
       {@JsonKey(name: 'training_steps', includeIfNull: false)
       final int? trainingSteps,
       @JsonKey(name: 'learning_rate') final double learningRate,
+      @JsonKey(name: 'weight_decay', includeIfNull: false)
+      final double? weightDecay,
+      @JsonKey(name: 'warmup_fraction', includeIfNull: false)
+      final double? warmupFraction,
       @JsonKey(includeIfNull: false) final double? epochs,
       @JsonKey(name: 'fim_ratio', includeIfNull: false)
       final double? fimRatio}) = _$TrainingParametersImpl;
@@ -4939,6 +4986,16 @@ abstract class _TrainingParameters extends TrainingParameters {
   @override
   @JsonKey(name: 'learning_rate')
   double get learningRate;
+
+  /// No Description
+  @override
+  @JsonKey(name: 'weight_decay', includeIfNull: false)
+  double? get weightDecay;
+
+  /// No Description
+  @override
+  @JsonKey(name: 'warmup_fraction', includeIfNull: false)
+  double? get warmupFraction;
 
   /// No Description
   @override
@@ -6637,6 +6694,14 @@ mixin _$TrainingParametersIn {
   @JsonKey(name: 'learning_rate')
   double get learningRate => throw _privateConstructorUsedError;
 
+  /// (Advanced Usage) Weight decay adds a term to the loss function that is proportional to the sum of the squared weights. This term reduces the magnitude of the weights and prevents them from growing too large.
+  @JsonKey(name: 'weight_decay', includeIfNull: false)
+  double? get weightDecay => throw _privateConstructorUsedError;
+
+  /// (Advanced Usage) A parameter that specifies the percentage of the total training steps at which the learning rate warm-up phase ends. During this phase, the learning rate gradually increases from a small value to the initial learning rate, helping to stabilize the training process and improve convergence. Similar to `pct_start` in [mistral-finetune](https://github.com/mistralai/mistral-finetune)
+  @JsonKey(name: 'warmup_fraction', includeIfNull: false)
+  double? get warmupFraction => throw _privateConstructorUsedError;
+
   /// No Description
   @JsonKey(includeIfNull: false)
   double? get epochs => throw _privateConstructorUsedError;
@@ -6665,6 +6730,9 @@ abstract class $TrainingParametersInCopyWith<$Res> {
       {@JsonKey(name: 'training_steps', includeIfNull: false)
       int? trainingSteps,
       @JsonKey(name: 'learning_rate') double learningRate,
+      @JsonKey(name: 'weight_decay', includeIfNull: false) double? weightDecay,
+      @JsonKey(name: 'warmup_fraction', includeIfNull: false)
+      double? warmupFraction,
       @JsonKey(includeIfNull: false) double? epochs,
       @JsonKey(name: 'fim_ratio', includeIfNull: false) double? fimRatio});
 }
@@ -6687,6 +6755,8 @@ class _$TrainingParametersInCopyWithImpl<$Res,
   $Res call({
     Object? trainingSteps = freezed,
     Object? learningRate = null,
+    Object? weightDecay = freezed,
+    Object? warmupFraction = freezed,
     Object? epochs = freezed,
     Object? fimRatio = freezed,
   }) {
@@ -6699,6 +6769,14 @@ class _$TrainingParametersInCopyWithImpl<$Res,
           ? _value.learningRate
           : learningRate // ignore: cast_nullable_to_non_nullable
               as double,
+      weightDecay: freezed == weightDecay
+          ? _value.weightDecay
+          : weightDecay // ignore: cast_nullable_to_non_nullable
+              as double?,
+      warmupFraction: freezed == warmupFraction
+          ? _value.warmupFraction
+          : warmupFraction // ignore: cast_nullable_to_non_nullable
+              as double?,
       epochs: freezed == epochs
           ? _value.epochs
           : epochs // ignore: cast_nullable_to_non_nullable
@@ -6723,6 +6801,9 @@ abstract class _$$TrainingParametersInImplCopyWith<$Res>
       {@JsonKey(name: 'training_steps', includeIfNull: false)
       int? trainingSteps,
       @JsonKey(name: 'learning_rate') double learningRate,
+      @JsonKey(name: 'weight_decay', includeIfNull: false) double? weightDecay,
+      @JsonKey(name: 'warmup_fraction', includeIfNull: false)
+      double? warmupFraction,
       @JsonKey(includeIfNull: false) double? epochs,
       @JsonKey(name: 'fim_ratio', includeIfNull: false) double? fimRatio});
 }
@@ -6742,6 +6823,8 @@ class __$$TrainingParametersInImplCopyWithImpl<$Res>
   $Res call({
     Object? trainingSteps = freezed,
     Object? learningRate = null,
+    Object? weightDecay = freezed,
+    Object? warmupFraction = freezed,
     Object? epochs = freezed,
     Object? fimRatio = freezed,
   }) {
@@ -6754,6 +6837,14 @@ class __$$TrainingParametersInImplCopyWithImpl<$Res>
           ? _value.learningRate
           : learningRate // ignore: cast_nullable_to_non_nullable
               as double,
+      weightDecay: freezed == weightDecay
+          ? _value.weightDecay
+          : weightDecay // ignore: cast_nullable_to_non_nullable
+              as double?,
+      warmupFraction: freezed == warmupFraction
+          ? _value.warmupFraction
+          : warmupFraction // ignore: cast_nullable_to_non_nullable
+              as double?,
       epochs: freezed == epochs
           ? _value.epochs
           : epochs // ignore: cast_nullable_to_non_nullable
@@ -6773,6 +6864,10 @@ class _$TrainingParametersInImpl extends _TrainingParametersIn {
       {@JsonKey(name: 'training_steps', includeIfNull: false)
       this.trainingSteps,
       @JsonKey(name: 'learning_rate') this.learningRate = 0.0001,
+      @JsonKey(name: 'weight_decay', includeIfNull: false)
+      this.weightDecay = 0.1,
+      @JsonKey(name: 'warmup_fraction', includeIfNull: false)
+      this.warmupFraction = 0.05,
       @JsonKey(includeIfNull: false) this.epochs,
       @JsonKey(name: 'fim_ratio', includeIfNull: false) this.fimRatio = 0.9})
       : super._();
@@ -6790,6 +6885,16 @@ class _$TrainingParametersInImpl extends _TrainingParametersIn {
   @JsonKey(name: 'learning_rate')
   final double learningRate;
 
+  /// (Advanced Usage) Weight decay adds a term to the loss function that is proportional to the sum of the squared weights. This term reduces the magnitude of the weights and prevents them from growing too large.
+  @override
+  @JsonKey(name: 'weight_decay', includeIfNull: false)
+  final double? weightDecay;
+
+  /// (Advanced Usage) A parameter that specifies the percentage of the total training steps at which the learning rate warm-up phase ends. During this phase, the learning rate gradually increases from a small value to the initial learning rate, helping to stabilize the training process and improve convergence. Similar to `pct_start` in [mistral-finetune](https://github.com/mistralai/mistral-finetune)
+  @override
+  @JsonKey(name: 'warmup_fraction', includeIfNull: false)
+  final double? warmupFraction;
+
   /// No Description
   @override
   @JsonKey(includeIfNull: false)
@@ -6802,7 +6907,7 @@ class _$TrainingParametersInImpl extends _TrainingParametersIn {
 
   @override
   String toString() {
-    return 'TrainingParametersIn(trainingSteps: $trainingSteps, learningRate: $learningRate, epochs: $epochs, fimRatio: $fimRatio)';
+    return 'TrainingParametersIn(trainingSteps: $trainingSteps, learningRate: $learningRate, weightDecay: $weightDecay, warmupFraction: $warmupFraction, epochs: $epochs, fimRatio: $fimRatio)';
   }
 
   @override
@@ -6814,6 +6919,10 @@ class _$TrainingParametersInImpl extends _TrainingParametersIn {
                 other.trainingSteps == trainingSteps) &&
             (identical(other.learningRate, learningRate) ||
                 other.learningRate == learningRate) &&
+            (identical(other.weightDecay, weightDecay) ||
+                other.weightDecay == weightDecay) &&
+            (identical(other.warmupFraction, warmupFraction) ||
+                other.warmupFraction == warmupFraction) &&
             (identical(other.epochs, epochs) || other.epochs == epochs) &&
             (identical(other.fimRatio, fimRatio) ||
                 other.fimRatio == fimRatio));
@@ -6821,8 +6930,8 @@ class _$TrainingParametersInImpl extends _TrainingParametersIn {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, trainingSteps, learningRate, epochs, fimRatio);
+  int get hashCode => Object.hash(runtimeType, trainingSteps, learningRate,
+      weightDecay, warmupFraction, epochs, fimRatio);
 
   /// Create a copy of TrainingParametersIn
   /// with the given fields replaced by the non-null parameter values.
@@ -6847,6 +6956,10 @@ abstract class _TrainingParametersIn extends TrainingParametersIn {
       {@JsonKey(name: 'training_steps', includeIfNull: false)
       final int? trainingSteps,
       @JsonKey(name: 'learning_rate') final double learningRate,
+      @JsonKey(name: 'weight_decay', includeIfNull: false)
+      final double? weightDecay,
+      @JsonKey(name: 'warmup_fraction', includeIfNull: false)
+      final double? warmupFraction,
       @JsonKey(includeIfNull: false) final double? epochs,
       @JsonKey(name: 'fim_ratio', includeIfNull: false)
       final double? fimRatio}) = _$TrainingParametersInImpl;
@@ -6864,6 +6977,16 @@ abstract class _TrainingParametersIn extends TrainingParametersIn {
   @override
   @JsonKey(name: 'learning_rate')
   double get learningRate;
+
+  /// (Advanced Usage) Weight decay adds a term to the loss function that is proportional to the sum of the squared weights. This term reduces the magnitude of the weights and prevents them from growing too large.
+  @override
+  @JsonKey(name: 'weight_decay', includeIfNull: false)
+  double? get weightDecay;
+
+  /// (Advanced Usage) A parameter that specifies the percentage of the total training steps at which the learning rate warm-up phase ends. During this phase, the learning rate gradually increases from a small value to the initial learning rate, helping to stabilize the training process and improve convergence. Similar to `pct_start` in [mistral-finetune](https://github.com/mistralai/mistral-finetune)
+  @override
+  @JsonKey(name: 'warmup_fraction', includeIfNull: false)
+  double? get warmupFraction;
 
   /// No Description
   @override
@@ -10279,7 +10402,7 @@ ChatCompletionRequest _$ChatCompletionRequestFromJson(
 
 /// @nodoc
 mixin _$ChatCompletionRequest {
-  /// ID of the model to use. You can use the [List Available Models](/api#operation/listModels) API to see all of your available models, or see our [Model overview](/models) for model descriptions.
+  /// ID of the model to use. You can use the [List Available Models](/api/#tag/models/operation/list_models_v1_models_get) API to see all of your available models, or see our [Model overview](/models) for model descriptions.
   String? get model => throw _privateConstructorUsedError;
 
   /// What sampling temperature to use, between 0.0 and 1.0. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both.
@@ -10309,8 +10432,11 @@ mixin _$ChatCompletionRequest {
   @JsonKey(name: 'random_seed', includeIfNull: false)
   int? get randomSeed => throw _privateConstructorUsedError;
 
-  /// The prompt(s) to generate completions for, encoded as a list of dict with role and content.
-  /// You can pass only this types into to the list: [SystemMessage], [UserMessage], [AssistantMessage], [ToolMessage].
+  /// The prompt(s) to generate completions for, encoded as a list of dict
+  /// with role and content.
+  ///
+  /// You can pass only this types into to the list: [SystemMessage], [UserMessage],
+  /// [AssistantMessage], [ToolMessage].
   List<dynamic> get messages => throw _privateConstructorUsedError;
 
   /// No Description
@@ -10621,7 +10747,7 @@ class _$ChatCompletionRequestImpl extends _ChatCompletionRequest {
   factory _$ChatCompletionRequestImpl.fromJson(Map<String, dynamic> json) =>
       _$$ChatCompletionRequestImplFromJson(json);
 
-  /// ID of the model to use. You can use the [List Available Models](/api#operation/listModels) API to see all of your available models, or see our [Model overview](/models) for model descriptions.
+  /// ID of the model to use. You can use the [List Available Models](/api/#tag/models/operation/list_models_v1_models_get) API to see all of your available models, or see our [Model overview](/models) for model descriptions.
   @override
   final String? model;
 
@@ -10661,12 +10787,18 @@ class _$ChatCompletionRequestImpl extends _ChatCompletionRequest {
   @JsonKey(name: 'random_seed', includeIfNull: false)
   final int? randomSeed;
 
-  /// The prompt(s) to generate completions for, encoded as a list of dict with role and content.
-  /// You can pass only this types into to the list: [SystemMessage], [UserMessage], [AssistantMessage], [ToolMessage].
+  /// The prompt(s) to generate completions for, encoded as a list of dict
+  /// with role and content.
+  ///
+  /// You can pass only this types into to the list: [SystemMessage], [UserMessage],
+  /// [AssistantMessage], [ToolMessage].
   final List<dynamic> _messages;
 
-  /// The prompt(s) to generate completions for, encoded as a list of dict with role and content.
-  /// You can pass only this types into to the list: [SystemMessage], [UserMessage], [AssistantMessage], [ToolMessage].
+  /// The prompt(s) to generate completions for, encoded as a list of dict
+  /// with role and content.
+  ///
+  /// You can pass only this types into to the list: [SystemMessage], [UserMessage],
+  /// [AssistantMessage], [ToolMessage].
   @override
   List<dynamic> get messages {
     if (_messages is EqualUnmodifiableListView) return _messages;
@@ -10792,7 +10924,7 @@ abstract class _ChatCompletionRequest extends ChatCompletionRequest {
   factory _ChatCompletionRequest.fromJson(Map<String, dynamic> json) =
       _$ChatCompletionRequestImpl.fromJson;
 
-  /// ID of the model to use. You can use the [List Available Models](/api#operation/listModels) API to see all of your available models, or see our [Model overview](/models) for model descriptions.
+  /// ID of the model to use. You can use the [List Available Models](/api/#tag/models/operation/list_models_v1_models_get) API to see all of your available models, or see our [Model overview](/models) for model descriptions.
   @override
   String? get model;
 
@@ -10830,8 +10962,11 @@ abstract class _ChatCompletionRequest extends ChatCompletionRequest {
   @JsonKey(name: 'random_seed', includeIfNull: false)
   int? get randomSeed;
 
-  /// The prompt(s) to generate completions for, encoded as a list of dict with role and content.
-  /// You can pass only this types into to the list: [SystemMessage], [UserMessage], [AssistantMessage], [ToolMessage].
+  /// The prompt(s) to generate completions for, encoded as a list of dict
+  /// with role and content.
+  ///
+  /// You can pass only this types into to the list: [SystemMessage], [UserMessage],
+  /// [AssistantMessage], [ToolMessage].
   @override
   List<dynamic> get messages;
 
@@ -15461,8 +15596,11 @@ mixin _$AgentsCompletionRequest {
   @JsonKey(name: 'random_seed', includeIfNull: false)
   int? get randomSeed => throw _privateConstructorUsedError;
 
-  /// The prompt(s) to generate completions for, encoded as a list of dict with role and content.
-  /// You can pass only this types into to the list [UserMessage], [AssistantMessage], [ToolMessage].
+  /// The prompt(s) to generate completions for, encoded as a list of dict
+  /// with role and content.
+  ///
+  /// You can pass only this types into to the list [UserMessage],
+  /// [AssistantMessage], [ToolMessage].
   List<dynamic> get messages => throw _privateConstructorUsedError;
 
   /// No Description
@@ -15767,12 +15905,18 @@ class _$AgentsCompletionRequestImpl extends _AgentsCompletionRequest {
   @JsonKey(name: 'random_seed', includeIfNull: false)
   final int? randomSeed;
 
-  /// The prompt(s) to generate completions for, encoded as a list of dict with role and content.
-  /// You can pass only this types into to the list [UserMessage], [AssistantMessage], [ToolMessage].
+  /// The prompt(s) to generate completions for, encoded as a list of dict
+  /// with role and content.
+  ///
+  /// You can pass only this types into to the list [UserMessage],
+  /// [AssistantMessage], [ToolMessage].
   final List<dynamic> _messages;
 
-  /// The prompt(s) to generate completions for, encoded as a list of dict with role and content.
-  /// You can pass only this types into to the list [UserMessage], [AssistantMessage], [ToolMessage].
+  /// The prompt(s) to generate completions for, encoded as a list of dict
+  /// with role and content.
+  ///
+  /// You can pass only this types into to the list [UserMessage],
+  /// [AssistantMessage], [ToolMessage].
   @override
   List<dynamic> get messages {
     if (_messages is EqualUnmodifiableListView) return _messages;
@@ -15914,8 +16058,11 @@ abstract class _AgentsCompletionRequest extends AgentsCompletionRequest {
   @JsonKey(name: 'random_seed', includeIfNull: false)
   int? get randomSeed;
 
-  /// The prompt(s) to generate completions for, encoded as a list of dict with role and content.
-  /// You can pass only this types into to the list [UserMessage], [AssistantMessage], [ToolMessage].
+  /// The prompt(s) to generate completions for, encoded as a list of dict
+  /// with role and content.
+  ///
+  /// You can pass only this types into to the list [UserMessage],
+  /// [AssistantMessage], [ToolMessage].
   @override
   List<dynamic> get messages;
 

@@ -452,7 +452,7 @@ class FileSchema with _$FileSchema {
     required String filename,
 
     /// The intended purpose of the uploaded file. Only accepts fine-tuning (`fine-tune`) for now.
-    required dynamic purpose,
+    required FileSchemaPurpose purpose,
 
     ///
     @JsonKey(name: 'sample_type') required SampleType sampleType,
@@ -500,6 +500,16 @@ class FileSchema with _$FileSchema {
       'source': source,
     };
   }
+}
+
+// ==========================================
+// ENUM: FileSchemaPurpose
+// ==========================================
+
+/// The intended purpose of the uploaded file. Only accepts fine-tuning (`fine-tune`) for now.
+enum FileSchemaPurpose {
+  @JsonValue('fine-tune')
+  fineTune,
 }
 
 // ==========================================
@@ -1074,6 +1084,16 @@ class TrainingParameters with _$TrainingParameters {
     @JsonKey(name: 'learning_rate') @Default(0.0001) double learningRate,
 
     /// No Description
+    @JsonKey(name: 'weight_decay', includeIfNull: false)
+    @Default(0.1)
+    double? weightDecay,
+
+    /// No Description
+    @JsonKey(name: 'warmup_fraction', includeIfNull: false)
+    @Default(0.05)
+    double? warmupFraction,
+
+    /// No Description
     @JsonKey(includeIfNull: false) double? epochs,
 
     /// No Description
@@ -1090,6 +1110,8 @@ class TrainingParameters with _$TrainingParameters {
   static const List<String> propertyNames = [
     'training_steps',
     'learning_rate',
+    'weight_decay',
+    'warmup_fraction',
     'epochs',
     'fim_ratio'
   ];
@@ -1099,6 +1121,12 @@ class TrainingParameters with _$TrainingParameters {
   static const learningRateDefaultValue = 0.0001;
   static const learningRateMinValue = 1e-8;
   static const learningRateMaxValue = 1.0;
+  static const weightDecayDefaultValue = 0.1;
+  static const weightDecayMinValue = 0.0;
+  static const weightDecayMaxValue = 1.0;
+  static const warmupFractionDefaultValue = 0.05;
+  static const warmupFractionMinValue = 0.0;
+  static const warmupFractionMaxValue = 1.0;
   static const epochsMinValue = 0.01;
   static const fimRatioDefaultValue = 0.9;
   static const fimRatioMinValue = 0.0;
@@ -1114,6 +1142,18 @@ class TrainingParameters with _$TrainingParameters {
     }
     if (learningRate > learningRateMaxValue) {
       return "The value of 'learningRate' cannot be > $learningRateMaxValue";
+    }
+    if (weightDecay != null && weightDecay! < weightDecayMinValue) {
+      return "The value of 'weightDecay' cannot be < $weightDecayMinValue";
+    }
+    if (weightDecay != null && weightDecay! > weightDecayMaxValue) {
+      return "The value of 'weightDecay' cannot be > $weightDecayMaxValue";
+    }
+    if (warmupFraction != null && warmupFraction! < warmupFractionMinValue) {
+      return "The value of 'warmupFraction' cannot be < $warmupFractionMinValue";
+    }
+    if (warmupFraction != null && warmupFraction! > warmupFractionMaxValue) {
+      return "The value of 'warmupFraction' cannot be > $warmupFractionMaxValue";
     }
     if (epochs != null && epochs! < epochsMinValue) {
       return "The value of 'epochs' cannot be < $epochsMinValue";
@@ -1132,6 +1172,8 @@ class TrainingParameters with _$TrainingParameters {
     return {
       'training_steps': trainingSteps,
       'learning_rate': learningRate,
+      'weight_decay': weightDecay,
+      'warmup_fraction': warmupFraction,
       'epochs': epochs,
       'fim_ratio': fimRatio,
     };
@@ -1528,6 +1570,16 @@ class TrainingParametersIn with _$TrainingParametersIn {
     /// A parameter describing how much to adjust the pre-trained model's weights in response to the estimated error each time the weights are updated during the fine-tuning process.
     @JsonKey(name: 'learning_rate') @Default(0.0001) double learningRate,
 
+    /// (Advanced Usage) Weight decay adds a term to the loss function that is proportional to the sum of the squared weights. This term reduces the magnitude of the weights and prevents them from growing too large.
+    @JsonKey(name: 'weight_decay', includeIfNull: false)
+    @Default(0.1)
+    double? weightDecay,
+
+    /// (Advanced Usage) A parameter that specifies the percentage of the total training steps at which the learning rate warm-up phase ends. During this phase, the learning rate gradually increases from a small value to the initial learning rate, helping to stabilize the training process and improve convergence. Similar to `pct_start` in [mistral-finetune](https://github.com/mistralai/mistral-finetune)
+    @JsonKey(name: 'warmup_fraction', includeIfNull: false)
+    @Default(0.05)
+    double? warmupFraction,
+
     /// No Description
     @JsonKey(includeIfNull: false) double? epochs,
 
@@ -1545,6 +1597,8 @@ class TrainingParametersIn with _$TrainingParametersIn {
   static const List<String> propertyNames = [
     'training_steps',
     'learning_rate',
+    'weight_decay',
+    'warmup_fraction',
     'epochs',
     'fim_ratio'
   ];
@@ -1554,6 +1608,12 @@ class TrainingParametersIn with _$TrainingParametersIn {
   static const learningRateDefaultValue = 0.0001;
   static const learningRateMinValue = 1e-8;
   static const learningRateMaxValue = 1.0;
+  static const weightDecayDefaultValue = 0.1;
+  static const weightDecayMinValue = 0.0;
+  static const weightDecayMaxValue = 1.0;
+  static const warmupFractionDefaultValue = 0.05;
+  static const warmupFractionMinValue = 0.0;
+  static const warmupFractionMaxValue = 1.0;
   static const epochsMinValue = 0.01;
   static const fimRatioDefaultValue = 0.9;
   static const fimRatioMinValue = 0.0;
@@ -1569,6 +1629,18 @@ class TrainingParametersIn with _$TrainingParametersIn {
     }
     if (learningRate > learningRateMaxValue) {
       return "The value of 'learningRate' cannot be > $learningRateMaxValue";
+    }
+    if (weightDecay != null && weightDecay! < weightDecayMinValue) {
+      return "The value of 'weightDecay' cannot be < $weightDecayMinValue";
+    }
+    if (weightDecay != null && weightDecay! > weightDecayMaxValue) {
+      return "The value of 'weightDecay' cannot be > $weightDecayMaxValue";
+    }
+    if (warmupFraction != null && warmupFraction! < warmupFractionMinValue) {
+      return "The value of 'warmupFraction' cannot be < $warmupFractionMinValue";
+    }
+    if (warmupFraction != null && warmupFraction! > warmupFractionMaxValue) {
+      return "The value of 'warmupFraction' cannot be > $warmupFractionMaxValue";
     }
     if (epochs != null && epochs! < epochsMinValue) {
       return "The value of 'epochs' cannot be < $epochsMinValue";
@@ -1587,6 +1659,8 @@ class TrainingParametersIn with _$TrainingParametersIn {
     return {
       'training_steps': trainingSteps,
       'learning_rate': learningRate,
+      'weight_decay': weightDecay,
+      'warmup_fraction': warmupFraction,
       'epochs': epochs,
       'fim_ratio': fimRatio,
     };
@@ -2352,7 +2426,7 @@ class ChatCompletionRequest with _$ChatCompletionRequest {
 
   /// Factory constructor for ChatCompletionRequest
   const factory ChatCompletionRequest({
-    /// ID of the model to use. You can use the [List Available Models](/api#operation/listModels) API to see all of your available models, or see our [Model overview](/models) for model descriptions.
+    /// ID of the model to use. You can use the [List Available Models](/api/#tag/models/operation/list_models_v1_models_get) API to see all of your available models, or see our [Model overview](/models) for model descriptions.
     required String? model,
 
     /// What sampling temperature to use, between 0.0 and 1.0. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both.
@@ -2376,8 +2450,11 @@ class ChatCompletionRequest with _$ChatCompletionRequest {
     /// The seed to use for random sampling. If set, different calls will generate deterministic results.
     @JsonKey(name: 'random_seed', includeIfNull: false) int? randomSeed,
 
-    /// The prompt(s) to generate completions for, encoded as a list of dict with role and content.
-    /// You can pass only this types into to the list: [SystemMessage], [UserMessage], [AssistantMessage], [ToolMessage].
+    /// The prompt(s) to generate completions for, encoded as a list of dict
+    /// with role and content.
+    ///
+    /// You can pass only this types into to the list: [SystemMessage], [UserMessage],
+    /// [AssistantMessage], [ToolMessage].
     required List<dynamic> messages,
 
     /// No Description
@@ -3365,8 +3442,11 @@ class AgentsCompletionRequest with _$AgentsCompletionRequest {
     /// The seed to use for random sampling. If set, different calls will generate deterministic results.
     @JsonKey(name: 'random_seed', includeIfNull: false) int? randomSeed,
 
-    /// The prompt(s) to generate completions for, encoded as a list of dict with role and content.
-    /// You can pass only this types into to the list [UserMessage], [AssistantMessage], [ToolMessage].
+    /// The prompt(s) to generate completions for, encoded as a list of dict
+    /// with role and content.
+    ///
+    /// You can pass only this types into to the list [UserMessage],
+    /// [AssistantMessage], [ToolMessage].
     required List<dynamic> messages,
 
     /// No Description
