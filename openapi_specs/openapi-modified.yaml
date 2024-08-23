@@ -3,39 +3,39 @@
 # Modifications:
 # - Adjusted the OpenAPI version to 3.0.3 (port from 3.1.0)
 # - Fixes errors found in 3.1.0 spec (wrong use of $ref or wrong required fields)
+# - each place where we differ from original has comment explaining change
 openapi: 3.0.3
 info:
   title: Mistral AI API
-  description: >-
-    Our Chat Completion and Embeddings APIs specification. Create your account
-    on [La Plateforme](https://console.mistral.ai) to get access and read the
-    [docs](https://docs.mistral.ai) to learn how to use it.
+  description: Our Chat Completion and Embeddings APIs specification. Create your account on [La Plateforme](https://console.mistral.ai) to get access and read the [docs](https://docs.mistral.ai) to learn how to use it.
   version: 0.0.2
 paths:
   /v1/models:
     get:
       summary: List Models
       description: List all models available to the user.
+      # renamed for better generated code naming
       operationId: list_models
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ModelList'
-        '422':
+                $ref: "#/components/schemas/ModelList"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       tags:
         - models
   /v1/models/{model_id}:
     get:
       summary: Retrieve Model
       description: Retrieve a model information.
+      # renamed for better generated code naming
       operationId: retrieve_model
       parameters:
         - name: model_id
@@ -44,26 +44,27 @@ paths:
           schema:
             type: string
             title: Model Id
-          example: ft:open-mistral-7b:587a6b29:20240514:7e773925
+          example: "ft:open-mistral-7b:587a6b29:20240514:7e773925"
           description: The ID of the model to retrieve.
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ModelCard'
-        '422':
+                $ref: "#/components/schemas/ModelCard"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       tags:
         - models
     delete:
       summary: Delete Model
       description: Delete a fine-tuned model.
+      # renamed for better generated code naming
       operationId: delete_model
       parameters:
         - name: model_id
@@ -72,43 +73,42 @@ paths:
           schema:
             type: string
             title: Model Id
-          example: ft:open-mistral-7b:587a6b29:20240514:7e773925
+          example: "ft:open-mistral-7b:587a6b29:20240514:7e773925"
           description: The ID of the model to delete.
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeleteModelOut'
-        '422':
+                $ref: "#/components/schemas/DeleteModelOut"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       tags:
         - models
   /v1/files:
     post:
+      # renamed for better generated code naming
       operationId: upload_file
       summary: Upload File
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UploadFileOut'
-      description: >-
-        Upload a file that can be used across various endpoints.
+                $ref: "#/components/schemas/UploadFileOut"
+      description: "Upload a file that can be used across various endpoints.
 
 
-        The size of individual files can be a maximum of 512 MB. The Fine-tuning
-        API only supports .jsonl files.
+        The size of individual files can be a maximum of 512 MB. The Fine-tuning API only supports .jsonl files.
 
 
-        Please contact us if you need to increase these storage limits.
+        Please contact us if you need to increase these storage limits."
       requestBody:
         content:
           multipart/form-data:
@@ -117,45 +117,39 @@ paths:
               type: object
               properties:
                 purpose:
+                  # migrated from 3.1.0 to 3.0.3
+                  default: fine-tune
                   enum:
                     - fine-tune
-                  type: string
-                  default: fine-tune
                   title: Purpose
+                  type: string
                 file:
                   format: binary
                   title: File
                   type: string
-                  description: |-
-                    The File object (not file name) to be uploaded.
-                     To upload a file and specify a custom file name you should format your request as such:
-                     ```bash
-                     file=@path/to/your/file.jsonl;filename=custom_name.jsonl
-                     ```
-                     Otherwise, you can just keep the original file name:
-                     ```bash
-                     file=@path/to/your/file.jsonl
-                     ```
+                  description: "The File object (not file name) to be uploaded.\n To upload a file and specify a custom file name you should format your request as such:\n ```bash\n file=@path/to/your/file.jsonl;filename=custom_name.jsonl\n ```\n Otherwise, you can just keep the original file name:\n ```bash\n file=@path/to/your/file.jsonl\n ```"
               required:
                 - file
         required: true
       tags:
         - files
     get:
+      # renamed for better generated code naming
       operationId: list_files
       summary: List Files
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListFilesOut'
+                $ref: "#/components/schemas/ListFilesOut"
       description: Returns a list of files that belong to the user's organization.
       tags:
         - files
   /v1/files/{file_id}:
     get:
+      # renamed for better generated code naming
       operationId: retrieve_file
       summary: Retrieve File
       parameters:
@@ -166,16 +160,17 @@ paths:
             type: string
           required: true
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RetrieveFileOut'
+                $ref: "#/components/schemas/RetrieveFileOut"
       description: Returns information about a specific file.
       tags:
         - files
     delete:
+      # renamed for better generated code naming
       operationId: delete_file
       summary: Delete File
       parameters:
@@ -186,17 +181,18 @@ paths:
             type: string
           required: true
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeleteFileOut'
+                $ref: "#/components/schemas/DeleteFileOut"
       description: Delete a file.
       tags:
         - files
   /v1/fine_tuning/jobs:
     get:
+      # renamed for better generated code naming
       operationId: get_fine_tuning_jobs
       summary: Get Fine Tuning Jobs
       parameters:
@@ -219,24 +215,22 @@ paths:
         - in: query
           name: model
           schema:
+            # migrated from 3.1.0 to 3.0.3
             type: string
             nullable: true
             title: Model
           required: false
-          description: >-
-            The model name used for fine-tuning to filter on. When set, the
-            other results are not displayed.
+          description: The model name used for fine-tuning to filter on. When set, the other results are not displayed.
         - in: query
           name: created_after
           schema:
+            # migrated from 3.1.0 to 3.0.3
             format: date-time
             type: string
             nullable: true
             title: Created After
           required: false
-          description: >-
-            The date/time to filter on. When set, the results for previous
-            creation times are not displayed.
+          description: The date/time to filter on. When set, the results for previous creation times are not displayed.
         - in: query
           name: created_by_me
           schema:
@@ -244,12 +238,11 @@ paths:
             title: Created By Me
             type: boolean
           required: false
-          description: >-
-            When set, only return results for jobs created by the API caller.
-            Other results are not displayed.
+          description: When set, only return results for jobs created by the API caller. Other results are not displayed.
         - in: query
           name: status
           schema:
+            # migrated from 3.1.0 to 3.0.3
             enum:
               - QUEUED
               - STARTED
@@ -265,93 +258,91 @@ paths:
             nullable: true
             title: Status
           required: false
-          description: >-
-            The current job state to filter on. When set, the other results are
-            not displayed.
+          description: The current job state to filter on. When set, the other results are not displayed.
         - in: query
           name: wandb_project
           schema:
+            # migrated from 3.1.0 to 3.0.3
             type: string
             nullable: true
             title: Wandb Project
           required: false
-          description: >-
-            The Weights and Biases project to filter on. When set, the other
-            results are not displayed.
+          description: The Weights and Biases project to filter on. When set, the other results are not displayed.
         - in: query
           name: wandb_name
           schema:
+            # migrated from 3.1.0 to 3.0.3
             type: string
             nullable: true
             title: Wandb Name
           required: false
-          description: >-
-            The Weight and Biases run name to filter on. When set, the other
-            results are not displayed.
+          description: The Weight and Biases run name to filter on. When set, the other results are not displayed.
         - in: query
           name: suffix
           schema:
+            # migrated from 3.1.0 to 3.0.3
             type: string
             nullable: true
             title: Suffix
           required: false
-          description: >-
-            The model suffix to filter on. When set, the other results are not
-            displayed.
+          description: The model suffix to filter on. When set, the other results are not displayed.
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/JobsOut'
+                $ref: "#/components/schemas/JobsOut"
       description: Get a list of fine-tuning jobs for your organization and user.
       tags:
         - fine-tuning
     post:
-      # _raw at the end is to tell that the result will be a raw response
-      # which has to be parsed manually
+      # renamed for better generated code naming.
+      # _raw at the end is to tell client user the result will be a raw response
+      # which has to be parsed manually.
       operationId: create_fine_tuning_job_raw
       summary: Create Fine Tuning Job
       parameters:
         - in: query
           name: dry_run
           schema:
+            # migrated from 3.1.0 to 3.0.3
             type: boolean
             nullable: true
             title: Dry Run
           required: false
-          description: >
-            * If `true` the job is not spawned, instead the query returns a
-            handful of useful metadata
+          description: |
+            * If `true` the job is not spawned, instead the query returns a handful of useful metadata
               for the user to perform sanity checks (see `LegacyJobMetadataOut` response).
-            * Otherwise, the job is started and the query returns the job ID
-            along with some of the
+            * Otherwise, the job is started and the query returns the job ID along with some of the
               input parameters (see `JobOut` response).
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
+                # migrated from 3.1.0 to 3.0.3.
                 # oneOf instead of allOf to prevent generating union
                 # in this case - generator cannot do a dynamic
                 # resolution of the union (it's easier to do it manually)
                 oneOf:
                   - $ref: '#/components/schemas/JobOut'
                   - $ref: '#/components/schemas/LegacyJobMetadataOut'
+                # renamed for better naming in generated code
                 title: JobsResponse
       description: Create a new fine-tuning job, it will be queued for processing.
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/JobIn'
+              $ref: "#/components/schemas/JobIn"
         required: true
       tags:
         - fine-tuning
   /v1/fine_tuning/jobs/{job_id}:
     get:
+      # renamed for better naming in generated code
       operationId: get_fine_tuning_job
       summary: Get Fine Tuning Job
       parameters:
@@ -364,17 +355,18 @@ paths:
           required: true
           description: The ID of the job to analyse.
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DetailedJobOut'
+                $ref: "#/components/schemas/DetailedJobOut"
       description: Get a fine-tuned job details by its UUID.
       tags:
         - fine-tuning
   /v1/fine_tuning/jobs/{job_id}/cancel:
     post:
+      # renamed for better generated code naming
       operationId: cancel_fine_tuning_job
       summary: Cancel Fine Tuning Job
       parameters:
@@ -387,17 +379,18 @@ paths:
           required: true
           description: The ID of the job to cancel.
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DetailedJobOut'
+                $ref: "#/components/schemas/DetailedJobOut"
       description: Request the cancellation of a fine tuning job.
       tags:
         - fine-tuning
   /v1/fine_tuning/jobs/{job_id}/start:
     post:
+      # renamed for better generated code naming
       operationId: start_fine_tuning_job
       summary: Start Fine Tuning Job
       parameters:
@@ -409,17 +402,18 @@ paths:
             type: string
           required: true
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DetailedJobOut'
+                $ref: "#/components/schemas/DetailedJobOut"
       description: Request the start of a validated fine tuning job.
       tags:
         - fine-tuning
   /v1/fine_tuning/models/{model_id}:
     patch:
+      # renamed for better generated code naming
       operationId: update_fine_tuned_model
       summary: Update Fine Tuned Model
       parameters:
@@ -429,26 +423,27 @@ paths:
             title: Model Id
             type: string
           required: true
-          example: ft:open-mistral-7b:587a6b29:20240514:7e773925
+          example: "ft:open-mistral-7b:587a6b29:20240514:7e773925"
           description: The ID of the model to update.
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FTModelOut'
+                $ref: "#/components/schemas/FTModelOut"
       description: Update a model name or description.
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateFTModelIn'
+              $ref: "#/components/schemas/UpdateFTModelIn"
         required: true
       tags:
         - models
   /v1/fine_tuning/models/{model_id}/archive:
     post:
+      # renamed for better generated code naming
       operationId: archive_fine_tuned_model
       summary: Archive Fine Tuned Model
       parameters:
@@ -458,19 +453,20 @@ paths:
             title: Model Id
             type: string
           required: true
-          example: ft:open-mistral-7b:587a6b29:20240514:7e773925
+          example: "ft:open-mistral-7b:587a6b29:20240514:7e773925"
           description: The ID of the model to archive.
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ArchiveFTModelOut'
+                $ref: "#/components/schemas/ArchiveFTModelOut"
       description: Archive a fine-tuned model.
       tags:
         - models
     delete:
+      # renamed for better generated code naming
       operationId: unarchive_fine_tuned_model
       summary: Unarchive Fine Tuned Model
       parameters:
@@ -480,124 +476,124 @@ paths:
             title: Model Id
             type: string
           required: true
-          example: ft:open-mistral-7b:587a6b29:20240514:7e773925
+          example: "ft:open-mistral-7b:587a6b29:20240514:7e773925"
           description: The ID of the model to unarchive.
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UnarchiveFTModelOut'
+                $ref: "#/components/schemas/UnarchiveFTModelOut"
       description: Un-archive a fine-tuned model.
       tags:
         - models
   /v1/chat/completions:
     post:
       summary: Chat Completion
+      # renamed for better generated code naming
       operationId: chat_complete
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ChatCompletionRequest'
+              $ref: "#/components/schemas/ChatCompletionRequest"
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/ChatCompletionResponse'
+              schema: { $ref: "#/components/schemas/ChatCompletionResponse" }
             text/event-stream:
               schema:
-                $ref: '#/components/schemas/CompletionEvent'
-        '422':
+                $ref: "#/components/schemas/CompletionEvent"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       tags:
         - chat
   /v1/fim/completions:
     post:
       summary: Fim Completion
       description: FIM completion.
+      # renamed for better generated code naming
       operationId: fim_complete
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/FIMCompletionRequest'
+              $ref: "#/components/schemas/FIMCompletionRequest"
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/FIMCompletionResponse'
+              schema: { $ref: "#/components/schemas/FIMCompletionResponse" }
             text/event-stream:
               schema:
-                $ref: '#/components/schemas/CompletionEvent'
-        '422':
+                $ref: "#/components/schemas/CompletionEvent"
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       tags:
         - fim
   /v1/agents/completions:
     post:
       summary: Agents Completion
+      # renamed for better generated code naming
       operationId: agents_complete
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AgentsCompletionRequest'
+              $ref: "#/components/schemas/AgentsCompletionRequest"
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/ChatCompletionResponse'
-        '422':
+              schema: { $ref: "#/components/schemas/ChatCompletionResponse" }
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       tags:
         - agents
   /v1/embeddings:
     post:
       summary: Embeddings
-      description: Embeddings
+      description: "Embeddings"
+      # renamed for better generated code naming
       operationId: create_embeddings
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EmbeddingRequest'
+              $ref: "#/components/schemas/EmbeddingRequest"
       responses:
-        '200':
+        "200":
           description: Successful Response
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/EmbeddingResponse'
-        '422':
+              schema: { $ref: "#/components/schemas/EmbeddingResponse" }
+        "422":
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: "#/components/schemas/HTTPValidationError"
       tags:
         - embeddings
 components:
@@ -608,9 +604,11 @@ components:
           type: string
           title: Id
           description: The ID of the deleted model.
+          # migrated from 3.1.0 to 3.0.3
           example: ft:open-mistral-7b:587a6b29:20240514:7e773925
         object:
           type: string
+          # renamed for better generated code naming
           title: DeleteModelOutObject
           default: model
           description: The object type that was deleted
@@ -619,7 +617,8 @@ components:
           title: Deleted
           default: true
           description: The deletion status
-          example: true
+          # migrated from 3.1.0 to 3.0.3
+          example: True
       type: object
       required:
         - id
@@ -628,7 +627,7 @@ components:
       properties:
         detail:
           items:
-            $ref: '#/components/schemas/ValidationError'
+            $ref: "#/components/schemas/ValidationError"
           type: array
           title: Detail
       type: object
@@ -660,6 +659,7 @@ components:
           title: Id
         object:
           type: string
+          # renamed for better generated code naming
           title: ModelCardObject
           default: model
         created:
@@ -670,6 +670,7 @@ components:
           title: Owned By
           default: mistralai
         root:
+          # migrated from 3.1.0 to 3.0.3
           type: string
           nullable: true
           title: Root
@@ -678,15 +679,17 @@ components:
           title: Archived
           default: false
         name:
+          # migrated from 3.1.0 to 3.0.3
           type: string
           nullable: true
           title: Name
         description:
+          # migrated from 3.1.0 to 3.0.3
           type: string
           nullable: true
           title: Description
         capabilities:
-          $ref: '#/components/schemas/ModelCapabilities'
+          $ref: "#/components/schemas/ModelCapabilities"
         max_context_length:
           type: integer
           title: Max Context Length
@@ -698,6 +701,7 @@ components:
           title: Aliases
           default: []
         deprecation:
+          # migrated from 3.1.0 to 3.0.3
           type: string
           format: date-time
           nullable: true
@@ -711,11 +715,12 @@ components:
       properties:
         object:
           type: string
+          # renamed for better generated code naming
           title: ModelListObject
           default: list
         data:
           items:
-            $ref: '#/components/schemas/ModelCard'
+            $ref: "#/components/schemas/ModelCard"
           type: array
           title: Data
       type: object
@@ -760,44 +765,50 @@ components:
           title: Id
           type: string
           description: The unique identifier of the file.
+          # migrated from 3.1.0 to 3.0.3
           example: 497f6eca-6276-4993-bfeb-53cbbbba6f09
         object:
+          # renamed for better generated code naming
           title: UploadFileOutObject
           type: string
           description: The object type, which is always "file".
+          # migrated from 3.1.0 to 3.0.3
           example: file
         bytes:
           title: Bytes
           type: integer
           description: The size of the file, in bytes.
+          # migrated from 3.1.0 to 3.0.3
           example: 13000
         created_at:
           title: Created At
           type: integer
           description: The UNIX timestamp (in seconds) of the event.
+          # migrated from 3.1.0 to 3.0.3
           example: 1716963433
         filename:
           title: Filename
           type: string
           description: The name of the uploaded file.
+          # migrated from 3.1.0 to 3.0.3
           example: files_upload.jsonl
         purpose:
           enum:
             - fine-tune
-          type: string
           title: Purpose
-          description: >-
-            The intended purpose of the uploaded file. Only accepts fine-tuning
-            (`fine-tune`) for now.
+          type: string
+          description: The intended purpose of the uploaded file. Only accepts fine-tuning (`fine-tune`) for now.
+          # migrated from 3.1.0 to 3.0.3
           example: fine-tune
         sample_type:
-          $ref: '#/components/schemas/SampleType'
+          $ref: "#/components/schemas/SampleType"
         num_lines:
+          # migrated from 3.1.0 to 3.0.3
           type: integer
           nullable: true
           title: Num Lines
         source:
-          $ref: '#/components/schemas/Source'
+          $ref: "#/components/schemas/Source"
       required:
         - id
         - object
@@ -816,43 +827,51 @@ components:
           title: Id
           type: string
           description: The unique identifier of the file.
+          # migrated from 3.1.0 to 3.0.3
           example: 497f6eca-6276-4993-bfeb-53cbbbba6f09
         object:
+          # renamed for better generated code naming
           title: FileSchemaObject
           type: string
           description: The object type, which is always "file".
+          # migrated from 3.1.0 to 3.0.3
           example: file
         bytes:
           title: Bytes
           type: integer
           description: The size of the file, in bytes.
+          # migrated from 3.1.0 to 3.0.3
           example: 13000
         created_at:
           title: Created At
           type: integer
           description: The UNIX timestamp (in seconds) of the event.
+          # migrated from 3.1.0 to 3.0.3
           example: 1716963433
         filename:
           title: Filename
           type: string
           description: The name of the uploaded file.
+          # migrated from 3.1.0 to 3.0.3
           example: files_upload.jsonl
         purpose:
+          # migrated from 3.1.0 to 3.0.3
           enum: 
             - fine-tune
           title: Purpose
-          description: >-
-            The intended purpose of the uploaded file. Only accepts fine-tuning
-            (`fine-tune`) for now.
+          type: string
+          description: The intended purpose of the uploaded file. Only accepts fine-tuning (`fine-tune`) for now.
+          # migrated from 3.1.0 to 3.0.3
           example: fine-tune
         sample_type:
-          $ref: '#/components/schemas/SampleType'
+          $ref: "#/components/schemas/SampleType"
         num_lines:
+          # migrated from 3.1.0 to 3.0.3
           type: integer
           nullable: true
           title: Num Lines
         source:
-          $ref: '#/components/schemas/Source'
+          $ref: "#/components/schemas/Source"
       required:
         - id
         - object
@@ -868,10 +887,11 @@ components:
       properties:
         data:
           items:
-            $ref: '#/components/schemas/FileSchema'
+            $ref: "#/components/schemas/FileSchema"
           title: Data
           type: array
         object:
+          # renamed for better generated code naming
           title: ListFilesOutObject
           type: string
       required:
@@ -886,44 +906,51 @@ components:
           title: Id
           type: string
           description: The unique identifier of the file.
+          # migrated from 3.1.0 to 3.0.3
           example: 497f6eca-6276-4993-bfeb-53cbbbba6f09
         object:
+          # renamed for better generated code naming
           title: RetrieveFileOutObject
           type: string
           description: The object type, which is always "file".
+          # migrated from 3.1.0 to 3.0.3
           example: file
         bytes:
           title: Bytes
           type: integer
           description: The size of the file, in bytes.
+          # migrated from 3.1.0 to 3.0.3
           example: 13000
         created_at:
           title: Created At
           type: integer
           description: The UNIX timestamp (in seconds) of the event.
+          # migrated from 3.1.0 to 3.0.3
           example: 1716963433
         filename:
           title: Filename
           type: string
           description: The name of the uploaded file.
+          # migrated from 3.1.0 to 3.0.3
           example: files_upload.jsonl
         purpose:
+          # migrated from 3.1.0 to 3.0.3
           enum:
             - fine-tune
-          type: string
           title: Purpose
-          description: >-
-            The intended purpose of the uploaded file. Only accepts fine-tuning
-            (`fine-tune`) for now.
+          type: string
+          description: The intended purpose of the uploaded file. Only accepts fine-tuning (`fine-tune`) for now.
+          # migrated from 3.1.0 to 3.0.3
           example: fine-tune
         sample_type:
-          $ref: '#/components/schemas/SampleType'
+          $ref: "#/components/schemas/SampleType"
         num_lines:
+          # migrated from 3.1.0 to 3.0.3
           type: integer
           nullable: true
           title: Num Lines
         source:
-          $ref: '#/components/schemas/Source'
+          $ref: "#/components/schemas/Source"
       required:
         - id
         - object
@@ -942,16 +969,20 @@ components:
           title: Id
           type: string
           description: The ID of the deleted file.
+          # migrated from 3.1.0 to 3.0.3
           example: 497f6eca-6276-4993-bfeb-53cbbbba6f09
         object:
+          # renamed for better generated code naming
           title: DeleteFileOutObject
           type: string
           description: The object type that was deleted
+          # migrated from 3.1.0 to 3.0.3
           example: file
         deleted:
           title: Deleted
           type: boolean
           description: The deletion status.
+          # migrated from 3.1.0 to 3.0.3
           example: false
       required:
         - id
@@ -972,11 +1003,12 @@ components:
     GithubRepositoryOut:
       properties:
         type:
+          # migrated from 3.1.0 to 3.0.3
+          default: github
           enum:
             - github
-          type: string
-          default: github
           title: Type
+          type: string
         name:
           title: Name
           type: string
@@ -984,13 +1016,15 @@ components:
           title: Owner
           type: string
         ref:
+          # migrated from 3.1.0 to 3.0.3
           type: string
           nullable: true
           title: Ref
         weight:
-          default: 1
-          minimum: 0
+          default: 1.0
+          # migrated from 3.1.0 to 3.0.3
           exclusiveMinimum: true
+          minimum: 0
           title: Weight
           type: number
         commit_id:
@@ -1007,30 +1041,37 @@ components:
     JobMetadataOut:
       properties:
         expected_duration_seconds:
+          # migrated from 3.1.0 to 3.0.3
           type: integer
           nullable: true
           title: Expected Duration Seconds
         cost:
+          # migrated from 3.1.0 to 3.0.3
           type: number
           nullable: true
           title: Cost
         cost_currency:
+          # migrated from 3.1.0 to 3.0.3
           type: string
           nullable: true
           title: Cost Currency
         train_tokens_per_step:
+          # migrated from 3.1.0 to 3.0.3
           type: integer
           nullable: true
           title: Train Tokens Per Step
         train_tokens:
+          # migrated from 3.1.0 to 3.0.3
           type: integer
           nullable: true
           title: Train Tokens
         data_tokens:
+          # migrated from 3.1.0 to 3.0.3
           type: integer
           nullable: true
           title: Data Tokens
         estimated_start_time:
+          # migrated from 3.1.0 to 3.0.3
           type: integer
           nullable: true
           title: Estimated Start Time
@@ -1047,9 +1088,9 @@ components:
           title: Auto Start
           type: boolean
         hyperparameters:
-          $ref: '#/components/schemas/TrainingParameters'
+          $ref: "#/components/schemas/TrainingParameters"
         model:
-          $ref: '#/components/schemas/FineTuneableModel'
+          $ref: "#/components/schemas/FineTuneableModel"
         status:
           enum:
             - QUEUED
@@ -1072,25 +1113,20 @@ components:
         created_at:
           title: Created At
           type: integer
-          description: >-
-            The UNIX timestamp (in seconds) for when the fine-tuning job was
-            created.
+          description: The UNIX timestamp (in seconds) for when the fine-tuning job was created.
         modified_at:
           title: Modified At
           type: integer
-          description: >-
-            The UNIX timestamp (in seconds) for when the fine-tuning job was
-            last modified.
+          description: The UNIX timestamp (in seconds) for when the fine-tuning job was last modified.
         training_files:
           items:
             format: uuid
             type: string
           title: Training Files
           type: array
-          description: >-
-            A list containing the IDs of uploaded files that contain training
-            data.
+          description: A list containing the IDs of uploaded files that contain training data.
         validation_files:
+          # migrated from 3.1.0 to 3.0.3
           items:
               format: uuid
               type: string
@@ -1098,40 +1134,42 @@ components:
           nullable: true
           default: []
           title: Validation Files
-          description: >-
-            A list containing the IDs of uploaded files that contain validation
-            data.
+          description: A list containing the IDs of uploaded files that contain validation data.
         object:
-          enum: 
-            - job
-          type: string
+          # migrated from 3.1.0 to 3.0.3
           default: job
+          enum:
+            - job
+          # renamed for better generated code naming
           title: JobOutObject
+          type: string
           description: The object type of the fine-tuning job.
         fine_tuned_model:
+          # migrated from 3.1.0 to 3.0.3
           type: string
           nullable: true
           title: Fine Tuned Model
-          description: >-
-            The name of the fine-tuned model that is being created. The value
-            will be `null` if the fine-tuning job is still running.
+          description: The name of the fine-tuned model that is being created. The value will be `null` if the fine-tuning job is still running.
         suffix:
+          # migrated from 3.1.0 to 3.0.3
           type: string
           nullable: true
           title: Suffix
-          description: >-
-            Optional text/code that adds more context for the model. When given
-            a `prompt` and a `suffix` the model will fill what is between them.
-            When `suffix` is not provided, the model will simply execute
-            completion starting with `prompt`.
+          description: Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`.
         integrations:
+          # migrated from 3.1.0 to 3.0.3
           items:
-            $ref: '#/components/schemas/WandbIntegrationOut'
+            discriminator:
+              mapping:
+                wandb: "#/components/schemas/WandbIntegrationOut"
+              propertyName: type
+            $ref: "#/components/schemas/WandbIntegrationOut"
           type: array
           nullable: true
           title: Integrations
           description: A list of integrations enabled for your fine-tuning job.
         trained_tokens:
+          # migrated from 3.1.0 to 3.0.3
           type: integer
           nullable: true
           title: Trained Tokens
@@ -1139,13 +1177,18 @@ components:
         repositories:
           default: []
           items:
-            $ref: '#/components/schemas/GithubRepositoryOut'
+            discriminator:
+              mapping:
+                github: "#/components/schemas/GithubRepositoryOut"
+              propertyName: type
+            # migrated from 3.1.0 to 3.0.3
+            $ref: "#/components/schemas/GithubRepositoryOut"
           maxItems: 20
           title: Repositories
           type: array
         metadata:
-          allOf:
-            - $ref: '#/components/schemas/JobMetadataOut'
+          # migrated from 3.1.0 to 3.0.3
+          $ref: "#/components/schemas/JobMetadataOut"
           nullable: true
       required:
         - id
@@ -1164,15 +1207,17 @@ components:
         data:
           default: []
           items:
-            $ref: '#/components/schemas/JobOut'
+            $ref: "#/components/schemas/JobOut"
           title: Data
           type: array
         object:
-          enum: 
-            - list
-          type: string
+          # migrated from 3.1.0 to 3.0.3
           default: list
+          enum:
+            - list
+          # renamed for better generated code naming
           title: JobsOutObject
+          type: string
         total:
           title: Total
           type: integer
@@ -1183,6 +1228,7 @@ components:
     TrainingParameters:
       properties:
         training_steps:
+          # migrated from 3.1.0 to 3.0.3
           minimum: 1
           type: integer
           nullable: true
@@ -1190,15 +1236,33 @@ components:
         learning_rate:
           default: 0.0001
           maximum: 1
-          minimum: 1.e-8
+          minimum: 0.00000001
           title: Learning Rate
           type: number
+        weight_decay:
+          # migrated from 3.1.0 to 3.0.3
+          maximum: 1
+          minimum: 0
+          type: number
+          nullable: true
+          default: 0.1
+          title: Weight Decay
+        warmup_fraction:
+          # migrated from 3.1.0 to 3.0.3
+          maximum: 1
+          minimum: 0
+          type: number
+          nullable: true
+          default: 0.05
+          title: Warmup Fraction
         epochs:
+          # migrated from 3.1.0 to 3.0.3
           minimum: 0.01
           type: number
           nullable: true
           title: Epochs
         fim_ratio:
+          # migrated from 3.1.0 to 3.0.3
           maximum: 1
           minimum: 0
           type: number
@@ -1210,23 +1274,24 @@ components:
     WandbIntegrationOut:
       properties:
         type:
+          # migrated from 3.1.0 to 3.0.3
+          default: wandb
           enum:
             - wandb
-          type: string
-          default: wandb
           title: Type
+          type: string
         project:
           title: Project
           type: string
           description: The name of the project that the new run will be created under.
         name:
+          # migrated from 3.1.0 to 3.0.3
           type: string
           nullable: true
           title: Name
-          description: >-
-            A display name to set for the run. If not set, will use the job ID
-            as the name.
+          description: A display name to set for the run. If not set, will use the job ID as the name.
         run_name:
+          # migrated from 3.1.0 to 3.0.3
           type: string
           nullable: true
           title: Run Name
@@ -1237,44 +1302,55 @@ components:
     LegacyJobMetadataOut:
       properties:
         expected_duration_seconds:
+          # migrated from 3.1.0 to 3.0.3
           type: integer
           nullable: true
           title: Expected Duration Seconds
-          description: >-
-            The approximated time (in seconds) for the fine-tuning process to
-            complete.
+          description: The approximated time (in seconds) for the fine-tuning process to complete.
+          # migrated from 3.1.0 to 3.0.3
           example: 220
         cost:
+          # migrated from 3.1.0 to 3.0.3
           type: number
           nullable: true
           title: Cost
           description: The cost of the fine-tuning job.
+          # migrated from 3.1.0 to 3.0.3
           example: 10
         cost_currency:
+          # migrated from 3.1.0 to 3.0.3
           type: string
           nullable: true
           title: Cost Currency
           description: The currency used for the fine-tuning job cost.
+          # migrated from 3.1.0 to 3.0.3
           example: EUR
         train_tokens_per_step:
+          # migrated from 3.1.0 to 3.0.3
           type: integer
           nullable: true
           title: Train Tokens Per Step
           description: The number of tokens consumed by one training step.
+          # migrated from 3.1.0 to 3.0.3
           example: 131072
         train_tokens:
+          # migrated from 3.1.0 to 3.0.3
           type: integer
           nullable: true
           title: Train Tokens
           description: The total number of tokens used during the fine-tuning process.
+          # migrated from 3.1.0 to 3.0.3
           example: 1310720
         data_tokens:
+          # migrated from 3.1.0 to 3.0.3
           type: integer
           nullable: true
           title: Data Tokens
           description: The total number of tokens in the training dataset.
+          # migrated from 3.1.0 to 3.0.3
           example: 305375
         estimated_start_time:
+          # migrated from 3.1.0 to 3.0.3
           type: integer
           nullable: true
           title: Estimated Start Time
@@ -1286,27 +1362,29 @@ components:
           title: Details
           type: string
         epochs:
+          # migrated from 3.1.0 to 3.0.3
           type: number
           nullable: true
           title: Epochs
           description: The number of complete passes through the entire training dataset.
+          # migrated from 3.1.0 to 3.0.3
           example: 4.2922
         training_steps:
+          # migrated from 3.1.0 to 3.0.3
           type: integer
           nullable: true
           title: Training Steps
-          description: >-
-            The number of training steps to perform. A training step refers to a
-            single update of the model weights during the fine-tuning process.
-            This update is typically calculated using a batch of samples from
-            the training dataset.
+          description: The number of training steps to perform. A training step refers to a single update of the model weights during the fine-tuning process. This update is typically calculated using a batch of samples from the training dataset.
+          # migrated from 3.1.0 to 3.0.3
           example: 10
         object:
-          enum: 
-            - job.metadata
-          type: string
+          # migrated from 3.1.0 to 3.0.3
           default: job.metadata
+          enum:
+            - job.metadata
+          # renamed for better generated code naming
           title: LegacyJobMetadataOutObject
+          type: string
       required:
         - details
       title: LegacyJobMetadataOut
@@ -1314,11 +1392,12 @@ components:
     GithubRepositoryIn:
       properties:
         type:
-          enum: 
-            - github
-          type: string
+          # migrated from 3.1.0 to 3.0.3
           default: github
+          enum:
+            - github
           title: Type
+          type: string
         name:
           title: Name
           type: string
@@ -1326,14 +1405,16 @@ components:
           title: Owner
           type: string
         ref:
+          # migrated from 3.1.0 to 3.0.3
           type: string
           nullable: true
           title: Ref
         weight:
-          title: Weight
-          minimum: 0
+          default: 1.0
+          # migrated from 3.1.0 to 3.0.3
           exclusiveMinimum: true
-          default: 1
+          minimum: 0
+          title: Weight
           type: number
         token:
           title: Token
@@ -1347,40 +1428,38 @@ components:
     JobIn:
       properties:
         model:
-          $ref: '#/components/schemas/FineTuneableModel'
+          $ref: "#/components/schemas/FineTuneableModel"
         training_files:
           default: []
           items:
-            $ref: '#/components/schemas/TrainingFile'
+            $ref: "#/components/schemas/TrainingFile"
           title: Training Files
           type: array
         validation_files:
+          # migrated from 3.1.0 to 3.0.3
           items:
             format: uuid
             type: string
           type: array
           nullable: true
           title: Validation Files
-          description: >-
-            A list containing the IDs of uploaded files that contain validation
-            data. If you provide these files, the data is used to generate
-            validation metrics periodically during fine-tuning. These metrics
-            can be viewed in `checkpoints` when getting the status of a running
-            fine-tuning job. The same data should not be present in both train
-            and validation files.
+          description: "A list containing the IDs of uploaded files that contain validation data. If you provide these files, the data is used to generate validation metrics periodically during fine-tuning. These metrics can be viewed in `checkpoints` when getting the status of a running fine-tuning job. The same data should not be present in both train and validation files."
         hyperparameters:
-          $ref: '#/components/schemas/TrainingParametersIn'
+          $ref: "#/components/schemas/TrainingParametersIn"
         suffix:
+          # migrated from 3.1.0 to 3.0.3
           maxLength: 18
           type: string
           nullable: true
           title: Suffix
-          description: >-
-            A string that will be added to your fine-tuning model name. For
-            example, a suffix of "my-great-model" would produce a model name
-            like `ft:open-mistral-7b:my-great-model:xxx...`
+          description: 'A string that will be added to your fine-tuning model name. For example, a suffix of "my-great-model" would produce a model name like `ft:open-mistral-7b:my-great-model:xxx...`'
         integrations:
+          # migrated from 3.1.0 to 3.0.3
           items:
+            discriminator:
+              mapping:
+                wandb: "#/components/schemas/WandbIntegration"
+              propertyName: type
             $ref: '#/components/schemas/WandbIntegration'
           type: array
           nullable: true
@@ -1389,7 +1468,12 @@ components:
         repositories:
           default: []
           items:
-            $ref: '#/components/schemas/GithubRepositoryIn'
+            discriminator:
+              mapping:
+                github: "#/components/schemas/GithubRepositoryIn"
+              propertyName: type
+            # migrated from 3.1.0 to 3.0.3
+            $ref: "#/components/schemas/GithubRepositoryIn"
           title: Repositories
           type: array
         auto_start:
@@ -1408,9 +1492,10 @@ components:
           title: File Id
           type: string
         weight:
-          default: 1
-          minimum: 0
+          default: 1.0
+          # migrated from 3.1.0 to 3.0.3
           exclusiveMinimum: true
+          minimum: 0
           title: Weight
           type: number
       required:
@@ -1420,31 +1505,45 @@ components:
     TrainingParametersIn:
       properties:
         training_steps:
+          # migrated from 3.1.0 to 3.0.3
           minimum: 1
           type: integer
           nullable: true
           title: Training Steps
-          description: >-
-            The number of training steps to perform. A training step refers to a
-            single update of the model weights during the fine-tuning process.
-            This update is typically calculated using a batch of samples from
-            the training dataset.
+          description: "The number of training steps to perform. A training step refers to a single update of the model weights during the fine-tuning process. This update is typically calculated using a batch of samples from the training dataset."
         learning_rate:
           default: 0.0001
           maximum: 1
-          minimum: 1.e-8
+          minimum: 0.00000001
           title: Learning Rate
           type: number
-          description: >-
-            A parameter describing how much to adjust the pre-trained model's
-            weights in response to the estimated error each time the weights are
-            updated during the fine-tuning process.
+          description: "A parameter describing how much to adjust the pre-trained model's weights in response to the estimated error each time the weights are updated during the fine-tuning process."
+        weight_decay:
+          # migrated from 3.1.0 to 3.0.3
+          maximum: 1
+          minimum: 0
+          type: number
+          nullable: true
+          default: 0.1
+          title: Weight Decay
+          description: "(Advanced Usage) Weight decay adds a term to the loss function that is proportional to the sum of the squared weights. This term reduces the magnitude of the weights and prevents them from growing too large."
+        warmup_fraction:
+          # migrated from 3.1.0 to 3.0.3
+          maximum: 1
+          minimum: 0
+          type: number
+          nullable: true
+          default: 0.05
+          title: Warmup Fraction
+          description: "(Advanced Usage) A parameter that specifies the percentage of the total training steps at which the learning rate warm-up phase ends. During this phase, the learning rate gradually increases from a small value to the initial learning rate, helping to stabilize the training process and improve convergence. Similar to `pct_start` in [mistral-finetune](https://github.com/mistralai/mistral-finetune)"
         epochs:
+          # migrated from 3.1.0 to 3.0.3
           minimum: 0.01
           type: number
           nullable: true
           title: Epochs
         fim_ratio:
+          # migrated from 3.1.0 to 3.0.3
           maximum: 1
           minimum: 0
           type: number
@@ -1457,22 +1556,22 @@ components:
     WandbIntegration:
       properties:
         type:
+          # migrated from 3.1.0 to 3.0.3
+          default: wandb
           enum:
             - wandb
-          type: string
-          default: wandb
           title: Type
+          type: string
         project:
           title: Project
           type: string
           description: The name of the project that the new run will be created under.
         name:
+          # migrated from 3.1.0 to 3.0.3
           type: string
           nullable: true
           title: Name
-          description: >-
-            A display name to set for the run. If not set, will use the job ID
-            as the name.
+          description: A display name to set for the run. If not set, will use the job ID as the name.
         api_key:
           maxLength: 40
           minLength: 40
@@ -1480,6 +1579,7 @@ components:
           type: string
           description: The WandB API key to use for authentication.
         run_name:
+          # migrated from 3.1.0 to 3.0.3
           type: string
           nullable: true
           title: Run Name
@@ -1491,7 +1591,7 @@ components:
     CheckpointOut:
       properties:
         metrics:
-          $ref: '#/components/schemas/MetricOut'
+          $ref: "#/components/schemas/MetricOut"
         step_number:
           title: Step Number
           type: integer
@@ -1500,6 +1600,7 @@ components:
           title: Created At
           type: integer
           description: The UNIX timestamp (in seconds) for when the checkpoint was created.
+          # migrated from 3.1.0 to 3.0.3
           example: 1716963433
       required:
         - metrics
@@ -1517,9 +1618,9 @@ components:
           title: Auto Start
           type: boolean
         hyperparameters:
-          $ref: '#/components/schemas/TrainingParameters'
+          $ref: "#/components/schemas/TrainingParameters"
         model:
-          $ref: '#/components/schemas/FineTuneableModel'
+          $ref: "#/components/schemas/FineTuneableModel"
         status:
           enum:
             - QUEUED
@@ -1550,6 +1651,7 @@ components:
           title: Training Files
           type: array
         validation_files:
+          # migrated from 3.1.0 to 3.0.3
           items:
             format: uuid
             type: string
@@ -1558,54 +1660,65 @@ components:
           default: []
           title: Validation Files
         object:
+          default: job
           enum:
             - job
-          type: string
-          default: job
+          # renamed for better generated code naming
           title: DetailedJobOutObject
+          type: string
         fine_tuned_model:
+          # migrated from 3.1.0 to 3.0.3
           type: string
           nullable: true
           title: Fine Tuned Model
         suffix:
+          # migrated from 3.1.0 to 3.0.3
           type: string
           nullable: true
           title: Suffix
         integrations:
+          # migrated from 3.1.0 to 3.0.3
           items:
-            $ref: '#/components/schemas/WandbIntegrationOut'
+            discriminator:
+              mapping:
+                wandb: "#/components/schemas/WandbIntegrationOut"
+              propertyName: type
+            $ref: "#/components/schemas/WandbIntegrationOut"
           type: array
           nullable: true
           title: Integrations
         trained_tokens:
+          # migrated from 3.1.0 to 3.0.3
           type: integer
           nullable: true
           title: Trained Tokens
         repositories:
           default: []
           items:
-            $ref: '#/components/schemas/GithubRepositoryOut'
+            discriminator:
+              mapping:
+                github: "#/components/schemas/GithubRepositoryOut"
+              propertyName: type
+            # migrated from 3.1.0 to 3.0.3
+            $ref: "#/components/schemas/GithubRepositoryOut"
           maxItems: 20
           title: Repositories
           type: array
         metadata:
-          allOf:
-            - $ref: '#/components/schemas/JobMetadataOut'
-          type: object
+          # migrated from 3.1.0 to 3.0.3
+          $ref: "#/components/schemas/JobMetadataOut"
           nullable: true
         events:
           default: []
           items:
-            $ref: '#/components/schemas/EventOut'
+            $ref: "#/components/schemas/EventOut"
           title: Events
           type: array
-          description: >-
-            Event items are created every time the status of a fine-tuning job
-            changes. The timestamped list of all events is accessible here.
+          description: "Event items are created every time the status of a fine-tuning job changes. The timestamped list of all events is accessible here."
         checkpoints:
           default: []
           items:
-            $ref: '#/components/schemas/CheckpointOut'
+            $ref: "#/components/schemas/CheckpointOut"
           title: Checkpoints
           type: array
       required:
@@ -1627,6 +1740,7 @@ components:
           type: string
           description: The name of the event.
         data:
+          # migrated from 3.1.0 to 3.0.3
           type: object
           additionalProperties: true
           nullable: true
@@ -1643,23 +1757,23 @@ components:
     MetricOut:
       properties:
         train_loss:
+          # migrated from 3.1.0 to 3.0.3
           type: number
           nullable: true
           title: Train Loss
         valid_loss:
+          # migrated from 3.1.0 to 3.0.3
           type: number
           nullable: true
           title: Valid Loss
         valid_mean_token_accuracy:
+          # migrated from 3.1.0 to 3.0.3
           type: number
           nullable: true
           title: Valid Mean Token Accuracy
       title: MetricOut
       type: object
-      description: >-
-        Metrics at the step number during the fine-tuning job. Use these metrics
-        to assess if the training is going smoothly (loss should decrease, token
-        accuracy should increase).
+      description: "Metrics at the step number during the fine-tuning job. Use these metrics to assess if the training is going smoothly (loss should decrease, token accuracy should increase)."
     FTModelCapabilitiesOut:
       properties:
         completion_chat:
@@ -1686,11 +1800,13 @@ components:
           title: Id
           type: string
         object:
-          enum: 
-            - model
-          type: string
+          # migrated from 3.1.0 to 3.0.3
           default: model
+          enum:
+            - model
+          # renamed for better generated code naming
           title: FTModelOutObject
+          type: string
         created:
           title: Created
           type: integer
@@ -1704,15 +1820,17 @@ components:
           title: Archived
           type: boolean
         name:
+          # migrated from 3.1.0 to 3.0.3
           type: string
           nullable: true
           title: Name
         description:
+          # migrated from 3.1.0 to 3.0.3
           type: string
           nullable: true
           title: Description
         capabilities:
-          $ref: '#/components/schemas/FTModelCapabilitiesOut'
+          $ref: "#/components/schemas/FTModelCapabilitiesOut"
         max_context_length:
           default: 32768
           title: Max Context Length
@@ -1740,10 +1858,12 @@ components:
     UpdateFTModelIn:
       properties:
         name:
+          # migrated from 3.1.0 to 3.0.3
           type: string
           nullable: true
           title: Name
         description:
+          # migrated from 3.1.0 to 3.0.3
           type: string
           nullable: true
           title: Description
@@ -1755,11 +1875,13 @@ components:
           title: Id
           type: string
         object:
-          enum: 
-            - model
-          type: string
+          # migrated from 3.1.0 to 3.0.3
           default: model
+          enum:
+            - model
+          # renamed for better generated code naming
           title: ArchiveFTModelOutObject
+          type: string
         archived:
           default: true
           title: Archived
@@ -1774,11 +1896,13 @@ components:
           title: Id
           type: string
         object:
-          enum: 
-            - model
-          type: string
+          # migrated from 3.1.0 to 3.0.3
           default: model
+          enum:
+            - model
+          # renamed for better generated code naming
           title: UnarchiveFTModelOutObject
+          type: string
         archived:
           default: false
           title: Archived
@@ -1790,12 +1914,14 @@ components:
     AssistantMessage:
       properties:
         content:
+          # migrated from 3.1.0 to 3.0.3
           type: string
           nullable: true
           title: Content
         tool_calls:
+          # migrated from 3.1.0 to 3.0.3
           items:
-            $ref: '#/components/schemas/ToolCall'
+            $ref: "#/components/schemas/ToolCall"
           type: array
           nullable: true
           title: Tool Calls
@@ -1803,10 +1929,7 @@ components:
           type: boolean
           title: Prefix
           default: false
-          description: >-
-            Set this to `true` when adding an assistant message as prefix to
-            condition the model response. The role of the prefix message is to
-            force the model to start its answer by the content of the message.
+          description: "Set this to `true` when adding an assistant message as prefix to condition the model response. The role of the prefix message is to force the model to start its answer by the content of the message."
         role:
           type: string
           default: assistant
@@ -1819,13 +1942,12 @@ components:
     ChatCompletionRequest:
       properties:
         model:
+          # migrated from 3.1.0 to 3.0.3
           type: string
           nullable: true
           title: Model
-          description: >-
-            ID of the model to use. You can use the [List Available
-            Models](/api#operation/listModels) API to see all of your available
-            models, or see our [Model overview](/models) for model descriptions.
+          description: ID of the model to use. You can use the [List Available Models](/api/#tag/models/operation/list_models_v1_models_get) API to see all of your available models, or see our [Model overview](/models) for model descriptions.
+          # migrated from 3.1.0 to 3.0.3
           example: mistral-small-latest
         temperature:
           type: number
@@ -1833,32 +1955,23 @@ components:
           minimum: 0
           title: Temperature
           default: 0.7
-          description: >-
-            What sampling temperature to use, between 0.0 and 1.0. Higher values
-            like 0.8 will make the output more random, while lower values like
-            0.2 will make it more focused and deterministic. We generally
-            recommend altering this or `top_p` but not both.
+          description: "What sampling temperature to use, between 0.0 and 1.0. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both."
         top_p:
           type: number
           maximum: 1
           minimum: 0
           title: Top P
-          default: 1
-          description: >-
-            Nucleus sampling, where the model considers the results of the
-            tokens with `top_p` probability mass. So 0.1 means only the tokens
-            comprising the top 10% probability mass are considered. We generally
-            recommend altering this or `temperature` but not both.
+          default: 1.0
+          description: "Nucleus sampling, where the model considers the results of the tokens with `top_p` probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered. We generally recommend altering this or `temperature` but not both."
         max_tokens:
+          # migrated from 3.1.0 to 3.0.3
           type: integer
           minimum: 0
           nullable: true
           title: Max Tokens
-          description: >-
-            The maximum number of tokens to generate in the completion. The
-            token count of your prompt plus `max_tokens` cannot exceed the
-            model's context length.
+          description: "The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length."
         min_tokens:
+          # migrated from 3.1.0 to 3.0.3
           type: integer
           minimum: 0
           nullable: true
@@ -1868,12 +1981,7 @@ components:
           type: boolean
           title: Stream
           default: false
-          description: >-
-            Whether to stream back partial progress. If set, tokens will be sent
-            as data-only server-side events as they become available, with the
-            stream terminated by a data: [DONE] message. Otherwise, the server
-            will hold the request open until the timeout or until completion,
-            with the response containing the full result as JSON.
+          description: "Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON."
         stop:
           anyOf:
             - type: string
@@ -1881,53 +1989,57 @@ components:
                 type: string
               type: array
           title: Stop
-          description: >-
-            Stop generation if this token is detected. Or if one of these tokens
-            is detected when providing an array
+          description: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         random_seed:
+          # migrated from 3.1.0 to 3.0.3
           type: integer
           minimum: 0
           nullable: true
           title: Random Seed
-          description: >-
-            The seed to use for random sampling. If set, different calls will
-            generate deterministic results.
+          description: The seed to use for random sampling. If set, different calls will generate deterministic results.
         messages:
           items:
             oneOf:
-              - $ref: '#/components/schemas/SystemMessage'
-              - $ref: '#/components/schemas/UserMessage'
-              - $ref: '#/components/schemas/AssistantMessage'
-              - $ref: '#/components/schemas/ToolMessage'
+              - $ref: "#/components/schemas/SystemMessage"
+              - $ref: "#/components/schemas/UserMessage"
+              - $ref: "#/components/schemas/AssistantMessage"
+              - $ref: "#/components/schemas/ToolMessage"
             discriminator:
               propertyName: role
               mapping:
-                assistant: '#/components/schemas/AssistantMessage'
-                system: '#/components/schemas/SystemMessage'
-                tool: '#/components/schemas/ToolMessage'
-                user: '#/components/schemas/UserMessage'
+                assistant: "#/components/schemas/AssistantMessage"
+                system: "#/components/schemas/SystemMessage"
+                tool: "#/components/schemas/ToolMessage"
+                user: "#/components/schemas/UserMessage"
           type: array
           title: Messages
-          description: >-
+          # updated for better generated code documentation
+          description: |-
             The prompt(s) to generate completions for, encoded as a list of dict
             with role and content.
 
             You can pass only this types into to the list: [SystemMessage], [UserMessage],
             [AssistantMessage], [ToolMessage].
-          example: >- 
-            - role: user
-              content: Who is the best French painter? Answer in one short sentence.
+          # migrated from 3.1.0 to 3.0.3
+          example:
+            - [
+                {
+                  "role": "user",
+                  "content": "Who is the best French painter? Answer in one short sentence.",
+                },
+              ]
         response_format:
-          $ref: '#/components/schemas/ResponseFormat'
+          $ref: "#/components/schemas/ResponseFormat"
         tools:
+          # migrated from 3.1.0 to 3.0.3
           items:
-            $ref: '#/components/schemas/Tool'
+            $ref: "#/components/schemas/Tool"
           type: array
           nullable: true
           title: Tools
         tool_choice:
           allOf:
-            - $ref: '#/components/schemas/ToolChoice'
+            - $ref: "#/components/schemas/ToolChoice"
           default: auto
         safe_prompt:
           type: boolean
@@ -1941,6 +2053,7 @@ components:
       title: ChatCompletionRequest
     ChunkTypes:
       type: string
+      # migrated from 3.1.0 to 3.0.3
       enum:
         - text
       title: ChunkTypes
@@ -1948,7 +2061,7 @@ components:
       properties:
         type:
           allOf:
-            - $ref: '#/components/schemas/ChunkTypes'
+            - $ref: "#/components/schemas/ChunkTypes"
           default: text
         text:
           type: string
@@ -1961,14 +2074,13 @@ components:
     FIMCompletionRequest:
       properties:
         model:
+          # migrated from 3.1.0 to 3.0.3
           type: string
           nullable: true
           title: Model
           default: codestral-2405
-          description: |-
-            ID of the model to use. Only compatible for now with:
-              - `codestral-2405`
-              - `codestral-latest`
+          description: "ID of the model to use. Only compatible for now with:\n  - `codestral-2405`\n  - `codestral-latest`"
+          # migrated from 3.1.0 to 3.0.3
           example: codestral-2405
         temperature:
           type: number
@@ -1976,32 +2088,23 @@ components:
           minimum: 0
           title: Temperature
           default: 0.7
-          description: >-
-            What sampling temperature to use, between 0.0 and 1.0. Higher values
-            like 0.8 will make the output more random, while lower values like
-            0.2 will make it more focused and deterministic. We generally
-            recommend altering this or `top_p` but not both.
+          description: "What sampling temperature to use, between 0.0 and 1.0. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or `top_p` but not both."
         top_p:
           type: number
           maximum: 1
           minimum: 0
           title: Top P
-          default: 1
-          description: >-
-            Nucleus sampling, where the model considers the results of the
-            tokens with `top_p` probability mass. So 0.1 means only the tokens
-            comprising the top 10% probability mass are considered. We generally
-            recommend altering this or `temperature` but not both.
+          default: 1.0
+          description: "Nucleus sampling, where the model considers the results of the tokens with `top_p` probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered. We generally recommend altering this or `temperature` but not both."
         max_tokens:
+          # migrated from 3.1.0 to 3.0.3
           type: integer
           minimum: 0
           nullable: true
           title: Max Tokens
-          description: >-
-            The maximum number of tokens to generate in the completion. The
-            token count of your prompt plus `max_tokens` cannot exceed the
-            model's context length.
+          description: "The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length."
         min_tokens:
+          # migrated from 3.1.0 to 3.0.3
           type: integer
           minimum: 0
           nullable: true
@@ -2011,12 +2114,7 @@ components:
           type: boolean
           title: Stream
           default: false
-          description: >-
-            Whether to stream back partial progress. If set, tokens will be sent
-            as data-only server-side events as they become available, with the
-            stream terminated by a data: [DONE] message. Otherwise, the server
-            will hold the request open until the timeout or until completion,
-            with the response containing the full result as JSON.
+          description: "Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON."
         stop:
           anyOf:
             - type: string
@@ -2024,32 +2122,28 @@ components:
                 type: string
               type: array
           title: Stop
-          description: >-
-            Stop generation if this token is detected. Or if one of these tokens
-            is detected when providing an array
+          description: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         random_seed:
+          # migrated from 3.1.0 to 3.0.3
           type: integer
           minimum: 0
           nullable: true
           title: Random Seed
-          description: >-
-            The seed to use for random sampling. If set, different calls will
-            generate deterministic results.
+          description: The seed to use for random sampling. If set, different calls will generate deterministic results.
         prompt:
           type: string
           title: Prompt
-          description: The text/code to complete.
+          description: "The text/code to complete."
+          # migrated from 3.1.0 to 3.0.3
           example: def
         suffix:
+          # migrated from 3.1.0 to 3.0.3
           type: string
           nullable: true
           title: Suffix
-          default: ''
-          description: >-
-            Optional text/code that adds more context for the model. When given
-            a `prompt` and a `suffix` the model will fill what is between them.
-            When `suffix` is not provided, the model will simply execute
-            completion starting with `prompt`.
+          default: ""
+          description: "Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`."
+          # migrated from 3.1.0 to 3.0.3
           example: return a+b
       additionalProperties: false
       type: object
@@ -2057,6 +2151,7 @@ components:
         - prompt
         - model
       title: FIMCompletionRequest
+    # renamed to avoid conflict with the `Function` type
     FunctionDefinition:
       properties:
         name:
@@ -2065,7 +2160,7 @@ components:
         description:
           type: string
           title: Description
-          default: ''
+          default: ""
         parameters:
           type: object
           title: Parameters
@@ -2075,6 +2170,7 @@ components:
       required:
         - name
         - parameters
+      # renamed to avoid conflict with the `Function` type
       title: FunctionDefinition
     FunctionCall:
       properties:
@@ -2097,7 +2193,7 @@ components:
       properties:
         type:
           allOf:
-            - $ref: '#/components/schemas/ResponseFormats'
+            - $ref: "#/components/schemas/ResponseFormats"
           default: text
       additionalProperties: false
       type: object
@@ -2108,19 +2204,14 @@ components:
         - text
         - json_object
       title: ResponseFormats
-      description: >-
-        An object specifying the format that the model must output. Setting to
-        `{ "type": "json_object" }` enables JSON mode, which guarantees the
-        message the model generates is in JSON. When using JSON mode you MUST
-        also instruct the model to produce JSON yourself with a system or a user
-        message.
+      description: 'An object specifying the format that the model must output. Setting to `{ "type": "json_object" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message.'
     SystemMessage:
       properties:
         content:
           anyOf:
             - type: string
             - items:
-                $ref: '#/components/schemas/ContentChunk'
+                $ref: "#/components/schemas/ContentChunk"
               type: array
           title: Content
         role:
@@ -2136,9 +2227,9 @@ components:
     TextChunk:
       properties:
         type:
+          # migrated from 3.1.0 to 3.0.3
           enum:
             - text
-          type: string
           title: Type
           default: text
         text:
@@ -2153,10 +2244,11 @@ components:
       properties:
         type:
           allOf:
-            - $ref: '#/components/schemas/ToolTypes'
+            - $ref: "#/components/schemas/ToolTypes"
           default: function
         function:
-          $ref: '#/components/schemas/FunctionDefinition'
+          # renamed to avoid conflict with the `Function` type
+          $ref: "#/components/schemas/FunctionDefinition"
       additionalProperties: false
       type: object
       required:
@@ -2166,15 +2258,16 @@ components:
       properties:
         id:
           type: string
-          nullable: true
           title: Id
+          # migrated from 3.1.0 to 3.0.3
           default: null
+          nullable: true
         type:
           allOf:
-            - $ref: '#/components/schemas/ToolTypes'
+            - $ref: "#/components/schemas/ToolTypes"
           default: function
         function:
-          $ref: '#/components/schemas/FunctionCall'
+          $ref: "#/components/schemas/FunctionCall"
       additionalProperties: false
       type: object
       required:
@@ -2193,10 +2286,12 @@ components:
           type: string
           title: Content
         tool_call_id:
+          # migrated from 3.1.0 to 3.0.3
           type: string
           nullable: true
           title: Tool Call Id
         name:
+          # migrated from 3.1.0 to 3.0.3
           type: string
           nullable: true
           title: Name
@@ -2212,6 +2307,7 @@ components:
       title: ToolMessage
     ToolTypes:
       type: string
+      # migrated from 3.1.0 to 3.0.3
       enum: 
         - function
       title: ToolTypes
@@ -2222,7 +2318,7 @@ components:
           anyOf:
             - type: string
             - items:
-                $ref: '#/components/schemas/TextChunk'
+                $ref: "#/components/schemas/TextChunk"
               type: array
         role:
           type: string
@@ -2237,15 +2333,14 @@ components:
     AgentsCompletionRequest:
       properties:
         max_tokens:
+          # migrated from 3.1.0 to 3.0.3
           type: integer
           minimum: 0
           nullable: true
           title: Max Tokens
-          description: >-
-            The maximum number of tokens to generate in the completion. The
-            token count of your prompt plus `max_tokens` cannot exceed the
-            model's context length.
+          description: "The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length."
         min_tokens:
+          # migrated from 3.1.0 to 3.0.3
           type: integer
           minimum: 0
           nullable: true
@@ -2255,12 +2350,7 @@ components:
           type: boolean
           title: Stream
           default: false
-          description: >-
-            Whether to stream back partial progress. If set, tokens will be sent
-            as data-only server-side events as they become available, with the
-            stream terminated by a data: [DONE] message. Otherwise, the server
-            will hold the request open until the timeout or until completion,
-            with the response containing the full result as JSON.
+          description: "Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON."
         stop:
           anyOf:
             - type: string
@@ -2268,51 +2358,55 @@ components:
                 type: string
               type: array
           title: Stop
-          description: >-
-            Stop generation if this token is detected. Or if one of these tokens
-            is detected when providing an array
+          description: Stop generation if this token is detected. Or if one of these tokens is detected when providing an array
         random_seed:
+          # migrated from 3.1.0 to 3.0.3
           type: integer
           minimum: 0
           nullable: true
           title: Random Seed
-          description: >-
-            The seed to use for random sampling. If set, different calls will
-            generate deterministic results.
+          description: The seed to use for random sampling. If set, different calls will generate deterministic results.
         messages:
           type: array
           title: Messages
           items:
             oneOf:
-              - $ref: '#/components/schemas/UserMessage'
-              - $ref: '#/components/schemas/AssistantMessage'
-              - $ref: '#/components/schemas/ToolMessage'
+              - $ref: "#/components/schemas/UserMessage"
+              - $ref: "#/components/schemas/AssistantMessage"
+              - $ref: "#/components/schemas/ToolMessage"
             discriminator:
               propertyName: role
               mapping:
-                assistant: '#/components/schemas/AssistantMessage'
-                tool: '#/components/schemas/ToolMessage'
-                user: '#/components/schemas/UserMessage'
-          description: >-
+                assistant: "#/components/schemas/AssistantMessage"
+                tool: "#/components/schemas/ToolMessage"
+                user: "#/components/schemas/UserMessage"
+          # updated for better generated code documentation
+          description: |-
             The prompt(s) to generate completions for, encoded as a list of dict
             with role and content.
 
             You can pass only this types into to the list [UserMessage],
             [AssistantMessage], [ToolMessage].
-          example: >-
-            - role: user
-              content: Who is the best French painter? Answer in one short sentence.
+          # migrated from 3.1.0 to 3.0.3
+          example:
+            - [
+                {
+                  "role": "user",
+                  "content": "Who is the best French painter? Answer in one short sentence.",
+                },
+              ]
         response_format:
-          $ref: '#/components/schemas/ResponseFormat'
+          $ref: "#/components/schemas/ResponseFormat"
         tools:
+          # migrated from 3.1.0 to 3.0.3
           items:
-            $ref: '#/components/schemas/Tool'
+            $ref: "#/components/schemas/Tool"
           type: array
           nullable: true
           title: Tools
         tool_choice:
           allOf:
-            - $ref: '#/components/schemas/ToolChoice'
+            - $ref: "#/components/schemas/ToolChoice"
           default: auto
         agent_id:
           type: string
@@ -2331,6 +2425,7 @@ components:
             - items:
                 type: string
               type: array
+          # renamed for better generated code naming
           title: EmbeddingRequestInput
           description: Text to embed.
         model:
@@ -2338,6 +2433,7 @@ components:
           title: Model
           description: ID of the model to use.
         encoding_format:
+          # migrated from 3.1.0 to 3.0.3
           type: string
           nullable: true
           title: Encoding Format
@@ -2375,25 +2471,25 @@ components:
           example: cmpl-e5cc70bb28c444948073e77776eb30ef
         object:
           type: string
-          example: chat.completion
+          example: "chat.completion"
         model:
           type: string
           example: mistral-small-latest
         usage:
-          $ref: '#/components/schemas/UsageInfo'
+          $ref: "#/components/schemas/UsageInfo"
     ChatCompletionChoice:
       title: ChatCompletionChoice
       type: object
       required:
         - index
-        - message
         - finish_reason
+        - message
       properties:
         index:
           type: integer
           example: 0
         message:
-          $ref: '#/components/schemas/AssistantMessage'
+          $ref: "#/components/schemas/AssistantMessage"
         finish_reason:
           type: string
           enum:
@@ -2405,7 +2501,7 @@ components:
           example: stop
     ChatCompletionResponseBase:
       allOf:
-        - $ref: '#/components/schemas/ResponseBase'
+        - $ref: "#/components/schemas/ResponseBase"
         - type: object
           title: ChatCompletionResponseBase
           properties:
@@ -2414,23 +2510,23 @@ components:
               example: 1702256327
     ChatCompletionResponse:
       allOf:
-        - $ref: '#/components/schemas/ChatCompletionResponseBase'
+        - $ref: "#/components/schemas/ChatCompletionResponseBase"
         - type: object
           title: ChatCompletionResponse
           properties:
             choices:
               type: array
               items:
-                $ref: '#/components/schemas/ChatCompletionChoice'
-      required:
-        - id
-        - object
-        - data
-        - model
-        - usage
+                $ref: "#/components/schemas/ChatCompletionChoice"
+          required:
+            - id
+            - object
+            - data
+            - model
+            - usage
     FIMCompletionResponse:
       allOf:
-        - $ref: '#/components/schemas/ChatCompletionResponse'
+        - $ref: "#/components/schemas/ChatCompletionResponse"
         - type: object
           properties:
             model:
@@ -2447,54 +2543,40 @@ components:
           type: array
           items:
             type: number
-          example:
-            - 0.1
-            - 0.2
-            - 0.3
+          example: [0.1, 0.2, 0.3]
         index:
           type: integer
           example: 0
       example:
-        - object: embedding
-          embedding:
-            - 0.1
-            - 0.2
-            - 0.3
-          index: 0
-        - object: embedding
-          embedding:
-            - 0.4
-            - 0.5
-            - 0.6
-          index: 1
+        [
+          { "object": "embedding", "embedding": [0.1, 0.2, 0.3], "index": 0 },
+          { "object": "embedding", "embedding": [0.4, 0.5, 0.6], "index": 1 },
+        ]
     EmbeddingResponse:
       allOf:
-        - $ref: '#/components/schemas/ResponseBase'
+        - $ref: "#/components/schemas/ResponseBase"
         - type: object
           properties:
             data:
               type: array
               items:
-                $ref: '#/components/schemas/EmbeddingResponseData'
-      required:
-        - id
-        - object
-        - data
-        - model
-        - usage
+                # fix of bug in schema
+                $ref: "#/components/schemas/EmbeddingResponseData"
+          required:
+            - id
+            - object
+            - data
+            - model
+            - usage
     CompletionEvent:
       type: object
-      required:
-        - data
+      required: [data]
       properties:
         data:
-          $ref: '#/components/schemas/CompletionChunk'
+          $ref: "#/components/schemas/CompletionChunk"
     CompletionChunk:
       type: object
-      required:
-        - id
-        - model
-        - choices
+      required: [id, model, choices]
       properties:
         id:
           type: string
@@ -2505,23 +2587,21 @@ components:
         model:
           type: string
         usage:
-          $ref: '#/components/schemas/UsageInfo'
+          $ref: "#/components/schemas/UsageInfo"
         choices:
           type: array
           items:
-            $ref: '#/components/schemas/CompletionResponseStreamChoice'
+            $ref: "#/components/schemas/CompletionResponseStreamChoice"
     CompletionResponseStreamChoice:
       type: object
-      required:
-        - index
-        - delta
-        - finish_reason
+      required: [index, delta, finish_reason]
       properties:
         index:
           type: integer
         delta:
-          $ref: '#/components/schemas/DeltaMessage'
+          $ref: "#/components/schemas/DeltaMessage"
         finish_reason:
+          # migrated from 3.1.0 to 3.0.3
           type: string
           nullable: true
           enum:
@@ -2535,12 +2615,15 @@ components:
         role:
           type: string
         content:
+          # migrated from 3.1.0 to 3.0.3
           type: string
+          nullable: true
         tool_calls:
+          # migrated from 3.1.0 to 3.0.3
+          nullable: true
           type: array
           items:
-            $ref: '#/components/schemas/ToolCall'
-          nullable: true
+            $ref: "#/components/schemas/ToolCall"
   securitySchemes:
     ApiKey:
       type: http
