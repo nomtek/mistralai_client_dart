@@ -97,8 +97,6 @@ void main() async {
   var chatResponse = await client.chatComplete(
     request: ChatCompletionRequest(
       model: model,
-      // TODO(lgawron): generated code accepts only List<dynamic> for messages
-      // we should have a union type for messages
       messages: messages,
       tools: tools,
     ),
@@ -119,8 +117,6 @@ void main() async {
       tools: tools,
     ),
   );
-
-  // Request to call the function 'retrievePaymentStatus'
   messages.add(chatResponse.choices?[0].message);
 
   final toolMessages =

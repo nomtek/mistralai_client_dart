@@ -17,7 +17,6 @@ void main() async {
       suffix: suffix,
     ),
   );
-  // TODO(lgawron): check if choices should be nullable
   final message = result.choices?[0].message;
   print('''
 $prompt
