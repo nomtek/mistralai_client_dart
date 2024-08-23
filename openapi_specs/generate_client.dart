@@ -6,7 +6,7 @@ void main(List<String> args) async {
   final arguments = args.toList();
   assert(
     () {
-      arguments.add('plugin-redoc-0-0.0.2-oas-3.0.3-adjusted.yaml');
+      arguments.add('openapi-modified.yaml');
       return true;
     }(),
     '',
@@ -38,38 +38,29 @@ void main(List<String> args) async {
       clientOptions: ClientGeneratorOptions(
         enabled: true,
         onMethodName: (methodName) {
-          log('methodName: $methodName');
+          log('generating method: $methodName');
           return methodName;
         },
       ),
       schemaOptions: SchemaGeneratorOptions(
         singleFile: true,
         onSchemaName: (schemaName) {
-          log('schemaName: $schemaName');
+          log('generating schema: $schemaName');
           return schemaName;
         },
-        onSchemaPropertyName: (propertyName) {
-          log('propertyName: $propertyName');
-          return propertyName;
-        },
-        onSchemaUnionKey: (unionKey, subKeys) {
-          log('unionKey: $unionKey, subKeys: ${subKeys.join(',')}');
-          return unionKey;
-        },
         onSchemaUnionName: (unionName, subNames) {
-          log('unionName: $unionName, subNames: ${subNames.join(',')}');
-          if (['JobOut', 'LegacyJobMetadataOut'] == subNames) {
-            return 'JobOutUnion';
-          }
+          log('generating union: $unionName, sub types: ${subNames.join(',')}');
           return unionName;
         },
       ),
     );
+    log('running build_runner');
     await Process.run(
       'dart',
       ['pub', 'run', 'build_runner', 'build', '-d'],
     );
 
+    log('apply fixes to generated code');
     // fix analysis problems in generated code
     final clientFile = File('${destination}client.dart');
     final clientContent = clientFile.readAsStringSync();
