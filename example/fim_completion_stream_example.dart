@@ -8,12 +8,15 @@ import 'api_key.dart';
 
 void main() async {
   final client = MistralAIClient(apiKey: mistralApiKey);
-  const model = 'codestral-latest';
   const prompt = 'void printHelloWorld() {';
   const suffix = '}';
 
   final stream = client.fimStream(
-    const FIMCompletionRequest(model: model, prompt: prompt, suffix: suffix),
+    request: const FIMCompletionRequest(
+      model: 'codestral-latest',
+      prompt: prompt,
+      suffix: suffix,
+    ),
   );
 
   stdout.write(prompt);

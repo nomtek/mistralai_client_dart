@@ -13,18 +13,18 @@ void main() async {
   print(models?.join(', '));
 
   // chat without streaming
-  const params = ChatCompletionRequest(
+  const request = ChatCompletionRequest(
     model: 'mistral-small-latest',
     messages: [
       UserMessage(content: UserMessageContent.string('Hello chat!')),
     ],
   );
-  final chatCompletion = await client.chatComplete(request: params);
+  final chatCompletion = await client.chatComplete(request: request);
   final chatMessage = chatCompletion.choices?[0].message;
   print(chatMessage?.content);
 
   // chat with streaming
-  final stream = client.chatStream(params);
+  final stream = client.chatStream(request: request);
   await for (final completionChunk in stream) {
     final chatMessage = completionChunk.choices[0].delta.content;
     if (chatMessage != null) {

@@ -15,9 +15,9 @@ class MistralAIClient extends generated.MistralaiClientDartClient {
     super.queryParams,
   }) : super(bearerToken: apiKey);
 
-  Stream<CompletionChunk> chatStream(
-    ChatCompletionRequest request,
-  ) async* {
+  Stream<CompletionChunk> chatStream({
+    required ChatCompletionRequest request,
+  }) async* {
     final streamRequest = await makeRequestStream(
       baseUrl: 'https://api.mistral.ai',
       path: '/v1/chat/completions',
@@ -59,9 +59,9 @@ class MistralAIClient extends generated.MistralaiClientDartClient {
     return response.copyWith(choices: fixedChoices);
   }
 
-  Stream<CompletionChunk> fimStream(
-    FIMCompletionRequest request,
-  ) async* {
+  Stream<CompletionChunk> fimStream({
+    required FIMCompletionRequest request,
+  }) async* {
     final streamRequest = await makeRequestStream(
       baseUrl: 'https://api.mistral.ai',
       path: '/v1/fim/completions',
