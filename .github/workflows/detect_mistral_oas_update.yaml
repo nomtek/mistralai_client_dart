@@ -1,0 +1,5 @@
+name: Detect openapi.yaml update (Mistral's)
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
