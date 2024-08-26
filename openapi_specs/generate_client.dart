@@ -2,15 +2,18 @@ import 'dart:io';
 
 import 'package:openapi_spec/openapi_spec.dart';
 
+/// Generates client and schema files from the OpenAPI spec.
+/// Pass the path to the OpenAPI spec as an argument if you want to use a
+/// custom file. Otherwise, the script will use the default 
+/// file: `openapi-modified.yaml`.
 void main(List<String> args) async {
-  final arguments = args.toList();
-  assert(
-    () {
-      arguments.add('openapi-modified.yaml');
-      return true;
-    }(),
-    '',
-  );
+  var arguments = args.toList();
+  if (arguments.isEmpty) {
+    // fallback to the default URL
+    arguments = [
+      'openapi-modified.yaml',
+    ];
+  }
   if (arguments.isEmpty) {
     throw ArgumentError('Missing required argument: path to OpenAPI spec');
   }
