@@ -13,6 +13,7 @@ Thank you for considering contributing to Mistral AI Client for Dart! We appreci
     - [Documentation](#documentation)
   - [Getting Started](#getting-started)
     - [Setting Up the Development Environment](#setting-up-the-development-environment)
+    - [Client code generation](#client-code-generation)
   - [Style Guide](#style-guide)
   - [Review Process](#review-process)
 
@@ -57,16 +58,9 @@ To contribute to documentation follow the same steps as in [Code Contributions](
 3. Run `dart pub get` in terminal to get dependencies
 4. If everything went well you're good to go 😊
 
-### Code generation
+### Client code generation
 
-We are using [json_serializable](https://pub.dev/packages/json_serializable) package to generate code for serializing and deserializing JSON models.
-We are committing the generated code to the repository.
-
-In order to generate code run:
-
-```shell
-dart run build_runner build -d
-```
+The package uses code generation to generate API client code from the OpenAPI specification. More details about it can be found in the [Client Code Generation](doc/contribute/Client-Code-Generation.md) document.
 
 ## Style Guide
 
