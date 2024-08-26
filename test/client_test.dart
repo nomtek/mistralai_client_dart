@@ -17,7 +17,10 @@ void main() {
 
     test('should throw when base URL ends with /', () {
       expect(
-        () => MistralAIClient(apiKey: 'apiKey', baseUrl: 'https://api.mistral.ai/'),
+        () => MistralAIClient(
+          apiKey: 'apiKey',
+          baseUrl: 'https://api.mistral.ai/',
+        ),
         throwsA(isA<AssertionError>()),
       );
     });

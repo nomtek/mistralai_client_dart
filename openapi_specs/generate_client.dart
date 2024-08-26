@@ -4,7 +4,7 @@ import 'package:openapi_spec/openapi_spec.dart';
 
 /// Generates client and schema files from the OpenAPI spec.
 /// Pass the path to the OpenAPI spec as an argument if you want to use a
-/// custom file. Otherwise, the script will use the default 
+/// custom file. Otherwise, the script will use the default
 /// file: `openapi-modified.yaml`.
 void main(List<String> args) async {
   var arguments = args.toList();
@@ -75,6 +75,9 @@ void main(List<String> args) async {
   } catch (e) {
     log('Failed to generate client: $e');
   }
+
+  log('run code formating');
+  await Process.run('dart', ['format', '.']);
 }
 
 void log(Object message) {

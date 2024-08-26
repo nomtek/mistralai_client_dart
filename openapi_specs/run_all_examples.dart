@@ -3,7 +3,7 @@
 import 'dart:io';
 
 /// Runs all examples in the example directory.
-/// 
+///
 /// Requires EXAMPLES_MISTRAL_API_KEY environment variable to be set when
 /// running in CI.
 ///

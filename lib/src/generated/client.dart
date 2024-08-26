@@ -823,7 +823,8 @@ class MistralaiClientDartClient {
       responseType: 'application/json',
       body: request,
     );
-    return ChatCompletionResponse.fromJson(_jsonDecode(r) as Map<String, dynamic>);
+    return ChatCompletionResponse.fromJson(
+        _jsonDecode(r) as Map<String, dynamic>);
   }
 
   // ------------------------------------------
@@ -849,7 +850,8 @@ class MistralaiClientDartClient {
       responseType: 'application/json',
       body: request,
     );
-    return FIMCompletionResponse.fromJson(_jsonDecode(r) as Map<String, dynamic>);
+    return FIMCompletionResponse.fromJson(
+        _jsonDecode(r) as Map<String, dynamic>);
   }
 
   // ------------------------------------------
@@ -873,7 +875,8 @@ class MistralaiClientDartClient {
       responseType: 'application/json',
       body: request,
     );
-    return ChatCompletionResponse.fromJson(_jsonDecode(r) as Map<String, dynamic>);
+    return ChatCompletionResponse.fromJson(
+        _jsonDecode(r) as Map<String, dynamic>);
   }
 
   // ------------------------------------------
