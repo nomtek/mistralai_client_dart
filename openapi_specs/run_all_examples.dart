@@ -2,6 +2,13 @@
 
 import 'dart:io';
 
+/// Runs all examples in the example directory.
+/// 
+/// Requires EXAMPLES_MISTRAL_API_KEY environment variable to be set when
+/// running in CI.
+///
+/// For local testing make sure to have a valid API key set in the
+/// `example/api_key.dart` file.
 void main() async {
   if (const bool.hasEnvironment('CI') &&
       !const bool.hasEnvironment('EXAMPLES_MISTRAL_API_KEY')) {
