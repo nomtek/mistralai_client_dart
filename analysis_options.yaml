@@ -6,3 +6,4 @@ linter:
 analyzer:
   exclude:
     - '**.g.dart'
+    - 'lib/src/generated/client.dart'

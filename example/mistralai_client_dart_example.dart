@@ -2,40 +2,41 @@
 
 import 'package:mistralai_client_dart/mistralai_client_dart.dart';
 
+import 'api_key.dart';
+
 void main() async {
-  const apiKey = 'your api key here';
-  final client = MistralAIClient(apiKey: apiKey);
+  final client = MistralAIClient(apiKey: mistralApiKey);
 
   // list models
   final modelsResult = await client.listModels();
-  final models = modelsResult.data.map((e) => e.id).toList();
-  print(models.join(', '));
+  final models = modelsResult.data?.map((e) => e.id).toList();
+  print(models?.join(', '));
 
   // chat without streaming
-  final params = ChatParams(
+  const request = ChatCompletionRequest(
     model: 'mistral-small-latest',
-    messages: const [
-      ChatMessage(role: 'user', content: 'Hello chat!'),
+    messages: [
+      UserMessage(content: UserMessageContent.string('Hello chat!')),
     ],
   );
-  final chatCompletion = await client.chat(params);
-  final chatMessage = chatCompletion.choices[0].message;
-  print(chatMessage.content);
+  final chatCompletion = await client.chatComplete(request: request);
+  final chatMessage = chatCompletion.choices?[0].message;
+  print(chatMessage?.content);
 
   // chat with streaming
-  final stream = client.chatStream(params);
+  final stream = client.chatStream(request: request);
   await for (final completionChunk in stream) {
-    final chatMessage = completionChunk.choices[0].delta?.content;
+    final chatMessage = completionChunk.choices[0].delta.content;
     if (chatMessage != null) {
       print(chatMessage);
     }
   }
 
   // embeddings
-  final embeddings = await client.embeddings(
-    const EmbeddingParams(
+  final embeddings = await client.createEmbeddings(
+    request: const EmbeddingRequest(
       model: 'mistral-embed',
-      input: ['Hello chat!'],
+      input: EmbeddingRequestInput.arrayString(['Hello chat!']),
     ),
   );
   for (final data in embeddings.data) {

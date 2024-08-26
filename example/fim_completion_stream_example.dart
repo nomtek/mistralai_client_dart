@@ -4,20 +4,24 @@ import 'dart:io';
 
 import 'package:mistralai_client_dart/mistralai_client_dart.dart';
 
+import 'api_key.dart';
+
 void main() async {
-  const apiKey = 'your api key here';
-  final client = MistralAIClient(apiKey: apiKey);
-  const model = 'codestral-latest';
+  final client = MistralAIClient(apiKey: mistralApiKey);
   const prompt = 'void printHelloWorld() {';
   const suffix = '}';
 
-  final stream = client.fimCompletionStream(
-    FimParams(model: model, prompt: prompt, suffix: suffix),
+  final stream = client.fimStream(
+    request: const FIMCompletionRequest(
+      model: 'codestral-latest',
+      prompt: prompt,
+      suffix: suffix,
+    ),
   );
 
   stdout.write(prompt);
   await for (final completionChunk in stream) {
-    final message = completionChunk.choices[0].delta?.content;
+    final message = completionChunk.choices[0].delta.content;
     if (message != null) {
       stdout.write(message);
     }

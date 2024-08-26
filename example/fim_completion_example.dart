@@ -2,20 +2,25 @@
 
 import 'package:mistralai_client_dart/mistralai_client_dart.dart';
 
+import 'api_key.dart';
+
 void main() async {
-  const apiKey = 'your api key here';
-  final client = MistralAIClient(apiKey: apiKey);
+  final client = MistralAIClient(apiKey: mistralApiKey);
   const model = 'codestral-latest';
   const prompt = 'void printHelloWorld() {';
   const suffix = '}';
 
-  final result = await client.fimCompletion(
-    FimParams(model: model, prompt: prompt, suffix: suffix),
+  final result = await client.fimComplete(
+    request: const FIMCompletionRequest(
+      model: model,
+      prompt: prompt,
+      suffix: suffix,
+    ),
   );
-  final message = result.choices[0].message;
+  final message = result.choices?[0].message;
   print('''
 $prompt
-${message.content}
+${message?.content}
 $suffix
 ''');
 }
