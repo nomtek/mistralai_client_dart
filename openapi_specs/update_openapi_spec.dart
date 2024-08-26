@@ -4,6 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:http/http.dart' as http;
 
 /// Downloads OpenAPI spec from the given URL and compares it with the original.
+/// If the spec has been updated, it will be copied to the original file.
 void main(List<String> args) async {
   var arguments = args.toList();
   if (arguments.isEmpty) {
