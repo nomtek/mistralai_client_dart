@@ -31,7 +31,7 @@ The PR should be reviewed and merged by a team member.
 
 3. Migrate `openapi_spec/openapi-original.yaml` from OpenAPI 3.1.0 to OpenAPI 3.0.3
    - this is a manual step at the moment
-   - basically you need to diff the to files and update `openapi-modified.yaml` based on `openapi-original.yaml`
+   - basically you need to diff the two files and update `openapi-modified.yaml` based on `openapi-original.yaml`
    - while updating the `openapi-modified.yaml` make sure to apply changes but in a way that the file is still valid [OpenAPI 3.0.3](https://spec.openapis.org/oas/v3.0.3)
    - in existing `openapi-modified.yaml` you will find a comment before each change that was made to migrate from 3.1.0 to 3.0.3 - use that as a reference
    - each new change should have a comment explaining why it was made
