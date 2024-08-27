@@ -1,0 +1,75 @@
+name: Update Mistral's openapi-original.yaml
+
+on:
+  schedule:
+    # every Sunday at 21:00 (9 PM) UTC
+    - cron: "0 21 * * 0"
+  # This allows manual triggering of the workflow
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Setup Dart
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: "3.2.3"
+      
+      - name: Update openapi_specs/openapi-original.yaml
+        run: dart run openapi_specs/update_openapi_spec.dart
+
+      - name: Check openapi_specs/openapi-original.yaml has changed
+        id: check_changes
+        run: |
+          if git diff --exit-code openapi_specs/openapi-original.yaml
+          then
+            echo "No changes detected in openapi-original.yaml"
+            echo "files_changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "Changes detected in openapi-original.yaml"
+            echo "files_changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: No changes detected
+        if: steps.check_changes.outputs.files_changed == 'false'
+        run: echo "No changes detected in openapi-original.yaml"
+
+      - name: Update Branch and Push Changes (optionally with PR)
+        if: ${{ steps.check_files.outputs.files_changed == 'true' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Automatically provided by GitHub Actions
+        run: |
+          # Fetch latest references from the remote
+          git fetch --prune origin
+          
+          # Define branch name and PR title with the current date
+          BRANCH_NAME="bot/update-openapi-specs"
+          CURRENT_DATE=$(date +"%Y-%m-%d")  # Format the date as YYYY-MM-DD
+          PR_TITLE="Update OpenAPI Specs for Run ${{ github.run_id }} on $CURRENT_DATE"
+          
+          # Check if the branch already exists in the remote
+          if git show-ref --verify --quiet "refs/remotes/origin/$BRANCH_NAME"; then
+            echo "Branch $BRANCH_NAME already exists in the remote repository."
+            git checkout $BRANCH_NAME
+          else
+            echo "Branch $BRANCH_NAME does not exist in the remote repository. Creating a new branch..."
+            git checkout -b $BRANCH_NAME
+          fi
+          
+          # Commit changes
+          git add openapi_specs/openapi-original.yaml
+          git commit -m "Update OpenAPI Specs for Run ${{ github.run_id }}"
+          
+          # Push the branch to the repository
+          git push -u origin $BRANCH_NAME
+          
+          # Create a pull request if the branch was newly created
+          if ! git show-ref --verify --quiet refs/pull/$BRANCH_NAME; then
+            gh pr create --title "$PR_TITLE" --body "This PR updates the OpenAPI specs for run ${{ github.run_id }}." --base main --head $BRANCH_NAME
+          else
+            echo "Pull request already exists for branch $BRANCH_NAME."
+          fi
