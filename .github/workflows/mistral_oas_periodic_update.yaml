@@ -19,6 +19,9 @@ jobs:
         with:
           sdk: "3.2.3"
       
+      - name: Install dependencies
+        run: dart pub get
+
       - name: Update openapi_specs/openapi-original.yaml
         run: dart run openapi_specs/update_openapi_spec.dart
 
@@ -35,7 +38,7 @@ jobs:
           fi
 
       - name: No changes detected
-        if: steps.check_changes.outputs.files_changed == 'false'
+        if: ${{ steps.check_changes.outputs.files_changed == 'false' }}
         run: echo "No changes detected in openapi-original.yaml"
 
       - name: Update Branch and Push Changes (optionally with PR)
