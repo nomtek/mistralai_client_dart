@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:collection/collection.dart';
 import 'package:http/http.dart' as http;
 
 /// Downloads OpenAPI spec from the given URL and compares it with the original.
@@ -52,8 +50,26 @@ void main(List<String> args) async {
 Future<bool> areFilesDifferent(String path1, String path2) async {
   final file1 = await File(path1).readAsBytes();
   final file2 = await File(path2).readAsBytes();
-  final areEqual = const ListEquality<int>().equals(file1, file2);
+  final areEqual = listEquals(file1, file2);
   return !areEqual;
+}
+
+bool listEquals<T>(List<T>? a, List<T>? b) {
+  if (a == null) {
+    return b == null;
+  }
+  if (b == null || a.length != b.length) {
+    return false;
+  }
+  if (identical(a, b)) {
+    return true;
+  }
+  for (var index = 0; index < a.length; index += 1) {
+    if (a[index] != b[index]) {
+      return false;
+    }
+  }
+  return true;
 }
 
 void log(Object message) {
