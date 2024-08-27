@@ -82,12 +82,16 @@ jobs:
           
           # Get the PR number if it exists
           PR_NUMBER=$(gh pr list --head $BRANCH_NAME --state open --json number --jq '.[].number')
+
+          JOB_URL = ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          PR_TITLE = "Automatic OpenAPI Specs update"
+          PR_BODY = "Automatic openapi-original.yaml change detected. This PR updates the OpenAPI specs triggered by job [${{ github.run_id }}]($JOB_URL)."
           
           # If PR exists, update it, otherwise create a new one
           if [ -n "$PR_NUMBER" ]; then
             echo "Pull request $PR_NUMBER already exists for branch $BRANCH_NAME. Updating the PR..."
-            gh pr edit $PR_NUMBER --title "Update OpenAPI Specs for Run ${{ github.run_id }}" --body "This PR updates the OpenAPI specs for run ${{ github.run_id }}."
+            gh pr edit $PR_NUMBER --title $PR_TITLE --body $PR_BODY
           else
             echo "Creating a new pull request for branch $BRANCH_NAME..."
-            gh pr create --title "Update OpenAPI Specs for Run ${{ github.run_id }}" --body "This PR updates the OpenAPI specs for run ${{ github.run_id }}." --base main --head $BRANCH_NAME
+            gh pr create --title $PR_TITLE --body $PR_BODY --base main --head $BRANCH_NAME
           fi
