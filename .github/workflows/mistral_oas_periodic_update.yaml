@@ -90,8 +90,8 @@ jobs:
           # If PR exists, update it, otherwise create a new one
           if [ -n "$PR_NUMBER" ]; then
             echo "Pull request $PR_NUMBER already exists for branch $BRANCH_NAME. Updating the PR..."
-            gh pr edit $PR_NUMBER --title $PR_TITLE --body $PR_BODY
+            gh pr edit "$PR_NUMBER" --title "$PR_TITLE" --body "$PR_BODY"
           else
             echo "Creating a new pull request for branch $BRANCH_NAME..."
-            gh pr create --title $PR_TITLE --body $PR_BODY --base main --head $BRANCH_NAME
+            gh pr create --title "$PR_TITLE" --body "$PR_BODY" --base main --head $BRANCH_NAME
           fi
