@@ -10,6 +10,9 @@ on:
 jobs:
   run:
     runs-on: ubuntu-latest
+    env:
+      BRANCH_NAME: "bot/update-openapi-specs"  # Define the branch name as an environment variable
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -21,6 +24,25 @@ jobs:
       
       - name: Install dependencies
         run: dart pub get
+
+      - name: Configure Git User
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
+
+      - name: Update Branch
+        run: |
+          # Fetch latest references from the remote
+          git fetch --prune origin
+          
+          # Check if the branch already exists in the remote
+          if git show-ref --verify --quiet "refs/remotes/origin/$BRANCH_NAME"; then
+            echo "Branch $BRANCH_NAME already exists in the remote repository."
+            git checkout $BRANCH_NAME
+          else
+            echo "Branch $BRANCH_NAME does not exist in the remote repository. Creating a new branch..."
+            git checkout -b $BRANCH_NAME
+          fi
 
       - name: Update openapi_specs/openapi-original.yaml
         run: dart run openapi_specs/update_openapi_spec.dart
@@ -43,35 +65,18 @@ jobs:
         if: ${{ steps.check_changes.outputs.SPEC_CHANGED == 'false' }}
         run: echo "No changes detected in openapi-original.yaml"
 
-      - name: Configure Git User (Bot)
+      - name: Commit Changes
+        if: ${{ steps.check_changes.outputs.SPEC_CHANGED == 'true' }}
         run: |
-          git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
+          # Commit changes
+          git add openapi_specs/openapi-original.yaml
+          git commit -m "Update OpenAPI Specs for Run ${{ github.run_id }}"
 
-      - name: Update Branch and Push Changes (optionally with PR)
+      - name: Push Changes
         if: ${{ steps.check_changes.outputs.SPEC_CHANGED == 'true' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Automatically provided by GitHub Actions
         run: |
-          # Fetch latest references from the remote
-          git fetch --prune origin
-          
-          # Define branch name
-          BRANCH_NAME="bot/update-openapi-specs"
-          
-          # Check if the branch already exists in the remote
-          if git show-ref --verify --quiet "refs/remotes/origin/$BRANCH_NAME"; then
-            echo "Branch $BRANCH_NAME already exists in the remote repository."
-            git checkout $BRANCH_NAME
-          else
-            echo "Branch $BRANCH_NAME does not exist in the remote repository. Creating a new branch..."
-            git checkout -b $BRANCH_NAME
-          fi
-          
-          # Commit changes
-          git add openapi_specs/openapi-original.yaml
-          git commit -m "Update OpenAPI Specs for Run ${{ github.run_id }}"
-          
           # Push the branch to the repository
           git push -u origin $BRANCH_NAME
           
