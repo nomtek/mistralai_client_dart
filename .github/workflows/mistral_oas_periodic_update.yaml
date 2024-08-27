@@ -10,6 +10,9 @@ on:
 jobs:
   run:
     runs-on: ubuntu-latest
+    env:
+      BRANCH_NAME: "bot/update-openapi-specs"  # Define the branch name as an environment variable
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -19,37 +22,18 @@ jobs:
         with:
           sdk: "3.2.3"
       
-      - name: Update openapi_specs/openapi-original.yaml
-        run: dart run openapi_specs/update_openapi_spec.dart
+      - name: Install dependencies
+        run: dart pub get
 
-      - name: Check openapi_specs/openapi-original.yaml has changed
-        id: check_changes
+      - name: Configure Git User
         run: |
-          if git diff --exit-code openapi_specs/openapi-original.yaml
-          then
-            echo "No changes detected in openapi-original.yaml"
-            echo "files_changed=false" >> $GITHUB_OUTPUT
-          else
-            echo "Changes detected in openapi-original.yaml"
-            echo "files_changed=true" >> $GITHUB_OUTPUT
-          fi
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
 
-      - name: No changes detected
-        if: steps.check_changes.outputs.files_changed == 'false'
-        run: echo "No changes detected in openapi-original.yaml"
-
-      - name: Update Branch and Push Changes (optionally with PR)
-        if: ${{ steps.check_files.outputs.files_changed == 'true' }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Automatically provided by GitHub Actions
+      - name: Update Branch
         run: |
           # Fetch latest references from the remote
           git fetch --prune origin
-          
-          # Define branch name and PR title with the current date
-          BRANCH_NAME="bot/update-openapi-specs"
-          CURRENT_DATE=$(date +"%Y-%m-%d")  # Format the date as YYYY-MM-DD
-          PR_TITLE="Update OpenAPI Specs for Run ${{ github.run_id }} on $CURRENT_DATE"
           
           # Check if the branch already exists in the remote
           if git show-ref --verify --quiet "refs/remotes/origin/$BRANCH_NAME"; then
@@ -59,17 +43,55 @@ jobs:
             echo "Branch $BRANCH_NAME does not exist in the remote repository. Creating a new branch..."
             git checkout -b $BRANCH_NAME
           fi
-          
+
+      - name: Update openapi_specs/openapi-original.yaml
+        run: dart run openapi_specs/update_openapi_spec.dart
+
+      - name: Check openapi_specs/openapi-original.yaml has changed
+        id: check_changes
+        run: |
+          if git diff --exit-code openapi_specs/openapi-original.yaml; then
+            echo "No changes detected in openapi-original.yaml"
+            echo "SPEC_CHANGED=false" >> $GITHUB_OUTPUT
+          else
+            echo "Changes detected in openapi-original.yaml"
+            echo "SPEC_CHANGED=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Debug SPEC_CHANGED value
+        run: echo "SPEC_CHANGED is set to ${{ steps.check_changes.outputs.SPEC_CHANGED }}"
+
+      - name: No changes detected
+        if: ${{ steps.check_changes.outputs.SPEC_CHANGED == 'false' }}
+        run: echo "No changes detected in openapi-original.yaml"
+
+      - name: Commit Changes
+        if: ${{ steps.check_changes.outputs.SPEC_CHANGED == 'true' }}
+        run: |
           # Commit changes
           git add openapi_specs/openapi-original.yaml
           git commit -m "Update OpenAPI Specs for Run ${{ github.run_id }}"
-          
+
+      - name: Push Changes
+        if: ${{ steps.check_changes.outputs.SPEC_CHANGED == 'true' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Automatically provided by GitHub Actions
+        run: |
           # Push the branch to the repository
           git push -u origin $BRANCH_NAME
           
-          # Create a pull request if the branch was newly created
-          if ! git show-ref --verify --quiet refs/pull/$BRANCH_NAME; then
-            gh pr create --title "$PR_TITLE" --body "This PR updates the OpenAPI specs for run ${{ github.run_id }}." --base main --head $BRANCH_NAME
+          # Get the PR number if it exists
+          PR_NUMBER=$(gh pr list --head $BRANCH_NAME --state open --json number --jq '.[].number')
+
+          JOB_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          PR_TITLE="Automatic OpenAPI Specs update"
+          PR_BODY="Automatic openapi-original.yaml change detected. This PR updates the OpenAPI specs triggered by job [${{ github.run_id }}]($JOB_URL)."
+          
+          # If PR exists, update it, otherwise create a new one
+          if [ -n "$PR_NUMBER" ]; then
+            echo "Pull request $PR_NUMBER already exists for branch $BRANCH_NAME. Updating the PR..."
+            gh pr edit "$PR_NUMBER" --title "$PR_TITLE" --body "$PR_BODY"
           else
-            echo "Pull request already exists for branch $BRANCH_NAME."
+            echo "Creating a new pull request for branch $BRANCH_NAME..."
+            gh pr create --title "$PR_TITLE" --body "$PR_BODY" --base main --head $BRANCH_NAME
           fi
