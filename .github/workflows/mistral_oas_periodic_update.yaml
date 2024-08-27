@@ -83,9 +83,9 @@ jobs:
           # Get the PR number if it exists
           PR_NUMBER=$(gh pr list --head $BRANCH_NAME --state open --json number --jq '.[].number')
 
-          JOB_URL = "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          PR_TITLE = "Automatic OpenAPI Specs update"
-          PR_BODY = "Automatic openapi-original.yaml change detected. This PR updates the OpenAPI specs triggered by job [${{ github.run_id }}]($JOB_URL)."
+          JOB_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          PR_TITLE="Automatic OpenAPI Specs update"
+          PR_BODY="Automatic openapi-original.yaml change detected. This PR updates the OpenAPI specs triggered by job [${{ github.run_id }}]($JOB_URL)."
           
           # If PR exists, update it, otherwise create a new one
           if [ -n "$PR_NUMBER" ]; then
