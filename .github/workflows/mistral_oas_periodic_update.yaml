@@ -43,6 +43,11 @@ jobs:
         if: ${{ steps.check_changes.outputs.SPEC_CHANGED == 'false' }}
         run: echo "No changes detected in openapi-original.yaml"
 
+      - name: Configure Git User (Bot)
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
+
       - name: Update Branch and Push Changes (optionally with PR)
         if: ${{ steps.check_changes.outputs.SPEC_CHANGED == 'true' }}
         env:
