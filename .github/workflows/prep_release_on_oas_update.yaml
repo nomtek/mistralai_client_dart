@@ -1,0 +1,54 @@
+name: OpenAPI Update
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - openapi_spec/openapi-original.yaml
+  workflow_dispatch:
+
+jobs:
+  update_openapi:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Get commit hash
+        run: |
+          echo "COMMIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Set branch name
+        id: branch_name
+        run: |
+          BRANCH_NAME="release/oas-update-commit-${{ steps.get_commit.outputs.COMMIT_HASH }}"
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_OUTPUT
+
+      - name: Create release branch
+        run: |
+          git checkout -b ${{ steps.branch_name.outputs.BRANCH_NAME }}
+          git push -u origin ${{ steps.branch_name.outputs.BRANCH_NAME }}
+
+      - name: Create draft pull request
+        run: |
+          gh pr create \
+            --title "OpenAPI Specification Update" \
+            --body "This pull request updates the OpenAPI specification." \
+            --draft \
+            --base main \
+            --head ${{ steps.branch_name.outputs.BRANCH_NAME }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create GitHub Issue
+        run: |
+          gh issue create \
+            --title "OpenAPI Specification Updated" \
+            --body "The OpenAPI specification has been updated in the repository. Please review the changes.
+
+            Release branch: ${{ steps.branch_name.outputs.BRANCH_NAME }}
+            Pull Request: ${{ github.server_url }}/${{ github.repository }}/pull/new/${{ steps.branch_name.outputs.BRANCH_NAME }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
