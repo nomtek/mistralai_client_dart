@@ -37,7 +37,9 @@ jobs:
         run: |
           # Get current date
           DATE=$(date +'%Y-%m-%d')
+          echo "$DATE"
           ISSUE_TITLE="Release new client based on OpenAPI Specification Update - $DATE"
+          echo "$ISSUE_TITLE"
 
           read -d '' ISSUE_BODY <<EOF
           The OpenAPI specification has been updated in the repository.
@@ -47,11 +49,14 @@ jobs:
           Release branch name: ${{ steps.branch_name.outputs.BRANCH_NAME }}
           Pull Request: ${{ github.server_url }}/${{ github.repository }}/pull/new/${{ steps.branch_name.outputs.BRANCH_NAME }}
           EOF
+          echo "$ISSUE_BODY"
 
-          ISSUE_OUTPUT=$(gh issue create  --title "$ISSUE_TITLE" --body "$ISSUE_BODY")
+          ISSUE_OUTPUT=$(gh issue create --title "$ISSUE_TITLE" --body "$ISSUE_BODY")
+          echo "$ISSUE_OUTPUT"
 
           # Extract issue number from the output (issue link)
           ISSUE_NUMBER=$(echo "$ISSUE_OUTPUT" | grep -oE '[0-9]+')
+          echo "$ISSUE_NUMBER"
 
           echo "ISSUE_NUMBER=$ISSUE_NUMBER" >> $GITHUB_OUTPUT
         env:
