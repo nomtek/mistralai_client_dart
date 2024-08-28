@@ -37,43 +37,49 @@ jobs:
         run: |
           # Get current date
           DATE=$(date +'%Y-%m-%d')
-          ISSUE_OUTPUT=$(gh issue create \
-            --title "Release new client based on OpenAPI Specification Update - $DATE" \
-            --body "The OpenAPI specification has been updated in the repository.
-            
-            Please review the changes and prepare new client version for publishing.
-      
-            Release branch name: ${{ steps.branch_name.outputs.BRANCH_NAME }}
-            Pull Request: ${{ github.server_url }}/${{ github.repository }}/pull/new/${{ steps.branch_name.outputs.BRANCH_NAME }}" \
-            --json number -q '.number') # Capture the issue number
-      
-          echo "ISSUE_NUMBER=$ISSUE_OUTPUT" >> $GITHUB_OUTPUT
+          ISSUE_TITLE="Release new client based on OpenAPI Specification Update - $DATE"
+
+          read -d '' ISSUE_BODY <<EOF
+          The OpenAPI specification has been updated in the repository.
+
+          Please review the changes and prepare new client version for publishing.
+
+          Release branch name: ${{ steps.branch_name.outputs.BRANCH_NAME }}
+          Pull Request: ${{ github.server_url }}/${{ github.repository }}/pull/new/${{ steps.branch_name.outputs.BRANCH_NAME }}
+          EOF
+
+          ISSUE_OUTPUT=$(gh issue create  --title "$ISSUE_TITLE" --body "$ISSUE_BODY"
+
+          # Extract issue number from the output (issue link)
+          ISSUE_NUMBER=$(echo "$ISSUE_OUTPUT" | grep -oE '[0-9]+')
+
+          echo "ISSUE_NUMBER=$ISSUE_NUMBER" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create draft pull request
         run: |
           DATE=$(date +'%Y-%m-%d')
-          gh pr create \
-            --title "Release new client based on OpenAPI Specification Update - $DATE" \
-            --body "This PR is created automatically when the OpenAPI specification is updated in the repository.
+          PR_TITLE="Release new client based on OpenAPI Specification Update - $DATE"
+          read -d '' PR_BODY <<EOF
+          This PR is created automatically when the OpenAPI specification is updated in the repository.
       
-            Documentation on client generation can be found [here](https://github.com/nomtek/mistralai_client_dart/blob/main/doc/contribute/Client-Code-Generation.md)
+          Documentation on client generation can be found [here](https://github.com/nomtek/mistralai_client_dart/blob/main/doc/contribute/Client-Code-Generation.md)
       
-            Closes #${{ steps.create_issue.outputs.ISSUE_NUMBER }} # Link to the created issue
+          Closes #${{ steps.create_issue.outputs.ISSUE_NUMBER }}
       
-            Checklist of things must to do:
-              - [ ] client changes according to [docs](https://github.com/nomtek/mistralai_client_dart/blob/main/doc/contribute/Client-Code-Generation.md)
-              - [ ] update `CHANGELOG.md`
-              - [ ] bump version in `pubspec.yaml` (following semantic versioning)
-              - [ ] check if all existing examples are working (for example use openapi_specs/run_all_examples.dart script)
-      
-            Checklist of things that should be done (if needed):
-              - [ ] add examples in `examples/*` (if necessary based on client changes)
-              - [ ] update README.md (if necessary based on client changes and examples)
-            " \
-            --draft \
-            --base main \
-            --head ${{ steps.branch_name.outputs.BRANCH_NAME }}
+          Checklist of things must to do (mandatory):
+            - [ ] client changes according to [docs](https://github.com/nomtek/mistralai_client_dart/blob/main/doc/contribute/Client-Code-Generation.md)
+            - [ ] update `CHANGELOG.md`
+            - [ ] bump version in `pubspec.yaml` (following semantic versioning)
+            - [ ] check if all existing examples are working (for example use openapi_specs/run_all_examples.dart script)
+    
+          Checklist of things that should be done (optional):
+            - [ ] add examples in `examples/*` (if necessary based on client changes)
+            - [ ] update README.md (if necessary based on client changes and examples)
+          EOF
+
+          # Create draft PR
+          gh pr create --title "$PR_TITLE" --body "$PR_BODY" --draft --base main --head ${{ steps.branch_name.outputs.BRANCH_NAME }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
