@@ -42,14 +42,14 @@ jobs:
           echo "$ISSUE_TITLE"
 
           ISSUE_BODY=$(cat <<EOF
-The OpenAPI specification has been updated in the repository.
+          The OpenAPI specification has been updated in the repository.
 
-Please review the changes and prepare new client version for publishing.
+          Please review the changes and prepare new client version for publishing.
 
-Release branch name: ${{ steps.branch_name.outputs.BRANCH_NAME }}
-Pull Request: ${{ github.server_url }}/${{ github.repository }}/pull/new/${{ steps.branch_name.outputs.BRANCH_NAME }}
-EOF
-)
+          Release branch name: ${{ steps.branch_name.outputs.BRANCH_NAME }}
+          Pull Request: ${{ github.server_url }}/${{ github.repository }}/pull/new/${{ steps.branch_name.outputs.BRANCH_NAME }}
+          EOF
+          )
           echo "$ISSUE_BODY"
 
           ISSUE_OUTPUT=$(gh issue create --title "$ISSUE_TITLE" --body "$ISSUE_BODY")
