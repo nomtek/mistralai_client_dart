@@ -27,6 +27,3 @@ doc/api/
 # IDE specific files
 .idea/
 .vscode/
-
-# Example specific files
-example/api_key.dart

@@ -1,0 +1,44 @@
+name: "Check if the package is ready for publishing"
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check_publish:
+    if: startsWith(github.head_ref, 'release/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get last version tag
+        id: last_version
+        run: |
+          echo "LAST_VERSION=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
+      
+      - name: Check if version is updated in pubspec.yaml
+        id: check_version
+        run: |
+          # Check if the version in pubspec.yaml is the same as the last version tag
+          if [[ $(grep -c "version: ${{ steps.last_version.outputs.LAST_VERSION }}" pubspec.yaml) -eq 1 ]]; then
+            echo "Please bump the version in pubspec.yaml"
+            exit 1
+          fi
+
+      - name: Check if CHANGELOG.md contains the new version
+        id: check_changelog
+        run: |
+          # grep finds the line with the version in pubspec.yaml and awk extracts the version number
+          NEW_VERSION=$(grep "version: " pubspec.yaml | awk '{print $2}')
+
+          # Check if the new version is in CHANGELOG.md
+          # The version should be in format '## x.y.z'
+          if ! grep -q "## $NEW_VERSION" CHANGELOG.md; then
+            echo "CHANGELOG.md does not contain the new version: $NEW_VERSION. Please add changelog entry."
+            exit 1
+          fi
+
+      - name: Pub publish dry run
+        run: dart pub publish --dry-run
