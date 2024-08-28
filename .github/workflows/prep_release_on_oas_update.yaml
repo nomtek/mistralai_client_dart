@@ -48,7 +48,7 @@ jobs:
           Pull Request: ${{ github.server_url }}/${{ github.repository }}/pull/new/${{ steps.branch_name.outputs.BRANCH_NAME }}
           EOF
 
-          ISSUE_OUTPUT=$(gh issue create  --title "$ISSUE_TITLE" --body "$ISSUE_BODY"
+          ISSUE_OUTPUT=$(gh issue create  --title "$ISSUE_TITLE" --body "$ISSUE_BODY")
 
           # Extract issue number from the output (issue link)
           ISSUE_NUMBER=$(echo "$ISSUE_OUTPUT" | grep -oE '[0-9]+')
