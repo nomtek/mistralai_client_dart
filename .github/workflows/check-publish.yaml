@@ -9,10 +9,15 @@ jobs:
   debug_if:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "HEAD_REF: ${{ github.head_ref }}"
-      - run: echo "BASE_REF: ${{ github.base_ref }}"
-      - run: echo "HEAD_SHA: ${{ github.ref_name }}"
-      - run: echo "is_release: ${{ startsWith(github.head_ref, 'release/') }}"
+      - run: |
+          echo "HEAD_REF: ${{ github.head_ref }}"
+      - run: |
+          echo "BASE_REF: ${{ github.base_ref }}"
+      - run: |
+          echo "HEAD_SHA: ${{ github.ref_name }}"
+      - run: | 
+          echo "is_release: ${{ startsWith(github.head_ref, 'release/') }}"
+
   check_publish:
     if: startsWith(github.head_ref, 'release/')
     runs-on: ubuntu-latest
