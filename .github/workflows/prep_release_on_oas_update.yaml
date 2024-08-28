@@ -1,4 +1,4 @@
-name: OpenAPI Update
+name: Prepare client release from OpenAPI Spec Update
 
 on:
   push:
@@ -9,14 +9,15 @@ on:
   workflow_dispatch:
 
 jobs:
-  update_openapi:
+  prepare_release:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Get commit hash
+        id: get_commit
         run: |
           echo "COMMIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
@@ -31,24 +32,48 @@ jobs:
           git checkout -b ${{ steps.branch_name.outputs.BRANCH_NAME }}
           git push -u origin ${{ steps.branch_name.outputs.BRANCH_NAME }}
 
-      - name: Create draft pull request
+      - name: Create GitHub Issue
+        id: create_issue
         run: |
-          gh pr create \
-            --title "OpenAPI Specification Update" \
-            --body "This pull request updates the OpenAPI specification." \
-            --draft \
-            --base main \
-            --head ${{ steps.branch_name.outputs.BRANCH_NAME }}
+          # Get current date
+          DATE=$(date +'%Y-%m-%d')
+          ISSUE_OUTPUT=$(gh issue create \
+            --title "Release new client based on OpenAPI Specification Update - $DATE" \
+            --body "The OpenAPI specification has been updated in the repository.
+            
+            Please review the changes and prepare new client version for publishing.
+      
+            Release branch name: ${{ steps.branch_name.outputs.BRANCH_NAME }}
+            Pull Request: ${{ github.server_url }}/${{ github.repository }}/pull/new/${{ steps.branch_name.outputs.BRANCH_NAME }}" \
+            --json number -q '.number') # Capture the issue number
+      
+          echo "ISSUE_NUMBER=$ISSUE_OUTPUT" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create GitHub Issue
+      - name: Create draft pull request
         run: |
-          gh issue create \
-            --title "OpenAPI Specification Updated" \
-            --body "The OpenAPI specification has been updated in the repository. Please review the changes.
-
-            Release branch: ${{ steps.branch_name.outputs.BRANCH_NAME }}
-            Pull Request: ${{ github.server_url }}/${{ github.repository }}/pull/new/${{ steps.branch_name.outputs.BRANCH_NAME }}"
+          DATE=$(date +'%Y-%m-%d')
+          gh pr create \
+            --title "Release new client based on OpenAPI Specification Update - $DATE" \
+            --body "This PR is created automatically when the OpenAPI specification is updated in the repository.
+      
+            Documentation on client generation can be found [here](https://github.com/nomtek/mistralai_client_dart/blob/main/doc/contribute/Client-Code-Generation.md)
+      
+            Closes #${{ steps.create_issue.outputs.ISSUE_NUMBER }} # Link to the created issue
+      
+            Checklist of things must to do:
+              - [ ] client changes according to [docs](https://github.com/nomtek/mistralai_client_dart/blob/main/doc/contribute/Client-Code-Generation.md)
+              - [ ] update `CHANGELOG.md`
+              - [ ] bump version in `pubspec.yaml` (following semantic versioning)
+              - [ ] check if all existing examples are working (for example use openapi_specs/run_all_examples.dart script)
+      
+            Checklist of things that should be done (if needed):
+              - [ ] add examples in `examples/*` (if necessary based on client changes)
+              - [ ] update README.md (if necessary based on client changes and examples)
+            " \
+            --draft \
+            --base main \
+            --head ${{ steps.branch_name.outputs.BRANCH_NAME }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
