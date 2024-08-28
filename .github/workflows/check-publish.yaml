@@ -6,6 +6,13 @@ on:
       - main
 
 jobs:
+  debug_if:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "HEAD_REF: ${{ github.head_ref }}"
+      - run: echo "BASE_REF: ${{ github.base_ref }}"
+      - run: echo "HEAD_SHA: ${{ github.ref_name }}"
+      - run: echo "is_release: ${{ startsWith(github.head_ref, 'release/') }}"
   check_publish:
     if: startsWith(github.head_ref, 'release/')
     runs-on: ubuntu-latest
@@ -38,6 +45,16 @@ jobs:
           if ! grep -q "## $NEW_VERSION" CHANGELOG.md; then
             echo "CHANGELOG.md does not contain the new version: $NEW_VERSION. Please add changelog entry."
             exit 1
+          fi
+
+      - name: Check openapi_specs/openapi-modified.yaml has changed
+        id: check_changes
+        run: |
+          if git diff --exit-code openapi_specs/openapi-modified.yaml; then
+            echo "No changes detected in openapi-modified.yaml. Please update the OpenAPI specification based on openapi_specs/openapi-original.yaml"
+            exit 1 # Exit with non-zero status to fail the step
+          else
+            echo "Changes detected in openapi-modified.yaml."
           fi
 
       - name: Pub publish dry run
