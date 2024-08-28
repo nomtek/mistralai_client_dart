@@ -7,7 +7,7 @@ on:
 
 jobs:
   check_publish:
-    if: startsWith(github.head_ref, 'releases/')
+    if: startsWith(github.head_ref, 'release/')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
