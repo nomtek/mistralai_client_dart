@@ -67,7 +67,8 @@ jobs:
         run: |
           DATE=$(date +'%Y-%m-%d')
           PR_TITLE="Release new client based on OpenAPI Specification Update - $DATE"
-          read -d '' PR_BODY <<EOF
+          
+          PR_BODY=$(cat <<EOF
           This PR is created automatically when the OpenAPI specification is updated in the repository.
       
           Documentation on client generation can be found [here](https://github.com/nomtek/mistralai_client_dart/blob/main/doc/contribute/Client-Code-Generation.md)
@@ -84,6 +85,7 @@ jobs:
             - [ ] add examples in `examples/*` (if necessary based on client changes)
             - [ ] update README.md (if necessary based on client changes and examples)
           EOF
+          )
 
           # Create draft PR
           gh pr create --title "$PR_TITLE" --body "$PR_BODY" --draft --base main --head ${{ steps.branch_name.outputs.BRANCH_NAME }}
