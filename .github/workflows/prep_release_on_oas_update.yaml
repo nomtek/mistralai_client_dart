@@ -47,7 +47,6 @@ jobs:
           Please review the changes and prepare new client version for publishing.
 
           Release branch name: ${{ steps.branch_name.outputs.BRANCH_NAME }}
-          Pull Request: ${{ github.server_url }}/${{ github.repository }}/pull/new/${{ steps.branch_name.outputs.BRANCH_NAME }}
           EOF
           )
           echo "$ISSUE_BODY"
@@ -67,7 +66,7 @@ jobs:
         run: |
           DATE=$(date +'%Y-%m-%d')
           PR_TITLE="Release new client based on OpenAPI Specification Update - $DATE"
-          
+
           PR_BODY=$(cat <<EOF
           This PR is created automatically when the OpenAPI specification is updated in the repository.
       
@@ -77,12 +76,12 @@ jobs:
       
           Checklist of things must to do (mandatory):
             - [ ] client changes according to [docs](https://github.com/nomtek/mistralai_client_dart/blob/main/doc/contribute/Client-Code-Generation.md)
-            - [ ] update `CHANGELOG.md`
-            - [ ] bump version in `pubspec.yaml` (following semantic versioning)
+            - [ ] update CHANGELOG.md
+            - [ ] bump version in pubspec.yaml (following semantic versioning)
             - [ ] check if all existing examples are working (for example use openapi_specs/run_all_examples.dart script)
     
           Checklist of things that should be done (optional):
-            - [ ] add examples in `examples/*` (if necessary based on client changes)
+            - [ ] add examples in examples/* (if necessary based on client changes)
             - [ ] update README.md (if necessary based on client changes and examples)
           EOF
           )
