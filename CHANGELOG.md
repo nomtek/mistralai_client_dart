@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.0
+
+- Support newest [Mistral OAS](https://github.com/mistralai/platform-docs-public/commit/2f2868013495c8b332c987be3c8c945204a544d4)
+
+BREAKING CHANGES:
+
+- client is code generated from the OpenAPI specification
+- for changes in the API see examples in the example directory
+
 ## 0.3.0
 
 - New feature: Fine-tuning ([docs](https://docs.mistral.ai/capabilities/finetuning/)). Check [example](example/mistralai_client_jobs_example.dart) for usage.
