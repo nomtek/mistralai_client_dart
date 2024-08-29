@@ -3,13 +3,39 @@ name: Publish to pub.dev
 on:
   push:
     tags:
-      # must align with the tag-pattern configured on pub.dev
-      - '[0-9]+.[0-9]+.[0-9]+*' # tag-pattern on pub.dev: '{{version}}'
+      - '[0-9]+.[0-9]+.[0-9]+*' # Adjusted tag-pattern for semantic versioning
 
-# Based on official guide from https://dart.dev/tools/pub/automated-publishing
 jobs:
   publish:
     permissions:
       id-token: write # Required for authentication using OIDC
-    # Publish using the reusable workflow from dart-lang.
-    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+      contents: write # Required for creating GitHub releases
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: "3.2.3"
+    
+      - name: Install dependencies
+        run: dart pub get
+    
+      # Make sure publish will work
+      - name: Publish - dry run
+        run: dart pub publish --dry-run
+      
+      # Publish
+      - name: Create GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Automatically provided by GitHub Actions
+        run: |
+          # Extract the current version from the ref (tag)
+          VERSION=${{ github.ref_name }}
+          echo "Creating GitHub Realease $VERSION"
+          
+          # Create the GitHub release with the generated notes
+          gh release create "$VERSION" -t "$VERSION" --generate-notes
+      
+      - name: Publish to pub.dev
+        run: dart pub publish --force
