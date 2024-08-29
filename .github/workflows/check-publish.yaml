@@ -13,8 +13,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-tags: true
+
+      - name: Fetch main
+        run: git fetch origin main
 
       - name: Get Pubspec.yaml version
         id: pubspec_version
@@ -26,7 +27,7 @@ jobs:
       - name: Get the last Git tag
         id: last_git_tag
         run: |
-          LAST_TAG=$(git describe --tags --abbrev=0)
+          LAST_TAG=$(git describe --tags --abbrev=0 origin/main)
           echo "Last Git tag: $LAST_TAG"
           echo "LAST_TAG=$LAST_TAG" >> $GITHUB_ENV
 
@@ -54,9 +55,6 @@ jobs:
       - name: Check openapi_specs/openapi-modified.yaml has changed
         id: check_openapi_changed
         run: |
-          # Fetch the latest changes from the main branch
-          git fetch origin main
-      
           # Compare openapi_specs/openapi-modified.yaml between main and the current branch
           if git diff --exit-code origin/main -- openapi_specs/openapi-modified.yaml; then
             echo "No changes detected in openapi-modified.yaml. Please update the OpenAPI specification based on openapi_specs/openapi-original.yaml."
