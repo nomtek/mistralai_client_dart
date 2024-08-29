@@ -63,5 +63,10 @@ jobs:
             echo "Changes detected in openapi-modified.yaml."
           fi
 
+      - name: ⚙️ Setup Dart
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: "3.2.3"
+
       - name: Pub publish dry run
         run: dart pub publish --dry-run
