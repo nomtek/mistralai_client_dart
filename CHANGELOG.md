@@ -6,7 +6,7 @@
 
 BREAKING CHANGES:
 
-- client is code generated from the OpenAPI specification
+- client code is generated from the OpenAPI specification
 - for changes in the API see examples in the example directory
 
 ## 0.3.0
