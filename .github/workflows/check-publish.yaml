@@ -14,8 +14,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Fetch main
-        run: git fetch origin main
+      - name: Fetch all branches and tags
+        run: git fetch --all --tags
 
       - name: Get Pubspec.yaml version
         id: pubspec_version
