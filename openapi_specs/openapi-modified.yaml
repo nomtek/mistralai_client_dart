@@ -1,9 +1,25 @@
 # Modified version of the OpenAPI specification for the Mistral AI API
-# [Original version](plugin-redoc-0-0.0.2-original.yaml)
+# The original file is `openapi_specs/openapi-original.yaml`
+# Version: 1 (bump the number if there are no changes in the original file but we still need to publish new release)
+#
 # Modifications:
 # - Adjusted the OpenAPI version to 3.0.3 (port from 3.1.0)
 # - Fixes errors found in 3.1.0 spec (wrong use of $ref or wrong required fields)
-# - each place where we differ from original has comment explaining change
+# - Each place where we differ from original has comment explaining change
+#
+# Guidelines (differences that were applied so far):
+# - keep this file as close to `openapi_specs/openapi-original.yaml` as possible
+# - always mark difference between original and this file with comment
+# - 'null' is not allowed in OpenAPI 3.0.3, use 'nullable: true' instead
+# - `examples` should become `example` in 3.0.3
+# - 'operationId' naming changes for better generated code
+# - 'const' is not allowed in OpenAPI 3.0.3, use 'enum' instead (optionally with default value)
+# - 'allOf' requires closer look, sometimes it's better to use 'oneOf' or 'anyOf' instead
+# - 'discriminator' is not supported by our generator (just port it as it is)
+# - use lint to check for errors in the spec like https://editor.swagger.io/ or https://quobix.com/vacuum/
+# - some documentation changes where not applied for better readability
+# - 'type' property added sometimes for better code generation
+
 openapi: 3.0.3
 info:
   title: Mistral AI API

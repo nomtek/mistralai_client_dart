@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   check_publish:
@@ -13,32 +14,62 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Get last version tag
-        id: last_version
+      - name: Fetch all branches and tags
+        run: git fetch --all --tags
+
+      - name: Get Pubspec.yaml version
+        id: pubspec_version
         run: |
-          echo "LAST_VERSION=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
-      
+          VERSION=$(grep "version:" pubspec.yaml | awk '{print $2}')
+          echo "Version in pubspec.yaml: $VERSION"
+          echo "PUBSPEC_VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Get the last Git tag
+        id: last_git_tag
+        run: |
+          LAST_TAG=$(git describe --tags --abbrev=0 origin/main)
+          echo "Last Git tag: $LAST_TAG"
+          echo "LAST_TAG=$LAST_TAG" >> $GITHUB_ENV
+
       - name: Check if version is updated in pubspec.yaml
         id: check_version
         run: |
-          # Check if the version in pubspec.yaml is the same as the last version tag
-          if [[ $(grep -c "version: ${{ steps.last_version.outputs.LAST_VERSION }}" pubspec.yaml) -eq 1 ]]; then
-            echo "Please bump the version in pubspec.yaml"
-            exit 1
+          # Compare the versions
+          if [ "$PUBSPEC_VERSION" == "$LAST_TAG" ]; then
+              echo "Error: The version in pubspec.yaml ($PUBSPEC_VERSION) matches the last Git tag ($LAST_TAG). Please update version in pubspec.yaml."
+              exit 1  # Exit with an error code if they match
+          else
+              echo "The version in pubspec.yaml ($PUBSPEC_VERSION) does not match the last Git tag ($LAST_TAG). Proceeding."
           fi
 
       - name: Check if CHANGELOG.md contains the new version
         id: check_changelog
         run: |
-          # grep finds the line with the version in pubspec.yaml and awk extracts the version number
-          NEW_VERSION=$(grep "version: " pubspec.yaml | awk '{print $2}')
-
           # Check if the new version is in CHANGELOG.md
           # The version should be in format '## x.y.z'
-          if ! grep -q "## $NEW_VERSION" CHANGELOG.md; then
-            echo "CHANGELOG.md does not contain the new version: $NEW_VERSION. Please add changelog entry."
+          if ! grep -q "## $PUBSPEC_VERSION" CHANGELOG.md; then
+            echo "CHANGELOG.md does not contain the new version: $PUBSPEC_VERSION. Please add changelog entry."
             exit 1
           fi
+
+      - name: Check openapi_specs/openapi-modified.yaml has changed
+        id: check_openapi_changed
+        run: |
+          # Compare openapi_specs/openapi-modified.yaml between main and the current branch
+          if git diff --exit-code origin/main -- openapi_specs/openapi-modified.yaml; then
+            echo "No changes detected in openapi-modified.yaml. Please update the OpenAPI specification based on openapi_specs/openapi-original.yaml."
+            exit 1 # Exit with non-zero status to fail the step
+          else
+            echo "Changes detected in openapi-modified.yaml."
+          fi
+
+      - name: ⚙️ Setup Dart
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: "3.2.3"
+
+      - name: Install dependencies
+        run: dart pub get
 
       - name: Pub publish dry run
         run: dart pub publish --dry-run

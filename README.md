@@ -7,14 +7,6 @@
 
 This is an unofficial Dart/Flutter client for the Mistral AI API.
 
-The implementation is inspired by the [official Mistral AI JS client](https://github.com/mistralai/client-js).
-
-## Flutter Flow
-
-For Flutter Flow integration please use the [mistralai_client_dart_flutter_flow](https://pub.dev/packages/mistralai_client_dart_flutter_flow) package.
-
-It's a version of this package that is adapted to work with Flutter Flow.
-
 ## Installation
 
 ```shell
@@ -42,23 +34,23 @@ print(models.join(', '));
 ### Chat
 
 ```dart
-final params = ChatParams(
+const request = ChatCompletionRequest(
   model: 'mistral-small-latest',
-  messages: const [
-    ChatMessage(role: 'user', content: 'Hello chat!'),
+  messages: [
+    UserMessage(content: UserMessageContent.string('Hello chat!')),
   ],
 );
-final chatCompletion = await client.chat(params);
-final chatMessage = chatCompletion.choices[0].message;
-print(chatMessage);
+final chatCompletion = await client.chatComplete(request: request);
+final chatMessage = chatCompletion.choices?[0].message;
+print(chatMessage?.content);
 ```
 
 ### Chat stream
 
 ```dart
-final stream = client.streamChat(params);
+final stream = client.chatStream(request: request);
 await for (final completionChunk in stream) {
-  final chatMessage = completionChunk.choices[0].delta?.content;
+  final chatMessage = completionChunk.choices[0].delta.content;
   if (chatMessage != null) {
     print(chatMessage);
   }
@@ -68,85 +60,22 @@ await for (final completionChunk in stream) {
 ### Embeddings
 
 ```dart
-final embeddings = await client.embeddings(
-  const EmbeddingParams(
+final embeddings = await client.createEmbeddings(
+  request: const EmbeddingRequest(
     model: 'mistral-embed',
-    input: ['Hello chat!'],
+    input: EmbeddingRequestInput.arrayString(['Hello chat!']),
   ),
 );
 for (final data in embeddings.data) {
-  print(data.embedding);
+  print('Embeddings: ${data.embedding}');
 }
 ```
 
 ### Function calling
 
-```dart
-String retrievePaymentStatus(Map<String, String> data, String transactionId) =>
-    '{"status": ${data[transactionId]}}';
+Check examples:
 
-final namesToFunctions = {
-  'retrievePaymentStatus': (String transactionId) =>
-      retrievePaymentStatus(paymentStatusData, transactionId),
-};
-
-final tools = [
-  const ToolsFunction(
-    name: 'retrievePaymentStatus',
-    description: 'Get payment status of a transaction',
-    parameters: [
-      ToolsFunctionParameter(
-        name: 'transactionId',
-        type: 'string',
-        description: 'The transaction ID',
-        isRequired: true,
-      ),
-    ],
-  ).toChatParamsFormat(),
-];
-
-var chatResponse = await client.chat(
-    ChatParams(
-        model: 'mistral-large-latest',
-        messages: messages,
-        tools: tools,
-        toolChoice: 'auto',
-    ),
-);
-
-final toolCall = chatResponse.choices[0].message.toolCalls?[0];
-if (toolCall != null && toolCall.type == 'function') {
-  final functionName = toolCall.function!.name;
-  final functionParams = toolCall.function!.argumentsMap;
-
-  print('calling functionName: $functionName');
-  print('functionParams: $functionParams');
-
-  final functionResult = namesToFunctions[functionName]!(
-      functionParams['transactionId']! as String,
-  );
-
-  messages.add(
-    ChatMessage(
-      role: 'tool',
-      content: functionResult,
-      name: functionName,
-      toolCallId: toolCall.id,
-    ),
-  );
-
-  chatResponse = await client.chat(
-      ChatParams(
-          model: model,
-          messages: messages,
-          tools: tools,
-          toolChoice: 'auto',
-      ),
-  );
-
-  print(chatResponse.choices[0].message.content);
-}
-```
+- [Function calling example](example/mistralai_client_function_calling_dart_example.dart)
 
 ### Files
 
@@ -167,6 +96,12 @@ Check examples:
 - [FIM completion example](example/fim_completion_example.dart)
 - [FIM completion stream example](example/fim_completion_stream_example.dart)
 
+### Agents
+
+Check examples:
+
+- [Agents example](example/agents_example.dart)
+
 ## Resources
 
 You can check the [official Mistral AI docs](https://docs.mistral.ai/).
@@ -174,3 +109,13 @@ You can check the [official Mistral AI docs](https://docs.mistral.ai/).
 ## Contributing
 
 For contributing guide please see [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Flutter Flow (deprecated)
+
+For Flutter Flow integration please use the [mistralai_client_dart_flutter_flow](https://pub.dev/packages/mistralai_client_dart_flutter_flow) package.
+
+It's a version of this package that is adapted to work with Flutter Flow.
+
+## Aknowledgements
+
+Part of the code was generated thx to [openapi_spec](https://pub.dev/packages/openapi_spec) package.
