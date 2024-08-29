@@ -68,5 +68,8 @@ jobs:
         with:
           sdk: "3.2.3"
 
+      - name: Install dependencies
+        run: dart pub get
+
       - name: Pub publish dry run
         run: dart pub publish --dry-run
