@@ -32,6 +32,14 @@ jobs:
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
 
+      - name: ⚙️ Setup Dart
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: "3.2.3"
+      
+      - name: Install dependencies
+        run: dart pub get
+
       - name: Create release branch
         run: |
           git checkout -b ${{ steps.branch_name.outputs.BRANCH_NAME }}
