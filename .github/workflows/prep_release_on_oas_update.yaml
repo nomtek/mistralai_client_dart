@@ -27,9 +27,17 @@ jobs:
           BRANCH_NAME="release/oas-update-commit-${{ steps.get_commit.outputs.COMMIT_HASH }}"
           echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_OUTPUT
 
+      - name: Configure Git User (Bot)
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
+
       - name: Create release branch
         run: |
           git checkout -b ${{ steps.branch_name.outputs.BRANCH_NAME }}
+          dart scripts/add_new_version_to_changelog.dart
+          git add CHANGELOG.md
+          git commit -m "Update changelog with possible new version"
           git push -u origin ${{ steps.branch_name.outputs.BRANCH_NAME }}
 
       - name: Create GitHub Issue
