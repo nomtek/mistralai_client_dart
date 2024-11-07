@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.1
+
+- New feature: Example feature
+- Improvement: Example improvement
+
 ## 1.0.0
 
 - Support newest [Mistral OAS](https://github.com/mistralai/platform-docs-public/commit/2f2868013495c8b332c987be3c8c945204a544d4)
