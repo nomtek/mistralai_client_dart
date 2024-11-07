@@ -25,7 +25,7 @@ jobs:
       - name: Install dependencies
         run: dart pub get
 
-      - name: Configure Git User
+      - name: Configure Git User (Bot)
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
