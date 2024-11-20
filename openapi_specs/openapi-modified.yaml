@@ -180,37 +180,37 @@ paths:
         - in: query
           name: sample_type
           schema:
-            anyOf:
-              - items:
-                  $ref: "#/components/schemas/SampleType"
-                type: array
-              - type: "null"
+            # migrated from 3.1.0 to 3.0.3
+            items:
+              $ref: "#/components/schemas/SampleType"
+            type: array
+            nullable: true
             title: Sample Type
           required: false
         - in: query
           name: source
           schema:
-            anyOf:
-              - items:
-                  $ref: "#/components/schemas/Source"
-                type: array
-              - type: "null"
+            # migrated from 3.1.0 to 3.0.3  
+            items:
+              $ref: "#/components/schemas/Source"
+            type: array
+            nullable: true
             title: Source
           required: false
         - in: query
           name: search
           schema:
-            anyOf:
-              - type: string
-              - type: "null"
+            # migrated from 3.1.0 to 3.0.3
+            type: string
+            nullable: true
             title: Search
           required: false
         - in: query
           name: purpose
           schema:
-            anyOf:
-              - $ref: "#/components/schemas/FilePurpose"
-              - type: "null"
+            # migrated from 3.1.0 to 3.0.3
+            $ref: "#/components/schemas/FilePurpose"
+            nullable: true
           required: false
       responses:
         "200":
@@ -425,8 +425,8 @@ paths:
                 # in this case - generator cannot do a dynamic
                 # resolution of the union (it's easier to do it manually)
                 oneOf:
-                  - $ref: '#/components/schemas/JobOut'
-                  - $ref: '#/components/schemas/LegacyJobMetadataOut'
+                  - $ref: "#/components/schemas/JobOut"
+                  - $ref: "#/components/schemas/LegacyJobMetadataOut"
                 # renamed for better naming in generated code
                 title: JobsResponse
       description: Create a new fine-tuning job, it will be queued for processing.
@@ -883,9 +883,9 @@ components:
         id:
           type: string
           title: Id
-        object:
+        model:
           type: string
-          title: Object
+          title: Model
           default: model
         created:
           type: integer
@@ -897,14 +897,14 @@ components:
         capabilities:
           $ref: "#/components/schemas/ModelCapabilities"
         name:
-          anyOf:
-            - type: string
-            - type: "null"
+          # migrated from 3.1.0 to 3.0.3
+          type: string
+          nullable: true
           title: Name
         description:
-          anyOf:
-            - type: string
-            - type: "null"
+          # migrated from 3.1.0 to 3.0.3
+          type: string
+          nullable: true
           title: Description
         max_context_length:
           type: integer
@@ -915,23 +915,25 @@ components:
             type: string
           type: array
           title: Aliases
+          # fix of bug in schema
+          nullable: true
           default: []
         deprecation:
-          anyOf:
-            - type: string
-              format: date-time
-            - type: "null"
+          # migrated from 3.1.0 to 3.0.3
+          type: string
+          format: date-time
+          nullable: true
           title: Deprecation
         default_model_temperature:
-          anyOf:
-            - type: number
-            - type: "null"
+          # migrated from 3.1.0 to 3.0.3
+          type: number
+          nullable: true
           title: Default Model Temperature
         type:
           type: string
+          # migrated from 3.1.0 to 3.0.3
           enum:
             - base
-          const: base
           title: Type
           default: base
       type: object
@@ -1010,15 +1012,15 @@ components:
           nullable: true
           title: Deprecation
         default_model_temperature:
-          anyOf:
-            - type: number
-            - type: "null"
+          # migrated from 3.1.0 to 3.0.3
+          type: number
+          nullable: true
           title: Default Model Temperature
         type:
           type: string
+          # migrated from 3.1.0 to 3.0.3
           enum:
             - fine-tuned
-          const: fine-tuned
           title: Type
           default: fine-tuned
         job:
@@ -1503,8 +1505,8 @@ components:
         validation_files:
           # migrated from 3.1.0 to 3.0.3
           items:
-              format: uuid
-              type: string
+            format: uuid
+            type: string
           type: array
           nullable: true
           default: []
@@ -1841,7 +1843,7 @@ components:
               mapping:
                 wandb: "#/components/schemas/WandbIntegration"
               propertyName: type
-            $ref: '#/components/schemas/WandbIntegration'
+            $ref: "#/components/schemas/WandbIntegration"
           type: array
           nullable: true
           title: Integrations
@@ -2047,7 +2049,7 @@ components:
           default: []
           title: Validation Files
         object:
-          const: job
+          # migrated from 3.1.0 to 3.0.3
           default: job
           enum:
             - job
@@ -2329,7 +2331,7 @@ components:
           title: Id
           type: string
         object:
-          const: batch
+          # migrated from 3.1.0 to 3.0.3
           default: batch
           enum:
             - batch
@@ -2420,7 +2422,7 @@ components:
           title: Data
           type: array
         object:
-          const: list
+          # migrated from 3.1.0 to 3.0.3
           default: list
           enum:
             - list
@@ -2604,7 +2606,9 @@ components:
             - $ref: "#/components/schemas/ToolChoice"
             - $ref: "#/components/schemas/ToolChoiceEnum"
           title: Tool Choice
-          default: auto
+          # fix bug in the generated code
+          nullable: true
+          default: null
         presence_penalty:
           type: number
           maximum: 2
@@ -2771,9 +2775,9 @@ components:
           type: string
           title: Url
         detail:
-          anyOf:
-            - type: string
-            - type: "null"
+          # migrated from 3.1.0 to 3.0.3
+          type: string
+          nullable: true
           title: Detail
       additionalProperties: false
       type: object
@@ -2786,7 +2790,7 @@ components:
           type: string
           enum:
             - image_url
-          const: image_url
+          # migrated from 3.1.0 to 3.0.3
           title: Type
           default: image_url
         image_url:
@@ -2806,7 +2810,7 @@ components:
           type: string
           enum:
             - reference
-          const: reference
+          # migrated from 3.1.0 to 3.0.3
           title: Type
           default: reference
         reference_ids:
@@ -2959,7 +2963,7 @@ components:
     ToolTypes:
       type: string
       # migrated from 3.1.0 to 3.0.3
-      enum: 
+      enum:
         - function
       title: ToolTypes
     UserMessage:
@@ -3124,7 +3128,7 @@ components:
         - model
       title: EmbeddingRequest
     ChatClassificationRequest:
-     # migrated from 3.1.0 to 3.0.3
+      # migrated from 3.1.0 to 3.0.3
       properties:
         input:
           anyOf:
@@ -3257,22 +3261,22 @@ components:
       type: object
       properties:
         role:
-          anyOf:
-            - type: string
-            - type: "null"
+          # migrated from 3.1.0 to 3.0.3
+          type: string
+          nullable: true
         content:
-          anyOf:
-            - type: string
-            - type: "null"
-            - items:
-                $ref: "#/components/schemas/ContentChunk"
-              type: array
+          # migrated from 3.1.0 to 3.0.3
+          type: string
+          nullable: true
+          items:
+            $ref: "#/components/schemas/ContentChunk"
+            type: array
         tool_calls:
-          anyOf:
-            - type: "null"
-            - type: array
-              items:
-                $ref: "#/components/schemas/ToolCall"
+          # migrated from 3.1.0 to 3.0.3
+          nullable: true
+          type: array
+          items:
+            $ref: "#/components/schemas/ToolCall"
     ChatCompletionResponseBase:
       allOf:
         - $ref: "#/components/schemas/ResponseBase"
