@@ -153,8 +153,8 @@ paths:
                   title: File
                   type: string
                   description: "The File object (not file name) to be uploaded.\n To upload a file and specify a custom file name you should format your request as such:\n ```bash\n file=@path/to/your/file.jsonl;filename=custom_name.jsonl\n ```\n Otherwise, you can just keep the original file name:\n ```bash\n file=@path/to/your/file.jsonl\n ```"
-              required:
-                - file
+              # migrated from 3.1.0 to 3.0.3
+              required: [file]
         required: true
       tags:
         - files
@@ -190,7 +190,7 @@ paths:
         - in: query
           name: source
           schema:
-            # migrated from 3.1.0 to 3.0.3  
+            # migrated from 3.1.0 to 3.0.3
             items:
               $ref: "#/components/schemas/Source"
             type: array
@@ -879,6 +879,9 @@ paths:
 components:
   schemas:
     BaseModelCard:
+      title: BaseModelCard
+      type: object
+      required: [id, capabilities]
       properties:
         id:
           type: string
@@ -934,13 +937,8 @@ components:
           # migrated from 3.1.0 to 3.0.3
           enum:
             - base
-          title: Type
+          title: BaseModelCardType
           default: base
-      type: object
-      required:
-        - id
-        - capabilities
-      title: BaseModelCard
     DeleteModelOut:
       properties:
         id:
@@ -963,8 +961,8 @@ components:
           # migrated from 3.1.0 to 3.0.3
           example: True
       type: object
-      required:
-        - id
+      # migrated from 3.1.0 to 3.0.3
+      required: [id]
       title: DeleteModelOut
     FTModelCard:
       properties:
@@ -1021,7 +1019,7 @@ components:
           # migrated from 3.1.0 to 3.0.3
           enum:
             - fine-tuned
-          title: Type
+          title: FTModelCardType
           default: fine-tuned
         job:
           type: string
@@ -1034,11 +1032,8 @@ components:
           title: Archived
           default: false
       type: object
-      required:
-        - id
-        - capabilities
-        - job
-        - root
+      # migrated from 3.1.0 to 3.0.3
+      required: [id, capabilities, job, root]
       title: FTModelCard
       description: Extra fields for fine-tuned models.
     HTTPValidationError:
@@ -1111,10 +1106,8 @@ components:
           type: string
           title: Error Type
       type: object
-      required:
-        - loc
-        - msg
-        - type
+      # migrated from 3.1.0 to 3.0.3
+      required: [loc, msg, type]
       title: ValidationError
     FilePurpose:
       enum:
@@ -1186,15 +1179,9 @@ components:
           title: Num Lines
         source:
           $ref: "#/components/schemas/Source"
+      # migrated from 3.1.0 to 3.0.3
       required:
-        - id
-        - object
-        - bytes
-        - created_at
-        - filename
-        - purpose
-        - sample_type
-        - source
+        [id, object, bytes, created_at, filename, purpose, sample_type, source]
       title: UploadFileOut
       type: object
     FileSchema:
@@ -1245,15 +1232,9 @@ components:
           title: Num Lines
         source:
           $ref: "#/components/schemas/Source"
+      # migrated from 3.1.0 to 3.0.3
       required:
-        - id
-        - object
-        - bytes
-        - created_at
-        - filename
-        - purpose
-        - sample_type
-        - source
+        [id, object, bytes, created_at, filename, purpose, sample_type, source]
       title: FileSchema
       type: object
     ListFilesOut:
@@ -1270,10 +1251,7 @@ components:
         total:
           title: Total
           type: integer
-      required:
-        - data
-        - object
-        - total
+      required: [data, object, total]
       title: ListFilesOut
       type: object
     RetrieveFileOut:
@@ -1328,15 +1306,17 @@ components:
           title: Deleted
           type: boolean
       required:
-        - id
-        - object
-        - bytes
-        - created_at
-        - filename
-        - purpose
-        - sample_type
-        - source
-        - deleted
+        [
+          id,
+          object,
+          bytes,
+          created_at,
+          filename,
+          purpose,
+          sample_type,
+          source,
+          deleted,
+        ]
       title: RetrieveFileOut
       type: object
     DeleteFileOut:
@@ -1361,10 +1341,8 @@ components:
           description: The deletion status.
           # migrated from 3.1.0 to 3.0.3
           example: false
-      required:
-        - id
-        - object
-        - deleted
+      # migrated from 3.1.0 to 3.0.3
+      required: [id, object, deleted]
       title: DeleteFileOut
       type: object
     FineTuneableModel:
@@ -1409,10 +1387,8 @@ components:
           minLength: 40
           title: Commit Id
           type: string
-      required:
-        - name
-        - owner
-        - commit_id
+      # migrated from 3.1.0 to 3.0.3
+      required: [type, name, owner, commit_id]
       title: GithubRepositoryOut
       type: object
     JobMetadataOut:
@@ -1567,16 +1543,19 @@ components:
           # migrated from 3.1.0 to 3.0.3
           $ref: "#/components/schemas/JobMetadataOut"
           nullable: true
+      # migrated from 3.1.0 to 3.0.3
       required:
-        - id
-        - auto_start
-        - hyperparameters
-        - model
-        - status
-        - job_type
-        - created_at
-        - modified_at
-        - training_files
+        [
+          id,
+          auto_start,
+          hyperparameters,
+          model,
+          status,
+          job_type,
+          created_at,
+          modified_at,
+          training_files,
+        ]
       title: JobOut
       type: object
     JobsOut:
@@ -1598,8 +1577,8 @@ components:
         total:
           title: Total
           type: integer
-      required:
-        - total
+      # migrated from 3.1.0 to 3.0.3
+      required: [total]
       title: JobsOut
       type: object
     TrainingParameters:
@@ -1661,7 +1640,7 @@ components:
           default: wandb
           enum:
             - wandb
-          title: Type
+          title: WandbIntegrationOutType
           type: string
         project:
           title: Project
@@ -1678,8 +1657,8 @@ components:
           type: string
           nullable: true
           title: Run Name
-      required:
-        - project
+      # migrated from 3.1.0 to 3.0.3
+      required: [project]
       title: WandbIntegrationOut
       type: object
     LegacyJobMetadataOut:
@@ -1768,8 +1747,8 @@ components:
           # renamed for better generated code naming
           title: LegacyJobMetadataOutObject
           type: string
-      required:
-        - details
+      # migrated from 3.1.0 to 3.0.3
+      required: [details]
       title: LegacyJobMetadataOut
       type: object
     GithubRepositoryIn:
@@ -1779,7 +1758,7 @@ components:
           default: github
           enum:
             - github
-          title: Type
+          title: GithubRepositoryInType
           type: string
         name:
           title: Name
@@ -1802,10 +1781,8 @@ components:
         token:
           title: Token
           type: string
-      required:
-        - name
-        - owner
-        - token
+      # migrated from 3.1.0 to 3.0.3
+      required: [name, owner, token]
       title: GithubRepositoryIn
       type: object
     JobIn:
@@ -1863,9 +1840,8 @@ components:
           description: This field will be required in a future release.
           title: Auto Start
           type: boolean
-      required:
-        - model
-        - hyperparameters
+      # migrated from 3.1.0 to 3.0.3
+      required: [model, hyperparameters]
       title: JobIn
       type: object
     TrainingFile:
@@ -1881,8 +1857,8 @@ components:
           minimum: 0
           title: Weight
           type: number
-      required:
-        - file_id
+      # migrated from 3.1.0 to 3.0.3
+      required: [file_id]
       title: TrainingFile
       type: object
     TrainingParametersIn:
@@ -1949,7 +1925,7 @@ components:
           default: wandb
           enum:
             - wandb
-          title: Type
+          title: WandbIntegrationType
           type: string
         project:
           title: Project
@@ -1972,9 +1948,8 @@ components:
           type: string
           nullable: true
           title: Run Name
-      required:
-        - project
-        - api_key
+      # migrated from 3.1.0 to 3.0.3
+      required: [project, api_key]
       title: WandbIntegration
       type: object
     CheckpointOut:
@@ -1991,10 +1966,8 @@ components:
           description: The UNIX timestamp (in seconds) for when the checkpoint was created.
           # migrated from 3.1.0 to 3.0.3
           example: 1716963433
-      required:
-        - metrics
-        - step_number
-        - created_at
+      # migrated from 3.1.0 to 3.0.3
+      required: [metrics, step_number, created_at]
       title: CheckpointOut
       type: object
     DetailedJobOut:
@@ -2022,7 +1995,7 @@ components:
             - SUCCESS
             - CANCELLED
             - CANCELLATION_REQUESTED
-          title: Status
+          title: DetailedJobOutStatus
           type: string
         job_type:
           title: Job Type
@@ -2111,16 +2084,19 @@ components:
             $ref: "#/components/schemas/CheckpointOut"
           title: Checkpoints
           type: array
+      # migrated from 3.1.0 to 3.0.3
       required:
-        - id
-        - auto_start
-        - hyperparameters
-        - model
-        - status
-        - job_type
-        - created_at
-        - modified_at
-        - training_files
+        [
+          id,
+          auto_start,
+          hyperparameters,
+          model,
+          status,
+          job_type,
+          created_at,
+          modified_at,
+          training_files,
+        ]
       title: DetailedJobOut
       type: object
     EventOut:
@@ -2139,9 +2115,8 @@ components:
           title: Created At
           type: integer
           description: The UNIX timestamp (in seconds) of the event.
-      required:
-        - name
-        - created_at
+      # migrated from 3.1.0 to 3.0.3
+      required: [name, created_at]
       title: EventOut
       type: object
     MetricOut:
@@ -2235,14 +2210,8 @@ components:
           format: uuid
           title: Job
           type: string
-      required:
-        - id
-        - created
-        - owned_by
-        - root
-        - archived
-        - capabilities
-        - job
+      # migrated from 3.1.0 to 3.0.3
+      required: [id, created, owned_by, root, archived, capabilities, job]
       title: FTModelOut
       type: object
     UpdateFTModelIn:
@@ -2276,8 +2245,7 @@ components:
           default: true
           title: Archived
           type: boolean
-      required:
-        - id
+      required: [id]
       title: ArchiveFTModelOut
       type: object
     UnarchiveFTModelOut:
@@ -2297,8 +2265,8 @@ components:
           default: false
           title: Archived
           type: boolean
-      required:
-        - id
+      # migrated from 3.1.0 to 3.0.3
+      required: [id]
       title: UnarchiveFTModelOut
       type: object
     BatchJobStatus:
@@ -2321,8 +2289,7 @@ components:
           default: 1
           title: Count
           type: integer
-      required:
-        - message
+      required: [message]
       title: BatchError
       type: object
     BatchJobOut:
@@ -2335,7 +2302,8 @@ components:
           default: batch
           enum:
             - batch
-          title: Object
+          # renamed for better generated code naming
+          title: BatchJobOutEnum
           type: string
         input_files:
           items:
@@ -2400,17 +2368,19 @@ components:
           nullable: true
           title: Completed At
       required:
-        - id
-        - input_files
-        - endpoint
-        - model
-        - errors
-        - status
-        - created_at
-        - total_requests
-        - completed_requests
-        - succeeded_requests
-        - failed_requests
+        [
+          id,
+          input_files,
+          endpoint,
+          model,
+          errors,
+          status,
+          created_at,
+          total_requests,
+          completed_requests,
+          succeeded_requests,
+          failed_requests,
+        ]
       title: BatchJobOut
       type: object
     BatchJobsOut:
@@ -2426,13 +2396,12 @@ components:
           default: list
           enum:
             - list
-          title: Object
+          title: BatchJobsOutObject
           type: string
         total:
           title: Total
           type: integer
-      required:
-        - total
+      required: [total]
       title: BatchJobsOut
       type: object
     ApiEndpoint:
@@ -2469,10 +2438,7 @@ components:
           default: 24
           title: Timeout Hours
           type: integer
-      required:
-        - input_files
-        - endpoint
-        - model
+      required: [input_files, endpoint, model]
       title: BatchJobIn
       type: object
     AssistantMessage:
@@ -2636,9 +2602,7 @@ components:
           default: false
       additionalProperties: false
       type: object
-      required:
-        - messages
-        - model
+      required: [messages, model]
       title: ChatCompletionRequest
     FIMCompletionRequest:
       properties:
@@ -2716,9 +2680,7 @@ components:
           description: The minimum number of tokens to generate in the completion.
       additionalProperties: false
       type: object
-      required:
-        - prompt
-        - model
+      required: [prompt, model]
       title: FIMCompletionRequest
     # renamed to avoid conflict with the `Function` type
     FunctionDefinition:
@@ -2736,9 +2698,8 @@ components:
           additionalProperties: true
       additionalProperties: false
       type: object
-      required:
-        - name
-        - parameters
+      # migrated from 3.1.0 to 3.0.3
+      required: [name, parameters]
       # renamed to avoid conflict with the `Function` type
       title: FunctionDefinition
     FunctionCall:
@@ -2754,9 +2715,8 @@ components:
             - type: string
       additionalProperties: false
       type: object
-      required:
-        - name
-        - arguments
+      # migrated from 3.1.0 to 3.0.3
+      required: [name, arguments]
       title: FunctionCall
     FunctionName:
       properties:
@@ -2765,8 +2725,7 @@ components:
           title: Name
       additionalProperties: false
       type: object
-      required:
-        - name
+      required: [name]
       title: FunctionName
       description: this restriction of `Function` is used to select a specific function to call
     ImageURL:
@@ -2781,8 +2740,8 @@ components:
           title: Detail
       additionalProperties: false
       type: object
-      required:
-        - url
+      # migrated from 3.1.0 to 3.0.3
+      required: [url]
       title: ImageURL
     ImageURLChunk:
       properties:
@@ -2791,7 +2750,7 @@ components:
           enum:
             - image_url
           # migrated from 3.1.0 to 3.0.3
-          title: Type
+          title: ImageURLChunkType
           default: image_url
         image_url:
           anyOf:
@@ -2800,8 +2759,8 @@ components:
           title: Image Url
       additionalProperties: false
       type: object
-      required:
-        - image_url
+      # migrated from 3.1.0 to 3.0.3
+      required: [image_url]
       title: ImageURLChunk
       description: '{"type":"image_url","image_url":{"url":"data:image/png;base64,iVBORw0'
     ReferenceChunk:
@@ -2811,7 +2770,7 @@ components:
           enum:
             - reference
           # migrated from 3.1.0 to 3.0.3
-          title: Type
+          title: ReferenceChunkType
           default: reference
         reference_ids:
           items:
@@ -2820,8 +2779,7 @@ components:
           title: Reference Ids
       additionalProperties: false
       type: object
-      required:
-        - reference_ids
+      required: [reference_ids]
       title: ReferenceChunk
     ResponseFormat:
       properties:
@@ -2853,10 +2811,11 @@ components:
           default: system
           enum:
             - system
+          title: SystemMessageRole
       additionalProperties: false
       type: object
-      required:
-        - content
+      # migrated from 3.1.0 to 3.0.3
+      required: [content]
       title: SystemMessage
     TextChunk:
       properties:
@@ -2864,7 +2823,7 @@ components:
           # migrated from 3.1.0 to 3.0.3
           enum:
             - text
-          title: Type
+          title: TextChunkType
           default: text
           # added for better generated code
           type: string
@@ -2873,8 +2832,7 @@ components:
           title: Text
       additionalProperties: false
       type: object
-      required:
-        - text
+      required: [text]
       title: TextChunk
     Tool:
       properties:
@@ -2887,8 +2845,7 @@ components:
           $ref: "#/components/schemas/FunctionDefinition"
       additionalProperties: false
       type: object
-      required:
-        - function
+      required: [function]
       title: Tool
     ToolCall:
       properties:
@@ -2906,8 +2863,8 @@ components:
           $ref: "#/components/schemas/FunctionCall"
       additionalProperties: false
       type: object
-      required:
-        - function
+      # migrated from 3.1.0 to 3.0.3
+      required: [function]
       title: ToolCall
     ToolChoice:
       properties:
@@ -2918,8 +2875,8 @@ components:
           $ref: "#/components/schemas/FunctionName"
       additionalProperties: false
       type: object
-      required:
-        - function
+      # migrated from 3.1.0 to 3.0.3
+      required: [function]
       title: ToolChoice
       description: ToolChoice is either a ToolChoiceEnum or a ToolChoice
     ToolChoiceEnum:
@@ -2955,10 +2912,11 @@ components:
           default: tool
           enum:
             - tool
+          title: ToolMessageRole
       additionalProperties: false
       type: object
-      required:
-        - content
+      # migrated from 3.1.0 to 3.0.3
+      required: [content]
       title: ToolMessage
     ToolTypes:
       type: string
@@ -2981,10 +2939,11 @@ components:
           default: user
           enum:
             - user
+          title: UserMessageRole
       additionalProperties: false
       type: object
-      required:
-        - content
+      # migrated from 3.1.0 to 3.0.3
+      required: [content]
       title: UserMessage
     AgentsCompletionRequest:
       properties:
@@ -3054,9 +3013,11 @@ components:
           nullable: true
           title: Tools
         tool_choice:
+          # migrated from 3.1.0 to 3.0.3
           allOf:
             - $ref: "#/components/schemas/ToolChoice"
-          default: auto
+          nullable: true
+          default: null
         presence_penalty:
           type: number
           maximum: 2
@@ -3249,6 +3210,7 @@ components:
           $ref: "#/components/schemas/AssistantMessage"
         finish_reason:
           type: string
+          title: FinishReasonEnum
           enum:
             - stop
             - length

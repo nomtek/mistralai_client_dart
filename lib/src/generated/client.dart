@@ -416,7 +416,7 @@ class MistralaiClientDartClient {
   /// `modelId`: The ID of the model to retrieve.
   ///
   /// `GET` `https://api.mistral.ai/v1/models/{model_id}`
-  Future<ModelCard> retrieveModel({
+  Future<http.Response> retrieveModel({
     required String modelId,
   }) async {
     final r = await makeRequest(
@@ -427,7 +427,7 @@ class MistralaiClientDartClient {
       requestType: '',
       responseType: 'application/json',
     );
-    return ModelCard.fromJson(_jsonDecode(r) as Map<String, dynamic>);
+    return r;
   }
 
   // ------------------------------------------
@@ -463,8 +463,27 @@ class MistralaiClientDartClient {
   ///
   /// Returns a list of files that belong to the user's organization.
   ///
+  /// `page`: No description
+  ///
+  /// `pageSize`: No description
+  ///
+  /// `sampleType`: No description
+  ///
+  /// `source`: No description
+  ///
+  /// `search`: No description
+  ///
+  /// `purpose`: No description
+  ///
   /// `GET` `https://api.mistral.ai/v1/files`
-  Future<ListFilesOut> listFiles() async {
+  Future<ListFilesOut> listFiles({
+    int page = 0,
+    int pageSize = 100,
+    List<SampleType>? sampleType,
+    List<Source>? source,
+    String? search,
+    FilePurpose? purpose,
+  }) async {
     final r = await makeRequest(
       baseUrl: 'https://api.mistral.ai',
       path: '/v1/files',
@@ -472,6 +491,14 @@ class MistralaiClientDartClient {
       isMultipart: false,
       requestType: '',
       responseType: 'application/json',
+      queryParams: {
+        'page': page,
+        'page_size': pageSize,
+        if (sampleType != null) 'sample_type': sampleType,
+        if (source != null) 'source': source,
+        if (search != null) 'search': search,
+        if (purpose != null) 'purpose': purpose.name,
+      },
     );
     return ListFilesOut.fromJson(_jsonDecode(r) as Map<String, dynamic>);
   }
@@ -554,6 +581,31 @@ class MistralaiClientDartClient {
       responseType: 'application/json',
     );
     return DeleteFileOut.fromJson(_jsonDecode(r) as Map<String, dynamic>);
+  }
+
+  // ------------------------------------------
+  // METHOD: downloadFile
+  // ------------------------------------------
+
+  /// Download File
+  ///
+  /// Download a file
+  ///
+  /// `fileId`: No description
+  ///
+  /// `GET` `https://api.mistral.ai/v1/files/{file_id}/content`
+  Future<String> downloadFile({
+    required String fileId,
+  }) async {
+    final r = await makeRequest(
+      baseUrl: 'https://api.mistral.ai',
+      path: '/v1/files/$fileId/content',
+      method: HttpMethod.get,
+      isMultipart: false,
+      requestType: '',
+      responseType: 'application/octet-stream',
+    );
+    return r.body;
   }
 
   // ------------------------------------------
@@ -803,6 +855,134 @@ class MistralaiClientDartClient {
   }
 
   // ------------------------------------------
+  // METHOD: jobsApiRoutesBatchGetBatchJobs
+  // ------------------------------------------
+
+  /// Get Batch Jobs
+  ///
+  /// Get a list of batch jobs for your organization and user.
+  ///
+  /// `page`: No description
+  ///
+  /// `pageSize`: No description
+  ///
+  /// `model`: No description
+  ///
+  /// `metadata`: No description
+  ///
+  /// `createdAfter`: No description
+  ///
+  /// `createdByMe`: No description
+  ///
+  /// `status`: No description
+  ///
+  /// `GET` `https://api.mistral.ai/v1/batch/jobs`
+  Future<BatchJobsOut> jobsApiRoutesBatchGetBatchJobs({
+    int page = 0,
+    int pageSize = 100,
+    String? model,
+    Map<String, dynamic>? metadata,
+    String? createdAfter,
+    bool createdByMe = false,
+    BatchJobStatus? status,
+  }) async {
+    final r = await makeRequest(
+      baseUrl: 'https://api.mistral.ai',
+      path: '/v1/batch/jobs',
+      method: HttpMethod.get,
+      isMultipart: false,
+      requestType: '',
+      responseType: 'application/json',
+      queryParams: {
+        'page': page,
+        'page_size': pageSize,
+        if (model != null) 'model': model,
+        if (metadata != null) 'metadata': metadata,
+        if (createdAfter != null) 'created_after': createdAfter,
+        'created_by_me': createdByMe,
+        if (status != null) 'status': status.name,
+      },
+    );
+    return BatchJobsOut.fromJson(_jsonDecode(r) as Map<String, dynamic>);
+  }
+
+  // ------------------------------------------
+  // METHOD: jobsApiRoutesBatchCreateBatchJob
+  // ------------------------------------------
+
+  /// Create Batch Job
+  ///
+  /// Create a new batch job, it will be queued for processing.
+  ///
+  /// `request`: No description
+  ///
+  /// `POST` `https://api.mistral.ai/v1/batch/jobs`
+  Future<BatchJobOut> jobsApiRoutesBatchCreateBatchJob({
+    required BatchJobIn request,
+  }) async {
+    final r = await makeRequest(
+      baseUrl: 'https://api.mistral.ai',
+      path: '/v1/batch/jobs',
+      method: HttpMethod.post,
+      isMultipart: false,
+      requestType: 'application/json',
+      responseType: 'application/json',
+      body: request,
+    );
+    return BatchJobOut.fromJson(_jsonDecode(r) as Map<String, dynamic>);
+  }
+
+  // ------------------------------------------
+  // METHOD: jobsApiRoutesBatchGetBatchJob
+  // ------------------------------------------
+
+  /// Get Batch Job
+  ///
+  /// Get a batch job details by its UUID.
+  ///
+  /// `jobId`: No description
+  ///
+  /// `GET` `https://api.mistral.ai/v1/batch/jobs/{job_id}`
+  Future<BatchJobOut> jobsApiRoutesBatchGetBatchJob({
+    required String jobId,
+  }) async {
+    final r = await makeRequest(
+      baseUrl: 'https://api.mistral.ai',
+      path: '/v1/batch/jobs/$jobId',
+      method: HttpMethod.get,
+      isMultipart: false,
+      requestType: '',
+      responseType: 'application/json',
+    );
+    return BatchJobOut.fromJson(_jsonDecode(r) as Map<String, dynamic>);
+  }
+
+  // ------------------------------------------
+  // METHOD: jobsApiRoutesBatchCancelBatchJob
+  // ------------------------------------------
+
+  /// Cancel Batch Job
+  ///
+  /// Request the cancellation of a batch job.
+  ///
+  /// `jobId`: No description
+  ///
+  /// `POST` `https://api.mistral.ai/v1/batch/jobs/{job_id}/cancel`
+  Future<BatchJobOut> jobsApiRoutesBatchCancelBatchJob({
+    required String jobId,
+  }) async {
+    final r = await makeRequest(
+      baseUrl: 'https://api.mistral.ai',
+      path: '/v1/batch/jobs/$jobId/cancel',
+      method: HttpMethod.post,
+      isMultipart: false,
+      requestType: '',
+      responseType: 'application/json',
+    );
+    return BatchJobOut.fromJson(_jsonDecode(r) as Map<String, dynamic>);
+  }
+
+  // ------------------------------------------
   // METHOD: chatComplete
   // ------------------------------------------
 
@@ -903,5 +1083,55 @@ class MistralaiClientDartClient {
       body: request,
     );
     return EmbeddingResponse.fromJson(_jsonDecode(r) as Map<String, dynamic>);
+  }
+
+  // ------------------------------------------
+  // METHOD: moderations
+  // ------------------------------------------
+
+  /// Moderations
+  ///
+  /// `request`: No description
+  ///
+  /// `POST` `https://api.mistral.ai/v1/moderations`
+  Future<ClassificationResponse> moderations({
+    required ClassificationRequest request,
+  }) async {
+    final r = await makeRequest(
+      baseUrl: 'https://api.mistral.ai',
+      path: '/v1/moderations',
+      method: HttpMethod.post,
+      isMultipart: false,
+      requestType: 'application/json',
+      responseType: 'application/json',
+      body: request,
+    );
+    return ClassificationResponse.fromJson(
+        _jsonDecode(r) as Map<String, dynamic>);
+  }
+
+  // ------------------------------------------
+  // METHOD: chatModerations
+  // ------------------------------------------
+
+  /// Moderations Chat
+  ///
+  /// `request`: No description
+  ///
+  /// `POST` `https://api.mistral.ai/v1/chat/moderations`
+  Future<ClassificationResponse> chatModerations({
+    required ChatClassificationRequest request,
+  }) async {
+    final r = await makeRequest(
+      baseUrl: 'https://api.mistral.ai',
+      path: '/v1/chat/moderations',
+      method: HttpMethod.post,
+      isMultipart: false,
+      requestType: 'application/json',
+      responseType: 'application/json',
+      body: request,
+    );
+    return ClassificationResponse.fromJson(
+        _jsonDecode(r) as Map<String, dynamic>);
   }
 }

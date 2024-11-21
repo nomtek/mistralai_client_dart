@@ -8,6 +8,112 @@ part 'schema.g.dart';
 part 'schema.freezed.dart';
 
 // ==========================================
+// CLASS: BaseModelCard
+// ==========================================
+
+/// No Description
+@freezed
+class BaseModelCard with _$BaseModelCard {
+  const BaseModelCard._();
+
+  /// Factory constructor for BaseModelCard
+  const factory BaseModelCard({
+    /// No Description
+    required String id,
+
+    /// No Description
+    @Default('model') String model,
+
+    /// No Description
+    @JsonKey(includeIfNull: false) int? created,
+
+    /// No Description
+    @JsonKey(name: 'owned_by') @Default('mistralai') String ownedBy,
+
+    /// No Description
+    required ModelCapabilities capabilities,
+
+    /// No Description
+    @JsonKey(includeIfNull: false) String? name,
+
+    /// No Description
+    @JsonKey(includeIfNull: false) String? description,
+
+    /// No Description
+    @JsonKey(name: 'max_context_length') @Default(32768) int maxContextLength,
+
+    /// No Description
+    @JsonKey(includeIfNull: false) @Default([]) List<String>? aliases,
+
+    /// No Description
+    @JsonKey(includeIfNull: false) String? deprecation,
+
+    /// No Description
+    @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+    double? defaultModelTemperature,
+
+    ///
+    @Default(BaseModelCardType.base) BaseModelCardType type,
+  }) = _BaseModelCard;
+
+  /// Object construction from a JSON representation
+  factory BaseModelCard.fromJson(Map<String, dynamic> json) =>
+      _$BaseModelCardFromJson(json);
+
+  /// List of all property names of schema
+  static const List<String> propertyNames = [
+    'id',
+    'model',
+    'created',
+    'owned_by',
+    'capabilities',
+    'name',
+    'description',
+    'max_context_length',
+    'aliases',
+    'deprecation',
+    'default_model_temperature',
+    'type'
+  ];
+
+  /// Validation constants
+  static const maxContextLengthDefaultValue = 32768;
+
+  /// Perform validations on the schema property values
+  String? validateSchema() {
+    return null;
+  }
+
+  /// Map representation of object (not serialized)
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'model': model,
+      'created': created,
+      'owned_by': ownedBy,
+      'capabilities': capabilities,
+      'name': name,
+      'description': description,
+      'max_context_length': maxContextLength,
+      'aliases': aliases,
+      'deprecation': deprecation,
+      'default_model_temperature': defaultModelTemperature,
+      'type': type,
+    };
+  }
+}
+
+// ==========================================
+// ENUM: BaseModelCardType
+// ==========================================
+
+/// No Description
+enum BaseModelCardType {
+  @JsonValue('base')
+  base,
+}
+
+// ==========================================
 // CLASS: DeleteModelOut
 // ==========================================
 
@@ -48,6 +154,127 @@ class DeleteModelOut with _$DeleteModelOut {
       'deleted': deleted,
     };
   }
+}
+
+// ==========================================
+// CLASS: FTModelCard
+// ==========================================
+
+/// Extra fields for fine-tuned models.
+@freezed
+class FTModelCard with _$FTModelCard {
+  const FTModelCard._();
+
+  /// Factory constructor for FTModelCard
+  const factory FTModelCard({
+    /// No Description
+    required String id,
+
+    /// No Description
+    @Default('model') String object,
+
+    /// No Description
+    @JsonKey(includeIfNull: false) int? created,
+
+    /// No Description
+    @JsonKey(name: 'owned_by') @Default('mistralai') String ownedBy,
+
+    /// No Description
+    required ModelCapabilities capabilities,
+
+    /// No Description
+    @JsonKey(includeIfNull: false) String? name,
+
+    /// No Description
+    @JsonKey(includeIfNull: false) String? description,
+
+    /// No Description
+    @JsonKey(name: 'max_context_length') @Default(32768) int maxContextLength,
+
+    /// No Description
+    @Default([]) List<String> aliases,
+
+    /// No Description
+    @JsonKey(includeIfNull: false) String? deprecation,
+
+    /// No Description
+    @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+    double? defaultModelTemperature,
+
+    ///
+    @Default(FTModelCardType.fineTuned) FTModelCardType type,
+
+    /// No Description
+    required String job,
+
+    /// No Description
+    required String root,
+
+    /// No Description
+    @Default(false) bool archived,
+  }) = _FTModelCard;
+
+  /// Object construction from a JSON representation
+  factory FTModelCard.fromJson(Map<String, dynamic> json) =>
+      _$FTModelCardFromJson(json);
+
+  /// List of all property names of schema
+  static const List<String> propertyNames = [
+    'id',
+    'object',
+    'created',
+    'owned_by',
+    'capabilities',
+    'name',
+    'description',
+    'max_context_length',
+    'aliases',
+    'deprecation',
+    'default_model_temperature',
+    'type',
+    'job',
+    'root',
+    'archived'
+  ];
+
+  /// Validation constants
+  static const maxContextLengthDefaultValue = 32768;
+
+  /// Perform validations on the schema property values
+  String? validateSchema() {
+    return null;
+  }
+
+  /// Map representation of object (not serialized)
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'object': object,
+      'created': created,
+      'owned_by': ownedBy,
+      'capabilities': capabilities,
+      'name': name,
+      'description': description,
+      'max_context_length': maxContextLength,
+      'aliases': aliases,
+      'deprecation': deprecation,
+      'default_model_temperature': defaultModelTemperature,
+      'type': type,
+      'job': job,
+      'root': root,
+      'archived': archived,
+    };
+  }
+}
+
+// ==========================================
+// ENUM: FTModelCardType
+// ==========================================
+
+/// No Description
+enum FTModelCardType {
+  @JsonValue('fine-tuned')
+  fineTuned,
 }
 
 // ==========================================
@@ -107,6 +334,9 @@ class ModelCapabilities with _$ModelCapabilities {
 
     /// No Description
     @JsonKey(name: 'fine_tuning') @Default(false) bool fineTuning,
+
+    /// No Description
+    @Default(false) bool vision,
   }) = _ModelCapabilities;
 
   /// Object construction from a JSON representation
@@ -118,7 +348,8 @@ class ModelCapabilities with _$ModelCapabilities {
     'completion_chat',
     'completion_fim',
     'function_calling',
-    'fine_tuning'
+    'fine_tuning',
+    'vision'
   ];
 
   /// Perform validations on the schema property values
@@ -133,101 +364,7 @@ class ModelCapabilities with _$ModelCapabilities {
       'completion_fim': completionFim,
       'function_calling': functionCalling,
       'fine_tuning': fineTuning,
-    };
-  }
-}
-
-// ==========================================
-// CLASS: ModelCard
-// ==========================================
-
-/// No Description
-@freezed
-class ModelCard with _$ModelCard {
-  const ModelCard._();
-
-  /// Factory constructor for ModelCard
-  const factory ModelCard({
-    /// No Description
-    required String id,
-
-    /// No Description
-    @Default('model') String object,
-
-    /// No Description
-    @JsonKey(includeIfNull: false) int? created,
-
-    /// No Description
-    @JsonKey(name: 'owned_by') @Default('mistralai') String ownedBy,
-
-    /// No Description
-    @JsonKey(includeIfNull: false) String? root,
-
-    /// No Description
-    @Default(false) bool archived,
-
-    /// No Description
-    @JsonKey(includeIfNull: false) String? name,
-
-    /// No Description
-    @JsonKey(includeIfNull: false) String? description,
-
-    /// No Description
-    required ModelCapabilities capabilities,
-
-    /// No Description
-    @JsonKey(name: 'max_context_length') @Default(32768) int maxContextLength,
-
-    /// No Description
-    @Default([]) List<String> aliases,
-
-    /// No Description
-    @JsonKey(includeIfNull: false) String? deprecation,
-  }) = _ModelCard;
-
-  /// Object construction from a JSON representation
-  factory ModelCard.fromJson(Map<String, dynamic> json) =>
-      _$ModelCardFromJson(json);
-
-  /// List of all property names of schema
-  static const List<String> propertyNames = [
-    'id',
-    'object',
-    'created',
-    'owned_by',
-    'root',
-    'archived',
-    'name',
-    'description',
-    'capabilities',
-    'max_context_length',
-    'aliases',
-    'deprecation'
-  ];
-
-  /// Validation constants
-  static const maxContextLengthDefaultValue = 32768;
-
-  /// Perform validations on the schema property values
-  String? validateSchema() {
-    return null;
-  }
-
-  /// Map representation of object (not serialized)
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'object': object,
-      'created': created,
-      'owned_by': ownedBy,
-      'root': root,
-      'archived': archived,
-      'name': name,
-      'description': description,
-      'capabilities': capabilities,
-      'max_context_length': maxContextLength,
-      'aliases': aliases,
-      'deprecation': deprecation,
+      'vision': vision,
     };
   }
 }
@@ -247,7 +384,7 @@ class ModelList with _$ModelList {
     @Default('list') String object,
 
     /// No Description
-    @JsonKey(includeIfNull: false) List<ModelCard>? data,
+    @JsonKey(includeIfNull: false) List<dynamic>? data,
   }) = _ModelList;
 
   /// Object construction from a JSON representation
@@ -315,6 +452,18 @@ class ValidationError with _$ValidationError {
 }
 
 // ==========================================
+// ENUM: FilePurpose
+// ==========================================
+
+/// No Description
+enum FilePurpose {
+  @JsonValue('fine-tune')
+  fineTune,
+  @JsonValue('batch')
+  batch,
+}
+
+// ==========================================
 // ENUM: SampleType
 // ==========================================
 
@@ -324,6 +473,12 @@ enum SampleType {
   pretrain,
   @JsonValue('instruct')
   instruct,
+  @JsonValue('batch_request')
+  batchRequest,
+  @JsonValue('batch_result')
+  batchResult,
+  @JsonValue('batch_error')
+  batchError,
 }
 
 // ==========================================
@@ -336,6 +491,8 @@ enum Source {
   upload,
   @JsonValue('repository')
   repository,
+  @JsonValue('mistral')
+  mistral,
 }
 
 // ==========================================
@@ -365,7 +522,7 @@ class UploadFileOut with _$UploadFileOut {
     required String filename,
 
     /// The intended purpose of the uploaded file. Only accepts fine-tuning (`fine-tune`) for now.
-    required Purpose purpose,
+    required FilePurpose purpose,
 
     ///
     @JsonKey(name: 'sample_type') required SampleType sampleType,
@@ -416,16 +573,6 @@ class UploadFileOut with _$UploadFileOut {
 }
 
 // ==========================================
-// ENUM: Purpose
-// ==========================================
-
-/// The intended purpose of the uploaded file. Only accepts fine-tuning (`fine-tune`) for now.
-enum Purpose {
-  @JsonValue('fine-tune')
-  fineTune,
-}
-
-// ==========================================
 // CLASS: FileSchema
 // ==========================================
 
@@ -452,7 +599,7 @@ class FileSchema with _$FileSchema {
     required String filename,
 
     /// The intended purpose of the uploaded file. Only accepts fine-tuning (`fine-tune`) for now.
-    required FileSchemaPurpose purpose,
+    required FilePurpose purpose,
 
     ///
     @JsonKey(name: 'sample_type') required SampleType sampleType,
@@ -503,16 +650,6 @@ class FileSchema with _$FileSchema {
 }
 
 // ==========================================
-// ENUM: FileSchemaPurpose
-// ==========================================
-
-/// The intended purpose of the uploaded file. Only accepts fine-tuning (`fine-tune`) for now.
-enum FileSchemaPurpose {
-  @JsonValue('fine-tune')
-  fineTune,
-}
-
-// ==========================================
 // CLASS: ListFilesOut
 // ==========================================
 
@@ -528,6 +665,9 @@ class ListFilesOut with _$ListFilesOut {
 
     /// No Description
     required String object,
+
+    /// No Description
+    required int total,
   }) = _ListFilesOut;
 
   /// Object construction from a JSON representation
@@ -535,7 +675,7 @@ class ListFilesOut with _$ListFilesOut {
       _$ListFilesOutFromJson(json);
 
   /// List of all property names of schema
-  static const List<String> propertyNames = ['data', 'object'];
+  static const List<String> propertyNames = ['data', 'object', 'total'];
 
   /// Perform validations on the schema property values
   String? validateSchema() {
@@ -547,6 +687,7 @@ class ListFilesOut with _$ListFilesOut {
     return {
       'data': data,
       'object': object,
+      'total': total,
     };
   }
 }
@@ -578,7 +719,7 @@ class RetrieveFileOut with _$RetrieveFileOut {
     required String filename,
 
     /// The intended purpose of the uploaded file. Only accepts fine-tuning (`fine-tune`) for now.
-    required RetrieveFileOutPurpose purpose,
+    required FilePurpose purpose,
 
     ///
     @JsonKey(name: 'sample_type') required SampleType sampleType,
@@ -588,6 +729,9 @@ class RetrieveFileOut with _$RetrieveFileOut {
 
     ///
     required Source source,
+
+    /// No Description
+    required bool deleted,
   }) = _RetrieveFileOut;
 
   /// Object construction from a JSON representation
@@ -604,7 +748,8 @@ class RetrieveFileOut with _$RetrieveFileOut {
     'purpose',
     'sample_type',
     'num_lines',
-    'source'
+    'source',
+    'deleted'
   ];
 
   /// Perform validations on the schema property values
@@ -624,18 +769,9 @@ class RetrieveFileOut with _$RetrieveFileOut {
       'sample_type': sampleType,
       'num_lines': numLines,
       'source': source,
+      'deleted': deleted,
     };
   }
-}
-
-// ==========================================
-// ENUM: RetrieveFileOutPurpose
-// ==========================================
-
-/// The intended purpose of the uploaded file. Only accepts fine-tuning (`fine-tune`) for now.
-enum RetrieveFileOutPurpose {
-  @JsonValue('fine-tune')
-  fineTune,
 }
 
 // ==========================================
@@ -711,7 +847,7 @@ class GithubRepositoryOut with _$GithubRepositoryOut {
   /// Factory constructor for GithubRepositoryOut
   const factory GithubRepositoryOut({
     ///
-    @Default(Type.github) Type type,
+    required Type type,
 
     /// No Description
     required String name,
@@ -1100,6 +1236,9 @@ class TrainingParameters with _$TrainingParameters {
     @JsonKey(name: 'fim_ratio', includeIfNull: false)
     @Default(0.9)
     double? fimRatio,
+
+    /// No Description
+    @JsonKey(name: 'seq_len', includeIfNull: false) int? seqLen,
   }) = _TrainingParameters;
 
   /// Object construction from a JSON representation
@@ -1113,7 +1252,8 @@ class TrainingParameters with _$TrainingParameters {
     'weight_decay',
     'warmup_fraction',
     'epochs',
-    'fim_ratio'
+    'fim_ratio',
+    'seq_len'
   ];
 
   /// Validation constants
@@ -1131,6 +1271,7 @@ class TrainingParameters with _$TrainingParameters {
   static const fimRatioDefaultValue = 0.9;
   static const fimRatioMinValue = 0.0;
   static const fimRatioMaxValue = 1.0;
+  static const seqLenMinValue = 100;
 
   /// Perform validations on the schema property values
   String? validateSchema() {
@@ -1164,6 +1305,9 @@ class TrainingParameters with _$TrainingParameters {
     if (fimRatio != null && fimRatio! > fimRatioMaxValue) {
       return "The value of 'fimRatio' cannot be > $fimRatioMaxValue";
     }
+    if (seqLen != null && seqLen! < seqLenMinValue) {
+      return "The value of 'seqLen' cannot be < $seqLenMinValue";
+    }
     return null;
   }
 
@@ -1176,6 +1320,7 @@ class TrainingParameters with _$TrainingParameters {
       'warmup_fraction': warmupFraction,
       'epochs': epochs,
       'fim_ratio': fimRatio,
+      'seq_len': seqLen,
     };
   }
 }
@@ -1587,6 +1732,9 @@ class TrainingParametersIn with _$TrainingParametersIn {
     @JsonKey(name: 'fim_ratio', includeIfNull: false)
     @Default(0.9)
     double? fimRatio,
+
+    /// No Description
+    @JsonKey(name: 'seq_len', includeIfNull: false) int? seqLen,
   }) = _TrainingParametersIn;
 
   /// Object construction from a JSON representation
@@ -1600,7 +1748,8 @@ class TrainingParametersIn with _$TrainingParametersIn {
     'weight_decay',
     'warmup_fraction',
     'epochs',
-    'fim_ratio'
+    'fim_ratio',
+    'seq_len'
   ];
 
   /// Validation constants
@@ -1618,6 +1767,7 @@ class TrainingParametersIn with _$TrainingParametersIn {
   static const fimRatioDefaultValue = 0.9;
   static const fimRatioMinValue = 0.0;
   static const fimRatioMaxValue = 1.0;
+  static const seqLenMinValue = 100;
 
   /// Perform validations on the schema property values
   String? validateSchema() {
@@ -1651,6 +1801,9 @@ class TrainingParametersIn with _$TrainingParametersIn {
     if (fimRatio != null && fimRatio! > fimRatioMaxValue) {
       return "The value of 'fimRatio' cannot be > $fimRatioMaxValue";
     }
+    if (seqLen != null && seqLen! < seqLenMinValue) {
+      return "The value of 'seqLen' cannot be < $seqLenMinValue";
+    }
     return null;
   }
 
@@ -1663,6 +1816,7 @@ class TrainingParametersIn with _$TrainingParametersIn {
       'warmup_fraction': warmupFraction,
       'epochs': epochs,
       'fim_ratio': fimRatio,
+      'seq_len': seqLen,
     };
   }
 }
@@ -2353,6 +2507,326 @@ enum UnarchiveFTModelOutObject {
 }
 
 // ==========================================
+// ENUM: BatchJobStatus
+// ==========================================
+
+/// No Description
+enum BatchJobStatus {
+  @JsonValue('QUEUED')
+  queued,
+  @JsonValue('RUNNING')
+  running,
+  @JsonValue('SUCCESS')
+  success,
+  @JsonValue('FAILED')
+  failed,
+  @JsonValue('TIMEOUT_EXCEEDED')
+  timeoutExceeded,
+  @JsonValue('CANCELLATION_REQUESTED')
+  cancellationRequested,
+  @JsonValue('CANCELLED')
+  cancelled,
+}
+
+// ==========================================
+// CLASS: BatchError
+// ==========================================
+
+/// No Description
+@freezed
+class BatchError with _$BatchError {
+  const BatchError._();
+
+  /// Factory constructor for BatchError
+  const factory BatchError({
+    /// No Description
+    required String message,
+
+    /// No Description
+    @Default(1) int count,
+  }) = _BatchError;
+
+  /// Object construction from a JSON representation
+  factory BatchError.fromJson(Map<String, dynamic> json) =>
+      _$BatchErrorFromJson(json);
+
+  /// List of all property names of schema
+  static const List<String> propertyNames = ['message', 'count'];
+
+  /// Validation constants
+  static const countDefaultValue = 1;
+
+  /// Perform validations on the schema property values
+  String? validateSchema() {
+    return null;
+  }
+
+  /// Map representation of object (not serialized)
+  Map<String, dynamic> toMap() {
+    return {
+      'message': message,
+      'count': count,
+    };
+  }
+}
+
+// ==========================================
+// CLASS: BatchJobOut
+// ==========================================
+
+/// No Description
+@freezed
+class BatchJobOut with _$BatchJobOut {
+  const BatchJobOut._();
+
+  /// Factory constructor for BatchJobOut
+  const factory BatchJobOut({
+    /// No Description
+    required String id,
+
+    ///
+    @Default(BatchJobOutEnum.batch) BatchJobOutEnum object,
+
+    /// No Description
+    @JsonKey(name: 'input_files') required List<String> inputFiles,
+
+    /// No Description
+    @JsonKey(includeIfNull: false) Map<String, dynamic>? metadata,
+
+    /// No Description
+    required String endpoint,
+
+    /// No Description
+    required String model,
+
+    /// No Description
+    @JsonKey(name: 'output_file', includeIfNull: false) String? outputFile,
+
+    /// No Description
+    @JsonKey(name: 'error_file', includeIfNull: false) String? errorFile,
+
+    /// No Description
+    required List<BatchError> errors,
+
+    ///
+    required BatchJobStatus status,
+
+    /// No Description
+    @JsonKey(name: 'created_at') required int createdAt,
+
+    /// No Description
+    @JsonKey(name: 'total_requests') required int totalRequests,
+
+    /// No Description
+    @JsonKey(name: 'completed_requests') required int completedRequests,
+
+    /// No Description
+    @JsonKey(name: 'succeeded_requests') required int succeededRequests,
+
+    /// No Description
+    @JsonKey(name: 'failed_requests') required int failedRequests,
+
+    /// No Description
+    @JsonKey(name: 'started_at', includeIfNull: false) int? startedAt,
+
+    /// No Description
+    @JsonKey(name: 'completed_at', includeIfNull: false) int? completedAt,
+  }) = _BatchJobOut;
+
+  /// Object construction from a JSON representation
+  factory BatchJobOut.fromJson(Map<String, dynamic> json) =>
+      _$BatchJobOutFromJson(json);
+
+  /// List of all property names of schema
+  static const List<String> propertyNames = [
+    'id',
+    'object',
+    'input_files',
+    'metadata',
+    'endpoint',
+    'model',
+    'output_file',
+    'error_file',
+    'errors',
+    'status',
+    'created_at',
+    'total_requests',
+    'completed_requests',
+    'succeeded_requests',
+    'failed_requests',
+    'started_at',
+    'completed_at'
+  ];
+
+  /// Perform validations on the schema property values
+  String? validateSchema() {
+    return null;
+  }
+
+  /// Map representation of object (not serialized)
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'object': object,
+      'input_files': inputFiles,
+      'metadata': metadata,
+      'endpoint': endpoint,
+      'model': model,
+      'output_file': outputFile,
+      'error_file': errorFile,
+      'errors': errors,
+      'status': status,
+      'created_at': createdAt,
+      'total_requests': totalRequests,
+      'completed_requests': completedRequests,
+      'succeeded_requests': succeededRequests,
+      'failed_requests': failedRequests,
+      'started_at': startedAt,
+      'completed_at': completedAt,
+    };
+  }
+}
+
+// ==========================================
+// ENUM: BatchJobOutEnum
+// ==========================================
+
+/// No Description
+enum BatchJobOutEnum {
+  @JsonValue('batch')
+  batch,
+}
+
+// ==========================================
+// CLASS: BatchJobsOut
+// ==========================================
+
+/// No Description
+@freezed
+class BatchJobsOut with _$BatchJobsOut {
+  const BatchJobsOut._();
+
+  /// Factory constructor for BatchJobsOut
+  const factory BatchJobsOut({
+    /// No Description
+    @Default([]) List<BatchJobOut> data,
+
+    ///
+    @Default(BatchJobsOutObject.list) BatchJobsOutObject object,
+
+    /// No Description
+    required int total,
+  }) = _BatchJobsOut;
+
+  /// Object construction from a JSON representation
+  factory BatchJobsOut.fromJson(Map<String, dynamic> json) =>
+      _$BatchJobsOutFromJson(json);
+
+  /// List of all property names of schema
+  static const List<String> propertyNames = ['data', 'object', 'total'];
+
+  /// Perform validations on the schema property values
+  String? validateSchema() {
+    return null;
+  }
+
+  /// Map representation of object (not serialized)
+  Map<String, dynamic> toMap() {
+    return {
+      'data': data,
+      'object': object,
+      'total': total,
+    };
+  }
+}
+
+// ==========================================
+// ENUM: BatchJobsOutObject
+// ==========================================
+
+/// No Description
+enum BatchJobsOutObject {
+  @JsonValue('list')
+  list,
+}
+
+// ==========================================
+// ENUM: ApiEndpoint
+// ==========================================
+
+/// No Description
+enum ApiEndpoint {
+  @JsonValue('/v1/chat/completions')
+  v1ChatCompletions,
+  @JsonValue('/v1/embeddings')
+  v1Embeddings,
+  @JsonValue('/v1/fim/completions')
+  v1FimCompletions,
+  @JsonValue('/v1/moderations')
+  v1Moderations,
+}
+
+// ==========================================
+// CLASS: BatchJobIn
+// ==========================================
+
+/// No Description
+@freezed
+class BatchJobIn with _$BatchJobIn {
+  const BatchJobIn._();
+
+  /// Factory constructor for BatchJobIn
+  const factory BatchJobIn({
+    /// No Description
+    @JsonKey(name: 'input_files') required List<String> inputFiles,
+
+    ///
+    required ApiEndpoint endpoint,
+
+    /// No Description
+    required String model,
+
+    /// No Description
+    @JsonKey(includeIfNull: false) Map<String, String>? metadata,
+
+    /// No Description
+    @JsonKey(name: 'timeout_hours') @Default(24) int timeoutHours,
+  }) = _BatchJobIn;
+
+  /// Object construction from a JSON representation
+  factory BatchJobIn.fromJson(Map<String, dynamic> json) =>
+      _$BatchJobInFromJson(json);
+
+  /// List of all property names of schema
+  static const List<String> propertyNames = [
+    'input_files',
+    'endpoint',
+    'model',
+    'metadata',
+    'timeout_hours'
+  ];
+
+  /// Validation constants
+  static const timeoutHoursDefaultValue = 24;
+
+  /// Perform validations on the schema property values
+  String? validateSchema() {
+    return null;
+  }
+
+  /// Map representation of object (not serialized)
+  Map<String, dynamic> toMap() {
+    return {
+      'input_files': inputFiles,
+      'endpoint': endpoint,
+      'model': model,
+      'metadata': metadata,
+      'timeout_hours': timeoutHours,
+    };
+  }
+}
+
+// ==========================================
 // CLASS: AssistantMessage
 // ==========================================
 
@@ -2464,10 +2938,17 @@ class ChatCompletionRequest with _$ChatCompletionRequest {
     /// No Description
     @JsonKey(includeIfNull: false) List<Tool>? tools,
 
-    ///
-    @JsonKey(name: 'tool_choice')
-    @Default(ToolChoice.auto)
-    ToolChoice toolChoice,
+    /// ToolChoice is either a ToolChoiceEnum or a ToolChoice
+    @JsonKey(name: 'tool_choice', includeIfNull: false) ToolChoice? toolChoice,
+
+    /// presence_penalty determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative.
+    @JsonKey(name: 'presence_penalty') @Default(0.0) double presencePenalty,
+
+    /// frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
+    @JsonKey(name: 'frequency_penalty') @Default(0.0) double frequencyPenalty,
+
+    /// Number of completions to return for each request, input tokens are only billed once.
+    @JsonKey(includeIfNull: false) int? n,
 
     /// Whether to inject a safety prompt before all conversations.
     @JsonKey(name: 'safe_prompt') @Default(false) bool safePrompt,
@@ -2491,6 +2972,9 @@ class ChatCompletionRequest with _$ChatCompletionRequest {
     'response_format',
     'tools',
     'tool_choice',
+    'presence_penalty',
+    'frequency_penalty',
+    'n',
     'safe_prompt'
   ];
 
@@ -2504,6 +2988,13 @@ class ChatCompletionRequest with _$ChatCompletionRequest {
   static const maxTokensMinValue = 0;
   static const minTokensMinValue = 0;
   static const randomSeedMinValue = 0;
+  static const presencePenaltyDefaultValue = 0.0;
+  static const presencePenaltyMinValue = -2.0;
+  static const presencePenaltyMaxValue = 2.0;
+  static const frequencyPenaltyDefaultValue = 0.0;
+  static const frequencyPenaltyMinValue = -2.0;
+  static const frequencyPenaltyMaxValue = 2.0;
+  static const nMinValue = 1;
 
   /// Perform validations on the schema property values
   String? validateSchema() {
@@ -2528,6 +3019,21 @@ class ChatCompletionRequest with _$ChatCompletionRequest {
     if (randomSeed != null && randomSeed! < randomSeedMinValue) {
       return "The value of 'randomSeed' cannot be < $randomSeedMinValue";
     }
+    if (presencePenalty < presencePenaltyMinValue) {
+      return "The value of 'presencePenalty' cannot be < $presencePenaltyMinValue";
+    }
+    if (presencePenalty > presencePenaltyMaxValue) {
+      return "The value of 'presencePenalty' cannot be > $presencePenaltyMaxValue";
+    }
+    if (frequencyPenalty < frequencyPenaltyMinValue) {
+      return "The value of 'frequencyPenalty' cannot be < $frequencyPenaltyMinValue";
+    }
+    if (frequencyPenalty > frequencyPenaltyMaxValue) {
+      return "The value of 'frequencyPenalty' cannot be > $frequencyPenaltyMaxValue";
+    }
+    if (n != null && n! < nMinValue) {
+      return "The value of 'n' cannot be < $nMinValue";
+    }
     return null;
   }
 
@@ -2546,6 +3052,9 @@ class ChatCompletionRequest with _$ChatCompletionRequest {
       'response_format': responseFormat,
       'tools': tools,
       'tool_choice': toolChoice,
+      'presence_penalty': presencePenalty,
+      'frequency_penalty': frequencyPenalty,
+      'n': n,
       'safe_prompt': safePrompt,
     };
   }
@@ -2603,55 +3112,6 @@ class _StopConverter implements JsonConverter<Stop?, Object?> {
 }
 
 // ==========================================
-// ENUM: ChunkTypes
-// ==========================================
-
-/// No Description
-enum ChunkTypes {
-  @JsonValue('text')
-  text,
-}
-
-// ==========================================
-// CLASS: ContentChunk
-// ==========================================
-
-/// No Description
-@freezed
-class ContentChunk with _$ContentChunk {
-  const ContentChunk._();
-
-  /// Factory constructor for ContentChunk
-  const factory ContentChunk({
-    ///
-    @Default(ChunkTypes.text) ChunkTypes type,
-
-    /// No Description
-    required String text,
-  }) = _ContentChunk;
-
-  /// Object construction from a JSON representation
-  factory ContentChunk.fromJson(Map<String, dynamic> json) =>
-      _$ContentChunkFromJson(json);
-
-  /// List of all property names of schema
-  static const List<String> propertyNames = ['type', 'text'];
-
-  /// Perform validations on the schema property values
-  String? validateSchema() {
-    return null;
-  }
-
-  /// Map representation of object (not serialized)
-  Map<String, dynamic> toMap() {
-    return {
-      'type': type,
-      'text': text,
-    };
-  }
-}
-
-// ==========================================
 // CLASS: FIMCompletionRequest
 // ==========================================
 
@@ -2676,9 +3136,6 @@ class FIMCompletionRequest with _$FIMCompletionRequest {
     /// The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length.
     @JsonKey(name: 'max_tokens', includeIfNull: false) int? maxTokens,
 
-    /// The minimum number of tokens to generate in the completion.
-    @JsonKey(name: 'min_tokens', includeIfNull: false) int? minTokens,
-
     /// Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON.
     @Default(false) bool stream,
 
@@ -2695,6 +3152,9 @@ class FIMCompletionRequest with _$FIMCompletionRequest {
 
     /// Optional text/code that adds more context for the model. When given a `prompt` and a `suffix` the model will fill what is between them. When `suffix` is not provided, the model will simply execute completion starting with `prompt`.
     @JsonKey(includeIfNull: false) @Default('') String? suffix,
+
+    /// The minimum number of tokens to generate in the completion.
+    @JsonKey(name: 'min_tokens', includeIfNull: false) int? minTokens,
   }) = _FIMCompletionRequest;
 
   /// Object construction from a JSON representation
@@ -2707,12 +3167,12 @@ class FIMCompletionRequest with _$FIMCompletionRequest {
     'temperature',
     'top_p',
     'max_tokens',
-    'min_tokens',
     'stream',
     'stop',
     'random_seed',
     'prompt',
-    'suffix'
+    'suffix',
+    'min_tokens'
   ];
 
   /// Validation constants
@@ -2723,8 +3183,8 @@ class FIMCompletionRequest with _$FIMCompletionRequest {
   static const topPMinValue = 0.0;
   static const topPMaxValue = 1.0;
   static const maxTokensMinValue = 0;
-  static const minTokensMinValue = 0;
   static const randomSeedMinValue = 0;
+  static const minTokensMinValue = 0;
 
   /// Perform validations on the schema property values
   String? validateSchema() {
@@ -2743,11 +3203,11 @@ class FIMCompletionRequest with _$FIMCompletionRequest {
     if (maxTokens != null && maxTokens! < maxTokensMinValue) {
       return "The value of 'maxTokens' cannot be < $maxTokensMinValue";
     }
-    if (minTokens != null && minTokens! < minTokensMinValue) {
-      return "The value of 'minTokens' cannot be < $minTokensMinValue";
-    }
     if (randomSeed != null && randomSeed! < randomSeedMinValue) {
       return "The value of 'randomSeed' cannot be < $randomSeedMinValue";
+    }
+    if (minTokens != null && minTokens! < minTokensMinValue) {
+      return "The value of 'minTokens' cannot be < $minTokensMinValue";
     }
     return null;
   }
@@ -2759,12 +3219,12 @@ class FIMCompletionRequest with _$FIMCompletionRequest {
       'temperature': temperature,
       'top_p': topP,
       'max_tokens': maxTokens,
-      'min_tokens': minTokens,
       'stream': stream,
       'stop': stop,
       'random_seed': randomSeed,
       'prompt': prompt,
       'suffix': suffix,
+      'min_tokens': minTokens,
     };
   }
 }
@@ -2954,6 +3414,232 @@ class _ArgumentsConverter implements JsonConverter<Arguments, Object?> {
       _UnionArgumentsMap(value: final v) => v,
     };
   }
+}
+
+// ==========================================
+// CLASS: FunctionName
+// ==========================================
+
+/// this restriction of `Function` is used to select a specific function to call
+@freezed
+class FunctionName with _$FunctionName {
+  const FunctionName._();
+
+  /// Factory constructor for FunctionName
+  const factory FunctionName({
+    /// No Description
+    required String name,
+  }) = _FunctionName;
+
+  /// Object construction from a JSON representation
+  factory FunctionName.fromJson(Map<String, dynamic> json) =>
+      _$FunctionNameFromJson(json);
+
+  /// List of all property names of schema
+  static const List<String> propertyNames = ['name'];
+
+  /// Perform validations on the schema property values
+  String? validateSchema() {
+    return null;
+  }
+
+  /// Map representation of object (not serialized)
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+    };
+  }
+}
+
+// ==========================================
+// CLASS: ImageURL
+// ==========================================
+
+/// No Description
+@freezed
+class ImageURL with _$ImageURL {
+  const ImageURL._();
+
+  /// Factory constructor for ImageURL
+  const factory ImageURL({
+    /// No Description
+    required String url,
+
+    /// No Description
+    @JsonKey(includeIfNull: false) String? detail,
+  }) = _ImageURL;
+
+  /// Object construction from a JSON representation
+  factory ImageURL.fromJson(Map<String, dynamic> json) =>
+      _$ImageURLFromJson(json);
+
+  /// List of all property names of schema
+  static const List<String> propertyNames = ['url', 'detail'];
+
+  /// Perform validations on the schema property values
+  String? validateSchema() {
+    return null;
+  }
+
+  /// Map representation of object (not serialized)
+  Map<String, dynamic> toMap() {
+    return {
+      'url': url,
+      'detail': detail,
+    };
+  }
+}
+
+// ==========================================
+// CLASS: ImageURLChunk
+// ==========================================
+
+/// {"type":"image_url","image_url":{"url":"data:image/png;base64,iVBORw0
+@freezed
+class ImageURLChunk with _$ImageURLChunk {
+  const ImageURLChunk._();
+
+  /// Factory constructor for ImageURLChunk
+  const factory ImageURLChunk({
+    ///
+    @Default(ImageURLChunkType.imageUrl) ImageURLChunkType type,
+
+    /// No Description
+    @_ImageUrlConverter()
+    @JsonKey(name: 'image_url')
+    required ImageUrl imageUrl,
+  }) = _ImageURLChunk;
+
+  /// Object construction from a JSON representation
+  factory ImageURLChunk.fromJson(Map<String, dynamic> json) =>
+      _$ImageURLChunkFromJson(json);
+
+  /// List of all property names of schema
+  static const List<String> propertyNames = ['type', 'image_url'];
+
+  /// Perform validations on the schema property values
+  String? validateSchema() {
+    return null;
+  }
+
+  /// Map representation of object (not serialized)
+  Map<String, dynamic> toMap() {
+    return {
+      'type': type,
+      'image_url': imageUrl,
+    };
+  }
+}
+
+// ==========================================
+// ENUM: ImageURLChunkType
+// ==========================================
+
+/// No Description
+enum ImageURLChunkType {
+  @JsonValue('image_url')
+  imageUrl,
+}
+
+// ==========================================
+// CLASS: ImageUrl
+// ==========================================
+
+/// No Description
+@freezed
+sealed class ImageUrl with _$ImageUrl {
+  const ImageUrl._();
+
+  const factory ImageUrl.imageURL(
+    ImageURL value,
+  ) = _UnionImageUrlImageURL;
+
+  const factory ImageUrl.string(
+    String value,
+  ) = _UnionImageUrlString;
+
+  /// Object construction from a JSON representation
+  factory ImageUrl.fromJson(Map<String, dynamic> json) =>
+      _$ImageUrlFromJson(json);
+}
+
+/// Custom JSON converter for [ImageUrl]
+class _ImageUrlConverter implements JsonConverter<ImageUrl, Object?> {
+  const _ImageUrlConverter();
+
+  @override
+  ImageUrl fromJson(Object? data) {
+    if (data is Map<String, dynamic>) {
+      try {
+        return ImageUrl.imageURL(
+          ImageURL.fromJson(data),
+        );
+      } catch (e) {}
+    }
+    if (data is String) {
+      return ImageUrl.string(data);
+    }
+    throw Exception(
+      'Unexpected value for ImageUrl: $data',
+    );
+  }
+
+  @override
+  Object? toJson(ImageUrl data) {
+    return switch (data) {
+      _UnionImageUrlImageURL(value: final v) => v.toJson(),
+      _UnionImageUrlString(value: final v) => v,
+    };
+  }
+}
+
+// ==========================================
+// CLASS: ReferenceChunk
+// ==========================================
+
+/// No Description
+@freezed
+class ReferenceChunk with _$ReferenceChunk {
+  const ReferenceChunk._();
+
+  /// Factory constructor for ReferenceChunk
+  const factory ReferenceChunk({
+    ///
+    @Default(ReferenceChunkType.reference) ReferenceChunkType type,
+
+    /// No Description
+    @JsonKey(name: 'reference_ids') required List<int> referenceIds,
+  }) = _ReferenceChunk;
+
+  /// Object construction from a JSON representation
+  factory ReferenceChunk.fromJson(Map<String, dynamic> json) =>
+      _$ReferenceChunkFromJson(json);
+
+  /// List of all property names of schema
+  static const List<String> propertyNames = ['type', 'reference_ids'];
+
+  /// Perform validations on the schema property values
+  String? validateSchema() {
+    return null;
+  }
+
+  /// Map representation of object (not serialized)
+  Map<String, dynamic> toMap() {
+    return {
+      'type': type,
+      'reference_ids': referenceIds,
+    };
+  }
+}
+
+// ==========================================
+// ENUM: ReferenceChunkType
+// ==========================================
+
+/// No Description
+enum ReferenceChunkType {
+  @JsonValue('reference')
+  reference,
 }
 
 // ==========================================
@@ -3231,17 +3917,58 @@ class ToolCall with _$ToolCall {
 }
 
 // ==========================================
-// ENUM: ToolChoice
+// CLASS: ToolChoice
+// ==========================================
+
+/// ToolChoice is either a ToolChoiceEnum or a ToolChoice
+@freezed
+class ToolChoice with _$ToolChoice {
+  const ToolChoice._();
+
+  /// Factory constructor for ToolChoice
+  const factory ToolChoice({
+    ///
+    @Default(ToolTypes.function) ToolTypes type,
+
+    /// this restriction of `Function` is used to select a specific function to call
+    required FunctionName function,
+  }) = _ToolChoice;
+
+  /// Object construction from a JSON representation
+  factory ToolChoice.fromJson(Map<String, dynamic> json) =>
+      _$ToolChoiceFromJson(json);
+
+  /// List of all property names of schema
+  static const List<String> propertyNames = ['type', 'function'];
+
+  /// Perform validations on the schema property values
+  String? validateSchema() {
+    return null;
+  }
+
+  /// Map representation of object (not serialized)
+  Map<String, dynamic> toMap() {
+    return {
+      'type': type,
+      'function': function,
+    };
+  }
+}
+
+// ==========================================
+// ENUM: ToolChoiceEnum
 // ==========================================
 
 /// No Description
-enum ToolChoice {
+enum ToolChoiceEnum {
   @JsonValue('auto')
   auto,
   @JsonValue('none')
   none,
   @JsonValue('any')
   any,
+  @JsonValue('required')
+  required,
 }
 
 // ==========================================
@@ -3256,7 +3983,7 @@ class ToolMessage with _$ToolMessage {
   /// Factory constructor for ToolMessage
   const factory ToolMessage({
     /// No Description
-    required String content,
+    required String? content,
 
     /// No Description
     @JsonKey(name: 'tool_call_id', includeIfNull: false) String? toolCallId,
@@ -3328,7 +4055,7 @@ class UserMessage with _$UserMessage {
   /// Factory constructor for UserMessage
   const factory UserMessage({
     /// No Description
-    @_UserMessageContentConverter() required UserMessageContent content,
+    required String? content,
 
     ///
     @Default(UserMessageRole.user) UserMessageRole role,
@@ -3351,55 +4078,6 @@ class UserMessage with _$UserMessage {
     return {
       'content': content,
       'role': role,
-    };
-  }
-}
-
-// ==========================================
-// CLASS: UserMessageContent
-// ==========================================
-
-/// No Description
-@freezed
-sealed class UserMessageContent with _$UserMessageContent {
-  const UserMessageContent._();
-
-  const factory UserMessageContent.array(
-    List<TextChunk> value,
-  ) = _UnionUserMessageContentArray;
-
-  const factory UserMessageContent.string(
-    String value,
-  ) = _UnionUserMessageContentString;
-
-  /// Object construction from a JSON representation
-  factory UserMessageContent.fromJson(Map<String, dynamic> json) =>
-      _$UserMessageContentFromJson(json);
-}
-
-/// Custom JSON converter for [UserMessageContent]
-class _UserMessageContentConverter
-    implements JsonConverter<UserMessageContent, Object?> {
-  const _UserMessageContentConverter();
-
-  @override
-  UserMessageContent fromJson(Object? data) {
-    if (data is List && data.every((item) => item is TextChunk)) {
-      return UserMessageContent.array(data.cast());
-    }
-    if (data is String) {
-      return UserMessageContent.string(data);
-    }
-    throw Exception(
-      'Unexpected value for UserMessageContent: $data',
-    );
-  }
-
-  @override
-  Object? toJson(UserMessageContent data) {
-    return switch (data) {
-      _UnionUserMessageContentArray(value: final v) => v,
-      _UnionUserMessageContentString(value: final v) => v,
     };
   }
 }
@@ -3428,9 +4106,6 @@ class AgentsCompletionRequest with _$AgentsCompletionRequest {
     /// The maximum number of tokens to generate in the completion. The token count of your prompt plus `max_tokens` cannot exceed the model's context length.
     @JsonKey(name: 'max_tokens', includeIfNull: false) int? maxTokens,
 
-    /// The minimum number of tokens to generate in the completion.
-    @JsonKey(name: 'min_tokens', includeIfNull: false) int? minTokens,
-
     /// Whether to stream back partial progress. If set, tokens will be sent as data-only server-side events as they become available, with the stream terminated by a data: [DONE] message. Otherwise, the server will hold the request open until the timeout or until completion, with the response containing the full result as JSON.
     @Default(false) bool stream,
 
@@ -3447,7 +4122,7 @@ class AgentsCompletionRequest with _$AgentsCompletionRequest {
     ///
     /// You can pass only this types into to the list [UserMessage],
     /// [AssistantMessage], [ToolMessage].
-    required List<dynamic> messages,
+    required dynamic messages,
 
     /// No Description
     @JsonKey(name: 'response_format', includeIfNull: false)
@@ -3456,10 +4131,17 @@ class AgentsCompletionRequest with _$AgentsCompletionRequest {
     /// No Description
     @JsonKey(includeIfNull: false) List<Tool>? tools,
 
-    ///
-    @JsonKey(name: 'tool_choice')
-    @Default(ToolChoice.auto)
-    ToolChoice toolChoice,
+    /// ToolChoice is either a ToolChoiceEnum or a ToolChoice
+    @JsonKey(name: 'tool_choice', includeIfNull: false) ToolChoice? toolChoice,
+
+    /// presence_penalty determines how much the model penalizes the repetition of words or phrases. A higher presence penalty encourages the model to use a wider variety of words and phrases, making the output more diverse and creative.
+    @JsonKey(name: 'presence_penalty') @Default(0.0) double presencePenalty,
+
+    /// frequency_penalty penalizes the repetition of words based on their frequency in the generated text. A higher frequency penalty discourages the model from repeating words that have already appeared frequently in the output, promoting diversity and reducing repetition.
+    @JsonKey(name: 'frequency_penalty') @Default(0.0) double frequencyPenalty,
+
+    /// Number of completions to return for each request, input tokens are only billed once.
+    @JsonKey(includeIfNull: false) int? n,
 
     /// The ID of the agent to use for this completion.
     @JsonKey(name: 'agent_id') required String agentId,
@@ -3472,7 +4154,6 @@ class AgentsCompletionRequest with _$AgentsCompletionRequest {
   /// List of all property names of schema
   static const List<String> propertyNames = [
     'max_tokens',
-    'min_tokens',
     'stream',
     'stop',
     'random_seed',
@@ -3480,24 +4161,45 @@ class AgentsCompletionRequest with _$AgentsCompletionRequest {
     'response_format',
     'tools',
     'tool_choice',
+    'presence_penalty',
+    'frequency_penalty',
+    'n',
     'agent_id'
   ];
 
   /// Validation constants
   static const maxTokensMinValue = 0;
-  static const minTokensMinValue = 0;
   static const randomSeedMinValue = 0;
+  static const presencePenaltyDefaultValue = 0.0;
+  static const presencePenaltyMinValue = -2.0;
+  static const presencePenaltyMaxValue = 2.0;
+  static const frequencyPenaltyDefaultValue = 0.0;
+  static const frequencyPenaltyMinValue = -2.0;
+  static const frequencyPenaltyMaxValue = 2.0;
+  static const nMinValue = 1;
 
   /// Perform validations on the schema property values
   String? validateSchema() {
     if (maxTokens != null && maxTokens! < maxTokensMinValue) {
       return "The value of 'maxTokens' cannot be < $maxTokensMinValue";
     }
-    if (minTokens != null && minTokens! < minTokensMinValue) {
-      return "The value of 'minTokens' cannot be < $minTokensMinValue";
-    }
     if (randomSeed != null && randomSeed! < randomSeedMinValue) {
       return "The value of 'randomSeed' cannot be < $randomSeedMinValue";
+    }
+    if (presencePenalty < presencePenaltyMinValue) {
+      return "The value of 'presencePenalty' cannot be < $presencePenaltyMinValue";
+    }
+    if (presencePenalty > presencePenaltyMaxValue) {
+      return "The value of 'presencePenalty' cannot be > $presencePenaltyMaxValue";
+    }
+    if (frequencyPenalty < frequencyPenaltyMinValue) {
+      return "The value of 'frequencyPenalty' cannot be < $frequencyPenaltyMinValue";
+    }
+    if (frequencyPenalty > frequencyPenaltyMaxValue) {
+      return "The value of 'frequencyPenalty' cannot be > $frequencyPenaltyMaxValue";
+    }
+    if (n != null && n! < nMinValue) {
+      return "The value of 'n' cannot be < $nMinValue";
     }
     return null;
   }
@@ -3506,7 +4208,6 @@ class AgentsCompletionRequest with _$AgentsCompletionRequest {
   Map<String, dynamic> toMap() {
     return {
       'max_tokens': maxTokens,
-      'min_tokens': minTokens,
       'stream': stream,
       'stop': stop,
       'random_seed': randomSeed,
@@ -3514,6 +4215,9 @@ class AgentsCompletionRequest with _$AgentsCompletionRequest {
       'response_format': responseFormat,
       'tools': tools,
       'tool_choice': toolChoice,
+      'presence_penalty': presencePenalty,
+      'frequency_penalty': frequencyPenalty,
+      'n': n,
       'agent_id': agentId,
     };
   }
@@ -3569,6 +4273,36 @@ class _AgentsCompletionRequestStopConverter
       _UnionAgentsCompletionRequestStopString(value: final v) => v,
       null => null,
     };
+  }
+}
+
+// ==========================================
+// CLASS: ContentChunk
+// ==========================================
+
+/// No Description
+@freezed
+class ContentChunk with _$ContentChunk {
+  const ContentChunk._();
+
+  /// Factory constructor for ContentChunk
+  const factory ContentChunk() = _ContentChunk;
+
+  /// Object construction from a JSON representation
+  factory ContentChunk.fromJson(Map<String, dynamic> json) =>
+      _$ContentChunkFromJson(json);
+
+  /// List of all property names of schema
+  static const List<String> propertyNames = [];
+
+  /// Perform validations on the schema property values
+  String? validateSchema() {
+    return null;
+  }
+
+  /// Map representation of object (not serialized)
+  Map<String, dynamic> toMap() {
+    return {};
   }
 }
 
@@ -3666,6 +4400,173 @@ class _EmbeddingRequestInputConverter
     return switch (data) {
       _UnionEmbeddingRequestInputArrayString(value: final v) => v,
       _UnionEmbeddingRequestInputString(value: final v) => v,
+    };
+  }
+}
+
+// ==========================================
+// CLASS: ChatClassificationRequest
+// ==========================================
+
+/// No Description
+@freezed
+class ChatClassificationRequest with _$ChatClassificationRequest {
+  const ChatClassificationRequest._();
+
+  /// Factory constructor for ChatClassificationRequest
+  const factory ChatClassificationRequest({
+    /// Chat to classify
+    @_InputConverter() required Input input,
+
+    /// No Description
+    required String? model,
+  }) = _ChatClassificationRequest;
+
+  /// Object construction from a JSON representation
+  factory ChatClassificationRequest.fromJson(Map<String, dynamic> json) =>
+      _$ChatClassificationRequestFromJson(json);
+
+  /// List of all property names of schema
+  static const List<String> propertyNames = ['input', 'model'];
+
+  /// Perform validations on the schema property values
+  String? validateSchema() {
+    return null;
+  }
+
+  /// Map representation of object (not serialized)
+  Map<String, dynamic> toMap() {
+    return {
+      'input': input,
+      'model': model,
+    };
+  }
+}
+
+// ==========================================
+// CLASS: Input
+// ==========================================
+
+/// Chat to classify
+@freezed
+sealed class Input with _$Input {
+  const Input._();
+
+  const factory Input.array(
+    List<List<dynamic>> value,
+  ) = _UnionInputArray;
+
+  /// Object construction from a JSON representation
+  factory Input.fromJson(Map<String, dynamic> json) => _$InputFromJson(json);
+}
+
+/// Custom JSON converter for [Input]
+class _InputConverter implements JsonConverter<Input, Object?> {
+  const _InputConverter();
+
+  @override
+  Input fromJson(Object? data) {
+    if (data is List && data.every((item) => item is List<dynamic>)) {
+      return Input.array(data.cast());
+    }
+    throw Exception(
+      'Unexpected value for Input: $data',
+    );
+  }
+
+  @override
+  Object? toJson(Input data) {
+    return switch (data) {
+      _UnionInputArray(value: final v) => v,
+    };
+  }
+}
+
+// ==========================================
+// CLASS: ClassificationRequest
+// ==========================================
+
+/// No Description
+@freezed
+class ClassificationRequest with _$ClassificationRequest {
+  const ClassificationRequest._();
+
+  /// Factory constructor for ClassificationRequest
+  const factory ClassificationRequest({
+    /// Text to classify.
+    @_ClassificationRequestInputConverter()
+    required ClassificationRequestInput input,
+
+    /// No Description
+    @JsonKey(includeIfNull: false) String? model,
+  }) = _ClassificationRequest;
+
+  /// Object construction from a JSON representation
+  factory ClassificationRequest.fromJson(Map<String, dynamic> json) =>
+      _$ClassificationRequestFromJson(json);
+
+  /// List of all property names of schema
+  static const List<String> propertyNames = ['input', 'model'];
+
+  /// Perform validations on the schema property values
+  String? validateSchema() {
+    return null;
+  }
+
+  /// Map representation of object (not serialized)
+  Map<String, dynamic> toMap() {
+    return {
+      'input': input,
+      'model': model,
+    };
+  }
+}
+
+// ==========================================
+// CLASS: ClassificationRequestInput
+// ==========================================
+
+/// Text to classify.
+@freezed
+sealed class ClassificationRequestInput with _$ClassificationRequestInput {
+  const ClassificationRequestInput._();
+
+  const factory ClassificationRequestInput.arrayString(
+    List<String> value,
+  ) = _UnionClassificationRequestInputArrayString;
+
+  const factory ClassificationRequestInput.string(
+    String value,
+  ) = _UnionClassificationRequestInputString;
+
+  /// Object construction from a JSON representation
+  factory ClassificationRequestInput.fromJson(Map<String, dynamic> json) =>
+      _$ClassificationRequestInputFromJson(json);
+}
+
+/// Custom JSON converter for [ClassificationRequestInput]
+class _ClassificationRequestInputConverter
+    implements JsonConverter<ClassificationRequestInput, Object?> {
+  const _ClassificationRequestInputConverter();
+
+  @override
+  ClassificationRequestInput fromJson(Object? data) {
+    if (data is List && data.every((item) => item is String)) {
+      return ClassificationRequestInput.arrayString(data.cast());
+    }
+    if (data is String) {
+      return ClassificationRequestInput.string(data);
+    }
+    throw Exception(
+      'Unexpected value for ClassificationRequestInput: $data',
+    );
+  }
+
+  @override
+  Object? toJson(ClassificationRequestInput data) {
+    return switch (data) {
+      _UnionClassificationRequestInputArrayString(value: final v) => v,
+      _UnionClassificationRequestInputString(value: final v) => v,
     };
   }
 }
@@ -3782,8 +4683,7 @@ class ChatCompletionChoice with _$ChatCompletionChoice {
     required AssistantMessage message,
 
     ///
-    @JsonKey(name: 'finish_reason')
-    required ChatCompletionChoiceFinishReason finishReason,
+    @JsonKey(name: 'finish_reason') required FinishReasonEnum finishReason,
   }) = _ChatCompletionChoice;
 
   /// Object construction from a JSON representation
@@ -3813,11 +4713,11 @@ class ChatCompletionChoice with _$ChatCompletionChoice {
 }
 
 // ==========================================
-// ENUM: ChatCompletionChoiceFinishReason
+// ENUM: FinishReasonEnum
 // ==========================================
 
 /// No Description
-enum ChatCompletionChoiceFinishReason {
+enum FinishReasonEnum {
   @JsonValue('stop')
   stop,
   @JsonValue('length')
@@ -3828,6 +4728,50 @@ enum ChatCompletionChoiceFinishReason {
   error,
   @JsonValue('tool_calls')
   toolCalls,
+}
+
+// ==========================================
+// CLASS: DeltaMessage
+// ==========================================
+
+/// No Description
+@freezed
+class DeltaMessage with _$DeltaMessage {
+  const DeltaMessage._();
+
+  /// Factory constructor for DeltaMessage
+  const factory DeltaMessage({
+    /// No Description
+    @JsonKey(includeIfNull: false) String? role,
+
+    /// No Description
+    @JsonKey(includeIfNull: false) String? content,
+
+    /// No Description
+    @JsonKey(name: 'tool_calls', includeIfNull: false)
+    List<ToolCall>? toolCalls,
+  }) = _DeltaMessage;
+
+  /// Object construction from a JSON representation
+  factory DeltaMessage.fromJson(Map<String, dynamic> json) =>
+      _$DeltaMessageFromJson(json);
+
+  /// List of all property names of schema
+  static const List<String> propertyNames = ['role', 'content', 'tool_calls'];
+
+  /// Perform validations on the schema property values
+  String? validateSchema() {
+    return null;
+  }
+
+  /// Map representation of object (not serialized)
+  Map<String, dynamic> toMap() {
+    return {
+      'role': role,
+      'content': content,
+      'tool_calls': toolCalls,
+    };
+  }
 }
 
 // ==========================================
@@ -4112,6 +5056,89 @@ class EmbeddingResponse with _$EmbeddingResponse {
 }
 
 // ==========================================
+// CLASS: ClassificationResponse
+// ==========================================
+
+/// No Description
+@freezed
+class ClassificationResponse with _$ClassificationResponse {
+  const ClassificationResponse._();
+
+  /// Factory constructor for ClassificationResponse
+  const factory ClassificationResponse({
+    /// No Description
+    @JsonKey(includeIfNull: false) String? id,
+
+    /// No Description
+    @JsonKey(includeIfNull: false) String? model,
+
+    /// No Description
+    @JsonKey(includeIfNull: false) List<ClassificationObject>? results,
+  }) = _ClassificationResponse;
+
+  /// Object construction from a JSON representation
+  factory ClassificationResponse.fromJson(Map<String, dynamic> json) =>
+      _$ClassificationResponseFromJson(json);
+
+  /// List of all property names of schema
+  static const List<String> propertyNames = ['id', 'model', 'results'];
+
+  /// Perform validations on the schema property values
+  String? validateSchema() {
+    return null;
+  }
+
+  /// Map representation of object (not serialized)
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'model': model,
+      'results': results,
+    };
+  }
+}
+
+// ==========================================
+// CLASS: ClassificationObject
+// ==========================================
+
+/// No Description
+@freezed
+class ClassificationObject with _$ClassificationObject {
+  const ClassificationObject._();
+
+  /// Factory constructor for ClassificationObject
+  const factory ClassificationObject({
+    /// Classifier result thresholded
+    @JsonKey(includeIfNull: false) Map<String, bool>? categories,
+
+    /// Classifier result
+    @JsonKey(name: 'category_scores', includeIfNull: false)
+    Map<String, double>? categoryScores,
+  }) = _ClassificationObject;
+
+  /// Object construction from a JSON representation
+  factory ClassificationObject.fromJson(Map<String, dynamic> json) =>
+      _$ClassificationObjectFromJson(json);
+
+  /// List of all property names of schema
+  static const List<String> propertyNames = ['categories', 'category_scores'];
+
+  /// Perform validations on the schema property values
+  String? validateSchema() {
+    return null;
+  }
+
+  /// Map representation of object (not serialized)
+  Map<String, dynamic> toMap() {
+    return {
+      'categories': categories,
+      'category_scores': categoryScores,
+    };
+  }
+}
+
+// ==========================================
 // CLASS: CompletionEvent
 // ==========================================
 
@@ -4272,45 +5299,28 @@ enum CompletionResponseStreamChoiceFinishReason {
 }
 
 // ==========================================
-// CLASS: DeltaMessage
+// CLASS: UnionURL
 // ==========================================
 
-/// No Description
-@freezed
-class DeltaMessage with _$DeltaMessage {
-  const DeltaMessage._();
+/// Union class for [ImageURL]
+@Freezed(unionKey: 'type')
+sealed class UnionURL with _$UnionURL {
+  const UnionURL._();
 
-  /// Factory constructor for DeltaMessage
-  const factory DeltaMessage({
+  // ------------------------------------------
+  // UNION: ImageURL
+  // ------------------------------------------
+
+  /// Union constructor for [ImageURL]
+  const factory UnionURL.Image({
     /// No Description
-    @JsonKey(includeIfNull: false) String? role,
+    required String url,
 
     /// No Description
-    @JsonKey(includeIfNull: false) String? content,
-
-    /// No Description
-    @JsonKey(name: 'tool_calls', includeIfNull: false)
-    List<ToolCall>? toolCalls,
-  }) = _DeltaMessage;
+    @JsonKey(includeIfNull: false) String? detail,
+  }) = UnionURLImage;
 
   /// Object construction from a JSON representation
-  factory DeltaMessage.fromJson(Map<String, dynamic> json) =>
-      _$DeltaMessageFromJson(json);
-
-  /// List of all property names of schema
-  static const List<String> propertyNames = ['role', 'content', 'tool_calls'];
-
-  /// Perform validations on the schema property values
-  String? validateSchema() {
-    return null;
-  }
-
-  /// Map representation of object (not serialized)
-  Map<String, dynamic> toMap() {
-    return {
-      'role': role,
-      'content': content,
-      'tool_calls': toolCalls,
-    };
-  }
+  factory UnionURL.fromJson(Map<String, dynamic> json) =>
+      _$UnionURLFromJson(json);
 }

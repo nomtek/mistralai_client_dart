@@ -7,16 +7,16 @@ import 'api_key.dart';
 void main() async {
   final client = MistralAIClient(apiKey: mistralApiKey);
 
-  // list models
-  final modelsResult = await client.listModels();
-  final models = modelsResult.data?.map((e) => e.id).toList();
-  print(models?.join(', '));
+  // // list models
+  // final modelsResult = await client.listModels();
+  // final models = modelsResult.data?.map((e) => e.id).toList();
+  // print(models?.join(', '));
 
   // chat without streaming
   const request = ChatCompletionRequest(
     model: 'mistral-small-latest',
     messages: [
-      UserMessage(content: UserMessageContent.string('Hello chat!')),
+      UserMessage(content: 'Hello chat!'),
     ],
   );
   final chatCompletion = await client.chatComplete(request: request);
