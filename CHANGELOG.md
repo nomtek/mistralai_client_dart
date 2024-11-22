@@ -2,8 +2,14 @@
 
 ## 1.0.1
 
-- New feature: Example feature
-- Improvement: Example improvement
+- new list models response
+- new parameters for list files
+- new method to download a file by id
+- net method get batch jobs
+- new method to create a batch job
+- new method to get a batch job by id
+- new method cancel a batch job by id
+- introduce moderation capabilities
 
 ## 1.0.0
 

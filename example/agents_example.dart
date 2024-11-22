@@ -15,7 +15,7 @@ void main() async {
     agentId: agentId,
     messages: [
       UserMessage(
-        content: UserMessageContent.string('What is the best French cheese?'),
+        content: 'What is the best French cheese?',
       ),
     ],
   );
