@@ -2,14 +2,8 @@
 
 ## 1.0.1
 
-- new list models response
-- new parameters for list files
-- new method to download a file by id
-- net method get batch jobs
-- new method to create a batch job
-- new method to get a batch job by id
-- new method cancel a batch job by id
-- introduce moderation capabilities
+- Generate new client code based on [python client changes](https://github.com/mistralai/client-python/releases/tag/v1.2.3)
+- New feature: Moderation ([docs](https://docs.mistral.ai/capabilities/guardrailing/)). Check [example](example/mistralai_client_moderation_example.dart) for usage.
 
 ## 1.0.0
 
