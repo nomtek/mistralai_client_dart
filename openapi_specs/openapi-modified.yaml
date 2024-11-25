@@ -937,6 +937,8 @@ components:
           # migrated from 3.1.0 to 3.0.3
           enum:
             - base
+            # fix of bug in model list
+            - fine-tuned
           title: BaseModelCardType
           default: base
     DeleteModelOut:
