@@ -15,6 +15,22 @@ class MistralAIClient extends generated.MistralaiClientDartClient {
     super.queryParams,
   }) : super(bearerToken: apiKey);
 
+  Future<List<MistralAiModelCard>?> listMistralModels() async {
+    final models = (await listModels()).data;
+
+    return models?.map((model) {
+      final type = (model as Map<String, dynamic>)['type'] as String;
+      if (type == 'fine-tuned') {
+        return MistralAiModelCard(
+          fineTunedModel: FTModelCard.fromJson(model),
+        );
+      }
+      return MistralAiModelCard(
+        baseModel: BaseModelCard.fromJson(model),
+      );
+    }).toList();
+  }
+
   Stream<CompletionChunk> chatStream({
     required ChatCompletionRequest request,
   }) async* {
@@ -218,4 +234,13 @@ class _MistralAIStreamTransformer
         .where((line) => !line.endsWith('[DONE]'))
         .map((item) => item.substring(6));
   }
+}
+
+class MistralAiModelCard {
+  MistralAiModelCard({
+    this.baseModel,
+    this.fineTunedModel,
+  });
+  final BaseModelCard? baseModel;
+  final FTModelCard? fineTunedModel;
 }
