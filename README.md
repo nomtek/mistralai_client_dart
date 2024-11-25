@@ -102,6 +102,12 @@ Check examples:
 
 - [Agents example](example/agents_example.dart)
 
+### Moderation
+
+Check examples:
+
+- [Moderation example](example/mistralai_client_moderation_example.dart)
+
 ## Resources
 
 You can check the [official Mistral AI docs](https://docs.mistral.ai/).
