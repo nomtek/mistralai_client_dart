@@ -5,6 +5,7 @@
 - Generate new client code based on [python client changes](https://github.com/mistralai/client-python/releases/tag/v1.2.3)
 - New feature: Moderation ([docs](https://docs.mistral.ai/capabilities/guardrailing/)). Check [example](example/mistralai_client_moderation_example.dart) for usage.
 - New function: `downloadFile` to download files from Mistral AI
+- New feature: Batch Inference ([docs](https://docs.mistral.ai/capabilities/batch/)). Check [example](example/mistral_client_batch_inference_example.dart) for usage.
 
 ## 1.0.0
 
