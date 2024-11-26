@@ -7,15 +7,17 @@ import 'api_key.dart';
 Future<void> main() async {
   final client = MistralAIClient(apiKey: mistralApiKey);
 
-  // raw text moderation
-  const rawTextClassificationRequest = ClassificationRequest(
-    input: ClassificationRequestInput.string(
-      'Invest in our revolutionary cryptocurrency today'
+  const financialMessage = 'Invest in our revolutionary cryptocurrency today'
       ' and secure a guaranteed 300% return within the'
       ' first week! This once-in-a-lifetime opportunity is'
       ' backed by cutting-edge technology and an elite team of investors.'
       ' Sign up now—no prior knowledge or experience required! Act fast,'
-      ' as spots are limited!',
+      ' as spots are limited!';
+
+  // raw text moderation
+  const rawTextClassificationRequest = ClassificationRequest(
+    input: ClassificationRequestInput.string(
+      financialMessage,
     ),
     model: 'mistral-moderation-latest',
   );
@@ -25,28 +27,22 @@ Future<void> main() async {
   final classificationObject = rawTextModerationResponse.results?.first;
 
   print(classificationObject);
-  // raw text moderation
-  const conversationClassificationRequest = ClassificationRequest(
-    input: ClassificationRequestInput.arrayString(
+
+  // chat text moderation
+  const conversationClassificationRequest = ChatClassificationRequest(
+    input: Input.array(
       [
-        // ignore: no_adjacent_strings_in_list
-        'Invest in our revolutionary cryptocurrency today'
-            ' and secure a guaranteed 300% return within the'
-            ' first week! This once-in-a-lifetime opportunity is'
-            ' backed by cutting-edge technology and an elite team of investors.'
-            ' Sign up now—no prior knowledge or experience required! Act fast,'
-            ' as spots are limited!',
-        'How can I Invest in your cryptocurrency?',
+        [
+          AssistantMessage(content: financialMessage),
+          UserMessage(content: 'How can I Invest in your cryptocurrency?'),
+        ],
       ],
     ),
     model: 'mistral-moderation-latest',
   );
 
   final conversationModerationResponse =
-      await client.moderations(request: conversationClassificationRequest);
+      await client.chatModerations(request: conversationClassificationRequest);
 
-  final classificationObjects = conversationModerationResponse.results ?? [];
-  for (final classificationObject in classificationObjects) {
-    print(classificationObject);
-  }
+  print(conversationModerationResponse);
 }
