@@ -588,7 +588,8 @@ paths:
         - models
   /v1/batch/jobs:
     get:
-      operationId: jobs_api_routes_batch_get_batch_jobs
+      # renamed for better generated code naming
+      operationId: get_batch_jobs
       summary: Get Batch Jobs
       parameters:
         - in: query
@@ -656,7 +657,8 @@ paths:
       tags:
         - batch
     post:
-      operationId: jobs_api_routes_batch_create_batch_job
+      # renamed for better generated code naming
+      operationId: create_batch_job
       summary: Create Batch Job
       responses:
         "200":
@@ -676,7 +678,8 @@ paths:
         - batch
   /v1/batch/jobs/{job_id}:
     get:
-      operationId: jobs_api_routes_batch_get_batch_job
+      # renamed for better generated code naming
+      operationId: get_batch_job
       summary: Get Batch Job
       parameters:
         - in: path
@@ -698,7 +701,8 @@ paths:
         - batch
   /v1/batch/jobs/{job_id}/cancel:
     post:
-      operationId: jobs_api_routes_batch_cancel_batch_job
+      # renamed for better generated code naming
+      operationId: cancel_batch_job
       summary: Cancel Batch Job
       parameters:
         - in: path

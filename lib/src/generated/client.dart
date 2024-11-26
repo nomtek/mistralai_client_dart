@@ -855,7 +855,7 @@ class MistralaiClientDartClient {
   }
 
   // ------------------------------------------
-  // METHOD: jobsApiRoutesBatchGetBatchJobs
+  // METHOD: getBatchJobs
   // ------------------------------------------
 
   /// Get Batch Jobs
@@ -877,7 +877,7 @@ class MistralaiClientDartClient {
   /// `status`: No description
   ///
   /// `GET` `https://api.mistral.ai/v1/batch/jobs`
-  Future<BatchJobsOut> jobsApiRoutesBatchGetBatchJobs({
+  Future<BatchJobsOut> getBatchJobs({
     int page = 0,
     int pageSize = 100,
     String? model,
@@ -907,7 +907,7 @@ class MistralaiClientDartClient {
   }
 
   // ------------------------------------------
-  // METHOD: jobsApiRoutesBatchCreateBatchJob
+  // METHOD: createBatchJob
   // ------------------------------------------
 
   /// Create Batch Job
@@ -917,7 +917,7 @@ class MistralaiClientDartClient {
   /// `request`: No description
   ///
   /// `POST` `https://api.mistral.ai/v1/batch/jobs`
-  Future<BatchJobOut> jobsApiRoutesBatchCreateBatchJob({
+  Future<BatchJobOut> createBatchJob({
     required BatchJobIn request,
   }) async {
     final r = await makeRequest(
@@ -933,7 +933,7 @@ class MistralaiClientDartClient {
   }
 
   // ------------------------------------------
-  // METHOD: jobsApiRoutesBatchGetBatchJob
+  // METHOD: getBatchJob
   // ------------------------------------------
 
   /// Get Batch Job
@@ -943,7 +943,7 @@ class MistralaiClientDartClient {
   /// `jobId`: No description
   ///
   /// `GET` `https://api.mistral.ai/v1/batch/jobs/{job_id}`
-  Future<BatchJobOut> jobsApiRoutesBatchGetBatchJob({
+  Future<BatchJobOut> getBatchJob({
     required String jobId,
   }) async {
     final r = await makeRequest(
@@ -958,7 +958,7 @@ class MistralaiClientDartClient {
   }
 
   // ------------------------------------------
-  // METHOD: jobsApiRoutesBatchCancelBatchJob
+  // METHOD: cancelBatchJob
   // ------------------------------------------
 
   /// Cancel Batch Job
@@ -968,7 +968,7 @@ class MistralaiClientDartClient {
   /// `jobId`: No description
   ///
   /// `POST` `https://api.mistral.ai/v1/batch/jobs/{job_id}/cancel`
-  Future<BatchJobOut> jobsApiRoutesBatchCancelBatchJob({
+  Future<BatchJobOut> cancelBatchJob({
     required String jobId,
   }) async {
     final r = await makeRequest(
