@@ -2450,9 +2450,13 @@ components:
       properties:
         content:
           # migrated from 3.1.0 to 3.0.3
-          type: string
+          title: AssistantMessageContent
+          anyOf:
+            - type: string
+            - items:
+                $ref: "#/components/schemas/ContentChunk"
+              type: array
           nullable: true
-          title: Content
         tool_calls:
           # migrated from 3.1.0 to 3.0.3
           items:

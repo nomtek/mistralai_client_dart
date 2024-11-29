@@ -33,7 +33,11 @@ Future<void> main() async {
     input: Input.array(
       [
         [
-          AssistantMessage(content: financialMessage),
+          AssistantMessage(
+            content: AssistantMessageContent.string(
+              financialMessage,
+            ),
+          ),
           UserMessage(
             content: UserMessageContent.string(
               'How can I Invest in your cryptocurrency?',

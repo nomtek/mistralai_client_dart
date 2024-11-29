@@ -2838,7 +2838,9 @@ class AssistantMessage with _$AssistantMessage {
   /// Factory constructor for AssistantMessage
   const factory AssistantMessage({
     /// No Description
-    @JsonKey(includeIfNull: false) String? content,
+    @_AssistantMessageContentConverter()
+    @JsonKey(includeIfNull: false)
+    AssistantMessageContent? content,
 
     /// No Description
     @JsonKey(name: 'tool_calls', includeIfNull: false)
@@ -2875,6 +2877,59 @@ class AssistantMessage with _$AssistantMessage {
       'tool_calls': toolCalls,
       'prefix': prefix,
       'role': role,
+    };
+  }
+}
+
+// ==========================================
+// CLASS: AssistantMessageContent
+// ==========================================
+
+/// No Description
+@freezed
+sealed class AssistantMessageContent with _$AssistantMessageContent {
+  const AssistantMessageContent._();
+
+  const factory AssistantMessageContent.array(
+    List<ContentChunk> value,
+  ) = _UnionAssistantMessageContentArray;
+
+  const factory AssistantMessageContent.string(
+    String value,
+  ) = _UnionAssistantMessageContentString;
+
+  /// Object construction from a JSON representation
+  factory AssistantMessageContent.fromJson(Map<String, dynamic> json) =>
+      _$AssistantMessageContentFromJson(json);
+}
+
+/// Custom JSON converter for [AssistantMessageContent]
+class _AssistantMessageContentConverter
+    implements JsonConverter<AssistantMessageContent?, Object?> {
+  const _AssistantMessageContentConverter();
+
+  @override
+  AssistantMessageContent? fromJson(Object? data) {
+    if (data == null) {
+      return null;
+    }
+    if (data is List && data.every((item) => item is ContentChunk)) {
+      return AssistantMessageContent.array(data.cast());
+    }
+    if (data is String) {
+      return AssistantMessageContent.string(data);
+    }
+    throw Exception(
+      'Unexpected value for AssistantMessageContent: $data',
+    );
+  }
+
+  @override
+  Object? toJson(AssistantMessageContent? data) {
+    return switch (data) {
+      _UnionAssistantMessageContentArray(value: final v) => v,
+      _UnionAssistantMessageContentString(value: final v) => v,
+      null => null,
     };
   }
 }

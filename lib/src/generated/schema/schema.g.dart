@@ -1053,7 +1053,8 @@ const _$ApiEndpointEnumMap = {
 _$AssistantMessageImpl _$$AssistantMessageImplFromJson(
         Map<String, dynamic> json) =>
     _$AssistantMessageImpl(
-      content: json['content'] as String?,
+      content:
+          const _AssistantMessageContentConverter().fromJson(json['content']),
       toolCalls: (json['tool_calls'] as List<dynamic>?)
           ?.map((e) => ToolCall.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -1064,7 +1065,9 @@ _$AssistantMessageImpl _$$AssistantMessageImplFromJson(
 Map<String, dynamic> _$$AssistantMessageImplToJson(
         _$AssistantMessageImpl instance) =>
     <String, dynamic>{
-      if (instance.content case final value?) 'content': value,
+      if (const _AssistantMessageContentConverter().toJson(instance.content)
+          case final value?)
+        'content': value,
       if (instance.toolCalls case final value?) 'tool_calls': value,
       'prefix': instance.prefix,
       'role': _$RoleEnumMap[instance.role]!,
@@ -1073,6 +1076,38 @@ Map<String, dynamic> _$$AssistantMessageImplToJson(
 const _$RoleEnumMap = {
   Role.assistant: 'assistant',
 };
+
+_$UnionAssistantMessageContentArrayImpl
+    _$$UnionAssistantMessageContentArrayImplFromJson(
+            Map<String, dynamic> json) =>
+        _$UnionAssistantMessageContentArrayImpl(
+          (json['value'] as List<dynamic>)
+              .map((e) => ContentChunk.fromJson(e as Map<String, dynamic>))
+              .toList(),
+          $type: json['runtimeType'] as String?,
+        );
+
+Map<String, dynamic> _$$UnionAssistantMessageContentArrayImplToJson(
+        _$UnionAssistantMessageContentArrayImpl instance) =>
+    <String, dynamic>{
+      'value': instance.value,
+      'runtimeType': instance.$type,
+    };
+
+_$UnionAssistantMessageContentStringImpl
+    _$$UnionAssistantMessageContentStringImplFromJson(
+            Map<String, dynamic> json) =>
+        _$UnionAssistantMessageContentStringImpl(
+          json['value'] as String,
+          $type: json['runtimeType'] as String?,
+        );
+
+Map<String, dynamic> _$$UnionAssistantMessageContentStringImplToJson(
+        _$UnionAssistantMessageContentStringImpl instance) =>
+    <String, dynamic>{
+      'value': instance.value,
+      'runtimeType': instance.$type,
+    };
 
 _$ChatCompletionRequestImpl _$$ChatCompletionRequestImplFromJson(
         Map<String, dynamic> json) =>
