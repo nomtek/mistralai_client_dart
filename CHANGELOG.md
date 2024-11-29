@@ -1,11 +1,12 @@
 # Changelog
 
-## 1.0.1
+## 1.1.0
 
-- Generate new client code based on [python client changes](https://github.com/mistralai/client-python/releases/tag/v1.2.3)
+- Generate new client code based on [Mistral OAS](https://github.com/mistralai/platform-docs-public/commit/89abfa4879279981adde99e23c0cda8153da6eef#diff-d910ba2ef878f7db0223a966b81c8b3f3b65027bb39e4431bb05140171eece39R2722)
 - New feature: Moderation ([docs](https://docs.mistral.ai/capabilities/guardrailing/)). Check [example](example/mistralai_client_moderation_example.dart) for usage.
-- New function: `downloadFile` to download files from Mistral AI
 - New feature: Batch Inference ([docs](https://docs.mistral.ai/capabilities/batch/)). Check [example](example/mistral_client_batch_inference_example.dart) for usage.
+- New function: `downloadFile` to download files from Mistral AI
+- BREAKING CHANGE: `ModelCard` was replaced by `UnionModelCard` to support `BaseModelCard` and `FTModelCard`
 
 ## 1.0.0
 
