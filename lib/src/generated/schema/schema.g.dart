@@ -150,7 +150,9 @@ Map<String, dynamic> _$$ModelCapabilitiesImplToJson(
 _$ModelListImpl _$$ModelListImplFromJson(Map<String, dynamic> json) =>
     _$ModelListImpl(
       object: json['object'] as String? ?? 'list',
-      data: json['data'] as List<dynamic>?,
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) => UnionModelCard.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$ModelListImplToJson(_$ModelListImpl instance) =>
@@ -2076,6 +2078,92 @@ const _$CompletionResponseStreamChoiceFinishReasonEnumMap = {
   CompletionResponseStreamChoiceFinishReason.error: 'error',
   CompletionResponseStreamChoiceFinishReason.toolCalls: 'tool_calls',
 };
+
+_$UnionModelCardBaseImpl _$$UnionModelCardBaseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$UnionModelCardBaseImpl(
+      id: json['id'] as String,
+      model: json['model'] as String? ?? 'model',
+      created: (json['created'] as num?)?.toInt(),
+      ownedBy: json['owned_by'] as String? ?? 'mistralai',
+      capabilities: ModelCapabilities.fromJson(
+          json['capabilities'] as Map<String, dynamic>),
+      name: json['name'] as String?,
+      description: json['description'] as String?,
+      maxContextLength: (json['max_context_length'] as num?)?.toInt() ?? 32768,
+      aliases: (json['aliases'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      deprecation: json['deprecation'] as String?,
+      defaultModelTemperature:
+          (json['default_model_temperature'] as num?)?.toDouble(),
+      type: json['type'] as String? ?? 'base',
+    );
+
+Map<String, dynamic> _$$UnionModelCardBaseImplToJson(
+        _$UnionModelCardBaseImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'model': instance.model,
+      if (instance.created case final value?) 'created': value,
+      'owned_by': instance.ownedBy,
+      'capabilities': instance.capabilities,
+      if (instance.name case final value?) 'name': value,
+      if (instance.description case final value?) 'description': value,
+      'max_context_length': instance.maxContextLength,
+      if (instance.aliases case final value?) 'aliases': value,
+      if (instance.deprecation case final value?) 'deprecation': value,
+      if (instance.defaultModelTemperature case final value?)
+        'default_model_temperature': value,
+      'type': instance.type,
+    };
+
+_$UnionModelCardFTImpl _$$UnionModelCardFTImplFromJson(
+        Map<String, dynamic> json) =>
+    _$UnionModelCardFTImpl(
+      id: json['id'] as String,
+      object: json['object'] as String? ?? 'model',
+      created: (json['created'] as num?)?.toInt(),
+      ownedBy: json['owned_by'] as String? ?? 'mistralai',
+      capabilities: ModelCapabilities.fromJson(
+          json['capabilities'] as Map<String, dynamic>),
+      name: json['name'] as String?,
+      description: json['description'] as String?,
+      maxContextLength: (json['max_context_length'] as num?)?.toInt() ?? 32768,
+      aliases: (json['aliases'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      deprecation: json['deprecation'] as String?,
+      defaultModelTemperature:
+          (json['default_model_temperature'] as num?)?.toDouble(),
+      type: json['type'] as String? ?? 'fine-tuned',
+      job: json['job'] as String,
+      root: json['root'] as String,
+      archived: json['archived'] as bool? ?? false,
+    );
+
+Map<String, dynamic> _$$UnionModelCardFTImplToJson(
+        _$UnionModelCardFTImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'object': instance.object,
+      if (instance.created case final value?) 'created': value,
+      'owned_by': instance.ownedBy,
+      'capabilities': instance.capabilities,
+      if (instance.name case final value?) 'name': value,
+      if (instance.description case final value?) 'description': value,
+      'max_context_length': instance.maxContextLength,
+      'aliases': instance.aliases,
+      if (instance.deprecation case final value?) 'deprecation': value,
+      if (instance.defaultModelTemperature case final value?)
+        'default_model_temperature': value,
+      'type': instance.type,
+      'job': instance.job,
+      'root': instance.root,
+      'archived': instance.archived,
+    };
 
 _$UnionURLImageImpl _$$UnionURLImageImplFromJson(Map<String, dynamic> json) =>
     _$UnionURLImageImpl(

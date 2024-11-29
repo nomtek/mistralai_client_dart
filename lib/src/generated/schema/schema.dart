@@ -384,7 +384,7 @@ class ModelList with _$ModelList {
     @Default('list') String object,
 
     /// No Description
-    @JsonKey(includeIfNull: false) List<dynamic>? data,
+    @JsonKey(includeIfNull: false) List<UnionModelCard>? data,
   }) = _ModelList;
 
   /// Object construction from a JSON representation
@@ -5400,6 +5400,130 @@ enum CompletionResponseStreamChoiceFinishReason {
   error,
   @JsonValue('tool_calls')
   toolCalls,
+}
+
+// ==========================================
+// CLASS: UnionModelCard
+// ==========================================
+
+/// Union class for [BaseModelCard], [FTModelCard]
+@Freezed(unionKey: 'type')
+sealed class UnionModelCard with _$UnionModelCard {
+  const UnionModelCard._();
+
+  // ------------------------------------------
+  // UNION: BaseModelCard
+  // ------------------------------------------
+
+  /// Union constructor for [BaseModelCard]
+  @FreezedUnionValue('base')
+  const factory UnionModelCard.Base({
+    /// No Description
+    required String id,
+
+    /// No Description
+    @Default('model') String model,
+
+    /// No Description
+    @JsonKey(includeIfNull: false) int? created,
+
+    /// No Description
+    @JsonKey(name: 'owned_by') @Default('mistralai') String ownedBy,
+
+    /// No Description
+    required ModelCapabilities capabilities,
+
+    /// No Description
+    @JsonKey(includeIfNull: false) String? name,
+
+    /// No Description
+    @JsonKey(includeIfNull: false) String? description,
+
+    /// No Description
+    @JsonKey(name: 'max_context_length') @Default(32768) int maxContextLength,
+
+    /// No Description
+    @JsonKey(includeIfNull: false) @Default([]) List<String>? aliases,
+
+    /// No Description
+    @JsonKey(includeIfNull: false) String? deprecation,
+
+    /// No Description
+    @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+    double? defaultModelTemperature,
+
+    /// No Description
+    @Default('base') String type,
+  }) = UnionModelCardBase;
+
+  // ------------------------------------------
+  // UNION: FTModelCard
+  // ------------------------------------------
+
+  /// Union constructor for [FTModelCard]
+  @FreezedUnionValue('fine-tuned')
+  const factory UnionModelCard.FT({
+    /// No Description
+    required String id,
+
+    /// No Description
+    @Default('model') String object,
+
+    /// No Description
+    @JsonKey(includeIfNull: false) int? created,
+
+    /// No Description
+    @JsonKey(name: 'owned_by') @Default('mistralai') String ownedBy,
+
+    /// No Description
+    required ModelCapabilities capabilities,
+
+    /// No Description
+    @JsonKey(includeIfNull: false) String? name,
+
+    /// No Description
+    @JsonKey(includeIfNull: false) String? description,
+
+    /// No Description
+    @JsonKey(name: 'max_context_length') @Default(32768) int maxContextLength,
+
+    /// No Description
+    @Default([]) List<String> aliases,
+
+    /// No Description
+    @JsonKey(includeIfNull: false) String? deprecation,
+
+    /// No Description
+    @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+    double? defaultModelTemperature,
+
+    /// No Description
+    @Default('fine-tuned') String type,
+
+    /// No Description
+    required String job,
+
+    /// No Description
+    required String root,
+
+    /// No Description
+    @Default(false) bool archived,
+  }) = UnionModelCardFT;
+
+  /// Object construction from a JSON representation
+  factory UnionModelCard.fromJson(Map<String, dynamic> json) =>
+      _$UnionModelCardFromJson(json);
+}
+
+// ==========================================
+// ENUM: UnionModelCardType
+// ==========================================
+
+enum UnionModelCardType {
+  @JsonValue('base')
+  base,
+  @JsonValue('fine-tuned')
+  fineTuned,
 }
 
 // ==========================================

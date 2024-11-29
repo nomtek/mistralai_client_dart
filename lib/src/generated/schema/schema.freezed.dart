@@ -1798,7 +1798,7 @@ mixin _$ModelList {
 
   /// No Description
   @JsonKey(includeIfNull: false)
-  List<dynamic>? get data => throw _privateConstructorUsedError;
+  List<UnionModelCard>? get data => throw _privateConstructorUsedError;
 
   /// Serializes this ModelList to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -1816,7 +1816,8 @@ abstract class $ModelListCopyWith<$Res> {
       _$ModelListCopyWithImpl<$Res, ModelList>;
   @useResult
   $Res call(
-      {String object, @JsonKey(includeIfNull: false) List<dynamic>? data});
+      {String object,
+      @JsonKey(includeIfNull: false) List<UnionModelCard>? data});
 }
 
 /// @nodoc
@@ -1845,7 +1846,7 @@ class _$ModelListCopyWithImpl<$Res, $Val extends ModelList>
       data: freezed == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>?,
+              as List<UnionModelCard>?,
     ) as $Val);
   }
 }
@@ -1859,7 +1860,8 @@ abstract class _$$ModelListImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String object, @JsonKey(includeIfNull: false) List<dynamic>? data});
+      {String object,
+      @JsonKey(includeIfNull: false) List<UnionModelCard>? data});
 }
 
 /// @nodoc
@@ -1886,7 +1888,7 @@ class __$$ModelListImplCopyWithImpl<$Res>
       data: freezed == data
           ? _value._data
           : data // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>?,
+              as List<UnionModelCard>?,
     ));
   }
 }
@@ -1896,7 +1898,7 @@ class __$$ModelListImplCopyWithImpl<$Res>
 class _$ModelListImpl extends _ModelList {
   const _$ModelListImpl(
       {this.object = 'list',
-      @JsonKey(includeIfNull: false) final List<dynamic>? data})
+      @JsonKey(includeIfNull: false) final List<UnionModelCard>? data})
       : _data = data,
         super._();
 
@@ -1909,12 +1911,12 @@ class _$ModelListImpl extends _ModelList {
   final String object;
 
   /// No Description
-  final List<dynamic>? _data;
+  final List<UnionModelCard>? _data;
 
   /// No Description
   @override
   @JsonKey(includeIfNull: false)
-  List<dynamic>? get data {
+  List<UnionModelCard>? get data {
     final value = _data;
     if (value == null) return null;
     if (_data is EqualUnmodifiableListView) return _data;
@@ -1960,7 +1962,7 @@ class _$ModelListImpl extends _ModelList {
 abstract class _ModelList extends ModelList {
   const factory _ModelList(
           {final String object,
-          @JsonKey(includeIfNull: false) final List<dynamic>? data}) =
+          @JsonKey(includeIfNull: false) final List<UnionModelCard>? data}) =
       _$ModelListImpl;
   const _ModelList._() : super._();
 
@@ -1974,7 +1976,7 @@ abstract class _ModelList extends ModelList {
   /// No Description
   @override
   @JsonKey(includeIfNull: false)
-  List<dynamic>? get data;
+  List<UnionModelCard>? get data;
 
   /// Create a copy of ModelList
   /// with the given fields replaced by the non-null parameter values.
@@ -26037,6 +26039,1428 @@ abstract class _CompletionResponseStreamChoice
   _$$CompletionResponseStreamChoiceImplCopyWith<
           _$CompletionResponseStreamChoiceImpl>
       get copyWith => throw _privateConstructorUsedError;
+}
+
+UnionModelCard _$UnionModelCardFromJson(Map<String, dynamic> json) {
+  switch (json['type']) {
+    case 'base':
+      return UnionModelCardBase.fromJson(json);
+    case 'fine-tuned':
+      return UnionModelCardFT.fromJson(json);
+
+    default:
+      throw CheckedFromJsonException(json, 'type', 'UnionModelCard',
+          'Invalid union type "${json['type']}"!');
+  }
+}
+
+/// @nodoc
+mixin _$UnionModelCard {
+  /// No Description
+  String get id => throw _privateConstructorUsedError;
+
+  /// No Description
+  @JsonKey(includeIfNull: false)
+  int? get created => throw _privateConstructorUsedError;
+
+  /// No Description
+  @JsonKey(name: 'owned_by')
+  String get ownedBy => throw _privateConstructorUsedError;
+
+  /// No Description
+  ModelCapabilities get capabilities => throw _privateConstructorUsedError;
+
+  /// No Description
+  @JsonKey(includeIfNull: false)
+  String? get name => throw _privateConstructorUsedError;
+
+  /// No Description
+  @JsonKey(includeIfNull: false)
+  String? get description => throw _privateConstructorUsedError;
+
+  /// No Description
+  @JsonKey(name: 'max_context_length')
+  int get maxContextLength => throw _privateConstructorUsedError;
+
+  /// No Description
+  @JsonKey(includeIfNull: false)
+  List<String>? get aliases => throw _privateConstructorUsedError;
+
+  /// No Description
+  @JsonKey(includeIfNull: false)
+  String? get deprecation => throw _privateConstructorUsedError;
+
+  /// No Description
+  @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+  double? get defaultModelTemperature => throw _privateConstructorUsedError;
+
+  /// No Description
+  String get type => throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            String id,
+            String model,
+            @JsonKey(includeIfNull: false) int? created,
+            @JsonKey(name: 'owned_by') String ownedBy,
+            ModelCapabilities capabilities,
+            @JsonKey(includeIfNull: false) String? name,
+            @JsonKey(includeIfNull: false) String? description,
+            @JsonKey(name: 'max_context_length') int maxContextLength,
+            @JsonKey(includeIfNull: false) List<String>? aliases,
+            @JsonKey(includeIfNull: false) String? deprecation,
+            @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+            double? defaultModelTemperature,
+            String type)
+        Base,
+    required TResult Function(
+            String id,
+            String object,
+            @JsonKey(includeIfNull: false) int? created,
+            @JsonKey(name: 'owned_by') String ownedBy,
+            ModelCapabilities capabilities,
+            @JsonKey(includeIfNull: false) String? name,
+            @JsonKey(includeIfNull: false) String? description,
+            @JsonKey(name: 'max_context_length') int maxContextLength,
+            List<String> aliases,
+            @JsonKey(includeIfNull: false) String? deprecation,
+            @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+            double? defaultModelTemperature,
+            String type,
+            String job,
+            String root,
+            bool archived)
+        FT,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(
+            String id,
+            String model,
+            @JsonKey(includeIfNull: false) int? created,
+            @JsonKey(name: 'owned_by') String ownedBy,
+            ModelCapabilities capabilities,
+            @JsonKey(includeIfNull: false) String? name,
+            @JsonKey(includeIfNull: false) String? description,
+            @JsonKey(name: 'max_context_length') int maxContextLength,
+            @JsonKey(includeIfNull: false) List<String>? aliases,
+            @JsonKey(includeIfNull: false) String? deprecation,
+            @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+            double? defaultModelTemperature,
+            String type)?
+        Base,
+    TResult? Function(
+            String id,
+            String object,
+            @JsonKey(includeIfNull: false) int? created,
+            @JsonKey(name: 'owned_by') String ownedBy,
+            ModelCapabilities capabilities,
+            @JsonKey(includeIfNull: false) String? name,
+            @JsonKey(includeIfNull: false) String? description,
+            @JsonKey(name: 'max_context_length') int maxContextLength,
+            List<String> aliases,
+            @JsonKey(includeIfNull: false) String? deprecation,
+            @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+            double? defaultModelTemperature,
+            String type,
+            String job,
+            String root,
+            bool archived)?
+        FT,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(
+            String id,
+            String model,
+            @JsonKey(includeIfNull: false) int? created,
+            @JsonKey(name: 'owned_by') String ownedBy,
+            ModelCapabilities capabilities,
+            @JsonKey(includeIfNull: false) String? name,
+            @JsonKey(includeIfNull: false) String? description,
+            @JsonKey(name: 'max_context_length') int maxContextLength,
+            @JsonKey(includeIfNull: false) List<String>? aliases,
+            @JsonKey(includeIfNull: false) String? deprecation,
+            @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+            double? defaultModelTemperature,
+            String type)?
+        Base,
+    TResult Function(
+            String id,
+            String object,
+            @JsonKey(includeIfNull: false) int? created,
+            @JsonKey(name: 'owned_by') String ownedBy,
+            ModelCapabilities capabilities,
+            @JsonKey(includeIfNull: false) String? name,
+            @JsonKey(includeIfNull: false) String? description,
+            @JsonKey(name: 'max_context_length') int maxContextLength,
+            List<String> aliases,
+            @JsonKey(includeIfNull: false) String? deprecation,
+            @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+            double? defaultModelTemperature,
+            String type,
+            String job,
+            String root,
+            bool archived)?
+        FT,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(UnionModelCardBase value) Base,
+    required TResult Function(UnionModelCardFT value) FT,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(UnionModelCardBase value)? Base,
+    TResult? Function(UnionModelCardFT value)? FT,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(UnionModelCardBase value)? Base,
+    TResult Function(UnionModelCardFT value)? FT,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+
+  /// Serializes this UnionModelCard to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of UnionModelCard
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $UnionModelCardCopyWith<UnionModelCard> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UnionModelCardCopyWith<$Res> {
+  factory $UnionModelCardCopyWith(
+          UnionModelCard value, $Res Function(UnionModelCard) then) =
+      _$UnionModelCardCopyWithImpl<$Res, UnionModelCard>;
+  @useResult
+  $Res call(
+      {String id,
+      @JsonKey(includeIfNull: false) int? created,
+      @JsonKey(name: 'owned_by') String ownedBy,
+      ModelCapabilities capabilities,
+      @JsonKey(includeIfNull: false) String? name,
+      @JsonKey(includeIfNull: false) String? description,
+      @JsonKey(name: 'max_context_length') int maxContextLength,
+      @JsonKey(includeIfNull: false) List<String> aliases,
+      @JsonKey(includeIfNull: false) String? deprecation,
+      @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+      double? defaultModelTemperature,
+      String type});
+
+  $ModelCapabilitiesCopyWith<$Res> get capabilities;
+}
+
+/// @nodoc
+class _$UnionModelCardCopyWithImpl<$Res, $Val extends UnionModelCard>
+    implements $UnionModelCardCopyWith<$Res> {
+  _$UnionModelCardCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of UnionModelCard
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? created = freezed,
+    Object? ownedBy = null,
+    Object? capabilities = null,
+    Object? name = freezed,
+    Object? description = freezed,
+    Object? maxContextLength = null,
+    Object? aliases = null,
+    Object? deprecation = freezed,
+    Object? defaultModelTemperature = freezed,
+    Object? type = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      created: freezed == created
+          ? _value.created
+          : created // ignore: cast_nullable_to_non_nullable
+              as int?,
+      ownedBy: null == ownedBy
+          ? _value.ownedBy
+          : ownedBy // ignore: cast_nullable_to_non_nullable
+              as String,
+      capabilities: null == capabilities
+          ? _value.capabilities
+          : capabilities // ignore: cast_nullable_to_non_nullable
+              as ModelCapabilities,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      maxContextLength: null == maxContextLength
+          ? _value.maxContextLength
+          : maxContextLength // ignore: cast_nullable_to_non_nullable
+              as int,
+      aliases: null == aliases
+          ? _value.aliases!
+          : aliases // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      deprecation: freezed == deprecation
+          ? _value.deprecation
+          : deprecation // ignore: cast_nullable_to_non_nullable
+              as String?,
+      defaultModelTemperature: freezed == defaultModelTemperature
+          ? _value.defaultModelTemperature
+          : defaultModelTemperature // ignore: cast_nullable_to_non_nullable
+              as double?,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+
+  /// Create a copy of UnionModelCard
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ModelCapabilitiesCopyWith<$Res> get capabilities {
+    return $ModelCapabilitiesCopyWith<$Res>(_value.capabilities, (value) {
+      return _then(_value.copyWith(capabilities: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$UnionModelCardBaseImplCopyWith<$Res>
+    implements $UnionModelCardCopyWith<$Res> {
+  factory _$$UnionModelCardBaseImplCopyWith(_$UnionModelCardBaseImpl value,
+          $Res Function(_$UnionModelCardBaseImpl) then) =
+      __$$UnionModelCardBaseImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String model,
+      @JsonKey(includeIfNull: false) int? created,
+      @JsonKey(name: 'owned_by') String ownedBy,
+      ModelCapabilities capabilities,
+      @JsonKey(includeIfNull: false) String? name,
+      @JsonKey(includeIfNull: false) String? description,
+      @JsonKey(name: 'max_context_length') int maxContextLength,
+      @JsonKey(includeIfNull: false) List<String>? aliases,
+      @JsonKey(includeIfNull: false) String? deprecation,
+      @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+      double? defaultModelTemperature,
+      String type});
+
+  @override
+  $ModelCapabilitiesCopyWith<$Res> get capabilities;
+}
+
+/// @nodoc
+class __$$UnionModelCardBaseImplCopyWithImpl<$Res>
+    extends _$UnionModelCardCopyWithImpl<$Res, _$UnionModelCardBaseImpl>
+    implements _$$UnionModelCardBaseImplCopyWith<$Res> {
+  __$$UnionModelCardBaseImplCopyWithImpl(_$UnionModelCardBaseImpl _value,
+      $Res Function(_$UnionModelCardBaseImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of UnionModelCard
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? model = null,
+    Object? created = freezed,
+    Object? ownedBy = null,
+    Object? capabilities = null,
+    Object? name = freezed,
+    Object? description = freezed,
+    Object? maxContextLength = null,
+    Object? aliases = freezed,
+    Object? deprecation = freezed,
+    Object? defaultModelTemperature = freezed,
+    Object? type = null,
+  }) {
+    return _then(_$UnionModelCardBaseImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      model: null == model
+          ? _value.model
+          : model // ignore: cast_nullable_to_non_nullable
+              as String,
+      created: freezed == created
+          ? _value.created
+          : created // ignore: cast_nullable_to_non_nullable
+              as int?,
+      ownedBy: null == ownedBy
+          ? _value.ownedBy
+          : ownedBy // ignore: cast_nullable_to_non_nullable
+              as String,
+      capabilities: null == capabilities
+          ? _value.capabilities
+          : capabilities // ignore: cast_nullable_to_non_nullable
+              as ModelCapabilities,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      maxContextLength: null == maxContextLength
+          ? _value.maxContextLength
+          : maxContextLength // ignore: cast_nullable_to_non_nullable
+              as int,
+      aliases: freezed == aliases
+          ? _value._aliases
+          : aliases // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      deprecation: freezed == deprecation
+          ? _value.deprecation
+          : deprecation // ignore: cast_nullable_to_non_nullable
+              as String?,
+      defaultModelTemperature: freezed == defaultModelTemperature
+          ? _value.defaultModelTemperature
+          : defaultModelTemperature // ignore: cast_nullable_to_non_nullable
+              as double?,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$UnionModelCardBaseImpl extends UnionModelCardBase {
+  const _$UnionModelCardBaseImpl(
+      {required this.id,
+      this.model = 'model',
+      @JsonKey(includeIfNull: false) this.created,
+      @JsonKey(name: 'owned_by') this.ownedBy = 'mistralai',
+      required this.capabilities,
+      @JsonKey(includeIfNull: false) this.name,
+      @JsonKey(includeIfNull: false) this.description,
+      @JsonKey(name: 'max_context_length') this.maxContextLength = 32768,
+      @JsonKey(includeIfNull: false) final List<String>? aliases = const [],
+      @JsonKey(includeIfNull: false) this.deprecation,
+      @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+      this.defaultModelTemperature,
+      this.type = 'base'})
+      : _aliases = aliases,
+        super._();
+
+  factory _$UnionModelCardBaseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UnionModelCardBaseImplFromJson(json);
+
+  /// No Description
+  @override
+  final String id;
+
+  /// No Description
+  @override
+  @JsonKey()
+  final String model;
+
+  /// No Description
+  @override
+  @JsonKey(includeIfNull: false)
+  final int? created;
+
+  /// No Description
+  @override
+  @JsonKey(name: 'owned_by')
+  final String ownedBy;
+
+  /// No Description
+  @override
+  final ModelCapabilities capabilities;
+
+  /// No Description
+  @override
+  @JsonKey(includeIfNull: false)
+  final String? name;
+
+  /// No Description
+  @override
+  @JsonKey(includeIfNull: false)
+  final String? description;
+
+  /// No Description
+  @override
+  @JsonKey(name: 'max_context_length')
+  final int maxContextLength;
+
+  /// No Description
+  final List<String>? _aliases;
+
+  /// No Description
+  @override
+  @JsonKey(includeIfNull: false)
+  List<String>? get aliases {
+    final value = _aliases;
+    if (value == null) return null;
+    if (_aliases is EqualUnmodifiableListView) return _aliases;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  /// No Description
+  @override
+  @JsonKey(includeIfNull: false)
+  final String? deprecation;
+
+  /// No Description
+  @override
+  @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+  final double? defaultModelTemperature;
+
+  /// No Description
+  @override
+  @JsonKey()
+  final String type;
+
+  @override
+  String toString() {
+    return 'UnionModelCard.Base(id: $id, model: $model, created: $created, ownedBy: $ownedBy, capabilities: $capabilities, name: $name, description: $description, maxContextLength: $maxContextLength, aliases: $aliases, deprecation: $deprecation, defaultModelTemperature: $defaultModelTemperature, type: $type)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UnionModelCardBaseImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.model, model) || other.model == model) &&
+            (identical(other.created, created) || other.created == created) &&
+            (identical(other.ownedBy, ownedBy) || other.ownedBy == ownedBy) &&
+            (identical(other.capabilities, capabilities) ||
+                other.capabilities == capabilities) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.maxContextLength, maxContextLength) ||
+                other.maxContextLength == maxContextLength) &&
+            const DeepCollectionEquality().equals(other._aliases, _aliases) &&
+            (identical(other.deprecation, deprecation) ||
+                other.deprecation == deprecation) &&
+            (identical(
+                    other.defaultModelTemperature, defaultModelTemperature) ||
+                other.defaultModelTemperature == defaultModelTemperature) &&
+            (identical(other.type, type) || other.type == type));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      model,
+      created,
+      ownedBy,
+      capabilities,
+      name,
+      description,
+      maxContextLength,
+      const DeepCollectionEquality().hash(_aliases),
+      deprecation,
+      defaultModelTemperature,
+      type);
+
+  /// Create a copy of UnionModelCard
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UnionModelCardBaseImplCopyWith<_$UnionModelCardBaseImpl> get copyWith =>
+      __$$UnionModelCardBaseImplCopyWithImpl<_$UnionModelCardBaseImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            String id,
+            String model,
+            @JsonKey(includeIfNull: false) int? created,
+            @JsonKey(name: 'owned_by') String ownedBy,
+            ModelCapabilities capabilities,
+            @JsonKey(includeIfNull: false) String? name,
+            @JsonKey(includeIfNull: false) String? description,
+            @JsonKey(name: 'max_context_length') int maxContextLength,
+            @JsonKey(includeIfNull: false) List<String>? aliases,
+            @JsonKey(includeIfNull: false) String? deprecation,
+            @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+            double? defaultModelTemperature,
+            String type)
+        Base,
+    required TResult Function(
+            String id,
+            String object,
+            @JsonKey(includeIfNull: false) int? created,
+            @JsonKey(name: 'owned_by') String ownedBy,
+            ModelCapabilities capabilities,
+            @JsonKey(includeIfNull: false) String? name,
+            @JsonKey(includeIfNull: false) String? description,
+            @JsonKey(name: 'max_context_length') int maxContextLength,
+            List<String> aliases,
+            @JsonKey(includeIfNull: false) String? deprecation,
+            @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+            double? defaultModelTemperature,
+            String type,
+            String job,
+            String root,
+            bool archived)
+        FT,
+  }) {
+    return Base(id, model, created, ownedBy, capabilities, name, description,
+        maxContextLength, aliases, deprecation, defaultModelTemperature, type);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(
+            String id,
+            String model,
+            @JsonKey(includeIfNull: false) int? created,
+            @JsonKey(name: 'owned_by') String ownedBy,
+            ModelCapabilities capabilities,
+            @JsonKey(includeIfNull: false) String? name,
+            @JsonKey(includeIfNull: false) String? description,
+            @JsonKey(name: 'max_context_length') int maxContextLength,
+            @JsonKey(includeIfNull: false) List<String>? aliases,
+            @JsonKey(includeIfNull: false) String? deprecation,
+            @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+            double? defaultModelTemperature,
+            String type)?
+        Base,
+    TResult? Function(
+            String id,
+            String object,
+            @JsonKey(includeIfNull: false) int? created,
+            @JsonKey(name: 'owned_by') String ownedBy,
+            ModelCapabilities capabilities,
+            @JsonKey(includeIfNull: false) String? name,
+            @JsonKey(includeIfNull: false) String? description,
+            @JsonKey(name: 'max_context_length') int maxContextLength,
+            List<String> aliases,
+            @JsonKey(includeIfNull: false) String? deprecation,
+            @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+            double? defaultModelTemperature,
+            String type,
+            String job,
+            String root,
+            bool archived)?
+        FT,
+  }) {
+    return Base?.call(
+        id,
+        model,
+        created,
+        ownedBy,
+        capabilities,
+        name,
+        description,
+        maxContextLength,
+        aliases,
+        deprecation,
+        defaultModelTemperature,
+        type);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(
+            String id,
+            String model,
+            @JsonKey(includeIfNull: false) int? created,
+            @JsonKey(name: 'owned_by') String ownedBy,
+            ModelCapabilities capabilities,
+            @JsonKey(includeIfNull: false) String? name,
+            @JsonKey(includeIfNull: false) String? description,
+            @JsonKey(name: 'max_context_length') int maxContextLength,
+            @JsonKey(includeIfNull: false) List<String>? aliases,
+            @JsonKey(includeIfNull: false) String? deprecation,
+            @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+            double? defaultModelTemperature,
+            String type)?
+        Base,
+    TResult Function(
+            String id,
+            String object,
+            @JsonKey(includeIfNull: false) int? created,
+            @JsonKey(name: 'owned_by') String ownedBy,
+            ModelCapabilities capabilities,
+            @JsonKey(includeIfNull: false) String? name,
+            @JsonKey(includeIfNull: false) String? description,
+            @JsonKey(name: 'max_context_length') int maxContextLength,
+            List<String> aliases,
+            @JsonKey(includeIfNull: false) String? deprecation,
+            @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+            double? defaultModelTemperature,
+            String type,
+            String job,
+            String root,
+            bool archived)?
+        FT,
+    required TResult orElse(),
+  }) {
+    if (Base != null) {
+      return Base(
+          id,
+          model,
+          created,
+          ownedBy,
+          capabilities,
+          name,
+          description,
+          maxContextLength,
+          aliases,
+          deprecation,
+          defaultModelTemperature,
+          type);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(UnionModelCardBase value) Base,
+    required TResult Function(UnionModelCardFT value) FT,
+  }) {
+    return Base(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(UnionModelCardBase value)? Base,
+    TResult? Function(UnionModelCardFT value)? FT,
+  }) {
+    return Base?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(UnionModelCardBase value)? Base,
+    TResult Function(UnionModelCardFT value)? FT,
+    required TResult orElse(),
+  }) {
+    if (Base != null) {
+      return Base(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$UnionModelCardBaseImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class UnionModelCardBase extends UnionModelCard {
+  const factory UnionModelCardBase(
+      {required final String id,
+      final String model,
+      @JsonKey(includeIfNull: false) final int? created,
+      @JsonKey(name: 'owned_by') final String ownedBy,
+      required final ModelCapabilities capabilities,
+      @JsonKey(includeIfNull: false) final String? name,
+      @JsonKey(includeIfNull: false) final String? description,
+      @JsonKey(name: 'max_context_length') final int maxContextLength,
+      @JsonKey(includeIfNull: false) final List<String>? aliases,
+      @JsonKey(includeIfNull: false) final String? deprecation,
+      @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+      final double? defaultModelTemperature,
+      final String type}) = _$UnionModelCardBaseImpl;
+  const UnionModelCardBase._() : super._();
+
+  factory UnionModelCardBase.fromJson(Map<String, dynamic> json) =
+      _$UnionModelCardBaseImpl.fromJson;
+
+  /// No Description
+  @override
+  String get id;
+
+  /// No Description
+  String get model;
+
+  /// No Description
+  @override
+  @JsonKey(includeIfNull: false)
+  int? get created;
+
+  /// No Description
+  @override
+  @JsonKey(name: 'owned_by')
+  String get ownedBy;
+
+  /// No Description
+  @override
+  ModelCapabilities get capabilities;
+
+  /// No Description
+  @override
+  @JsonKey(includeIfNull: false)
+  String? get name;
+
+  /// No Description
+  @override
+  @JsonKey(includeIfNull: false)
+  String? get description;
+
+  /// No Description
+  @override
+  @JsonKey(name: 'max_context_length')
+  int get maxContextLength;
+
+  /// No Description
+  @override
+  @JsonKey(includeIfNull: false)
+  List<String>? get aliases;
+
+  /// No Description
+  @override
+  @JsonKey(includeIfNull: false)
+  String? get deprecation;
+
+  /// No Description
+  @override
+  @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+  double? get defaultModelTemperature;
+
+  /// No Description
+  @override
+  String get type;
+
+  /// Create a copy of UnionModelCard
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$UnionModelCardBaseImplCopyWith<_$UnionModelCardBaseImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$UnionModelCardFTImplCopyWith<$Res>
+    implements $UnionModelCardCopyWith<$Res> {
+  factory _$$UnionModelCardFTImplCopyWith(_$UnionModelCardFTImpl value,
+          $Res Function(_$UnionModelCardFTImpl) then) =
+      __$$UnionModelCardFTImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String object,
+      @JsonKey(includeIfNull: false) int? created,
+      @JsonKey(name: 'owned_by') String ownedBy,
+      ModelCapabilities capabilities,
+      @JsonKey(includeIfNull: false) String? name,
+      @JsonKey(includeIfNull: false) String? description,
+      @JsonKey(name: 'max_context_length') int maxContextLength,
+      List<String> aliases,
+      @JsonKey(includeIfNull: false) String? deprecation,
+      @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+      double? defaultModelTemperature,
+      String type,
+      String job,
+      String root,
+      bool archived});
+
+  @override
+  $ModelCapabilitiesCopyWith<$Res> get capabilities;
+}
+
+/// @nodoc
+class __$$UnionModelCardFTImplCopyWithImpl<$Res>
+    extends _$UnionModelCardCopyWithImpl<$Res, _$UnionModelCardFTImpl>
+    implements _$$UnionModelCardFTImplCopyWith<$Res> {
+  __$$UnionModelCardFTImplCopyWithImpl(_$UnionModelCardFTImpl _value,
+      $Res Function(_$UnionModelCardFTImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of UnionModelCard
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? object = null,
+    Object? created = freezed,
+    Object? ownedBy = null,
+    Object? capabilities = null,
+    Object? name = freezed,
+    Object? description = freezed,
+    Object? maxContextLength = null,
+    Object? aliases = null,
+    Object? deprecation = freezed,
+    Object? defaultModelTemperature = freezed,
+    Object? type = null,
+    Object? job = null,
+    Object? root = null,
+    Object? archived = null,
+  }) {
+    return _then(_$UnionModelCardFTImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      object: null == object
+          ? _value.object
+          : object // ignore: cast_nullable_to_non_nullable
+              as String,
+      created: freezed == created
+          ? _value.created
+          : created // ignore: cast_nullable_to_non_nullable
+              as int?,
+      ownedBy: null == ownedBy
+          ? _value.ownedBy
+          : ownedBy // ignore: cast_nullable_to_non_nullable
+              as String,
+      capabilities: null == capabilities
+          ? _value.capabilities
+          : capabilities // ignore: cast_nullable_to_non_nullable
+              as ModelCapabilities,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      maxContextLength: null == maxContextLength
+          ? _value.maxContextLength
+          : maxContextLength // ignore: cast_nullable_to_non_nullable
+              as int,
+      aliases: null == aliases
+          ? _value._aliases
+          : aliases // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      deprecation: freezed == deprecation
+          ? _value.deprecation
+          : deprecation // ignore: cast_nullable_to_non_nullable
+              as String?,
+      defaultModelTemperature: freezed == defaultModelTemperature
+          ? _value.defaultModelTemperature
+          : defaultModelTemperature // ignore: cast_nullable_to_non_nullable
+              as double?,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      job: null == job
+          ? _value.job
+          : job // ignore: cast_nullable_to_non_nullable
+              as String,
+      root: null == root
+          ? _value.root
+          : root // ignore: cast_nullable_to_non_nullable
+              as String,
+      archived: null == archived
+          ? _value.archived
+          : archived // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$UnionModelCardFTImpl extends UnionModelCardFT {
+  const _$UnionModelCardFTImpl(
+      {required this.id,
+      this.object = 'model',
+      @JsonKey(includeIfNull: false) this.created,
+      @JsonKey(name: 'owned_by') this.ownedBy = 'mistralai',
+      required this.capabilities,
+      @JsonKey(includeIfNull: false) this.name,
+      @JsonKey(includeIfNull: false) this.description,
+      @JsonKey(name: 'max_context_length') this.maxContextLength = 32768,
+      final List<String> aliases = const [],
+      @JsonKey(includeIfNull: false) this.deprecation,
+      @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+      this.defaultModelTemperature,
+      this.type = 'fine-tuned',
+      required this.job,
+      required this.root,
+      this.archived = false})
+      : _aliases = aliases,
+        super._();
+
+  factory _$UnionModelCardFTImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UnionModelCardFTImplFromJson(json);
+
+  /// No Description
+  @override
+  final String id;
+
+  /// No Description
+  @override
+  @JsonKey()
+  final String object;
+
+  /// No Description
+  @override
+  @JsonKey(includeIfNull: false)
+  final int? created;
+
+  /// No Description
+  @override
+  @JsonKey(name: 'owned_by')
+  final String ownedBy;
+
+  /// No Description
+  @override
+  final ModelCapabilities capabilities;
+
+  /// No Description
+  @override
+  @JsonKey(includeIfNull: false)
+  final String? name;
+
+  /// No Description
+  @override
+  @JsonKey(includeIfNull: false)
+  final String? description;
+
+  /// No Description
+  @override
+  @JsonKey(name: 'max_context_length')
+  final int maxContextLength;
+
+  /// No Description
+  final List<String> _aliases;
+
+  /// No Description
+  @override
+  @JsonKey()
+  List<String> get aliases {
+    if (_aliases is EqualUnmodifiableListView) return _aliases;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_aliases);
+  }
+
+  /// No Description
+  @override
+  @JsonKey(includeIfNull: false)
+  final String? deprecation;
+
+  /// No Description
+  @override
+  @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+  final double? defaultModelTemperature;
+
+  /// No Description
+  @override
+  @JsonKey()
+  final String type;
+
+  /// No Description
+  @override
+  final String job;
+
+  /// No Description
+  @override
+  final String root;
+
+  /// No Description
+  @override
+  @JsonKey()
+  final bool archived;
+
+  @override
+  String toString() {
+    return 'UnionModelCard.FT(id: $id, object: $object, created: $created, ownedBy: $ownedBy, capabilities: $capabilities, name: $name, description: $description, maxContextLength: $maxContextLength, aliases: $aliases, deprecation: $deprecation, defaultModelTemperature: $defaultModelTemperature, type: $type, job: $job, root: $root, archived: $archived)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UnionModelCardFTImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.object, object) || other.object == object) &&
+            (identical(other.created, created) || other.created == created) &&
+            (identical(other.ownedBy, ownedBy) || other.ownedBy == ownedBy) &&
+            (identical(other.capabilities, capabilities) ||
+                other.capabilities == capabilities) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.maxContextLength, maxContextLength) ||
+                other.maxContextLength == maxContextLength) &&
+            const DeepCollectionEquality().equals(other._aliases, _aliases) &&
+            (identical(other.deprecation, deprecation) ||
+                other.deprecation == deprecation) &&
+            (identical(
+                    other.defaultModelTemperature, defaultModelTemperature) ||
+                other.defaultModelTemperature == defaultModelTemperature) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.job, job) || other.job == job) &&
+            (identical(other.root, root) || other.root == root) &&
+            (identical(other.archived, archived) ||
+                other.archived == archived));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      object,
+      created,
+      ownedBy,
+      capabilities,
+      name,
+      description,
+      maxContextLength,
+      const DeepCollectionEquality().hash(_aliases),
+      deprecation,
+      defaultModelTemperature,
+      type,
+      job,
+      root,
+      archived);
+
+  /// Create a copy of UnionModelCard
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UnionModelCardFTImplCopyWith<_$UnionModelCardFTImpl> get copyWith =>
+      __$$UnionModelCardFTImplCopyWithImpl<_$UnionModelCardFTImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            String id,
+            String model,
+            @JsonKey(includeIfNull: false) int? created,
+            @JsonKey(name: 'owned_by') String ownedBy,
+            ModelCapabilities capabilities,
+            @JsonKey(includeIfNull: false) String? name,
+            @JsonKey(includeIfNull: false) String? description,
+            @JsonKey(name: 'max_context_length') int maxContextLength,
+            @JsonKey(includeIfNull: false) List<String>? aliases,
+            @JsonKey(includeIfNull: false) String? deprecation,
+            @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+            double? defaultModelTemperature,
+            String type)
+        Base,
+    required TResult Function(
+            String id,
+            String object,
+            @JsonKey(includeIfNull: false) int? created,
+            @JsonKey(name: 'owned_by') String ownedBy,
+            ModelCapabilities capabilities,
+            @JsonKey(includeIfNull: false) String? name,
+            @JsonKey(includeIfNull: false) String? description,
+            @JsonKey(name: 'max_context_length') int maxContextLength,
+            List<String> aliases,
+            @JsonKey(includeIfNull: false) String? deprecation,
+            @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+            double? defaultModelTemperature,
+            String type,
+            String job,
+            String root,
+            bool archived)
+        FT,
+  }) {
+    return FT(
+        id,
+        object,
+        created,
+        ownedBy,
+        capabilities,
+        name,
+        description,
+        maxContextLength,
+        aliases,
+        deprecation,
+        defaultModelTemperature,
+        type,
+        job,
+        root,
+        archived);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(
+            String id,
+            String model,
+            @JsonKey(includeIfNull: false) int? created,
+            @JsonKey(name: 'owned_by') String ownedBy,
+            ModelCapabilities capabilities,
+            @JsonKey(includeIfNull: false) String? name,
+            @JsonKey(includeIfNull: false) String? description,
+            @JsonKey(name: 'max_context_length') int maxContextLength,
+            @JsonKey(includeIfNull: false) List<String>? aliases,
+            @JsonKey(includeIfNull: false) String? deprecation,
+            @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+            double? defaultModelTemperature,
+            String type)?
+        Base,
+    TResult? Function(
+            String id,
+            String object,
+            @JsonKey(includeIfNull: false) int? created,
+            @JsonKey(name: 'owned_by') String ownedBy,
+            ModelCapabilities capabilities,
+            @JsonKey(includeIfNull: false) String? name,
+            @JsonKey(includeIfNull: false) String? description,
+            @JsonKey(name: 'max_context_length') int maxContextLength,
+            List<String> aliases,
+            @JsonKey(includeIfNull: false) String? deprecation,
+            @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+            double? defaultModelTemperature,
+            String type,
+            String job,
+            String root,
+            bool archived)?
+        FT,
+  }) {
+    return FT?.call(
+        id,
+        object,
+        created,
+        ownedBy,
+        capabilities,
+        name,
+        description,
+        maxContextLength,
+        aliases,
+        deprecation,
+        defaultModelTemperature,
+        type,
+        job,
+        root,
+        archived);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(
+            String id,
+            String model,
+            @JsonKey(includeIfNull: false) int? created,
+            @JsonKey(name: 'owned_by') String ownedBy,
+            ModelCapabilities capabilities,
+            @JsonKey(includeIfNull: false) String? name,
+            @JsonKey(includeIfNull: false) String? description,
+            @JsonKey(name: 'max_context_length') int maxContextLength,
+            @JsonKey(includeIfNull: false) List<String>? aliases,
+            @JsonKey(includeIfNull: false) String? deprecation,
+            @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+            double? defaultModelTemperature,
+            String type)?
+        Base,
+    TResult Function(
+            String id,
+            String object,
+            @JsonKey(includeIfNull: false) int? created,
+            @JsonKey(name: 'owned_by') String ownedBy,
+            ModelCapabilities capabilities,
+            @JsonKey(includeIfNull: false) String? name,
+            @JsonKey(includeIfNull: false) String? description,
+            @JsonKey(name: 'max_context_length') int maxContextLength,
+            List<String> aliases,
+            @JsonKey(includeIfNull: false) String? deprecation,
+            @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+            double? defaultModelTemperature,
+            String type,
+            String job,
+            String root,
+            bool archived)?
+        FT,
+    required TResult orElse(),
+  }) {
+    if (FT != null) {
+      return FT(
+          id,
+          object,
+          created,
+          ownedBy,
+          capabilities,
+          name,
+          description,
+          maxContextLength,
+          aliases,
+          deprecation,
+          defaultModelTemperature,
+          type,
+          job,
+          root,
+          archived);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(UnionModelCardBase value) Base,
+    required TResult Function(UnionModelCardFT value) FT,
+  }) {
+    return FT(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(UnionModelCardBase value)? Base,
+    TResult? Function(UnionModelCardFT value)? FT,
+  }) {
+    return FT?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(UnionModelCardBase value)? Base,
+    TResult Function(UnionModelCardFT value)? FT,
+    required TResult orElse(),
+  }) {
+    if (FT != null) {
+      return FT(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$UnionModelCardFTImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class UnionModelCardFT extends UnionModelCard {
+  const factory UnionModelCardFT(
+      {required final String id,
+      final String object,
+      @JsonKey(includeIfNull: false) final int? created,
+      @JsonKey(name: 'owned_by') final String ownedBy,
+      required final ModelCapabilities capabilities,
+      @JsonKey(includeIfNull: false) final String? name,
+      @JsonKey(includeIfNull: false) final String? description,
+      @JsonKey(name: 'max_context_length') final int maxContextLength,
+      final List<String> aliases,
+      @JsonKey(includeIfNull: false) final String? deprecation,
+      @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+      final double? defaultModelTemperature,
+      final String type,
+      required final String job,
+      required final String root,
+      final bool archived}) = _$UnionModelCardFTImpl;
+  const UnionModelCardFT._() : super._();
+
+  factory UnionModelCardFT.fromJson(Map<String, dynamic> json) =
+      _$UnionModelCardFTImpl.fromJson;
+
+  /// No Description
+  @override
+  String get id;
+
+  /// No Description
+  String get object;
+
+  /// No Description
+  @override
+  @JsonKey(includeIfNull: false)
+  int? get created;
+
+  /// No Description
+  @override
+  @JsonKey(name: 'owned_by')
+  String get ownedBy;
+
+  /// No Description
+  @override
+  ModelCapabilities get capabilities;
+
+  /// No Description
+  @override
+  @JsonKey(includeIfNull: false)
+  String? get name;
+
+  /// No Description
+  @override
+  @JsonKey(includeIfNull: false)
+  String? get description;
+
+  /// No Description
+  @override
+  @JsonKey(name: 'max_context_length')
+  int get maxContextLength;
+
+  /// No Description
+  @override
+  List<String> get aliases;
+
+  /// No Description
+  @override
+  @JsonKey(includeIfNull: false)
+  String? get deprecation;
+
+  /// No Description
+  @override
+  @JsonKey(name: 'default_model_temperature', includeIfNull: false)
+  double? get defaultModelTemperature;
+
+  /// No Description
+  @override
+  String get type;
+
+  /// No Description
+  String get job;
+
+  /// No Description
+  String get root;
+
+  /// No Description
+  bool get archived;
+
+  /// Create a copy of UnionModelCard
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$UnionModelCardFTImplCopyWith<_$UnionModelCardFTImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 UnionURL _$UnionURLFromJson(Map<String, dynamic> json) {

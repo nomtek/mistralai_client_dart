@@ -68,8 +68,8 @@ paths:
           content:
             application/json:
               schema:
-                # TODO: use anyOf and test
-                oneOf:
+                # Changed for better code generation
+                anyOf:
                   - $ref: "#/components/schemas/BaseModelCard"
                   - $ref: "#/components/schemas/FTModelCard"
                 discriminator:
@@ -1083,7 +1083,7 @@ components:
           default: list
         data:
           items:
-            oneOf:
+            anyOf:
               - $ref: "#/components/schemas/BaseModelCard"
               - $ref: "#/components/schemas/FTModelCard"
             discriminator:
