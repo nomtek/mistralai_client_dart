@@ -68,6 +68,7 @@ paths:
           content:
             application/json:
               schema:
+                # TODO: use anyOf and test
                 oneOf:
                   - $ref: "#/components/schemas/BaseModelCard"
                   - $ref: "#/components/schemas/FTModelCard"
@@ -2932,12 +2933,13 @@ components:
       properties:
         content:
           # migrated from 3.1.0 to 3.0.3
-          title: Content
-          type: string
+          title: UserMessageContent
+          anyOf:
+            - type: string
+            - items:
+                $ref: "#/components/schemas/ContentChunk"
+              type: array
           nullable: true
-          items:
-            $ref: "#/components/schemas/TextChunk"
-            type: array
         role:
           type: string
           default: user

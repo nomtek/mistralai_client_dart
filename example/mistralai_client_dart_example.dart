@@ -22,7 +22,7 @@ void main() async {
   const request = ChatCompletionRequest(
     model: 'mistral-small-latest',
     messages: [
-      UserMessage(content: 'Hello chat!'),
+      UserMessage(content: UserMessageContent.string('Hello chat!')),
     ],
   );
   final chatCompletion = await client.chatComplete(request: request);

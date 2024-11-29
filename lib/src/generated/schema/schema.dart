@@ -4055,7 +4055,7 @@ class UserMessage with _$UserMessage {
   /// Factory constructor for UserMessage
   const factory UserMessage({
     /// No Description
-    required String? content,
+    @_UserMessageContentConverter() required UserMessageContent? content,
 
     ///
     @Default(UserMessageRole.user) UserMessageRole role,
@@ -4078,6 +4078,55 @@ class UserMessage with _$UserMessage {
     return {
       'content': content,
       'role': role,
+    };
+  }
+}
+
+// ==========================================
+// CLASS: UserMessageContent
+// ==========================================
+
+/// No Description
+@freezed
+sealed class UserMessageContent with _$UserMessageContent {
+  const UserMessageContent._();
+
+  const factory UserMessageContent.array(
+    List<ContentChunk> value,
+  ) = _UnionUserMessageContentArray;
+
+  const factory UserMessageContent.string(
+    String value,
+  ) = _UnionUserMessageContentString;
+
+  /// Object construction from a JSON representation
+  factory UserMessageContent.fromJson(Map<String, dynamic> json) =>
+      _$UserMessageContentFromJson(json);
+}
+
+/// Custom JSON converter for [UserMessageContent]
+class _UserMessageContentConverter
+    implements JsonConverter<UserMessageContent, Object?> {
+  const _UserMessageContentConverter();
+
+  @override
+  UserMessageContent fromJson(Object? data) {
+    if (data is List && data.every((item) => item is ContentChunk)) {
+      return UserMessageContent.array(data.cast());
+    }
+    if (data is String) {
+      return UserMessageContent.string(data);
+    }
+    throw Exception(
+      'Unexpected value for UserMessageContent: $data',
+    );
+  }
+
+  @override
+  Object? toJson(UserMessageContent data) {
+    return switch (data) {
+      _UnionUserMessageContentArray(value: final v) => v,
+      _UnionUserMessageContentString(value: final v) => v,
     };
   }
 }

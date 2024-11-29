@@ -89,7 +89,9 @@ void main() async {
 
   final messages = <dynamic>[
     const UserMessage(
-      content: "What's the status of my transaction?",
+      content: UserMessageContent.string(
+        "What's the status of my transaction?",
+      ),
     ),
   ];
 
@@ -105,7 +107,7 @@ void main() async {
     ..add(chatResponse.choices![0].message)
     ..add(
       const UserMessage(
-        content: 'My transaction ID is T1001',
+        content: UserMessageContent.string('My transaction ID is T1001'),
       ),
     );
 

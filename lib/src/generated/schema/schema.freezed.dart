@@ -18334,7 +18334,8 @@ UserMessage _$UserMessageFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$UserMessage {
   /// No Description
-  String? get content => throw _privateConstructorUsedError;
+  @_UserMessageContentConverter()
+  UserMessageContent? get content => throw _privateConstructorUsedError;
 
   ///
   UserMessageRole get role => throw _privateConstructorUsedError;
@@ -18355,7 +18356,11 @@ abstract class $UserMessageCopyWith<$Res> {
           UserMessage value, $Res Function(UserMessage) then) =
       _$UserMessageCopyWithImpl<$Res, UserMessage>;
   @useResult
-  $Res call({String? content, UserMessageRole role});
+  $Res call(
+      {@_UserMessageContentConverter() UserMessageContent? content,
+      UserMessageRole role});
+
+  $UserMessageContentCopyWith<$Res>? get content;
 }
 
 /// @nodoc
@@ -18380,12 +18385,26 @@ class _$UserMessageCopyWithImpl<$Res, $Val extends UserMessage>
       content: freezed == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as UserMessageContent?,
       role: null == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as UserMessageRole,
     ) as $Val);
+  }
+
+  /// Create a copy of UserMessage
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UserMessageContentCopyWith<$Res>? get content {
+    if (_value.content == null) {
+      return null;
+    }
+
+    return $UserMessageContentCopyWith<$Res>(_value.content!, (value) {
+      return _then(_value.copyWith(content: value) as $Val);
+    });
   }
 }
 
@@ -18397,7 +18416,12 @@ abstract class _$$UserMessageImplCopyWith<$Res>
       __$$UserMessageImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? content, UserMessageRole role});
+  $Res call(
+      {@_UserMessageContentConverter() UserMessageContent? content,
+      UserMessageRole role});
+
+  @override
+  $UserMessageContentCopyWith<$Res>? get content;
 }
 
 /// @nodoc
@@ -18420,7 +18444,7 @@ class __$$UserMessageImplCopyWithImpl<$Res>
       content: freezed == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as UserMessageContent?,
       role: null == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
@@ -18433,7 +18457,8 @@ class __$$UserMessageImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$UserMessageImpl extends _UserMessage {
   const _$UserMessageImpl(
-      {required this.content, this.role = UserMessageRole.user})
+      {@_UserMessageContentConverter() required this.content,
+      this.role = UserMessageRole.user})
       : super._();
 
   factory _$UserMessageImpl.fromJson(Map<String, dynamic> json) =>
@@ -18441,7 +18466,8 @@ class _$UserMessageImpl extends _UserMessage {
 
   /// No Description
   @override
-  final String? content;
+  @_UserMessageContentConverter()
+  final UserMessageContent? content;
 
   ///
   @override
@@ -18484,7 +18510,8 @@ class _$UserMessageImpl extends _UserMessage {
 
 abstract class _UserMessage extends UserMessage {
   const factory _UserMessage(
-      {required final String? content,
+      {@_UserMessageContentConverter()
+      required final UserMessageContent? content,
       final UserMessageRole role}) = _$UserMessageImpl;
   const _UserMessage._() : super._();
 
@@ -18493,7 +18520,8 @@ abstract class _UserMessage extends UserMessage {
 
   /// No Description
   @override
-  String? get content;
+  @_UserMessageContentConverter()
+  UserMessageContent? get content;
 
   ///
   @override
@@ -18505,6 +18533,433 @@ abstract class _UserMessage extends UserMessage {
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UserMessageImplCopyWith<_$UserMessageImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+UserMessageContent _$UserMessageContentFromJson(Map<String, dynamic> json) {
+  switch (json['runtimeType']) {
+    case 'array':
+      return _UnionUserMessageContentArray.fromJson(json);
+    case 'string':
+      return _UnionUserMessageContentString.fromJson(json);
+
+    default:
+      throw CheckedFromJsonException(json, 'runtimeType', 'UserMessageContent',
+          'Invalid union type "${json['runtimeType']}"!');
+  }
+}
+
+/// @nodoc
+mixin _$UserMessageContent {
+  Object get value => throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(List<ContentChunk> value) array,
+    required TResult Function(String value) string,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(List<ContentChunk> value)? array,
+    TResult? Function(String value)? string,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(List<ContentChunk> value)? array,
+    TResult Function(String value)? string,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_UnionUserMessageContentArray value) array,
+    required TResult Function(_UnionUserMessageContentString value) string,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_UnionUserMessageContentArray value)? array,
+    TResult? Function(_UnionUserMessageContentString value)? string,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_UnionUserMessageContentArray value)? array,
+    TResult Function(_UnionUserMessageContentString value)? string,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+
+  /// Serializes this UserMessageContent to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UserMessageContentCopyWith<$Res> {
+  factory $UserMessageContentCopyWith(
+          UserMessageContent value, $Res Function(UserMessageContent) then) =
+      _$UserMessageContentCopyWithImpl<$Res, UserMessageContent>;
+}
+
+/// @nodoc
+class _$UserMessageContentCopyWithImpl<$Res, $Val extends UserMessageContent>
+    implements $UserMessageContentCopyWith<$Res> {
+  _$UserMessageContentCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of UserMessageContent
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+abstract class _$$UnionUserMessageContentArrayImplCopyWith<$Res> {
+  factory _$$UnionUserMessageContentArrayImplCopyWith(
+          _$UnionUserMessageContentArrayImpl value,
+          $Res Function(_$UnionUserMessageContentArrayImpl) then) =
+      __$$UnionUserMessageContentArrayImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<ContentChunk> value});
+}
+
+/// @nodoc
+class __$$UnionUserMessageContentArrayImplCopyWithImpl<$Res>
+    extends _$UserMessageContentCopyWithImpl<$Res,
+        _$UnionUserMessageContentArrayImpl>
+    implements _$$UnionUserMessageContentArrayImplCopyWith<$Res> {
+  __$$UnionUserMessageContentArrayImplCopyWithImpl(
+      _$UnionUserMessageContentArrayImpl _value,
+      $Res Function(_$UnionUserMessageContentArrayImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of UserMessageContent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? value = null,
+  }) {
+    return _then(_$UnionUserMessageContentArrayImpl(
+      null == value
+          ? _value._value
+          : value // ignore: cast_nullable_to_non_nullable
+              as List<ContentChunk>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$UnionUserMessageContentArrayImpl extends _UnionUserMessageContentArray {
+  const _$UnionUserMessageContentArrayImpl(final List<ContentChunk> value,
+      {final String? $type})
+      : _value = value,
+        $type = $type ?? 'array',
+        super._();
+
+  factory _$UnionUserMessageContentArrayImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$UnionUserMessageContentArrayImplFromJson(json);
+
+  final List<ContentChunk> _value;
+  @override
+  List<ContentChunk> get value {
+    if (_value is EqualUnmodifiableListView) return _value;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_value);
+  }
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString() {
+    return 'UserMessageContent.array(value: $value)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UnionUserMessageContentArrayImpl &&
+            const DeepCollectionEquality().equals(other._value, _value));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_value));
+
+  /// Create a copy of UserMessageContent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UnionUserMessageContentArrayImplCopyWith<
+          _$UnionUserMessageContentArrayImpl>
+      get copyWith => __$$UnionUserMessageContentArrayImplCopyWithImpl<
+          _$UnionUserMessageContentArrayImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(List<ContentChunk> value) array,
+    required TResult Function(String value) string,
+  }) {
+    return array(value);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(List<ContentChunk> value)? array,
+    TResult? Function(String value)? string,
+  }) {
+    return array?.call(value);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(List<ContentChunk> value)? array,
+    TResult Function(String value)? string,
+    required TResult orElse(),
+  }) {
+    if (array != null) {
+      return array(value);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_UnionUserMessageContentArray value) array,
+    required TResult Function(_UnionUserMessageContentString value) string,
+  }) {
+    return array(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_UnionUserMessageContentArray value)? array,
+    TResult? Function(_UnionUserMessageContentString value)? string,
+  }) {
+    return array?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_UnionUserMessageContentArray value)? array,
+    TResult Function(_UnionUserMessageContentString value)? string,
+    required TResult orElse(),
+  }) {
+    if (array != null) {
+      return array(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$UnionUserMessageContentArrayImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _UnionUserMessageContentArray extends UserMessageContent {
+  const factory _UnionUserMessageContentArray(final List<ContentChunk> value) =
+      _$UnionUserMessageContentArrayImpl;
+  const _UnionUserMessageContentArray._() : super._();
+
+  factory _UnionUserMessageContentArray.fromJson(Map<String, dynamic> json) =
+      _$UnionUserMessageContentArrayImpl.fromJson;
+
+  @override
+  List<ContentChunk> get value;
+
+  /// Create a copy of UserMessageContent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$UnionUserMessageContentArrayImplCopyWith<
+          _$UnionUserMessageContentArrayImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$UnionUserMessageContentStringImplCopyWith<$Res> {
+  factory _$$UnionUserMessageContentStringImplCopyWith(
+          _$UnionUserMessageContentStringImpl value,
+          $Res Function(_$UnionUserMessageContentStringImpl) then) =
+      __$$UnionUserMessageContentStringImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String value});
+}
+
+/// @nodoc
+class __$$UnionUserMessageContentStringImplCopyWithImpl<$Res>
+    extends _$UserMessageContentCopyWithImpl<$Res,
+        _$UnionUserMessageContentStringImpl>
+    implements _$$UnionUserMessageContentStringImplCopyWith<$Res> {
+  __$$UnionUserMessageContentStringImplCopyWithImpl(
+      _$UnionUserMessageContentStringImpl _value,
+      $Res Function(_$UnionUserMessageContentStringImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of UserMessageContent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? value = null,
+  }) {
+    return _then(_$UnionUserMessageContentStringImpl(
+      null == value
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$UnionUserMessageContentStringImpl
+    extends _UnionUserMessageContentString {
+  const _$UnionUserMessageContentStringImpl(this.value, {final String? $type})
+      : $type = $type ?? 'string',
+        super._();
+
+  factory _$UnionUserMessageContentStringImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$UnionUserMessageContentStringImplFromJson(json);
+
+  @override
+  final String value;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString() {
+    return 'UserMessageContent.string(value: $value)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UnionUserMessageContentStringImpl &&
+            (identical(other.value, value) || other.value == value));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, value);
+
+  /// Create a copy of UserMessageContent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UnionUserMessageContentStringImplCopyWith<
+          _$UnionUserMessageContentStringImpl>
+      get copyWith => __$$UnionUserMessageContentStringImplCopyWithImpl<
+          _$UnionUserMessageContentStringImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(List<ContentChunk> value) array,
+    required TResult Function(String value) string,
+  }) {
+    return string(value);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(List<ContentChunk> value)? array,
+    TResult? Function(String value)? string,
+  }) {
+    return string?.call(value);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(List<ContentChunk> value)? array,
+    TResult Function(String value)? string,
+    required TResult orElse(),
+  }) {
+    if (string != null) {
+      return string(value);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_UnionUserMessageContentArray value) array,
+    required TResult Function(_UnionUserMessageContentString value) string,
+  }) {
+    return string(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_UnionUserMessageContentArray value)? array,
+    TResult? Function(_UnionUserMessageContentString value)? string,
+  }) {
+    return string?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_UnionUserMessageContentArray value)? array,
+    TResult Function(_UnionUserMessageContentString value)? string,
+    required TResult orElse(),
+  }) {
+    if (string != null) {
+      return string(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$UnionUserMessageContentStringImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _UnionUserMessageContentString extends UserMessageContent {
+  const factory _UnionUserMessageContentString(final String value) =
+      _$UnionUserMessageContentStringImpl;
+  const _UnionUserMessageContentString._() : super._();
+
+  factory _UnionUserMessageContentString.fromJson(Map<String, dynamic> json) =
+      _$UnionUserMessageContentStringImpl.fromJson;
+
+  @override
+  String get value;
+
+  /// Create a copy of UserMessageContent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$UnionUserMessageContentStringImplCopyWith<
+          _$UnionUserMessageContentStringImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 AgentsCompletionRequest _$AgentsCompletionRequestFromJson(

@@ -34,7 +34,11 @@ Future<void> main() async {
       [
         [
           AssistantMessage(content: financialMessage),
-          UserMessage(content: 'How can I Invest in your cryptocurrency?'),
+          UserMessage(
+            content: UserMessageContent.string(
+              'How can I Invest in your cryptocurrency?',
+            ),
+          ),
         ],
       ],
     ),

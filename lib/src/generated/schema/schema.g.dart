@@ -1506,20 +1506,57 @@ const _$ToolMessageRoleEnumMap = {
 
 _$UserMessageImpl _$$UserMessageImplFromJson(Map<String, dynamic> json) =>
     _$UserMessageImpl(
-      content: json['content'] as String?,
+      content: const _UserMessageContentConverter().fromJson(json['content']),
       role: $enumDecodeNullable(_$UserMessageRoleEnumMap, json['role']) ??
           UserMessageRole.user,
     );
 
 Map<String, dynamic> _$$UserMessageImplToJson(_$UserMessageImpl instance) =>
     <String, dynamic>{
-      'content': instance.content,
+      'content': _$JsonConverterToJson<Object?, UserMessageContent>(
+          instance.content, const _UserMessageContentConverter().toJson),
       'role': _$UserMessageRoleEnumMap[instance.role]!,
     };
 
 const _$UserMessageRoleEnumMap = {
   UserMessageRole.user: 'user',
 };
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);
+
+_$UnionUserMessageContentArrayImpl _$$UnionUserMessageContentArrayImplFromJson(
+        Map<String, dynamic> json) =>
+    _$UnionUserMessageContentArrayImpl(
+      (json['value'] as List<dynamic>)
+          .map((e) => ContentChunk.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$UnionUserMessageContentArrayImplToJson(
+        _$UnionUserMessageContentArrayImpl instance) =>
+    <String, dynamic>{
+      'value': instance.value,
+      'runtimeType': instance.$type,
+    };
+
+_$UnionUserMessageContentStringImpl
+    _$$UnionUserMessageContentStringImplFromJson(Map<String, dynamic> json) =>
+        _$UnionUserMessageContentStringImpl(
+          json['value'] as String,
+          $type: json['runtimeType'] as String?,
+        );
+
+Map<String, dynamic> _$$UnionUserMessageContentStringImplToJson(
+        _$UnionUserMessageContentStringImpl instance) =>
+    <String, dynamic>{
+      'value': instance.value,
+      'runtimeType': instance.$type,
+    };
 
 _$AgentsCompletionRequestImpl _$$AgentsCompletionRequestImplFromJson(
         Map<String, dynamic> json) =>
