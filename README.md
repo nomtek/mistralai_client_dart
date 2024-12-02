@@ -27,8 +27,8 @@ final client = MistralAIClient(apiKey: 'your api key here');
 
 ```dart
 final modelsResult = await client.listModels();
-final models = modelsResult.data.map((e) => e.id).toList();
-print(models.join(', '));
+final models = modelsResult.data?.map((e) => e.id).toList();
+print(models?.join(', '));
 ```
 
 ### Chat
@@ -101,6 +101,12 @@ Check examples:
 Check examples:
 
 - [Agents example](example/agents_example.dart)
+
+### Moderation
+
+Check examples:
+
+- [Moderation example](example/mistralai_client_moderation_example.dart)
 
 ## Resources
 

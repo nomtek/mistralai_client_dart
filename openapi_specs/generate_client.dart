@@ -53,6 +53,9 @@ void main(List<String> args) async {
         },
         onSchemaUnionName: (unionName, subNames) {
           log('generating union: $unionName, sub types: ${subNames.join(',')}');
+          if (unionName == 'UnionModelCard') {
+            return 'ModelCard';
+          }
           return unionName;
         },
       ),
@@ -67,17 +70,55 @@ void main(List<String> args) async {
     // fix analysis problems in generated code
     final clientFile = File('${destination}client.dart');
     final clientContent = clientFile.readAsStringSync();
-    final updatedClientContent = clientContent.replaceAll(
+    var updatedClientContent = clientContent.replaceAll(
       '_jsonDecode(r)',
       '_jsonDecode(r) as Map<String, dynamic>',
     );
+    updatedClientContent = fixReturnInRetrieveModelMethod(updatedClientContent);
     clientFile.writeAsStringSync(updatedClientContent);
   } catch (e) {
     log('Failed to generate client: $e');
   }
 
-  log('run code formating');
+  log('run code formatting');
   await Process.run('dart', ['format', '.']);
+}
+
+const noRetrieveModelMethodException =
+    'Failed to find retrieveModel method to fix. '
+    ' The fix may no longer be up to date.';
+
+String fixReturnInRetrieveModelMethod(String clientContent) {
+  final retrieveModelPattern = RegExp(
+    r'Future<ModelCard>\s+retrieveModel\(\{\s*required String modelId,\s*\}\)\s+async\s*\{[\s\S]*?^\}',
+    multiLine: true,
+  );
+
+  var foundMatch = false;
+
+  final updatedContent = clientContent.replaceAllMapped(
+    retrieveModelPattern,
+    (match) {
+      final functionContent = match.group(0);
+
+      if (functionContent == null) {
+        throw Exception(noRetrieveModelMethodException);
+      }
+
+      foundMatch = true;
+      final updatedFunctionContent = functionContent.replaceFirst(
+        'return _jsonDecode(r) as Map<String, dynamic>;',
+        'return ModelCard.fromJson(_jsonDecode(r) as Map<String, dynamic>);',
+      );
+      return updatedFunctionContent;
+    },
+  );
+
+  if (!foundMatch) {
+    throw Exception(noRetrieveModelMethodException);
+  }
+
+  return updatedContent;
 }
 
 void log(Object message) {

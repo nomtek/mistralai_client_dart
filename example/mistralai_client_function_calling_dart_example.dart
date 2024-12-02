@@ -89,8 +89,9 @@ void main() async {
 
   final messages = <dynamic>[
     const UserMessage(
-      content:
-          UserMessageContent.string("What's the status of my transaction?"),
+      content: UserMessageContent.string(
+        "What's the status of my transaction?",
+      ),
     ),
   ];
 
