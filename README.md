@@ -26,14 +26,8 @@ final client = MistralAIClient(apiKey: 'your api key here');
 ### List models
 
 ```dart
-final modelsResult = await client.listMistralModels();
-final models = modelsResult?.map((e) {
-  if (e.baseModel != null) {
-    return e.baseModel?.id;
-  } else {
-    return e.fineTunedModel?.id;
-  }
-}).toList();
+final modelsResult = await client.listModels();
+final models = modelsResult.data?.map((e) => e.id).toList();
 print(models?.join(', '));
 ```
 
