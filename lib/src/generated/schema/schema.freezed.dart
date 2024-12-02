@@ -1798,7 +1798,7 @@ mixin _$ModelList {
 
   /// No Description
   @JsonKey(includeIfNull: false)
-  List<UnionModelCard>? get data => throw _privateConstructorUsedError;
+  List<ModelCard>? get data => throw _privateConstructorUsedError;
 
   /// Serializes this ModelList to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -1816,8 +1816,7 @@ abstract class $ModelListCopyWith<$Res> {
       _$ModelListCopyWithImpl<$Res, ModelList>;
   @useResult
   $Res call(
-      {String object,
-      @JsonKey(includeIfNull: false) List<UnionModelCard>? data});
+      {String object, @JsonKey(includeIfNull: false) List<ModelCard>? data});
 }
 
 /// @nodoc
@@ -1846,7 +1845,7 @@ class _$ModelListCopyWithImpl<$Res, $Val extends ModelList>
       data: freezed == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as List<UnionModelCard>?,
+              as List<ModelCard>?,
     ) as $Val);
   }
 }
@@ -1860,8 +1859,7 @@ abstract class _$$ModelListImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String object,
-      @JsonKey(includeIfNull: false) List<UnionModelCard>? data});
+      {String object, @JsonKey(includeIfNull: false) List<ModelCard>? data});
 }
 
 /// @nodoc
@@ -1888,7 +1886,7 @@ class __$$ModelListImplCopyWithImpl<$Res>
       data: freezed == data
           ? _value._data
           : data // ignore: cast_nullable_to_non_nullable
-              as List<UnionModelCard>?,
+              as List<ModelCard>?,
     ));
   }
 }
@@ -1898,7 +1896,7 @@ class __$$ModelListImplCopyWithImpl<$Res>
 class _$ModelListImpl extends _ModelList {
   const _$ModelListImpl(
       {this.object = 'list',
-      @JsonKey(includeIfNull: false) final List<UnionModelCard>? data})
+      @JsonKey(includeIfNull: false) final List<ModelCard>? data})
       : _data = data,
         super._();
 
@@ -1911,12 +1909,12 @@ class _$ModelListImpl extends _ModelList {
   final String object;
 
   /// No Description
-  final List<UnionModelCard>? _data;
+  final List<ModelCard>? _data;
 
   /// No Description
   @override
   @JsonKey(includeIfNull: false)
-  List<UnionModelCard>? get data {
+  List<ModelCard>? get data {
     final value = _data;
     if (value == null) return null;
     if (_data is EqualUnmodifiableListView) return _data;
@@ -1962,7 +1960,7 @@ class _$ModelListImpl extends _ModelList {
 abstract class _ModelList extends ModelList {
   const factory _ModelList(
           {final String object,
-          @JsonKey(includeIfNull: false) final List<UnionModelCard>? data}) =
+          @JsonKey(includeIfNull: false) final List<ModelCard>? data}) =
       _$ModelListImpl;
   const _ModelList._() : super._();
 
@@ -1976,7 +1974,7 @@ abstract class _ModelList extends ModelList {
   /// No Description
   @override
   @JsonKey(includeIfNull: false)
-  List<UnionModelCard>? get data;
+  List<ModelCard>? get data;
 
   /// Create a copy of ModelList
   /// with the given fields replaced by the non-null parameter values.
@@ -26041,21 +26039,21 @@ abstract class _CompletionResponseStreamChoice
       get copyWith => throw _privateConstructorUsedError;
 }
 
-UnionModelCard _$UnionModelCardFromJson(Map<String, dynamic> json) {
+ModelCard _$ModelCardFromJson(Map<String, dynamic> json) {
   switch (json['type']) {
     case 'base':
-      return UnionModelCardBase.fromJson(json);
+      return ModelCardBase.fromJson(json);
     case 'fine-tuned':
-      return UnionModelCardFT.fromJson(json);
+      return ModelCardFT.fromJson(json);
 
     default:
-      throw CheckedFromJsonException(json, 'type', 'UnionModelCard',
-          'Invalid union type "${json['type']}"!');
+      throw CheckedFromJsonException(
+          json, 'type', 'ModelCard', 'Invalid union type "${json['type']}"!');
   }
 }
 
 /// @nodoc
-mixin _$UnionModelCard {
+mixin _$ModelCard {
   /// No Description
   String get id => throw _privateConstructorUsedError;
 
@@ -26210,39 +26208,38 @@ mixin _$UnionModelCard {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(UnionModelCardBase value) Base,
-    required TResult Function(UnionModelCardFT value) FT,
+    required TResult Function(ModelCardBase value) Base,
+    required TResult Function(ModelCardFT value) FT,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(UnionModelCardBase value)? Base,
-    TResult? Function(UnionModelCardFT value)? FT,
+    TResult? Function(ModelCardBase value)? Base,
+    TResult? Function(ModelCardFT value)? FT,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(UnionModelCardBase value)? Base,
-    TResult Function(UnionModelCardFT value)? FT,
+    TResult Function(ModelCardBase value)? Base,
+    TResult Function(ModelCardFT value)? FT,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 
-  /// Serializes this UnionModelCard to a JSON map.
+  /// Serializes this ModelCard to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of UnionModelCard
+  /// Create a copy of ModelCard
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $UnionModelCardCopyWith<UnionModelCard> get copyWith =>
+  $ModelCardCopyWith<ModelCard> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $UnionModelCardCopyWith<$Res> {
-  factory $UnionModelCardCopyWith(
-          UnionModelCard value, $Res Function(UnionModelCard) then) =
-      _$UnionModelCardCopyWithImpl<$Res, UnionModelCard>;
+abstract class $ModelCardCopyWith<$Res> {
+  factory $ModelCardCopyWith(ModelCard value, $Res Function(ModelCard) then) =
+      _$ModelCardCopyWithImpl<$Res, ModelCard>;
   @useResult
   $Res call(
       {String id,
@@ -26262,16 +26259,16 @@ abstract class $UnionModelCardCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$UnionModelCardCopyWithImpl<$Res, $Val extends UnionModelCard>
-    implements $UnionModelCardCopyWith<$Res> {
-  _$UnionModelCardCopyWithImpl(this._value, this._then);
+class _$ModelCardCopyWithImpl<$Res, $Val extends ModelCard>
+    implements $ModelCardCopyWith<$Res> {
+  _$ModelCardCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of UnionModelCard
+  /// Create a copy of ModelCard
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -26336,7 +26333,7 @@ class _$UnionModelCardCopyWithImpl<$Res, $Val extends UnionModelCard>
     ) as $Val);
   }
 
-  /// Create a copy of UnionModelCard
+  /// Create a copy of ModelCard
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -26348,11 +26345,11 @@ class _$UnionModelCardCopyWithImpl<$Res, $Val extends UnionModelCard>
 }
 
 /// @nodoc
-abstract class _$$UnionModelCardBaseImplCopyWith<$Res>
-    implements $UnionModelCardCopyWith<$Res> {
-  factory _$$UnionModelCardBaseImplCopyWith(_$UnionModelCardBaseImpl value,
-          $Res Function(_$UnionModelCardBaseImpl) then) =
-      __$$UnionModelCardBaseImplCopyWithImpl<$Res>;
+abstract class _$$ModelCardBaseImplCopyWith<$Res>
+    implements $ModelCardCopyWith<$Res> {
+  factory _$$ModelCardBaseImplCopyWith(
+          _$ModelCardBaseImpl value, $Res Function(_$ModelCardBaseImpl) then) =
+      __$$ModelCardBaseImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -26375,14 +26372,14 @@ abstract class _$$UnionModelCardBaseImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$UnionModelCardBaseImplCopyWithImpl<$Res>
-    extends _$UnionModelCardCopyWithImpl<$Res, _$UnionModelCardBaseImpl>
-    implements _$$UnionModelCardBaseImplCopyWith<$Res> {
-  __$$UnionModelCardBaseImplCopyWithImpl(_$UnionModelCardBaseImpl _value,
-      $Res Function(_$UnionModelCardBaseImpl) _then)
+class __$$ModelCardBaseImplCopyWithImpl<$Res>
+    extends _$ModelCardCopyWithImpl<$Res, _$ModelCardBaseImpl>
+    implements _$$ModelCardBaseImplCopyWith<$Res> {
+  __$$ModelCardBaseImplCopyWithImpl(
+      _$ModelCardBaseImpl _value, $Res Function(_$ModelCardBaseImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of UnionModelCard
+  /// Create a copy of ModelCard
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -26400,7 +26397,7 @@ class __$$UnionModelCardBaseImplCopyWithImpl<$Res>
     Object? defaultModelTemperature = freezed,
     Object? type = null,
   }) {
-    return _then(_$UnionModelCardBaseImpl(
+    return _then(_$ModelCardBaseImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -26455,8 +26452,8 @@ class __$$UnionModelCardBaseImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$UnionModelCardBaseImpl extends UnionModelCardBase {
-  const _$UnionModelCardBaseImpl(
+class _$ModelCardBaseImpl extends ModelCardBase {
+  const _$ModelCardBaseImpl(
       {required this.id,
       this.model = 'model',
       @JsonKey(includeIfNull: false) this.created,
@@ -26473,8 +26470,8 @@ class _$UnionModelCardBaseImpl extends UnionModelCardBase {
       : _aliases = aliases,
         super._();
 
-  factory _$UnionModelCardBaseImpl.fromJson(Map<String, dynamic> json) =>
-      _$$UnionModelCardBaseImplFromJson(json);
+  factory _$ModelCardBaseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ModelCardBaseImplFromJson(json);
 
   /// No Description
   @override
@@ -26545,14 +26542,14 @@ class _$UnionModelCardBaseImpl extends UnionModelCardBase {
 
   @override
   String toString() {
-    return 'UnionModelCard.Base(id: $id, model: $model, created: $created, ownedBy: $ownedBy, capabilities: $capabilities, name: $name, description: $description, maxContextLength: $maxContextLength, aliases: $aliases, deprecation: $deprecation, defaultModelTemperature: $defaultModelTemperature, type: $type)';
+    return 'ModelCard.Base(id: $id, model: $model, created: $created, ownedBy: $ownedBy, capabilities: $capabilities, name: $name, description: $description, maxContextLength: $maxContextLength, aliases: $aliases, deprecation: $deprecation, defaultModelTemperature: $defaultModelTemperature, type: $type)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UnionModelCardBaseImpl &&
+            other is _$ModelCardBaseImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.model, model) || other.model == model) &&
             (identical(other.created, created) || other.created == created) &&
@@ -26590,14 +26587,13 @@ class _$UnionModelCardBaseImpl extends UnionModelCardBase {
       defaultModelTemperature,
       type);
 
-  /// Create a copy of UnionModelCard
+  /// Create a copy of ModelCard
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$UnionModelCardBaseImplCopyWith<_$UnionModelCardBaseImpl> get copyWith =>
-      __$$UnionModelCardBaseImplCopyWithImpl<_$UnionModelCardBaseImpl>(
-          this, _$identity);
+  _$$ModelCardBaseImplCopyWith<_$ModelCardBaseImpl> get copyWith =>
+      __$$ModelCardBaseImplCopyWithImpl<_$ModelCardBaseImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -26751,8 +26747,8 @@ class _$UnionModelCardBaseImpl extends UnionModelCardBase {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(UnionModelCardBase value) Base,
-    required TResult Function(UnionModelCardFT value) FT,
+    required TResult Function(ModelCardBase value) Base,
+    required TResult Function(ModelCardFT value) FT,
   }) {
     return Base(this);
   }
@@ -26760,8 +26756,8 @@ class _$UnionModelCardBaseImpl extends UnionModelCardBase {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(UnionModelCardBase value)? Base,
-    TResult? Function(UnionModelCardFT value)? FT,
+    TResult? Function(ModelCardBase value)? Base,
+    TResult? Function(ModelCardFT value)? FT,
   }) {
     return Base?.call(this);
   }
@@ -26769,8 +26765,8 @@ class _$UnionModelCardBaseImpl extends UnionModelCardBase {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(UnionModelCardBase value)? Base,
-    TResult Function(UnionModelCardFT value)? FT,
+    TResult Function(ModelCardBase value)? Base,
+    TResult Function(ModelCardFT value)? FT,
     required TResult orElse(),
   }) {
     if (Base != null) {
@@ -26781,14 +26777,14 @@ class _$UnionModelCardBaseImpl extends UnionModelCardBase {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$UnionModelCardBaseImplToJson(
+    return _$$ModelCardBaseImplToJson(
       this,
     );
   }
 }
 
-abstract class UnionModelCardBase extends UnionModelCard {
-  const factory UnionModelCardBase(
+abstract class ModelCardBase extends ModelCard {
+  const factory ModelCardBase(
       {required final String id,
       final String model,
       @JsonKey(includeIfNull: false) final int? created,
@@ -26801,11 +26797,11 @@ abstract class UnionModelCardBase extends UnionModelCard {
       @JsonKey(includeIfNull: false) final String? deprecation,
       @JsonKey(name: 'default_model_temperature', includeIfNull: false)
       final double? defaultModelTemperature,
-      final String type}) = _$UnionModelCardBaseImpl;
-  const UnionModelCardBase._() : super._();
+      final String type}) = _$ModelCardBaseImpl;
+  const ModelCardBase._() : super._();
 
-  factory UnionModelCardBase.fromJson(Map<String, dynamic> json) =
-      _$UnionModelCardBaseImpl.fromJson;
+  factory ModelCardBase.fromJson(Map<String, dynamic> json) =
+      _$ModelCardBaseImpl.fromJson;
 
   /// No Description
   @override
@@ -26862,20 +26858,20 @@ abstract class UnionModelCardBase extends UnionModelCard {
   @override
   String get type;
 
-  /// Create a copy of UnionModelCard
+  /// Create a copy of ModelCard
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$UnionModelCardBaseImplCopyWith<_$UnionModelCardBaseImpl> get copyWith =>
+  _$$ModelCardBaseImplCopyWith<_$ModelCardBaseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$UnionModelCardFTImplCopyWith<$Res>
-    implements $UnionModelCardCopyWith<$Res> {
-  factory _$$UnionModelCardFTImplCopyWith(_$UnionModelCardFTImpl value,
-          $Res Function(_$UnionModelCardFTImpl) then) =
-      __$$UnionModelCardFTImplCopyWithImpl<$Res>;
+abstract class _$$ModelCardFTImplCopyWith<$Res>
+    implements $ModelCardCopyWith<$Res> {
+  factory _$$ModelCardFTImplCopyWith(
+          _$ModelCardFTImpl value, $Res Function(_$ModelCardFTImpl) then) =
+      __$$ModelCardFTImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -26901,14 +26897,14 @@ abstract class _$$UnionModelCardFTImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$UnionModelCardFTImplCopyWithImpl<$Res>
-    extends _$UnionModelCardCopyWithImpl<$Res, _$UnionModelCardFTImpl>
-    implements _$$UnionModelCardFTImplCopyWith<$Res> {
-  __$$UnionModelCardFTImplCopyWithImpl(_$UnionModelCardFTImpl _value,
-      $Res Function(_$UnionModelCardFTImpl) _then)
+class __$$ModelCardFTImplCopyWithImpl<$Res>
+    extends _$ModelCardCopyWithImpl<$Res, _$ModelCardFTImpl>
+    implements _$$ModelCardFTImplCopyWith<$Res> {
+  __$$ModelCardFTImplCopyWithImpl(
+      _$ModelCardFTImpl _value, $Res Function(_$ModelCardFTImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of UnionModelCard
+  /// Create a copy of ModelCard
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -26929,7 +26925,7 @@ class __$$UnionModelCardFTImplCopyWithImpl<$Res>
     Object? root = null,
     Object? archived = null,
   }) {
-    return _then(_$UnionModelCardFTImpl(
+    return _then(_$ModelCardFTImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -26996,8 +26992,8 @@ class __$$UnionModelCardFTImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$UnionModelCardFTImpl extends UnionModelCardFT {
-  const _$UnionModelCardFTImpl(
+class _$ModelCardFTImpl extends ModelCardFT {
+  const _$ModelCardFTImpl(
       {required this.id,
       this.object = 'model',
       @JsonKey(includeIfNull: false) this.created,
@@ -27017,8 +27013,8 @@ class _$UnionModelCardFTImpl extends UnionModelCardFT {
       : _aliases = aliases,
         super._();
 
-  factory _$UnionModelCardFTImpl.fromJson(Map<String, dynamic> json) =>
-      _$$UnionModelCardFTImplFromJson(json);
+  factory _$ModelCardFTImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ModelCardFTImplFromJson(json);
 
   /// No Description
   @override
@@ -27100,14 +27096,14 @@ class _$UnionModelCardFTImpl extends UnionModelCardFT {
 
   @override
   String toString() {
-    return 'UnionModelCard.FT(id: $id, object: $object, created: $created, ownedBy: $ownedBy, capabilities: $capabilities, name: $name, description: $description, maxContextLength: $maxContextLength, aliases: $aliases, deprecation: $deprecation, defaultModelTemperature: $defaultModelTemperature, type: $type, job: $job, root: $root, archived: $archived)';
+    return 'ModelCard.FT(id: $id, object: $object, created: $created, ownedBy: $ownedBy, capabilities: $capabilities, name: $name, description: $description, maxContextLength: $maxContextLength, aliases: $aliases, deprecation: $deprecation, defaultModelTemperature: $defaultModelTemperature, type: $type, job: $job, root: $root, archived: $archived)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UnionModelCardFTImpl &&
+            other is _$ModelCardFTImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.object, object) || other.object == object) &&
             (identical(other.created, created) || other.created == created) &&
@@ -27152,14 +27148,13 @@ class _$UnionModelCardFTImpl extends UnionModelCardFT {
       root,
       archived);
 
-  /// Create a copy of UnionModelCard
+  /// Create a copy of ModelCard
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$UnionModelCardFTImplCopyWith<_$UnionModelCardFTImpl> get copyWith =>
-      __$$UnionModelCardFTImplCopyWithImpl<_$UnionModelCardFTImpl>(
-          this, _$identity);
+  _$$ModelCardFTImplCopyWith<_$ModelCardFTImpl> get copyWith =>
+      __$$ModelCardFTImplCopyWithImpl<_$ModelCardFTImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -27333,8 +27328,8 @@ class _$UnionModelCardFTImpl extends UnionModelCardFT {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(UnionModelCardBase value) Base,
-    required TResult Function(UnionModelCardFT value) FT,
+    required TResult Function(ModelCardBase value) Base,
+    required TResult Function(ModelCardFT value) FT,
   }) {
     return FT(this);
   }
@@ -27342,8 +27337,8 @@ class _$UnionModelCardFTImpl extends UnionModelCardFT {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(UnionModelCardBase value)? Base,
-    TResult? Function(UnionModelCardFT value)? FT,
+    TResult? Function(ModelCardBase value)? Base,
+    TResult? Function(ModelCardFT value)? FT,
   }) {
     return FT?.call(this);
   }
@@ -27351,8 +27346,8 @@ class _$UnionModelCardFTImpl extends UnionModelCardFT {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(UnionModelCardBase value)? Base,
-    TResult Function(UnionModelCardFT value)? FT,
+    TResult Function(ModelCardBase value)? Base,
+    TResult Function(ModelCardFT value)? FT,
     required TResult orElse(),
   }) {
     if (FT != null) {
@@ -27363,14 +27358,14 @@ class _$UnionModelCardFTImpl extends UnionModelCardFT {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$UnionModelCardFTImplToJson(
+    return _$$ModelCardFTImplToJson(
       this,
     );
   }
 }
 
-abstract class UnionModelCardFT extends UnionModelCard {
-  const factory UnionModelCardFT(
+abstract class ModelCardFT extends ModelCard {
+  const factory ModelCardFT(
       {required final String id,
       final String object,
       @JsonKey(includeIfNull: false) final int? created,
@@ -27386,11 +27381,11 @@ abstract class UnionModelCardFT extends UnionModelCard {
       final String type,
       required final String job,
       required final String root,
-      final bool archived}) = _$UnionModelCardFTImpl;
-  const UnionModelCardFT._() : super._();
+      final bool archived}) = _$ModelCardFTImpl;
+  const ModelCardFT._() : super._();
 
-  factory UnionModelCardFT.fromJson(Map<String, dynamic> json) =
-      _$UnionModelCardFTImpl.fromJson;
+  factory ModelCardFT.fromJson(Map<String, dynamic> json) =
+      _$ModelCardFTImpl.fromJson;
 
   /// No Description
   @override
@@ -27455,11 +27450,11 @@ abstract class UnionModelCardFT extends UnionModelCard {
   /// No Description
   bool get archived;
 
-  /// Create a copy of UnionModelCard
+  /// Create a copy of ModelCard
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$UnionModelCardFTImplCopyWith<_$UnionModelCardFTImpl> get copyWith =>
+  _$$ModelCardFTImplCopyWith<_$ModelCardFTImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

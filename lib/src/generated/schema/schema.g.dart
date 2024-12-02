@@ -151,7 +151,7 @@ _$ModelListImpl _$$ModelListImplFromJson(Map<String, dynamic> json) =>
     _$ModelListImpl(
       object: json['object'] as String? ?? 'list',
       data: (json['data'] as List<dynamic>?)
-          ?.map((e) => UnionModelCard.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => ModelCard.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -2079,9 +2079,8 @@ const _$CompletionResponseStreamChoiceFinishReasonEnumMap = {
   CompletionResponseStreamChoiceFinishReason.toolCalls: 'tool_calls',
 };
 
-_$UnionModelCardBaseImpl _$$UnionModelCardBaseImplFromJson(
-        Map<String, dynamic> json) =>
-    _$UnionModelCardBaseImpl(
+_$ModelCardBaseImpl _$$ModelCardBaseImplFromJson(Map<String, dynamic> json) =>
+    _$ModelCardBaseImpl(
       id: json['id'] as String,
       model: json['model'] as String? ?? 'model',
       created: (json['created'] as num?)?.toInt(),
@@ -2101,8 +2100,7 @@ _$UnionModelCardBaseImpl _$$UnionModelCardBaseImplFromJson(
       type: json['type'] as String? ?? 'base',
     );
 
-Map<String, dynamic> _$$UnionModelCardBaseImplToJson(
-        _$UnionModelCardBaseImpl instance) =>
+Map<String, dynamic> _$$ModelCardBaseImplToJson(_$ModelCardBaseImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'model': instance.model,
@@ -2119,9 +2117,8 @@ Map<String, dynamic> _$$UnionModelCardBaseImplToJson(
       'type': instance.type,
     };
 
-_$UnionModelCardFTImpl _$$UnionModelCardFTImplFromJson(
-        Map<String, dynamic> json) =>
-    _$UnionModelCardFTImpl(
+_$ModelCardFTImpl _$$ModelCardFTImplFromJson(Map<String, dynamic> json) =>
+    _$ModelCardFTImpl(
       id: json['id'] as String,
       object: json['object'] as String? ?? 'model',
       created: (json['created'] as num?)?.toInt(),
@@ -2144,8 +2141,7 @@ _$UnionModelCardFTImpl _$$UnionModelCardFTImplFromJson(
       archived: json['archived'] as bool? ?? false,
     );
 
-Map<String, dynamic> _$$UnionModelCardFTImplToJson(
-        _$UnionModelCardFTImpl instance) =>
+Map<String, dynamic> _$$ModelCardFTImplToJson(_$ModelCardFTImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'object': instance.object,

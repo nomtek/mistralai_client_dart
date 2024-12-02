@@ -384,7 +384,7 @@ class ModelList with _$ModelList {
     @Default('list') String object,
 
     /// No Description
-    @JsonKey(includeIfNull: false) List<UnionModelCard>? data,
+    @JsonKey(includeIfNull: false) List<ModelCard>? data,
   }) = _ModelList;
 
   /// Object construction from a JSON representation
@@ -5403,13 +5403,13 @@ enum CompletionResponseStreamChoiceFinishReason {
 }
 
 // ==========================================
-// CLASS: UnionModelCard
+// CLASS: ModelCard
 // ==========================================
 
 /// Union class for [BaseModelCard], [FTModelCard]
 @Freezed(unionKey: 'type')
-sealed class UnionModelCard with _$UnionModelCard {
-  const UnionModelCard._();
+sealed class ModelCard with _$ModelCard {
+  const ModelCard._();
 
   // ------------------------------------------
   // UNION: BaseModelCard
@@ -5417,7 +5417,7 @@ sealed class UnionModelCard with _$UnionModelCard {
 
   /// Union constructor for [BaseModelCard]
   @FreezedUnionValue('base')
-  const factory UnionModelCard.Base({
+  const factory ModelCard.Base({
     /// No Description
     required String id,
 
@@ -5454,7 +5454,7 @@ sealed class UnionModelCard with _$UnionModelCard {
 
     /// No Description
     @Default('base') String type,
-  }) = UnionModelCardBase;
+  }) = ModelCardBase;
 
   // ------------------------------------------
   // UNION: FTModelCard
@@ -5462,7 +5462,7 @@ sealed class UnionModelCard with _$UnionModelCard {
 
   /// Union constructor for [FTModelCard]
   @FreezedUnionValue('fine-tuned')
-  const factory UnionModelCard.FT({
+  const factory ModelCard.FT({
     /// No Description
     required String id,
 
@@ -5508,18 +5508,18 @@ sealed class UnionModelCard with _$UnionModelCard {
 
     /// No Description
     @Default(false) bool archived,
-  }) = UnionModelCardFT;
+  }) = ModelCardFT;
 
   /// Object construction from a JSON representation
-  factory UnionModelCard.fromJson(Map<String, dynamic> json) =>
-      _$UnionModelCardFromJson(json);
+  factory ModelCard.fromJson(Map<String, dynamic> json) =>
+      _$ModelCardFromJson(json);
 }
 
 // ==========================================
-// ENUM: UnionModelCardType
+// ENUM: ModelCardType
 // ==========================================
 
-enum UnionModelCardType {
+enum ModelCardType {
   @JsonValue('base')
   base,
   @JsonValue('fine-tuned')

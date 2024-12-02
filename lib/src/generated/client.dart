@@ -416,7 +416,7 @@ class MistralaiClientDartClient {
   /// `modelId`: The ID of the model to retrieve.
   ///
   /// `GET` `https://api.mistral.ai/v1/models/{model_id}`
-  Future<UnionModelCard> retrieveModel({
+  Future<ModelCard> retrieveModel({
     required String modelId,
   }) async {
     final r = await makeRequest(
@@ -427,7 +427,7 @@ class MistralaiClientDartClient {
       requestType: '',
       responseType: 'application/json',
     );
-    return UnionModelCard.fromJson(_jsonDecode(r) as Map<String, dynamic>);
+    return ModelCard.fromJson(_jsonDecode(r) as Map<String, dynamic>);
   }
 
   // ------------------------------------------

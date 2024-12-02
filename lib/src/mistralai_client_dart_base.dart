@@ -219,12 +219,3 @@ class _MistralAIStreamTransformer
         .map((item) => item.substring(6));
   }
 }
-
-class MistralAiModelCard {
-  MistralAiModelCard({
-    this.baseModel,
-    this.fineTunedModel,
-  });
-  final BaseModelCard? baseModel;
-  final FTModelCard? fineTunedModel;
-}
