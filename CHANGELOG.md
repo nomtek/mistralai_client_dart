@@ -6,7 +6,7 @@
 - New feature: Moderation ([docs](https://docs.mistral.ai/capabilities/guardrailing/)). Check [example](example/mistralai_client_moderation_example.dart) for usage.
 - New feature: Batch Inference ([docs](https://docs.mistral.ai/capabilities/batch/)). Check [example](example/mistral_client_batch_inference_example.dart) for usage.
 - New function: `downloadFile` to download files from Mistral AI
-- Changes to `ModelCard` to support `BaseModelCard` and `FTModelCard`
+- BREAKING CHANGE: Changes to `ModelCard` to support `BaseModelCard` and `FTModelCard`
 
 ## 1.0.0
 
