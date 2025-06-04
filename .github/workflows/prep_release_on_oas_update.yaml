@@ -1,11 +1,11 @@
 name: Prepare client release from OpenAPI Spec Update
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - openapi_spec/openapi-original.yaml
+  # push:
+  #   branches:
+  #     - main
+  #   paths:
+  #     - openapi_spec/openapi-original.yaml
   workflow_dispatch:
 
 jobs:

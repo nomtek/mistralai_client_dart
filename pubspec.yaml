@@ -1,6 +1,6 @@
 name: mistralai_client_dart
-description: This is an unofficial Dart/Flutter client for the Mistral AI API.
-version: 1.1.0
+description: (Deprecated) This is an unofficial Dart/Flutter client for the Mistral AI API.
+version: 1.1.0+1
 repository: https://github.com/nomtek/mistralai_client_dart
 
 topics:

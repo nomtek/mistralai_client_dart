@@ -1,9 +1,9 @@
 name: Update Mistral's openapi-original.yaml
 
 on:
-  schedule:
+  # schedule:
     # every Sunday at 21:00 (9 PM) UTC
-    - cron: "0 21 * * 0"
+    # - cron: "0 21 * * 0"
   # This allows manual triggering of the workflow
   workflow_dispatch:
 
