@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0+1
+
+Package deprecation. Check [README](README.md) for note.
+
 ## 1.1.0
 
 - Generate new client code based on [Mistral OAS](https://github.com/mistralai/platform-docs-public/commit/89abfa4879279981adde99e23c0cda8153da6eef#diff-d910ba2ef878f7db0223a966b81c8b3f3b65027bb39e4431bb05140171eece39R2722)
